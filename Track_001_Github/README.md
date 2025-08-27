@@ -133,10 +133,21 @@ TJ-BU-703-강사PC@DESKTOP-2Q95R1R MINGW64 /d/hyojung/workspace (master|MERGING)
   Git은 상태 기반으로 동작한다는 걸 실감했다. 병합 중이라는 상태를 명확히 인식하고, 단계별로 처리해야 오류를 피할 수 있다. Git의 내부 동작을 더 깊이 이해하게 된 계기였다.
 
 
+```
+
+
 ---
-<br/>
-<br/>
-<br/>
+
+ <br/>
+ <br/>
+ <br/>
 
 
 
+
+
+## 📌 참고문헌
+- [Git 공식 문서](https://git-scm.com/doc)  
+- [Markdown 가이드](https://www.markdownguide.org/basic-syntax/)  
+- [VS Code 공식 사이트](https://code.visualstudio.com/)  
+- [AI 프롬프트 작성 팁](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/prompt-engineering?tabs=chat)
