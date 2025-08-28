@@ -124,23 +124,36 @@ From https://github.com/sally03915/fullstack_20250825
 Auto-merging day002.md
 CONFLICT (content): Merge conflict in day002.md
 t the result.
-
-
-### 트러블슈팅 (3)
-```bash
-TJ-BU-703-강사PC@DESKTOP-2Q95R1R MINGW64 /d/hyojung/workspace (master|MERGING) $ git pull origin master error: You have not concluded your merge (MERGE_HEAD exists). hint: Please, commit your changes before merging. fatal: Exiting because of unfinished merge.
-- **느낌점**  
-  Git은 상태 기반으로 동작한다는 걸 실감했다. 병합 중이라는 상태를 명확히 인식하고, 단계별로 처리해야 오류를 피할 수 있다. Git의 내부 동작을 더 깊이 이해하게 된 계기였다.
-
 ```
 
+### ⛔ 트러블슈팅 (3)
+
+```bash
+$ git pull origin master
+error: You have not concluded your merge (MERGE_HEAD exists).
+```
+
+- **문제점**  
+  이전 병합이 완료되지 않은 상태에서 다시 Pull을 시도함. Git이 병합 중이라는 상태를 유지하고 있음.
+
+- **해결방안**  
+  병합을 먼저 마무리해야 함.  
+  ```bash
+  git status  # 병합 중인 파일 확인
+  git add .
+  git commit -m "병합 완료"
+  ```
+
+- **느낌점**  
+  Git은 상태 기반으로 동작한다는 걸 실감했다. 병합 중이라는 상태를 명확히 인식하고, 단계별로 처리해야 오류를 피할 수 있다. Git의 내부 동작을 더 깊이 이해하게 된 계기였다.
+ 
+ 
+
+<br/>
+<br/>
+<br/> 
 
 ---
-
- <br/>
- <br/>
- <br/>
-
 
 
 
