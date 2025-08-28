@@ -107,6 +107,7 @@ Changes not staged for commit:
         modified:   day001.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
+
 ```
 
 ### 트러블슈팅 (2)
@@ -124,6 +125,7 @@ From https://github.com/sally03915/fullstack_20250825
 Auto-merging day002.md
 CONFLICT (content): Merge conflict in day002.md
 t the result.
+
 ```
 
 ### ⛔ 트러블슈팅 (3)
@@ -147,7 +149,7 @@ error: You have not concluded your merge (MERGE_HEAD exists).
 - **느낌점**  
   Git은 상태 기반으로 동작한다는 걸 실감했다. 병합 중이라는 상태를 명확히 인식하고, 단계별로 처리해야 오류를 피할 수 있다. Git의 내부 동작을 더 깊이 이해하게 된 계기였다.
  
- 
+
 
 <br/>
 <br/>
