@@ -1,4 +1,4 @@
-## Track003 - JAVA
+## Track003 - JAVA (20250825 ~ 20250829)
 1. java?
 - 한 번 작성하면 어디서든 실행된다.
 - JDK 설치 -> 작성 -> 컴파일 -> 실행
@@ -386,4 +386,128 @@ public class VarEx002 {
      10  * 3 = 30
      10  / 3 = 3
 */
+```
+
+
+```bash
+# ■ Java
+ 
+#### ■9. 자료형 (1)
+1) 자료형의 구분
+- 기본형 : 실제값 저장
+- 참조향 : 주소값 저장 ( String )
+
+2) 기본자료형
+- 논리형 - boolean  true/false 
+- 정수형 - byte(1byte) - short(2byte) - int(4byte) ★ - long(8byte) 
+                                                       long 1 = 4L;
+- 실수형 - float(4byte)      - double(8byte) ★
+          float f= 3.14f;     double d = 3.l4;
+
+ ***★ 자바 기본처리단위 *** 
+ ***★ 실수는 정수보다 크다(표현가능한 값의 범위와 타입의 복잡성) *** 
+   long(8byte)         <         float(4byte)  소수점 포함한 실수표현 
+   큰물통(딱 물정량-정수)           고압탱크(압축해서 엄청난 물 담기 - 실수+지수)
+
+package com.company.java002;
+
+import java.util.Scanner;
+
+public class Input001 {
+	public static void main(String[]args) {
+		// 자료형의 분류 : 기본형(값) / 참조형(주소) 
+		// 기본형 : 논리형(boolean), 정수형(byte-short-int-long), 실수형(float-double) 
+		
+		// OOP? 클래스(부품객체) 조립해 완성해가는 프로그램
+		//변수
+		int     like    = 0;   //like  [  0  ]  기본형
+		Scanner scanner = new Scanner(System.in); //참조 : ctrl + shift + o 
+		//1. new 공간빌리기         heap 1000 번지 [    ]
+		//2. Scanner(System.in)  Scanner() 사용할수 있게 초기화 - System.in 키보드입력 
+		//3. 사용법 : scanner.   변수명.
+		//입력
+		System.out.println("정수(1,2,3)를 입력하세요>");
+		like = scanner.nextInt();  //입력받기를 커서가 깜박
+		//처리 X 
+		//출력
+		System.out.println("입력한 정수는" + like + "입니다."); 
+	}
+}
+
+package com.company.java002_ex;
+
+import java.util.Scanner;
+
+public class InputEx001 {
+	public static void main(String[]args) {
+		//변수
+		int age = 20; 
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+		System.out.println("당신의 나이를 입력하세요>.");
+		age = scanner.nextInt();
+		//처리
+		//출력
+		System.out.println("내 나이는" + age + "입니다.");
+	
+	}
+}
+/* 1-1.  나이를 입력받을 자료형 선택후  변수명  age로 하시오.  예) 10,20
+   1-2.  Scanner이용해서 나이 입력받고 출력하시오.
+  
+    당신의 나이를 입력하시오 > _입력받기
+    내 나이는 ** 입니다.
+*/
+
+package com.company.java002_ex;
+
+import java.util.Scanner;
+
+public class InputEx002 {
+	public static void main(String[]args) {
+		//변수
+		int num = 20;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+		System.out.println("좋아하는 수를 입력하시오.>");
+		num = scanner.nextInt();
+		//처리
+		//출력
+		System.out.println("좋아하는 숫자는" + num + "입니다.");
+	
+		
+	}
+}
+/*연습문제2)
+패키지명 : com.company.java002_ex
+클래스명 : InputEx002
+출력내용 :  Scanner이용해서 나이 입력받고 출력하시오.
+    좋아하는 수(정수)   입력하시오 > _입력받기
+    좋아하는 숫자는 ** 입니다.
+*/
+
+package com.company.java002_ex;
+
+import java.util.Scanner;
+
+public class InputEx002_번외 {
+	public static void main (String[]args) {
+		//변수
+		int num = 2001;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+		System.out.println("태어난 연도를 입력하세요.>");
+		num = scanner.nextInt();
+		
+		//처리
+		num = 2025 - num;   //2025 - 2001
+		
+		//출력
+		System.out.println("당신의 나이는" + num + "살 입니다."); 
+	}
+
+}
 ```
