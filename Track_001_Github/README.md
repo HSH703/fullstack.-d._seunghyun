@@ -157,8 +157,9 @@ TJ-BU-703-강사PC@DESKTOP-2Q95R1R MINGW64 /d/hyojung/workspace (master|MERGING)
 
 
 
-```bash
+
 ## Track001 -  github (20250825~20250829)
+```bash
 ---
 ### 1. git  vs  github
 - git - 로컬에 파일의 변경이력 ( 내컴퓨터에 타임머신)
