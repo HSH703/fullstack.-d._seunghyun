@@ -5,85 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-          /* Q1. body 여백제거, 안쪽여백 : 30px, 글꼴 : 'Segoe UI', 배경 : 그라디언트 #fff1eb → #ace0f9 */
-          body{margin: 0; padding: 30px; font-family: 'Segoe UI'; 
-                background-image: linear-gradient(135deg, rgb(107, 210, 210), whitesmoke); }
-          /* Q2. h1 중앙정렬, 글자색상 : #34495e, 아래쪽여백 : 40px */
-          h1{ text-align: center; color:#34495e; margin-bottom: 40px;}
-          /* Q3. .portfolio 너비 : 250px, 여백 : 아래쪽 30px 중앙정렬, 테두리 둥글게 : 20px, 그림자효과, 안쪽여백 : 20px, 트랜지션 : 0.3초 */
-          .portfolio{width: 250px; margin: 0 auto 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                    padding: 20px; transition: all 0.3s; cursor:pointer;}
-          /* Q4. .portfolio:hover 확대 + 회전 + 밝기 + 그림자 강조 */
-          .portfolio:hover{transform: scale(1.05) rotate(-1deg); 
-                            filter:brightness(1.05);
-                            box-shadow:0 4px 12px rgba(0,0,0,0.25);}
-          /* Q5. .project1 배경 : 그라디언트 #fceabb → #f8b500 */
-          .portfolio.project1{background-image: linear-gradient(135deg,#fceabb,#f8b500 );}
-          /* Q6. .project2 배경 : 그라디언트 #d5fefd → #a1c4fd */
-          .portfolio2{background-image: linear-gradient(135deg, #d5fefd, #a1c4fd);}
-          /* Q7. .project3 배경 : 그라디언트 #fbc2eb → #a6c1ee */
-          .portfolio3{background-image: linear-gradient(#fbc2eb,#a6c1ee )}
-          /* Q8. .portfolio img 너비/높이 : 90px, 원형처리, 이미지 비율 유지, 테두리 : 3px 실선 #34495e */
-          .portfolio img{width: 150px; height:90px; border-radius: 20px;
-                         object-fit:cover; border:3px solid#34495e;
-                          display:block; margin:auto; }
-          /* Q9. .portfolio h2 여백 : 위10px 아래5px, 글자크기 : 18px, 글자색상 : #2c3e50 */
-          .portfolio h2{ margin: 10px 0 5px; font-size: 18px; color:#2c3e50;}
-         /* Q10. .portfolio p 글자크기 : 14px, 글자색상 : #555, 아래쪽여백 : 10px */
-         .portfolio p{font-size: 14px; color: #555; margin-bottom: 10px;}
-         /* Q11. .portfolio a 글자크기 : 13px, 글자색상 : #34495e, 밑줄 제거 */
-         .portfolio a{font-size: 13px; color:#34495e; text-decoration:none;  }
-         /* Q12. .portfolio h3 위쪽여백 : 20px, 글자크기 : 16px, 글자색상 : #2c3e50 */
-         .portfolio h3{margin-top: 20px; font-size: 16px; color:#2c3e50;}
-         /* Q13. .portfolio ul 왼쪽정렬, 왼쪽 안쪽여백 : 20px, 글자색상 : #2c3e50  */ 
-         .portfolio ul{text-align: center; padding-left: 20px; color:#2c3e50; }
+        /*   Q1. 전체여백빼기
+             box-sizing: border-box;  박스크기계산을 통일  ,
+             width와 height에 padding 과 border까지 포함해서 계산
+             박스크기가 100px, padding: 10px 자동으로 크지조절
+        */
+        *{  margin:0; padding:0; box-sizing: border-box;}
 
+        /*   Q2. body 글꼴 , 전체배경색상  */
+        body{ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+            background-image: linear-gradient(135deg, #f4ffb8 , #8affd0);
+        }
+       /*   Q3. h3 왼쪽에 선넣기 , 배경색  */
+        h3{ border-left:3px solid #123456;
+            border-bottom:1px solid #123456;
+        }
+       /*   Q4. strong 배경색  */
+        strong{ background-color:crimson; color:whitesmoke; padding:2px;
+            width:500px; /* 적용X inline */
+        }
+        /*   Q5. box 예)  */
+        .container{ width:60%; margin:50px auto; background-color:#fff;
+                    padding:20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .item{  padding:10px; background-color: #333; color:white;}
+
+        /*  Q6. float  */
+        .i1{float:left; box-sizing:100px;}
+        .i2{float:right; }
+        .i3{float:center; }
+
+        /* Q7. position */
+        .me{background-color: gold; padding: 10px; color: white;  
+              top:0; left:0; 
+        }
+        .p1{position:relative;}  /*  1. 부모 (감싸는 박스에 공간확보)*/
+        .p1  .me{position: absolute; right:0; bottom: 0;} /*  2.  자식(absolute)*/
+
+        .p2  .me{position:fixed; bottom:100px; right: 0;  /* 브라우저기준*/
+                background-color:red ;
+            }
     </style>
 </head>
 <body>
-    <div>
-        <h1>프로젝트 설명 카드</h1>
-        <div class="portfolio project1">
-            <p><img src="./portfolioimg/portfolio1.jpg" alt=""></p>
-            <h2>도서 추천 웹앱</h2>
-            <p>기획자: 사장님</p>
-            <p>사용자 취향 기반으로 도서를 추천하는 웹 서비스</p>
-            <p><a href="" title="">GitHub 저장소 보기</a></p>
-            <h3> 핵심 기능</h3>
-            <ul>
-                <li>사용자 입력 기반 추천 알고리즘</li>
-                <li>카드 UI를 활용한 도서 정보 시각화</li>
-                <li>팀원 역할 분담 및 협업 관리</li>
-            </ul>
-        </div>
-        <div class="portfolio project2">
-            <p><img src="./portfolioimg/portfolio2.jpg" alt=""></p>
-            <h2>반응형 포트폴리오 사이트</h2>
-            <p>프론트엔드: June</p>
-            <p>디자이너와 협업하여 제작한 개인 포트폴리오 웹사이트</p>
-            <p><a href="" title="">배포된 페이지 보기</a></p>
-            <h3> 주요 기술</h3>
-            <ul>
-                <li>HTML5 / CSS3 / JavaScript</li>
-                <li>미디어쿼리를 활용한 반응형 디자인</li>
-                <li>Figma 기반 UI 설계</li>
-            </ul>
-        </div>
-
-        <div class="portfolio project3">
-            <p><img src="./portfolioimg/portfolio3.jpg" alt=""></p>
-            <h2>AI 기반 독서 취향 분석기</h2>
-            <p>AI 분석: Mina</p>
-            <p>독서 이력 데이터를 기반으로 취향을 분석하고 도서를 추천</p>
-            <p><a href="" title="">프로젝트 상세 보기</a></p>
-            <h3> 기술 스택</h3>
-            <ul>
-                <li>Python / Pandas / Scikit-learn</li>
-                <li>자연어 처리 기반 키워드 분석</li>
-                <li>데이터 시각화 및 사용자 피드백 반영</li>
-            </ul>
-        </div>
-
+    <div class="container">
+        <h3> 1. block vs inline</h3>
+        <p><strong>block</strong> 그릇 width/height O, 줄바꿈 O</p>
+        <p><strong>inline</strong> 콘텐츠 - 간장 width/height X, 줄바꿈X </p>
     </div>
+
+    <div class="container f1">
+        <h3>2. 배치 - float</h3>
+        <p class="item i1">LEFT</p>
+        <p class="item i2">RIGHT</p>
+        <p class="item i3">float: left, float: right 사용시 왼쪽. 오른쪽 배치 / clear:both </p>
+    </div>
+
+    <div class="container p1">
+        <h3>3. 배치 (2)  position - relative + absolute</h3>
+        <p class="me"> HWERE I AM?</p>
+        <p>부모: relative (공간확보) / 자식요소 absolute(공간유지 안됨.)</p>
+    </div>
+
+    <div class="container p2">
+        <h3>3. 배치 (2)  position - fixed</h3>
+        <p class="me"> HWERE I AM?</p>
+    </div>
+
 </body>
 </html>
+<!--web005_1.html-->
