@@ -45,6 +45,13 @@
         .p2  .me{position:fixed; bottom:100px; right: 0;  /* 브라우저기준*/
                 background-color:red ;
             }
+        /* Q8. display */
+        .dl li {display: inline; }
+        .d2 li {display: inline-block;
+                width:100px; padding: 10px; background-color: gold;
+                text-align: center;}
+
+
     </style>
 </head>
 <body>
@@ -63,15 +70,31 @@
 
     <div class="container p1">
         <h3>3. 배치 (2)  position - relative + absolute</h3>
-        <p class="me"> HWERE I AM?</p>
+        <p class="me"> WHERE I AM?</p>
         <p>부모: relative (공간확보) / 자식요소 absolute(공간유지 안됨.)</p>
     </div>
 
     <div class="container p2">
         <h3>3. 배치 (2)  position - fixed</h3>
-        <p class="me"> HWERE I AM?</p>
+        <p class="me"> WHERE I AM?</p>
     </div>
 
+    <div class="container">
+        <h3>4. display요소속성변경</h3>
+        <ul>
+            <li>APPLE</li><li>BANANA</li><li>COCONUT</li>
+        </ul>
+        <hr/>
+            <ul class="d1">
+                <li>APPLE</li><li>BANANA</li><li>COCONUT</li>
+            </ul>
+        <hr/>
+        <hr/>
+            <ul class="d2">
+                <li>APPLE</li><li>BANANA</li><li>COCONUT</li>
+            </ul>
+        <hr/>
+    </div>
 </body>
 </html>
 <!--web005_1.html-->

@@ -2135,3 +2135,548 @@ public class IfEx007_1 {
 
 ---
 ---
+
+---
+ ## Track003 - JAVA (20250908 ~ 20250912)
+package com.company.java004_ex;
+
+import java.util.Scanner;
+
+public class Repeat011 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num1, num2; String result="";
+		char op;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+		System.out.println("1. 정수를 하나 입력하세요.>");
+		num1 = scanner.nextInt();
+		System.out.println("2. 정수를 하나 입력하세요.>");
+		num2 = scanner.nextInt();
+		System.out.println("3. 연산자를 입력하세요.>");
+		op = scanner.next().charAt(0);
+
+		//처리
+		result="" + num1 + op + num2 + "=";
+		
+		     if(op=='+') {result+=(num1+num2);}
+	    else if(op=='-') {result+=(num1-num2);}
+	    else if(op=='*') {result+=(num1*num2);}
+	    else if(op=='/') {result+=String.format("%.2f" , (double)num1/num2);}
+
+		//출력
+     	System.out.println(result); 
+		
+	}
+}
+
+---
+---
+package com.company.java004_ex;
+
+import java.util.Scanner;
+
+public class SwitchEx001 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num; 
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("좋아하는 월을 입력하세요.>");
+		num = scanner.nextInt();
+		//처리 + 출력
+		switch (num) {
+		case 3: System.out.println("봄이다."); break;
+		case 6: System.out.println("여름이다."); break;
+		case 9: System.out.println("가을이다."); break;
+		case 12: System.out.println("겨울이다."); break;
+
+		}
+	}
+}
+/*연습문제1)  
+패키지명 : com.company.java004_ex
+클래스명 :  SwitchEx001
+출력내용 :  switch 이용
+     숫자한개 입력받아
+     3이면 봄
+     6이면 여름
+     9이면 가을
+     12이면 겨울
+
+*/
+---	
+---
+package com.company.java004_ex;
+
+import java.util.Scanner;
+
+public class SwitchEx002 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+		System.out.println("좋아하는 월을 입력하세요.>");
+		num = scanner.nextInt();
+		
+		//처리 + 출력
+		switch (num) {
+		case 3:  case 4: case 5:  System.out.println("봄이다"); break;
+		case 6:  case 7: case 8:  System.out.println("여름이다"); break;
+		case 9:  case 10: case 11:  System.out.println("가을이다"); break;
+		case 12:  case 1: case 2:  System.out.println("겨울이다"); break;
+
+
+		}
+	}
+}
+/*연습문제2)  
+패키지명 : com.company.java004_ex
+클래스명 :  SwitchEx002
+출력내용 :   switch 이용
+     숫자한개 입력받아
+     3,4,5이면 봄
+     6,7,8이면 여름
+     9,10,11이면 가을
+     12,1,2이면 겨울
+*/
+---
+---
+package com.company.java004_ex;
+
+import java.util.Scanner;
+
+public class SwitchEx003 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num1, num2;
+		char op;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+		System.out.println("1. 정수를 입력하세요.>");
+		num1= scanner.nextInt();
+		System.out.println("2. 정수를 입력하세요.>");
+		num2= scanner.nextInt();
+		System.out.println("3. 연산자를 입력하세요.>");
+		op= scanner.next().charAt(0); 
+
+		//처리+출력
+		
+		switch (op) { 
+		case '+' : System.out.printf("%d %c %d=%d" , num1, op,num2, num1+num2); break;
+		case '-' : System.out.printf("%d %c %d=%d" , num1, op, num2, num1-num2); break;
+		case '*' : System.out.printf("%d %c %d=%d" , num1, op, num2, num1*num2); break;
+		case '/' : System.out.printf("%d %c %d=%.2f" , num1, op, num2, (double)num1/num2); break;
+
+		}
+	}
+}
+
+
+ /*연습문제3)  3
+패키지명 : com.company.java004_ex
+클래스명 :  SwtichEx003
+출력내용 :  계산기
+
+1. 정수를 하나 입력해주세요 > 10
+2. 정수를 하나 입력해주세요 > 3
+3. 연산자를 입력해주세요(+,-,*,/) > +
+10+3=13
+
+1. 정수를 하나 입력해주세요 > 10
+2. 정수를 하나 입력해주세요 > 3
+3. 연산자를 입력해주세요(+,-,*,/) > -
+10-3=7 
+  */
+---
+---
+package com.company.java005;
+
+public class Repeat001_For {
+	public static void main(String[]args) {
+		//step1 System.out.println() 3번 사용해서 1 2 3 출력		
+		System.out.println("step 1");
+		System.out.println(1 + "\t");	// 복사할 구문 → {   }
+		System.out.println(2 + "\t");	// ctrl + c, ctrl+ v = 2번 { 구문 }
+		System.out.println(3 + "\t");	// 안에 숫자 2,3 → { 구문 변수 }
+		//for(시작; 종료; 변화){구문}
+		//(for문 안에 if문 사용해도 됨.)
+
+		//step2
+		System.out.println("\n\nstep2");	//{변수}  for(시작; 종료; 변화)
+		for (int i=1; i<=3; i++){ System.out.println(1 + "\t"); }
+		
+		//step3
+		System.out.println("\n\nstep3");
+		// 1 ~ 5
+		for (int i=1; i<=5; i++){System.out.print(1 + "\t");}
+		System.out.println();
+		// 11 ~ 20
+		for (int i=11; i<=20; i++){System.out.print(1 + "\t");}
+		System.out.println();
+		// 3 ~ 8
+		for (int i=3; i<=8; i++){System.out.print(1 + "\t");}
+		System.out.println();
+		// 1 3 5
+		for (int i=1; i<=5; i=i+2){System.out.print(1 + "\t");}
+		System.out.println();
+		// Hello1 Hello2 Hello3
+		System.out.println("Hello" + 1 +"\t");
+		System.out.println("Hello" + 2 +"\t");
+		System.out.println("Hello" + 3 +"\t");
+		
+		for (int i=1; i<=3; i++){System.out.print("Hello" + i +"\t");  }
+
+		
+	} //end main
+ }//end class
+
+---
+---
+package com.company.java005_ex;
+
+public class ForEx001 { 
+	public static void main(String[]args) {
+		//q1 for문을 이용해서 다음과 같이 출력하시오 :   1 2 3 4 5 
+		System.out.println("\n\nq1");
+		for (int i=1; i<=5; i++) {		System.out.print(i + "\t"); }
+		
+		//q2 for문을 이용해서 다음과 같이 출력하시오 :   5 4 3 2 1 
+		System.out.println("\n\nq2");
+		for (int i=5; i>=1; i--) {		System.out.print(i + "\t"); }
+		
+		//q3 for문을 이용해서 다음과 같이 출력하시오 :   JAVA1   JAVA2  JAVA3  
+		System.out.println("\n\nq3");
+		for (int i=1; i<=3; i++) {		System.out.print("JAVA" + i + "\t"); }
+		
+		//q4 for문을 이용해서 다음과 같이 출력하시오 :   HAPPY3   HAPPY2  HAPPY1  
+		System.out.println("\n\nq4");
+		for (int i=3; i>=1; i--) {		System.out.print("HAPPY" + i + "\t"); }
+
+		//q5 for문을 이용해서 다음과 같이 출력하시오 :   0,1,2  
+		System.out.println("\n\nq5 -1");
+		System.out.print(""+ 0 + "\t");
+		System.out.print(","+ 1 + "\t");
+		System.out.print(","+ 2 + "\t");
+		
+		System.out.println("\n\nq5 -2");
+		for (int i=0; i<=2; i++) {		System.out.print( (i==0? "": ",")  + i ); }
+
+		//q6 for문을 이용해서 다음과 같이 출력하시오 :   0,1,2, ,,,중간생략 ,,, 99  
+		System.out.println("\n\nq6");
+		for (int i=0; i<=99; i++) {		System.out.print(  (i==0? "": ",")  +  i); }
+
+		//q7 for문을 이용해서 다음과 같이 출력하시오 :   10, 9,,,,중간생략 ,,, , 1 
+		System.out.println("\n\nq7");
+		for (int i=10; i>=1; i--) {		System.out.print(   (i==0? "": ",")  +  i); }
+
+		//q8 for문을 이용해서 다음과 같이 출력하시오 :   0, 2, 4, 6, 8 
+		System.out.println("\n\nq8");
+		for (int i=0; i<=8; i=i+2) {		System.out.print( (i==0? "": ",")  +  i); }
+		
+		//q9 for문을 이용해서 다음과 같이 출력하시오 :   0, 2, 4, 6, 8 ,,,중간생략 ,,, 18 
+		System.out.println("\n\nq9");
+		for (int i=0; i<=9; i++) {		System.out.print(  i*2 + "\t"); }
+
+	}
+}
+
+/*연습문제1)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx001
+출력내용 :   for 이용
+*/
+---
+---
+package com.company.java005_ex;
+
+import java.util.Scanner;
+
+public class ForEx002 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int dan=0; 
+		Scanner scanner = new Scanner(System.in) ;
+		//입력
+		System.out.println("구구단 중 원하는 단을 입력하세요.>");
+		dan = scanner.nextInt();
+		
+		//처리+출력 (1)
+		//2*1=2
+		//2*2=4
+		//2*3=6
+		//System.out.println(2+"*"+ 1 +  "=" + 2*1);
+		//System.out.println(2+"*"+ 2 +  "=" + 2*2);
+		//System.out.println(2+"*"+ 3 +  "=" + 2*3);
+
+		//처리+출력 (2) 2단 말고 사용자에게 입력받은 단 {반복} {변수} for(시작; 종료; 변화;)
+		for(int i=1; i<=9; i=i+1) {	System.out.println(dan +"*"+ i +  "=" + dan*i);}
+		
+	}
+}
+
+/*연습문제2)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx002
+출력내용 :   for 이용
+
+   사용자에게 구구단을 입력받아 해당하는 
+   구구단을 출력해주는 프로그램을 작성하시오. FOR문을 이용하시오.
+*/
+---
+---
+package com.company.java005_ex;
+
+import java.util.Scanner;
+
+public class ForEx003 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수 1~10까지의 합
+		int hap=0;	//hap을 담을 변수
+		
+		//입력 + 처리
+		//hap 변수에 1달기
+		//hap 변수에 2달기	
+		//hap = hap+1;	//hap[1]	0+1
+		//hap = hap+2;	//hap[2]	1+2
+		//hap = hap+3;	//hap[3]	3+3
+		//   {반복} 	{변수} 	for{시작; 종료; 변화;}
+		for (int i =1; i<=10; i++){ hap = hap+i;}
+		
+		//출력
+		//"" 1:	+2	+3	+4 +5	+6	+7	+8	+9	+10		=55
+		System.out.println("1~10까지의 합을 구하시오.>" + hap);
+
+	}
+}
+
+/*연습문제3)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx003
+출력내용 :   for 이용
+1~10까지의 합을 구하시오.
+
+upgrade)  시간나면 도전!
+1+2+3+4+5+6+7+8+9+10=55
+*/
+---
+---
+package com.company.java005_ex;
+
+import java.util.Scanner;
+
+public class ForEx003_2 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수 1~10까지의 합
+		int hap=0;	//hap을 담을 변수
+		
+		//입력 + 처리
+		//hap 변수에 1달기
+		//hap 변수에 2달기	
+		//hap = hap+1;	//hap[1]	0+1
+		//hap = hap+2;	//hap[2]	1+2
+		//hap = hap+3;	//hap[3]	3+3
+		//   {반복} 	{변수} 	for{시작; 종료; 변화;}
+		for (int i =1; i<=10; i++){ 
+			hap = hap+i;
+			System.out.println((i==1? "":"+")  +i);
+		}
+		
+		//출력
+		//"" 1:	+2	+3	+4 +5	+6	+7	+8	+9	+10		=55
+		System.out.println("1~10까지의 합을 구하시오.>" + hap);
+
+	}
+}
+
+/*연습문제3)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx003
+출력내용 :   for 이용
+1~10까지의 합을 구하시오.
+
+upgrade)  시간나면 도전!
+1+2+3+4+5+6+7+8+9+10=55
+*/
+---
+---
+package com.company.java005_ex;
+
+public class ForEx004 {
+	public static void main(String[]args) {
+		//변수
+		int cnt =0; // 1~10까지의 3의 배수의 갯수 카운트 담을 횟수
+		
+		//입력+처리(1) 문제파악
+		//1이 3의 배수라면 카운트
+		//2이 3의 배수라면 카운트
+		//3이 3의 배수라면 카운트
+
+		//입력+처리(2) 구조작성
+		//if(1이 3의 배수라면) {카운트}
+		//if(2이 3의 배수라면) {카운트}
+		//if(3이 3의 배수라면) {카운트}
+
+		//입력+처리(3) 코드변환
+		//if(1%3 ==0) { cnt++; }
+		//if(2%3 ==0) { cnt++; }
+		//if(3%3 ==0) { cnt++; }
+		for(int i=1; i<=10; i++) {		if(i%3 ==0) { cnt++; } }
+		
+		//출력
+		System.out.println("1~10 까지의 3의배수의 갯수: " + cnt);
+		
+		
+	}
+}
+
+/*연습문제4)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx004
+출력내용 :   for 이용
+1~10까지 3의 배수 갯수를 출력   
+
+upgrade)  시간나면 도전!
+3의배수 : 3,6,9    
+갯수 : 3개
+
+*/
+---
+---
+package com.company.java005_ex;
+
+public class ForEx004_2 {
+	public static void main(String[]args) {
+		//변수
+		String result="";
+		int cnt =0; // 1~10까지의 3의 배수의 갯수 카운트 담을 횟수
+		
+		//입력+처리(1) 문제파악
+		//1이 3의 배수라면 카운트
+		//2이 3의 배수라면 카운트
+		//3이 3의 배수라면 카운트
+
+		//입력+처리(2) 구조작성
+		//if(1이 3의 배수라면) {카운트}
+		//if(2이 3의 배수라면) {카운트}
+		//if(3이 3의 배수라면) {카운트}
+
+		//입력+처리(3) 코드변환
+		//if(1%3 ==0) { cnt++; }
+		//if(2%3 ==0) { cnt++; }
+		//if(3%3 ==0) { cnt++; }
+		for(int i=1; i<=10; i++) {		
+			if(i%3 ==0) { cnt++; result += (i==3? "": "," )+ i;} //()3	,	6, 9
+		}
+		
+		//출력
+		System.out.println("3의 배수:" + result);
+		System.out.println("1~10 까지의 3의배수의 갯수: " + cnt);
+		
+		
+	}
+}//3의배수 : 3,6,9    
+
+/*연습문제4)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx004
+출력내용 :   for 이용
+1~10까지 3의 배수 갯수를 출력   
+
+upgrade)  시간나면 도전!
+3의배수 : 3,6,9    
+갯수 : 3개
+
+*/
+---
+---
+package com.company.java005_ex;
+
+public class ForEx005 { 
+	public static void main(String[]args) {
+		//변수	문제파악
+		int cnt=0; // a~z까지 모음의 갯수를 카운트
+		//입력 + 처리(1)
+		//a가 모음이면 (a,e,i,o,u) 카운트
+		//b가 모음이면 (a,e,i,o,u) 카운트
+		//c가 모음이면 (a,e,i,o,u) 카운트
+
+		//입력 + 처리(2) 구조   || 코드작성 {반복} {변수} 
+		//if(a가 모음이라면(a.e.i.o.u)   ){카운트}
+		//if(b가 모음이라면(a.e.i.o.u)   ){카운트}
+		//if(c가 모음이라면(a.e.i.o.u)   ){카운트}
+
+		//입력 + 처리(3)
+		//if('a' == 'a' || 'a' == 'e' || 'a' == 'i' || 'a' == 'o' || 'a' == 'u'){cnt++;}
+		//if('b' == 'a' || 'b' == 'e' || 'b' == 'i' || 'b' == 'o' || 'b' == 'u'){cnt++;}
+		//if('c' == 'a' || 'c' == 'e' || 'c' == 'i' || 'c' == 'o' || 'c' == 'u'){cnt++;}
+	   for(char i='a'; i<='z'; i++)
+		{if(i == 'a' || i == 'e' || i == 'i' || i == 'o' || i == 'u'){cnt++;} }
+
+		//출력
+		System.out.println("a~z까지 모음의 갯수" + cnt);
+		
+	}
+}
+
+/*연습문제5)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx005
+출력내용 :   for 이용
+소문자 a~z까지 모음의 갯수를 출력하시오. 
+*/
+---
+---
+package com.company.java005_ex;
+
+public class ForEx005_2 { 
+	public static void main(String[]args) {
+		//변수	문제파악
+		int cnt=0; // a~z까지 모음의 갯수를 카운트
+		//입력 + 처리(1)
+		//a가 모음이면 (a,e,i,o,u) 카운트
+		//b가 모음이면 (a,e,i,o,u) 카운트
+		//c가 모음이면 (a,e,i,o,u) 카운트
+
+		//입력 + 처리(2) 구조   || 코드작성 {반복} {변수} 
+		//if(a가 모음이라면(a.e.i.o.u)   ){카운트}
+		//if(b가 모음이라면(a.e.i.o.u)   ){카운트}
+		//if(c가 모음이라면(a.e.i.o.u)   ){카운트}
+
+		//입력 + 처리(3)
+		//if('a' == 'a' || 'a' == 'e' || 'a' == 'i' || 'a' == 'o' || 'a' == 'u'){cnt++;}
+		//if('b' == 'a' || 'b' == 'e' || 'b' == 'i' || 'b' == 'o' || 'b' == 'u'){cnt++;}
+		//if('c' == 'a' || 'c' == 'e' || 'c' == 'i' || 'c' == 'o' || 'c' == 'u'){cnt++;}
+	   for(char i='a'; i<='z'; i++)
+		{ 
+		   switch(i) {case 'a' : case 'e' : case 'i' : case 'o' : case 'u' :  cnt++;}
+		}
+		//출력
+		System.out.println("a~z까지 모음의 갯수" + cnt);
+		
+	}
+}
+
+/*연습문제5)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx005
+출력내용 :   for 이용
+소문자 a~z까지 모음의 갯수를 출력하시오. 
+*/
+---
+
+
+---
+
+---
