@@ -2677,6 +2677,393 @@ public class ForEx005_2 {
 ---
 
 
+## JAVA
+```bash
+
+package com.company.java004_ex;
+
+import java.util.Scanner;
+
+public class Repeat012_1 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int a=0;
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("숫자를 입력하세요.>");
+		a = scanner.nextInt();
+		//처리
+		     if(a==1) {System.out.println("one");}
+		else if(a==2) {System.out.println("two");}
+		else if(a==3) {System.out.println("three");}
+
+		//출력
+	}
+}
+
+```
+---
+package com.company.java004_ex;
+
+import java.util.Scanner;
+
+public class Repeat012_2 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int a = 0;
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("숫자를 입력하세요.>");
+		a = scanner.nextInt();
+		//처리 + 출력
+		switch(a) {
+		case 1:/*a==1*/ {System.out.println("one");} break;
+		case 2:/*a==2*/ {System.out.println("two");} break;
+		case 3:/*a==1*/ {System.out.println("three");} break;
+
+		}
+	}
+}
+
+---
+---
+package com.company.java004_ex;
+
+public class Repeat012_3 {
+	public static void main(String[]args) {
+		//Q1.
+		System.out.println("\n\nq1");
+		for(int i=1; i<=5; i++){System.out.print(i + "\t");}
+		//Q2
+		System.out.println("\n\nq2");
+		for(int i=5; i>=1; i--){System.out.print(i + "\t");}
+
+		//Q3
+		System.out.println("\n\nq3");
+		for(int i=1; i<=3; i++){System.out.print("JAVA" + i + "\t");}
+
+	}
+}
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class ForEx006_1 { 
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num1 ,num2; double result = 0;
+		char op;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력	101   -1   무한반복 for(;;) {  빠져나올조건 }
+		/* for(;;){	//무한반복 1-4
+		 
+		 if(num1>=0 && num1<=100) {break ;}	//0~100사이면 잘쓴거~! 잘썼으면 나와!
+		 
+		 }
+		 */
+		for(;;) {
+			System.out.println("1. 정수를 입력하세요.>");
+			num1 = scanner.nextInt();
+			if(num1 >=0 && num1<=100 ) {break;}
+		}
+			
+		for(;;) {
+			System.out.println("2. 정수를 입력하세요.>");
+			num1 = scanner.nextInt();
+			if(num2 >=0 && num2<=100 ) {break;}
+		}
+			
+		for(;;) {
+			System.out.println("3. 연산자를 입력하세요.>");
+			num1 = scanner.nextInt();
+			if(op=='+' || op=='-' || op=='*' || op=='/' ) {break;}
+		}
+				
+		
+		//처리 
+		switch(op) {
+			case '+' : result = num1+num2; break;
+			case '-' : result = num1-num2; break;
+			case '*' : result = num1*num2; break;
+			case '/' : result = num1/(double)num2; break;
+		}
+		
+		//출력
+		System.out.println("" + num1 + op + num2 + "="
+				+ (op='/' ? "" + (int) result: String.format("%.2f" ,result)));
+
+		
+		
+		}
+	}
+
+
+
+/*연습문제6)  for 무한반복
+패키지명 : com.company.java006_ex
+클래스명 :  ForEx006
+출력내용 :  계산기
+
+1)  각 연산자에 맞게 계산처리
+2)  숫자1, 숫자2는 0~100사이만 입력가능하게 아니면 무한반복
+3)  연산자는 +, - ,*, /만 입력가능하게 아니면 무한반복
+     
+
+1. 정수를 하나 입력해주세요 > 10   
+2. 정수를 하나 입력해주세요 > 3
+3. 연산자를 입력해주세요(+,-,*,/) > +
+10+3=13
+ */
+ 
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class ForEx006_2 { 
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num1=-1 ,num2= -1; double result = 0;
+		char op=' ';
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력	101   -1   무한반복 for(;;) {  빠져나올조건 }
+		/* for(;;){	//무한반복 1-4
+		 
+		 if(num1>=0 && num1<=100) {break ;}	//0~100사이면 잘쓴거~! 잘썼으면 나와!
+		 
+		 }
+		 */
+		for(;;) {
+			if(!(num1 >=0 && num1 <=100 )) {		//1-1 0~100 범위가 아니라면
+				System.out.println("1. 정수를 입력하세요.>");  //1-2 입력받기
+				num1 = scanner.nextInt();
+				continue;	//1-3 아래쪽 진행하지 말것! skip 건너뛰기!
+				//잘썼으면 나와 ! 0~100사이면
+			}
+			
+			if (!(num2 >=0 && num2<=100 )) { //0~100 범위가 아니라면 2-1. num2=1
+				System.out.println("2. 정수를 입력하세요.>"); // 2-2 입력받기
+				num2 = scanner.nextInt();
+					continue;// 2-3. 아래쪽 진행하지 말것! skip 건너뛰기!잘썼으면 나와 
+			}
+			
+			if (!(op=='+' || op=='-' || op=='*' || op=='/' )) { //3-1
+			System.out.println("3. 연산자를 입력하세요.>"); //3-2. 입력받기
+			op = scanner.next().charAt(0);
+				continue;//3-3. 아래쪽 진행하지 말것! skip 건너뛰기!잘썼으면 나와
+			}
+			
+			break; // break 만났다면 num1, num2, op를 쓴 경우
+		}
+				
+		//처리 
+		switch(op) {
+			case '+' : result = num1+num2; break;
+			case '-' : result = num1-num2; break;
+			case '*' : result = num1*num2; break;
+			case '/' : result = num1/(double)num2; break;
+		}
+		//출력
+		System.out.println("" + num1 + op + num2 + "="
+				+ (op!='/' ? "" + (int) result: String.format("%.2f" ,result)));
+
+		
+		
+		}
+	}
+
+
+
+/*연습문제6)  for 무한반복
+패키지명 : com.company.java006_ex
+클래스명 :  ForEx006
+출력내용 :  계산기
+
+1)  각 연산자에 맞게 계산처리
+2)  숫자1, 숫자2는 0~100사이만 입력가능하게 아니면 무한반복
+3)  연산자는 +, - ,*, /만 입력가능하게 아니면 무한반복
+     
+
+1. 정수를 하나 입력해주세요 > 10   
+2. 정수를 하나 입력해주세요 > 3
+3. 연산자를 입력해주세요(+,-,*,/) > +
+10+3=13
+ */
+ 
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class ForEx007_1 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		String std="";
+		int kor, eng, mat, total; 
+		double avg;
+		String pass, level, jang;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+			//학번 입력 > std111
+			//국어점수 입력 > 100    ※ 0~100사이만입력받기
+			//수학점수 입력 > 100    ※ 0~100사이만입력받기
+			//영어점수 입력 > 99     ※ 0~100사이만입력받기
+
+		System.out.println("학번을 입력하세요.>");
+		std= scanner.next();
+		for(;;) {
+			System.out.println("국어점수를 입력하세요.>");
+			kor = scanner.nextInt();
+			if( 0<=kor && kor <=100) {break;}
+		}
+
+		for(;;) {
+			System.out.println("수학점수를 입력하세요.>");
+			mat = scanner.nextInt();
+			if( 0<=mat && mat <=100) {break;}
+		}
+		for(;;) {
+			System.out.println("영어점수를 입력하세요.>");
+			eng = scanner.nextInt();
+			if( 0<=eng && eng <=100) {break;}
+		}
+
+		//처리
+		total= kor+ eng+ mat; 
+		avg = total/3.0;
+		pass = avg < 60? "불합격" : kor<40 || eng<40 || mat<40 ? "불합격" : "합격";
+		jang = avg < 95? "" : "장학생"; 
+		level = avg >90? "수" : avg >80? "우" :avg >70? "미" :avg >60? "양" : "가";
+					 
+		//출력
+		System.out.println("=======================================");
+		System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\n",
+					"학번", "국어", "영어", "수학", "총점", "평균", "합격여부", "레벨", "장학생");
+		System.out.println("=======================================");
+		System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t",
+					std, kor, eng, mat, total, avg, pass, level, jang);
+
+		
+	}
+}
+
+/*클래스명 :  ForEx007
+출력내용 :  성적처리 프로그램입니다.
+
+1. 총점 구하기
+2. 평균 구하기
+3. 평균이 60점이상이고  각과목이 40점 미만이면 아니라면 합격/ 아니면 불합격
+4. 평균이 95점이상이면 장학생
+5. 평균이  90점이상이면 수, 80점이상이면 우, 70점이상이면 미, 60점이상이면 양, 아니라면 가 
+
+학번 입력 > std111
+국어점수 입력 > 100    ※ 0~100사이만입력받기
+수학점수 입력 > 100    ※ 0~100사이만입력받기
+영어점수 입력 > 99     ※ 0~100사이만입력받기
+
+============================================================== 
+학번   국어   영어   수학   총점   평균   합격여부   레벨   장학생
+============================================================== 
+std111   100   100   99   299   99.67   합격   수   장학생
+*/
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class ForEx007_2 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		String std="";
+		int kor= -1, eng=-1, mat=-1, total =0; 
+		double avg;
+		String pass, level, jang;
+		Scanner scanner = new Scanner(System.in);
+		
+		//입력
+			//학번 입력 > std111
+			//국어점수 입력 > 100    ※ 0~100사이만입력받기
+			//수학점수 입력 > 100    ※ 0~100사이만입력받기
+			//영어점수 입력 > 99     ※ 0~100사이만입력받기
+
+		System.out.println("학번을 입력하세요.>"); std= scanner.next();
+		for(;;) {	//1. 무한반복
+			if(! (0 <= kor && kor <=100) ) {	// 2-1. 점검 :0~100사이가 아니라면
+				System.out.println("국어점수를 입력하세요.>"); kor = scanner.nextInt(); //2-2. 입력받고
+				continue;//2-3 아래 건너뛰기 - 2-1.으로 가서 범위맞는지 확인
+			}
+
+			if(!(0<= mat && mat <=100) ) {	// 3-1. 점검 :0~100사이가 아니라면
+				System.out.println("수학점수를 입력하세요.>"); mat = scanner.nextInt(); //3-2. 입력받고
+				continue; //3-3 아래 건너뛰기 - 3-1.으로 가서 범위맞는지 확인
+			}
+		
+			if(!(0<=eng && eng <=100) ) {	// 4-1. 점검 :0~100사이가 아니라면
+				System.out.println("영어점수를 입력하세요.>"); eng = scanner.nextInt(); //4-2. 입력받고
+				continue; //4-3 아래 건너뛰기 - 4-1.으로 가서 범위맞는지 확인
+			}
+			
+		break;	// 이 위치까지 왔다면 입력잘한것!
+		
+		}
+		
+
+		//처리
+		total= kor+ eng+ mat; 
+		avg = total/3.0;
+		pass = avg < 60? "불합격" : kor<40 || eng<40 || mat<40 ? "불합격" : "합격";
+		jang = avg < 95? "" : "장학생"; 
+		level = avg >90? "수" : avg >80? "우" :avg >70? "미" :avg >60? "양" : "가";
+					 
+		//출력
+		System.out.println("=======================================");
+		System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\n",
+					"학번", "국어", "영어", "수학", "총점", "평균", "합격여부", "레벨", "장학생");
+		System.out.println("=======================================");
+		System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t",
+					std, kor, eng, mat, total, avg, pass, level, jang);
+
+		
+	}
+ }
+	
+	
+
+
+/*클래스명 :  ForEx007
+출력내용 :  성적처리 프로그램입니다.
+
+1. 총점 구하기
+2. 평균 구하기
+3. 평균이 60점이상이고  각과목이 40점 미만이면 아니라면 합격/ 아니면 불합격
+4. 평균이 95점이상이면 장학생
+5. 평균이  90점이상이면 수, 80점이상이면 우, 70점이상이면 미, 60점이상이면 양, 아니라면 가 
+
+학번 입력 > std111
+국어점수 입력 > 100    ※ 0~100사이만입력받기
+수학점수 입력 > 100    ※ 0~100사이만입력받기
+영어점수 입력 > 99     ※ 0~100사이만입력받기
+
+============================================================== 
+학번   국어   영어   수학   총점   평균   합격여부   레벨   장학생
+============================================================== 
+std111   100   100   99   299   99.67   합격   수   장학생
+*/
+---
 ---
 
 ---
