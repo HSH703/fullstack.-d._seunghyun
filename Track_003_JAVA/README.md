@@ -3065,5 +3065,399 @@ std111   100   100   99   299   99.67   합격   수   장학생
 */
 ---
 ---
+package com.company.java005_ex;
+
+import java.util.Scanner;
+
+public class Bank_ver1_Step1_1 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		int num=-1; String id = " ", pass = " "; double balance = 0;
+		Scanner scanner = new Scanner(System.in);
+		
+		for(;;) {
+			System.out.print("\n\n=======SH_BANK=========\n*" 
+					+ "1.추가\n* 2.조회\n* 3.입금\n* 4.출금\n* 5.삭제\n* 9.종료\n입력>>>");
+			num = scanner.nextInt();
+			if(num==9) {  System.out.println("ATM기를 종료합니다."); break;  }
+			
+			switch (num) {
+				case 1: {
+					System.out.println("추가기능입니다.");
+					System.out.println("아이디를 입력하세요."); 
+					id = scanner.next();	
+					System.out.println("비밀번호를 입력하세요."); 
+					pass = scanner.next();	
+					System.out.println("잔액을 입력하세요."); 
+					balance = scanner.nextDouble();	
+				}break;
+				
+				case 2: {
+					System.out.println("조회기능입니다.");
+					//변수
+					String tempid, tempass;
+					//입력	2-1. 사용자에게 임시아이디와 임시비밀번호를 입력받기
+					System.out.println("아이디를 입력하세요.>");
+					tempid = scanner.next();
+					System.out.println("비밀번호를 입력하세요.>");
+					tempass = scanner.next();
+					//처리 + 입력
+					//  	2-2. 아이디와 임시아이디가 같아야하고, 비번과 임시비밀번호가 같다면 사용자정보출력
+					if(tempid.equals(id)  && tempass.equals(pass)) 
+					     {System.out.println("🛠Welome to SH_BANK");
+					      System.out.println("🛠id>" + id);
+					      System.out.println("🛠pass>" + pass);
+					      System.out.println("🛠balance>" + balance);}
+			     		
+					//	    2-3. 다르면 정보를 확인해주세요.
+				    else {System.out.println("정보를 확인해주세요.>");}
+			  }break;
+			
+				case 3: {System.out.println("입금기능입니다.");
+					//변수
+					String tempid, tempass, price;
+					//입력	사용자에게 임시아이디와 임시비밀번호 입력받기
+					System.out.println("아이디를 입력하세요.>");
+					tempid = scanner.next();
+					System.out.println("비밀번호를 입력하세요.>");
+					tempass = scanner.next();
+				    //처리	if( 아이디와 임시아이디가 같고 비번과 임시비밀번화가 같다면) {돈 입력받아서, 잔액에 추가}
+					 if(tempid.equals(id) && tempass.equals(pass))
+					 	{System.out.println("금액을 입력하세요.>");
+					 	 price = scanner.next();
+					 	 System.out.println("잔액에 추가합니다.>");}
+					//출력	else{아니라면 정보를 확인해주세요.}
+					else {System.out.println("정보를 확인해주세요.");}
+			  }break;
+					 
+				case 4: {System.out.println("출금기능입니다.");
+					//변수
+					String tempid, tempass, price;
+					//입력	사용자에게 임시아이디와 임시비밀번호 입력받기
+					System.out.println("아이디를 입력하세요.>");
+					tempid = scanner.next();
+					System.out.println("비밀번호를 입력하세요.>");
+					tempass = scanner.next();
+					//처리	if( 아이디와 임시아이디가 같고 비번과 임시비밀번화가 같다면) {돈 입력받아서, 잔액에서 빼기}
+					 if(tempid.equals(id) && tempass.equals(pass))
+					 	{System.out.println("금액을 입력하세요.>");
+					 	  price = scanner.next();
+					 	 System.out.println("잔액에서 빼겠습니다.>");}
+					//출력	else{아니라면 정보를 확인해주세요.}
+					else {System.out.println("정보를 확인해주세요.");}
+				} break;
+				
+				case 5: {System.out.println("삭제기능입니다.");
+					//변수
+					String tempid, tempass, delete;
+					//입력	사용자에게 임시아이디와 임시비밀번호 입력받기
+					System.out.println("아이디를 입력하세요.>");
+					tempid = scanner.next();
+					System.out.println("비밀번호를 입력하세요.>");
+					tempass = scanner.next();
+					//처리	if( 아이디와 임시아이디가 같고 비번과 임시비밀번화가 같다면) {삭제하시겠습니까? 묻고 y라면 정보삭제}
+					 if(tempid.equals(id) && tempass.equals(pass))
+					 	{System.out.println("삭제하시겠습니까?>");
+					 	delete=scanner.next();
+					 	 System.out.println("정보를 삭제합니다.");}
+
+					//출력	else{아니라면 정보를 확인해주세요.}
+						else {System.out.println("정보를 확인해주세요.");}
+				} break;
+				
+				}
+		
+			//입력	+ 처리	+ 출력	
+			
+			
+		} //end for
+	} // end main
+} // end class
+
+/*
+  하루에 하나씩 힌트나가요~~~! 천천히 정리하면서 익히면서 도전이요~~! 이번주 다음주해서 숙제~!
+  
+  Step 1. 무한반복으로 만드는 메뉴 만들기
+  
+  for(;;){//1-1 무한반복 //1-2 빠져나올조건 9 //1-3 입력 받은 번호가 if or switch 1을 입력하면
+  추가기능입니다. 출력구문까지만. 2를 입력하면 조회기능입니다. 출력구문까지만. 3을 입력하면 입금기능입니다. 출력구문까지만. 4를 입력하면
+  출금기능입니다. 출력구문까지만. 5를 입력하면 삭제기능입니다. 출력구문까지만. 9를 입력하면 종료합니다. 출력구문까지만. }
+ */
+
+/*
+  Step 2 추가기능 // 아이디 입력 > _입력받기 // 비밀번호 입력 > _입력받기 // 잔액입력 >_입력받기
+  
+*/
+
+/* Step 3 조회기능 2-1. 사용자에게 임시아이디와 임시비밀번호를 입력받기 
+                 2-2. 아이디와 임시아이디가 같아야하고, 비번과임시비밀번호가 같다면 사용자정보출력 
+                 2-3. 다르면 정보를 확인해주세요.
+ */
+
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class IfEx001_1 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		char input;
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("문자를 입력하세요.>");
+		input = scanner.next().charAt(0);
+		//처리
+			 if (input=='a') {System.out.println("apple");}
+		else if (input=='b') {System.out.println("banana");}
+		else if (input=='c') {System.out.println("coconut");}
+		else	{System.out.println(   "a,b,c가 아니다."     );}
+		//출력
+		
+	}
+}
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class SwitchEx001_1 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수
+		char input;
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("문자를 입력하세요.>");
+		input = scanner.next().charAt(0);
+		//처리 + 출력
+		switch(input) {
+		case 'a': {System.out.println("apple");} break;
+		case 'b': {System.out.println("banana");} break;
+		case 'c': {System.out.println("coconut");} break;
+		default : {System.out.println("a,b,c가 아니다.");}
+		
+		}
+	}
+}
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class ForIfEx001_1 {
+	public static void main(String[] args) {
+		// GIGO
+		// 변수
+		int input;
+		Scanner scanner = new Scanner(System.in);
+		// 입력 + 처리 + 출력
+		for (;;) {
+			System.out.println("숫자를 입력하세요.>(1이면 종료)");
+			input = scanner.nextInt();
+			if (input == 1) {
+				System.out.println("종료합니다.");
+				break; 
+			}
+		}
+	}
+}
+---
+---
+package com.company.java006;
+
+public class Repeat003_While_Dowhile {
+	public static void main(String[]args) {
+		//1. for (반복횟수 일때)
+		// 1 2 3
+		System.out.println("1. for");
+		for (int i=1; i<=3; i++){  System.out.print(i + "\t");  }
+		
+		//2. while (반복횟수 모를때 - 게시판 조건)
+		System.out.println("2. while");
+		int i=1;	//2-1 초기문은 위로
+		while ( i<=3){ //2-2 조건문만 봄.
+			System.out.print(i + "\t");  
+			 i++;
+		}	//2-3 증감문-} 맨 끝으로
+		
+		//3. do while (무조건 1번은 실행해야할때)
+		System.out.println("3. do while");
+		i = 1;	//3-1 초기문은 위로
+		do{ //3-2 do 일단 실행.
+			System.out.print(i + "\t");  
+			 i++;
+		}  while ( i<=3);	//3-3 증감문-} 맨 끝으로
+	}
+}
+---
+---
+package com.company.java005_ex;
+
+public class ForEx008 {
+	public static void main(String[]args) {
+		//Q1.
+		System.out.println("1-1. for");
+		for (int i=1; i<=5; i++){System.out.print(i + "\t");}
+		System.out.println();
+		
+		System.out.println("1-2. while");
+		int i1=1;
+		while (i1<= 5) {
+			System.out.print(i1 + "\t");
+			i1++;
+		}
+		System.out.println();
+
+		System.out.println("1-3. do while");
+		i1=1;
+		do {
+			System.out.print(i1 + "\t");
+			i1++;
+		} while(i1<=5);
+		System.out.println();
+
+		//Q2.
+		System.out.println("2-1. for");
+		for (int i2=5; i2>=1; i2--){System.out.print(i2 + "\t");}
+		System.out.println();
+
+		System.out.println("2-2. while");
+		int i2=5;
+		while (i2 >= 1) {
+			System.out.print(i2 + "\t");
+			i2--;
+		}
+		System.out.println();
+
+		System.out.println("2-3. do while");
+		i2 = 5;
+		do {
+			System.out.print(i2 + "\t");
+			i2--;
+		} while (i2 >= 1);
+		System.out.println();
+		//Q3.
+		System.out.println("3-1. for");
+		for (int i3=1; i3<=3; i3++){System.out.print("JAVA" + i3 + "\t");}
+		System.out.println();
+
+		System.out.println("3-2. while");
+		int i3 = 1;
+		while (i3 <= 3) {
+			System.out.print("JAVA" + i3 + "\t");
+			i3++;
+		}
+		System.out.println();
+
+		System.out.println("3-3. do while");
+		i3 = 1;
+		do {
+			System.out.print("JAVA" + i3 + "\t");
+			i3++;
+		} while (i3 <= 3);		
+
+		
+	}
+}
+
+/*연습문제8)  for, while, do while
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx008 
+1.  for , while , do while문을 이용해서 다음과 같이 출력하시오 :  1 2 3 4 5
+2.  for , while , do while문을 이용해서 다음과 같이 출력하시오 :  5 4 3 2 1
+3.  for , while , do while문을 이용해서 다음과 같이 출력하시오 :  JAVA1   JAVA2  JAVA3
+*/
+---
+---
+package com.company.java005_ex;
+
+public class RepeatEx010 {
+	public static void main(String[]args) {
+		/*for , while , do while 3가지 버젼으로 
+		ABCDE   
+		FGHIJ
+		KLMNO
+		PQRST
+		UVWXY
+		Z 
+		 */
+		//ver-1 눈에 보이는 그대로
+		//System.out.println();
+		//System.out.println("A"); System.out.println("B"); System.out.println("C");System.out.println("D");System.out.println("E");
+		//System.out.println();
+		//System.out.println("F"); System.out.println("G"); System.out.println("H");System.out.println("I");System.out.println("J");
+		//ver-2 구조{ 반복 } { 변수 } for(시작; 종료; 변화)
+		//ver-3 특별한 문제풀이 조건
+		System.out.println("\nfor-ver");
+		for(char i='A'; i<='Z'; i++) {if (i%5==0) {System.out.println();} System.out.print(i);}
+		System.out.println("\nwhile-ver");
+		char i='A'; while ( i<='Z') {if (i%5==0) {System.out.println();} System.out.print(i); i++;}
+		System.out.println("\ndo while-ver");
+		i='A'; do{if (i%5==0) {System.out.println();} System.out.print(i); i++;} while ( i<='Z');
+
+	}
+}
+
+/*연습문제10)  for/while/do while
+패키지명 : com.company.java005_ex
+클래스명 :  RepeatEx010
+for , while , do while 3가지 버젼으로 
+ABCDE   
+FGHIJ
+KLMNO
+PQRST
+UVWXY
+Z 
+*/
+---
+---
+package com.company.java005_ex;
+
+public class RepeatEx010 {
+	public static void main(String[]args) {
+		/*for , while , do while 3가지 버젼으로 
+		ABCDE   
+		FGHIJ
+		KLMNO
+		PQRST
+		UVWXY
+		Z 
+		 */
+		//ver-1 눈에 보이는 그대로
+		//System.out.println();
+		//System.out.println("A"); System.out.println("B"); System.out.println("C");System.out.println("D");System.out.println("E");
+		//System.out.println();
+		//System.out.println("F"); System.out.println("G"); System.out.println("H");System.out.println("I");System.out.println("J");
+		//ver-2 구조{ 반복 } { 변수 } for(시작; 종료; 변화)
+		//ver-3 특별한 문제풀이 조건
+		System.out.println("\nfor-ver");
+		for(char i='A'; i<='Z'; i++) {if (i%5==0) {System.out.println();} System.out.print(i);}
+		System.out.println("\nwhile-ver");
+		char i='A'; while ( i<='Z') {if (i%5==0) {System.out.println();} System.out.print(i); i++;}
+		System.out.println("\ndo while-ver");
+		i='A'; do{if (i%5==0) {System.out.println();} System.out.print(i); i++;} while ( i<='Z');
+
+	}
+}
+
+/*연습문제10)  for/while/do while
+패키지명 : com.company.java005_ex
+클래스명 :  RepeatEx010
+for , while , do while 3가지 버젼으로 
+ABCDE   
+FGHIJ
+KLMNO
+PQRST
+UVWXY
+Z 
+*/
+---
+---
 
 ---
