@@ -3459,5 +3459,475 @@ Z
 */
 ---
 ---
+## JAVA
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class Repeat014_1 {
+	public static void main(String[] args) {
+		// 변수
+		char ch;
+		Scanner scanner = new Scanner(System.in);
+		// 입력
+		System.out.print("문자를 입력하세요.>");
+		ch = scanner.next().charAt(0);
+		// 처리
+		if (ch == 'x') {
+			System.out.println("x-ray");
+		} else if (ch == 'y') {
+			System.out.println("yogurt");
+		} else if (ch == 'z') {
+			System.out.println("zebra");
+		} else {
+			System.out.println("x,y,z가 아닙니다.");
+		}
+		// 출력
+	}
+}
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class Repeat014_2 {
+	public static void main(String[] args) {
+		// 변수
+		char ch;
+		Scanner scanner = new Scanner(System.in);
+		// 입력
+		System.out.print("문자를 입력하세요.>");
+		ch = scanner.next().charAt(0);
+		// 처리
+		switch (ch) {
+		case 'x': {
+			System.out.println("x-ray");
+		}
+			break;
+		case 'y': {
+			System.out.println("yogurt");
+		}
+			break;
+		case 'z': {
+			System.out.println("zebra");
+		}
+			break;
+		default: {
+			System.out.println("x,y,z가 아닙니다.");
+		}
+		}
+		// 출력
+	}
+}
+---
+---
+package com.company.java006_ex;
+
+import java.util.Scanner;
+
+public class Repeat014_3 {
+	public static void main(String[] args) {
+		// 변수
+		int num;
+		Scanner scanner = new Scanner(System.in);
+		// 입력 + 처리 + 출력
+		for (;;) {
+			System.out.print("숫자를 입력하세요.(7을 입력하면 종료)");
+			num = scanner.nextInt();
+			if (num == 7) {
+				System.out.println("종료합니다.");
+				break;
+			}
+			
+		}
+
+	}
+}
+---
+---
+package com.company.java006_ex;
+
+public class Repaet014_4 {
+	public static void main(String[] args) {
+		// for
+			System.out.println("for문 출력");
+		for (int i = 1; i <= 5; i++) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+		// while
+		System.out.println("while문 출력");
+		int j = 1;
+		while (j <= 5)
+		{
+			System.out.print(j + " ");
+			j++;
+		}
+		System.out.println();
+		// do while
+		System.out.println("do while문 출력");
+		int k = 1;
+		do{
+			System.out.print(k + " ");
+			k++;
+		}while (k <= 5);
+	}
+}
+---
+---
+package com.company.java006;
+
+public class Arr001 {
+	public static void main(String[]args) {
+		// 1.변수활용시
+		int a=1, b=2, c=3;
+		
+		//2. 배열?
+		// [같은 타입]의 데이터를 [연속 공간에 저장] 하는 자료구조
+		// 각 데이터의 저장위치 [인덱스]를 통해서 접근
+		// 1) int []arr 주소를 보관할준비됐어요~!  2) 공간은 있지만 값이 없어요! 
+		int []  arr	= null ;
+		System.out.println(arr);
+		
+		// [stack]	arr2(참조형변수) 주소보관  =	{heap} 1,2,3 연속된 공간에 저장
+		int 		[] arr2 	 =  {1,2,3};		
+		//      arr2(1000번지) 	 →	1000번지 ~ {1,2,3} 보관
+		//									  [0] [1] [2]
+		System.out.println(arr2);
+		System.out.println("1 꺼내쓰기>" + arr2[0]);
+		System.out.println("2 꺼내쓰기>" + arr2[1]);
+		System.out.println("3 꺼내쓰기>" + arr2[2]);
+
+		//3. 배열예시	: arr3 1 2 3 4 5
+		int [] arr3 = {1,2,3,4,5};	//0~4 System.out.println(arr3[2]);
+		
+		//3. 배열예시(2)	: arr4 100 200 300
+		int [] arr4 = {100, 200, 300}; System.out.println(arr4 [0]);
+		
+		//3. 배열예시(3)	: arr5 1.1 1.2 1.3
+		double[]  arr5 = {1.1, 1.2, 1.3,};	//0~2 System.out.println(arr5[2]);
+		
+		//3. 배열예시(4)	: arr6 'a', 'b', 'c'
+		char [] arr6= {'a', 'b', 'c'};
+		System.out.println(arr6[0]);
+		System.out.println(arr6[1]);
+		System.out.println(arr6[2]);
+
+		//4. 배열.length
+		System.out.println( "배열의 갯수>" + arr6.length   );  //배열의 갯수를 출력
+		//{반복}	{변수} for(시작;종료;변화)
+		for(int i=0; i<=2; i++) {System.out.println(arr6[i]);}
+		
+		for(int i=0; i<arr6.length; i++)	{System.out.println(arr6[i]);} //0, arr6.length
+
+		
+	}//end main
+}//end class
+---
+---
+package com.company.java006_ex;
+
+public class ArrayEx001 {
+	public static void main(String[]args) {
+		//변수
+		double[] arr = { 1.1, 1.2, 1.3, 1.4, 1.5 };
+		//입력
+		//처리
+		//출력
+		//{System.out.println(arr[0]);}
+		//{System.out.println(arr[1]);}
+		for(int i=0; i<arr.length; i++) {System.out.print((i==0? "":  ",")  + arr[i]);}
+
+	}
+}
+
+/*연습문제1)  array
+패키지명 : com.company.java006_ex
+클래스명 :  ArrayEx001
+    1. 배열명 : arr
+    2. 값 넣기 : 1.1  , 1.2  , 1.3  , 1.4  , 1.5
+    3. for + length 로 출력
+*/
+---
+---
+package com.company.java006_ex;
+
+public class ArrayEx002 {
+	public static void main(String[]args) {
+		
+		char [] arr = {'A', 'B', 'C', 'D'};
+		
+		for (int i=0; i<arr.length; i++){System.out.print(  (i==0? "":  ",")  +  arr[i]);}
+
+	}
+
+}
+/*연습문제2)  array
+패키지명 : com.company.java006_ex
+클래스명 :  ArrayEx002
+    1. 배열명 : arr
+    2. 값 넣기 : 'A' , 'B' , 'C' , 'D'
+    3. for + length 로 출력
+*/
+---
+---
+package com.company.java006_ex;
+
+public class ArrayEx003 {
+	public static void main(String[]args) {
+		
+		String [] arr = {"아이언맨", "헐크", "캡틴"};
+		
+		for(int i = 0; i< arr.length; i++) {System.out.print((i==0? "":  ",")  + arr[i]);}
+	}
+}
+/*연습문제3)  array
+패키지명 : com.company.java006_ex
+클래스명 :  ArrayEx003
+    1. 배열명 : arr
+    2. 값 넣기 : "아이언맨" , "헐크" , "캡틴"
+    3. for + length 로 출력
+*/
+---
+---
+package com.company.java006_ex;
+
+public class ArrayEx004 {
+	public static void main(String[]args) {
+		//변수
+		int cnt=0;
+
+		//입력
+		char [] ch = {'B', 'a', 'n', 'a', 'n', 'a'};
+		
+		//처리
+		//ver-1.만약 'B'가 'a'라면 카운트, 만약 'a'가 'a'라면 카운트
+		//ver-2.if (만약'B'가 'a'라면) {카운트}, if (만약'a'가 'a'라면) {카운트}
+		//ver-3.if (ch[0] == 'a') {cnt++;}, if (ch[1]=='a') {cnt++;}
+		for(int i=0; i<ch.length; i++){if (ch[i] == 'a') {cnt++;}}
+		//출력
+		System.out.println("ch 배열에서 갯수는>" + cnt);
+	}
+
+}
+/*연습문제4)  array
+패키지명 : com.company.java006_ex
+클래스명 :  ArrayEx004
+    1. 배열명 : ch
+    2. 값 넣기 : 'B' , 'a' , 'n' , 'a', 'n' , 'a'
+    3. ch 배열에서 a의 갯수 세기
+*/
+---
+---
+package com.company.java006_ex;
+
+public class ArrayEx005 {
+	public static void main(String[]args) {
+		//변수
+		int upper=0, lower=0;
+		//입력
+		char [] ch = {'B','a','n','a','n','a'};
+		//처리
+		//ver-1.만약 'B'가 대문자라면 대문자 카운트, 만약 소문자라면 소문자 카운트
+		//ver-2.if (만약'B'가 대문자라면) {대문자 카운트}, if (만약 소문자라면) {소문자 카운트}
+		//ver-3. if (ch[0] >= 'A' && ch<='Z') {upper++;}, 
+		//	else if (ch[1]>='a'&& ch<='z') {lower++;}
+		for(int i = 0; i<ch.length; i++)
+		{    if(ch[i]>='A' && ch[i]<='Z' ) {upper++;}
+		else if (ch[i] >='a' && ch[i]<='z') {lower++;} }
+		//출력
+		System.out.println("대문자>" + upper + "소문자>" + lower);
+
+	}
+
+}
+/*연습문제5)  array
+패키지명 : com.company.java006_ex
+클래스명 :  ArrayEx005
+    1. 배열명 : ch
+    2. 값 넣기 : 'B' , 'a' , 'n' , 'a', 'n' , 'a'
+    3. ch 배열에서 대문자의 갯수카운트, 소문자의 갯수 카운트
+*/
+---
+---
+package com.company.java006;
+
+import java.util.Arrays;
+
+public class Arr002 {
+	public static void main(String[]args) {
+		//1. new 
+		// 주소담을꺼야!	     1000번지 - 같은자료형 연달아서 저장
+		// arr(1000번지)	     [0][1][2]
+		  int [] arr    =    {1,2,3};
+		   
+		  int [] arr2   = new int[3]; //new 공간빌리기  int형태의 자료형 맞게
+		  System.out.println(arr2); //[1@Saaa6d82]
+		  System.out.println(Arrays.toString(arr2)); //[0, 0, 0]
+		  
+		  //arr2[0] = 10; arr2[1] = 20; arr2[2] = 30;	//for로 줄이기
+		  int data= 10;
+		  //arr2[0] = data; /*10*/ data +=10; /*data(20)*/
+		  //arr2[1] = data; /*20*/ data +=10; /*data(30)*/
+		  //arr2[2] = data; /*30*/ data +=10; /*data(40)*/
+		  for(int i =0; i<arr2.length; i++) {arr2[i] =data; data+=10;} // 데이터 넣고. 10증가
+
+		  for(int i =0; i<arr2.length; i++) {System.out.print(arr2[i] + "");}
+
+	}
+}
+
+---
+---
+package com.company.java007_ex;
+
+public class ArrayEx006 {
+	public static void main(String[]args) {
+		//변수
+		//int [] arr2   = new int[3];
+		double [] arr = new double[5];
+		//입력
+		// ver-1
+		//arr[0] = 1.1;
+		//arr[1] = 1.2;
+
+
+		// ver-2
+		 double data=1.1;
+		// arr[0] = data; data+=0.1; - 1.1 넣고 0.1증가;
+		 for(int i=0; i<arr.length; i++){arr[i] = data; data+=0.1;}
+		// arr[1] = data; data+=0.1; - 1.2 넣고 0.1증가;
+		//처리
+		//출력
+		for(int i=0; i<arr.length; i++) {System.out.printf(" %.1f " ,arr[i]);}
+	}
+}
+
+/*연습문제6)  array
+패키지명 : com.company.java007_ex
+클래스명 :  ArrayEx006
+    new 연산자 이용해서 배열만들기
+    1. 배열명 : arr     
+    2. 값 넣기 : 1.1  , 1.2  , 1.3  , 1.4  , 1.5    for+length 이용해보기
+    3. for + length 로 출력
+*/
+---
+---
+package com.company.java007_ex;
+
+public class ArrayEx007 {
+	public static void main(String[]args) {
+		//변수
+		//입력
+		// ver-1 
+		// arr[0] = 'A';
+		// arr[1] = 'B';
+		char [] arr = {'A', 'B', 'C', 'D', 'E'};
+	    // ver-2
+		 char data = 'A';
+		// arr[0] = data++;	- 'A'넣고 1증가
+		// arr[1] = data++; - 'B'넣고 1증가
+		for(int i=0; i<arr.length; i++){arr[i] = data++;}
+		//처리
+		//출력
+		for(int i=0; i<arr.length; i++){System.out.print(arr[i]);}
+	}
+}
+
+/*연습문제7)  array
+패키지명 : com.company.java007_ex
+클래스명 :  ArrayEx007
+    new 연산자 이용해서 배열만들기
+    1. 배열명 : arr     
+    2. 값 넣기 : A   B   C   D   E    for+length 이용해보기
+    3. for + length 로 출력
+*/
+---
+---
+package com.company.java007_ex;
+
+public class Array008 {
+	public static void main(String[]args) {
+		//변수 + 입력
+		String[] name = {"아이언맨", "헐크", "캡틴", "토르", "호크아이"};
+		int[] kor = {100, 20,90,70,35};
+		int[] eng = {100, 50,90,80,100};
+		int[] mat = {100, 30,90,60,100};
+		int[] aver = new int[5];
+		String[] pass = new String[5];
+		String[] jang = new String[5];
+		//처리
+		/////////처리1.
+	   // 1-1. (국어+영어+수학)/3
+	   // 1-2.  아이언맨의 평균 =  아이언맨의 국의 + 아이언맨의 영어 + 아이언맨의 수학 
+	   // 1-3.  aver[0] = kor[0] + eng[0] + mat[0]
+		for(int i=0; i<name.length; i++){
+			aver [i] = (kor[i] + eng[i] + mat[i]) /3;
+			pass [i] = aver[i] >= 60? "합격": "불합격";
+			jang [i] = aver[i] >=95? "----": "장학생";
+		}
+
+		//출력
+		System.out.println("   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\n " ,  "이름", "국어", "영어", "수학", "평균", "합격여부", "장학생");		
+		System.out.println("   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+
+		for(int i=0; i<name.length; i++)
+		{System.out.println(name[i] + "\t" + kor[i] + eng[i] + mat[i] + aver[i] + pass[i] + jang[i]);}
+	}
+}
+
+/*연습문제8)  array
+패키지명 : com.company.java007_ex
+클래스명 :  ArrayEx008
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+
+    String[] name={"아이언맨","헐크","캡틴","토르","호크아이"};
+    int[] kor={100,20,90,70,35};   
+    int[] eng={100,50,95,80,100};
+    int[] mat={100,30,90,60,100};
+    int[] aver=new int[5];
+
+     1. 평균구하시오.
+     2. 합격,불합격   -  평균이 60점이상이면 합격, 아니면 불합격으로 처리하시오.
+     3. 장학생   - 평균 95점이상이면 장학생으로 처리하시오. 
+      
+3.출력예시:     
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+   이름      국어   영어   수학   평균   합격여부   장학생   
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+   아이언맨   100   100   100   100      합격   장학생   
+   헐크      20   50   30   33   불합격   ----   
+   캡틴      90   95   90   91   합격   ----   
+   토르      70   80   60   70   합격   ----   
+   호크아이   35   100   100   78      합격   ----   
+   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+   ※ 힌트1)    
+    /////// 처리1 : 평균구하기  
+    1-1. (국어+영어+수학)/3
+   1-2.  아이언맨의 평균 =  아이언맨의 국의 + 아이언맨의 영어 + 아이언맨의 수학 
+   1-3.  aver[0] = kor[0] + eng[0] + mat[0]
+   
+   1-2.  헐크의 평균 =  아이언맨의 국의 + 아이언맨의 영어 + 아이언맨의 수학 
+   1-3.  aver[1] = kor[1] + eng[1] + mat[1]
+
+   /////// 처리2 : 합격,불합격 
+   2-1. 평균이 60점이상이면 합격    아니면 불합격
+   2-2. 어디다가 합격, 불합격을 담아놓을 것인가? ※ 필요한것 : 합격,불합격을 담을 배열     
+   2-3. 아이언맨의 평균이 60점 이상이라면 합격 / 아니면 불합격
+   2-4. if(aver[0] >=60){   합격 } else{불합격} 
+
+   /////// 처리3 : 장학생
+   3-1. 평균 95점이상 장학생
+   3-2. 어디다가 장학생을 담아놓을 것인가? ※ 필요한것 :  장학생 여부를 저장할 배열 
+   3-3. 아이언맨의 평균이 95점이상이면 장학생 / 아니라면 ----
+   3-4.  if(aver[0] >=95){ 장학생 } else{ ---- } 
+
+*/
+---
+---
 
 ---
