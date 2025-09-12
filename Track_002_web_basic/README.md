@@ -1127,8 +1127,1196 @@ h3{ border-left:10px;  background-color: #1d252e; margin-bottom: 1em; padding: 1
 </body>
 </html>
 ---
+# Webbasic
+---
+## 6 배치요소
 
+■1. Web  Basic  복습문제
+■1. Web  Basic  복습문제
+■1. Web  Basic  복습문제
+■1. Web  Basic  복습문제
+
+1. <>
+2. <h1> + validator
+3. css 많이쓰는 친구들~
+4. css 배치 (float , position , display)
+
+### 1. block vs inline
+1) box model  
+- 콘텐츠가 자리하는 영역을 의미하며, 박스의 구성 요소는 
+   content(내용)  ,  padding , border , margin 로 이루어진다.
+
+2) block 요소  
+- width/height 설정이 (O/X): O  
+- 앞뒤 줄바꿈이 (O/X): O  
+- 대표 태그: div , p , h3
+
+3) inline 요소  
+- width/height 설정이 (O/X): X  
+- 앞뒤 줄바꿈이 (O/X): X  
+- 대표 태그: a, strong , span
+
+
+### 2. 배치(1) - float
+- 요소를 좌우로 배치할 때 사용하는 속성은  float 이다.  
+- 다음 요소의 흐름을 정리하려면 clear속성을 사용한다.  
+- float를 끊는 대표적인 방법은 클래스명으로  .clear 를 사용한다.
+.clear{  clear:both ; }
+
+### 3. 배치(2) - position
+- 자식 요소를 부모 기준으로 위치시키려면 부모에  relative , 자식에 absolute를 설정한다.  
+- 브라우저 전체 기준으로 고정하려면 fixed 속성을 사용한다.  
+- position의 주요 값 4가지는  relative , absolute , fixed , static 이다.
+
+
+### 4. 배치(3) - display
+- 요소의 기본 속성을 바꾸려면 display 속성을 사용한다.  
+- block 요소를 inline처럼 보이게 하려면 inline,  
+  inline 요소를 block처럼 보이게 하려면 block 값을 사용한다.
+
+Q1. block요소를 inline으로,    width X , 줄바꿈 X
+ul.d1  li{ display:inline; }
+
+Q2. block요소를 inline-block으로,  width O , 줄바꿈 X
+ul.d2  li{ display:inline-block;  width:100px;}
+
+Q3. inline을 block 요소로,  링크영역확대
+a.github{  display:block;  width:100px; margin:auto; }
+
+Q4. 왼쪽, 오른쪽으로 배치시  (float) 사용해야하며 float끊을때는 (clear:both) 
+div.left{  width:20%;  float:left; }
+div.right{ width:20%;  float:right;}
+div.clear{ clear:both; }
+
+Q5. .space를 기준으로  .astronaut 오른쪽상단(10px 10px) 가  배치
+<div class="space">
+	<div class="astronaut"></div>
+</div>
+.space{  position:relative;  }
+.astronaut { position:absolute;  top:10px; right:10px; }
+
+Q6. 화면고정위치 브라우저에 고정( 오른쪽0 , 아래쪽:10%)
+.satellite{   position:fixed;  right:0; bottom:10%;}
+---
+---
+■ ■ ■  복습문제 DAY011 - ANSWER
+■ ■ ■  복습문제 DAY011 - ANSWER
+■ ■ ■  복습문제 DAY011 - ANSWER
 
 ---
+---
+## Webbasic
+
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>display:flex</title>
+    <style>
+        /*Q1. 모든 요소의 기본 여백 제거*/
+        *{margin:0; padding:0;}
+
+        /*Q2. h3 왼쪽 테두리 배경색, 패딩*/
+        h3{border-left:10px solid rgb(216, 134, 28); background-color:rgb(39, 180, 241); padding: 2%;}
+
+        /*Q3. .container 가로 80%, 페이지 중앙에 배치*/
+        .container{width:80%; margin:2% auto; background-color:#ccc; padding:2%; }
+
+        /*Q4. .item 배경, 글자색, 안쪽여백*/
+        .item{background-color: aquamarine; color:black; padding: 2%;}
+
+        /*Q5. .i1, .i2, .i3 좋아하는 배경색상*/
+        .i1{background-color: rgb(34, 218, 218);}
+        .i2{background-color:violet;}
+        .i3{background-color:antiquewhite;}
+
+        /*[c1] display:block    - 기본 html 흐름*/
+        .c1{display:block;}
+
+        /*[c2] display:flex - 자식 요소들을 가로로 정렬하고, 유연한 레이아웃*/
+        .c2{display:flex;}
+
+        /*[c3] flex 방향: row 생략해도 기본row  */ 
+        .c3{display:flex; flex-direction:row;}
+
+        /*[c4] flex 방향: column - 세로방향   */
+        .c4{display:flex; flex-direction:column-reverse;}
+
+        /*[c5] flex 방향: 네비게이션 - 오른쪽 정렬   */
+        .c5{display:flex;} /*네비게이션 메뉴 가로배치 - 줄바꿈 방지*/
+        .c5 .item{flex : none; } /*항목들 사이즈 크기를 한번에 설정 (none) */
+        .c5 .item.i2{margin-left: auto; } /* 마지막 항목을 오른쪽 끝으로 정렬*/
+
+        /*[c6] footer 아래방향   */
+        /*footer 배치, 방향은 세로방향, 전체박스 높이값 지정   */
+        .c6{display: flex;  flex-direction: column; height: 300px; }
+        .c6 .i1{margin-top: auto;}
+
+        /*[c7] 좌우정렬   */
+        /* 아이템들을 좌우 끝에 배치 - 가운데 여백은 자동생성 */
+        .c7{
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /*[c8] 가운데정렬    */
+        /* 감싸는 박스 flex.  */
+        .c8{
+            display: flex;
+            height: 100px;
+        }
+        /*아이템을 수직/수평 모두 가운데 정렬*/
+        .c8 .i1{
+            margin:auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <h3>001. display:flex / block 비교</h3>
+        <div class="container c1">
+            <div class="item i1">AAA</div>
+            <div class="item i2">BBB</div>
+            <div class="item i3">CCC</div>
+        </div>
+        <div class="container c2">
+            <div class="item i1">AAA</div>
+            <div class="item i2">BBB</div>
+            <div class="item i3">CCC</div>
+        </div>
+    </div><!--end 001-->
+
+    <div>
+        <h3>002. flex 방향설정</h3>
+        <div class="container c3">
+            <div class="item i1">AAA</div>
+            <div class="item i2">BBB</div>
+            <div class="item i3">CCC</div>
+        </div>
+        <div class="container c4">
+            <div class="item i1">AAA</div>
+            <div class="item i2">BBB</div>
+            <div class="item i3">CCC</div>
+        </div>
+    </div><!--end 002-->
+
+    <div>
+        <h3>003. 네비게이션</h3>
+        <div class="container c5">
+            <div class="item i1">HOME</div>
+            <div class="item i2">ABOUT</div>
+            <div class="item i3">CONTACT</div>
+        </div>
+    </div><!--end 003-->
+
+    <div>
+        <h3>004. footer 아래정렬</h3>
+        <div class="container c6">
+            <div class="item i1">Copyright 2025</div>
+        </div>
+    </div><!--end 004-->
+
+    <div>
+        <h3>005. 좌우정렬</h3>
+        <div class="container c7">
+            <div class="item i1">LEFT</div>
+            <div class="item i2">CENTER1</div>
+            <div class="item i2">CENTER2</div>
+            <div class="item i3">RIGHT</div>
+        </div>
+    </div><!--end 005-->
+
+    <div>
+        <h3>006. 가운데정렬</h3>
+        <div class="container c8">
+            <div class="item i1">CENTER CENTER CENTER</div>
+        </div>
+    </div><!--end 006-->
+
+</body>
+</html>
+<!--web005_5.html-->
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>피자 가게 레이아웃</title>
+  <style>
+    /* Q1: 모든 요소의 기본 여백(margin: 0, padding: 0)을 제거하려면? */
+    *{margin: 0; padding:0; box-sizing:border-box;}
+    /* Q2: 페이지 전체에 따뜻한 배경(#fff8f0)과 글꼴(Segoe UI)을 적용하려면? */
+    body{background-color:#fff8f0f3; font-family:'Segoe UI';}
+    /* Q3: 제목(h3)에 왼쪽 테두리(10px solid #ff6600), 배경색(#ffcc99), 패딩(1em)을 주려면? */
+    h3{border-left:10px solid #f46405; background-color:#ffcc99; padding:1em; }
+    /* Q4: 콘텐츠 박스를 중앙에 배치하고 배경색(#ffe5d9), 너비(80%), 여백(2em), 패딩(2em), 둥근 모서리(10px)를 주려면? */
+    .container{ background-color:#ffe5d9; 
+                width:80%; 
+                margin: 2em auto;
+                padding: 2em; 
+                border-radius: 10px;}
+    /* Q5: 메뉴 아이템에 배경색(#ff6f61), 글자색(white), 패딩(1em), 둥근 모서리(8px)를 주려면? */
+    .item{background-color:#ff6f61; color: white; padding:1em; border-radius:8px;}
+    /* Q6: 마르게리타 피자 색상(#ff6f61)을 지정하려면? */
+    .i1{background-color:#ff6f61;}
+    /* Q7: 페퍼로니 피자 색상(#ffb347)을 지정하려면? */
+    .i2{background-color: #ffb347;}
+    /* Q8: 하와이안 피자 색상(#c94c4c)을 지정하려면? */
+    .i3{background-color:#c94c4c;}
+
+    /* Q9: 메뉴를 좌우로 정렬하려면? (display: flex, justify-content: space-between) */
+    .c1{
+      display:flex;
+      justify-content: space-between;
+    }
+    /* Q10: 주문 버튼을 수직 가운데 정렬하려면? (display: flex, height: 100px) */
+    .c2{
+      display: flex;
+      height: 200px;
+    }
+    /* Q11: 주문 버튼을 수직/수평 모두 가운데 정렬하려면? (margin: auto) */
+    .c2 .i1{margin: auto; }
+    /* Q12: 푸터를 아래쪽에 고정하려면? (display: flex, flex-direction: column, height: 200px) */
+    .c3{
+      display: flex;
+      flex-direction: column;
+      height: 200px;
+    }
+    /* Q13: 푸터를 아래쪽으로 밀어내려면? (margin-top: auto) */
+    .c3 .i1{margin-top: auto; }
+
+  
+  </style>
+</head>
+<body>
+
+  <h3>🍕 001. 피자 메뉴판 (가로 정렬)</h3>
+  <div class="container c1">
+    <div class="item i1">마르게리타</div>
+    <div class="item i2">페퍼로니</div>
+    <div class="item i3">하와이안</div>
+  </div>
+
+  <h3>🛒 002. 주문 버튼 (가운데 정렬)</h3>
+  <div class="container c2">
+    <div class="item i1">주문하기</div>
+  </div>
+
+  <h3>📦 003. 푸터 (아래 고정)</h3>
+  <div class="container c3">
+    <div class="item i1">© 2025 Pizza Planet</div>
+  </div>
+
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 포트폴리오</title>
+    <style>
+/* Q1: 페이지 전체에 배경 그라디언트를 적용하고 기본 글꼴과 안쪽 여백을 주려면
+   - 배경: 135도 방향의 그라디언트 (#f0f9ff → #e0f7fa)
+   - 글꼴: Arial
+   - 안쪽 여백: 30px */
+ *{margin:0; padding:0; box-sizing: border-box;}
+ body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-image: linear-gradient(135deg,#f0f9ffe3, #e0f7fac1);
+    padding: 30px
+}
+
+/* Q2: 제목(h1)을 가운데 정렬하고 색상과 아래 여백을 주려면?
+   - 정렬: 가운데
+   - 글자 색상: #00796b (청록색 계열)
+   - 아래 여백: 40px */
+h1{
+    text-align: center; color: #04796b;
+    margin-bottom: 40px;
+    width:100%;
+}
+
+/* Q3: 콘텐츠 박스를 가운데 배치하고 너비를 50%로 설정하려면?
+   - 너비: 50%
+   - 좌우 자동 마진으로 가운데 정렬 
+  .container{width: 50%; margin:auto;}*/
+
+/* Q16: 콘텐츠 박스를 가운데 배치하고 너비를 80%로 설정하려면?
+   - 너비: 80%
+   - 좌우 자동 마진으로 가운데 정렬  
+   - display:flex를 이용해서 카드들을 가로로 나열하고 
+   - 가운데 정렬
+*/
+.container{
+    width:80%; 
+    margin: auto;
+    display:flex;   /*  자식요소들 가로방향나열해줘 */
+    justify-content: center; /*  space between 좌우 끝에 배치  */
+    flex-wrap:wrap; /*  넘치는 콘텐츠가 있다면 줄바꿈 허용(한줄에 안들어가면 다음줄로)  */
+    gap:20px;   /*  카드사이간격 20px;  */
+}
+
+
+/* Q4: 카드 박스를 가로로 배치하고 시각적 스타일을 주려면?
+   - float: left (가로 정렬)
+   - 너비: 250px
+   - 바깥 여백: 20px
+   - 안쪽 여백: 20px
+   - 배경색: 흰색 (#ffffff)
+   - 모서리 둥글게: 15px
+   - 그림자: 흐림 효과 (10px)
+   - 위치 기준점: relative
+   - 텍스트 가운데 정렬
+   - 애니메이션: 등장 시 아래에서 위로 이동 (translateY)
+   - 테두리: 투명 3px, 배경 클립 설정 */
+.card{
+    /*float: left;*/
+    width: 250px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffffe2;
+    border-radius:15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position:relative;
+    text-align: center;
+    transition:all 0.3s ease;
+    transform:translateY(20px);
+    border:3px solid transparent;
+    background-clip: padding-box;
+    opacity:0; /*## 화면에 안보이기 - 투명도*/
+    animation:fadeInup        0.8s            ease                 forwards; 
+    /*##     애니메이션이름    지속시간       처음과끝느리게      애니메이션끝나도마지막상태유지*/
+}
+
+
+/* Q5: 두 번째 카드에 애니메이션 지연을 주려면?
+   - 지연 시간: 0.3초
+   .card를 대상으로 nth-of-type
+   부모를 기준으로   nth-child */ 
+   .card:nth-of-type(1){
+    animation-delay: 0.3s;
+    }
+    .card:nth-of-type(2){
+    animation-delay: 0.6s;
+    }
+    .card:nth-of-type(3){
+    animation-delay: 0.9s;
+    }
+
+
+
+/* Q6: 카드에 마우스를 올렸을 때 효과를 주려면?
+   - 위로 이동: 5px
+   - 그림자 강조: 15px
+   - 테두리 색상 변경: #00796b */
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+    border:3px solid #059887;
+}
+
+
+/* Q7: 카드에 마우스를 올렸을 때 그라디언트 테두리를 나타내려면?
+   - 위치: 카드 바깥쪽 (-3px)
+   - 배경: 45도 방향의 그라디언트 (#00c9ff → #92fe9d)
+   - 둥근 테두리: 18px
+   - 투명도: hover 시 1로 변경 
+   css에서는 border에 그라디언트색상을 줄수 없음!
+   1) : before  가상요소 카드보다 살짝 크게 만들기
+   */
+    .card:before{
+        content:"" ;
+        position: absolute;
+        top: 3px; left: 3px; right: 3px; bottom: 3px;
+        background-image: linear-gradient(45deg, #00c8fff5, #92fe9df7);
+        border-radius:15px;
+        opacity: 0;
+        z-index:-1;
+        transition: opacity 0.5s ease;
+    }
+
+.card:hover::before{
+    opacity:1;
+}
+
+/* Q8: 카드 이미지에 크기와 스타일을 주려면?
+   - 너비: 120px
+   - 높이: 80px
+   - 둥근 모서리: 10px
+   - 이미지 비율 유지: object-fit: cover
+   - 테두리 색상: #00796b */
+.card img{
+    width:120px;
+    height:80px;
+    border-radius:10px;
+    object-fit: cover;
+    border:3px solid #058071;
+}
+
+/* Q9: 카드 제목(h2)에 글자 크기와 여백, 색상을 주려면?
+   - 글자 크기: 18px
+   - 여백: 위 15px, 아래 10px
+   - 색상: #333 (진회색) */
+h2{
+    font-size: 18px;
+    margin:15px 0 10px;
+    color:#333333e8;
+}
+
+/* Q10: 카드 설명(p)에 글자 크기와 색상, 아래 여백을 주려면?
+   - 글자 크기: 14px
+   - 색상: #555 (중간 회색)
+   - 아래 여백: 10px */
+p{
+    font-size: 14px;
+    color:#555555f5;
+    margin-bottom: 10px;
+}
+
+/* Q11: 카드 오른쪽 상단에 고정된 버튼을 만들고 스타일을 주려면?
+   - 위치: absolute (top:10px, right:10px)
+   - 배경색: #00796b
+   - 글자색: 흰색
+   - 패딩: 8px 12px
+   - 둥근 모서리: 12px
+   - 글자 크기: 13px */
+.card .more-btn{
+    position:absolute; 
+    top:10px;
+    right:10px;
+    background-color: #03796b;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size:13px;
+    text-decoration:none;
+    transition: background 0.3s ease ;
+}
+
+
+
+/* Q12: 버튼에 마우스를 올렸을 때 색상 변경과 흔들림 효과를 주려면?
+   - 배경색 변경: #004d40
+   - 애니메이션: shake (0.3초) */
+   .card .more-btn:hover{
+         background-color:#004d40;
+        animation: shake 0.3s ease-in-out;
+}
+
+/* Q13: 흔들림(shake) 애니메이션을 정의하려면?
+   - 좌우/상하로 2px씩 이동 반복 */
+@keyframes shake {
+     0%{ transform: translate(0,0);}
+    25%{ transform: translate(2px,2px);}
+    50%{ transform: translate(-2px,-2px);}
+    75%{ transform: translate(2px,2px);}
+   100%{ transform: translate(0,0);}
+
+}
+
+
+/* Q14: 카드가 아래에서 위로 부드럽게 등장하도록 애니메이션을 정의하려면?
+   - 시작: opacity 0, translateY(20px)
+   - 종료: opacity 1, translateY(0) */
+   @keyframes fadeInup {
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+   }
+
+/* Q15: float를 끊고 아래 설명 박스를 만들려면?
+   - clear: both
+   - 위 여백: 50px
+   - 안쪽 여백: 15px
+   - 배경색: #e0f2f1
+   - 둥근 모서리: 10px
+   - 텍스트 가운데 정렬, 글자색: #333 */
+   .clear{ 
+        /*clear:both; margin-top: 350px;*/ 
+        width:100%;
+        background-color: #e0f2f1;
+        border-radius:10px;
+        padding:15px;
+        text-align:center;
+        color:#333;
+}
+
+    /* Q1: 물방울 요소를 화면 아래에서 시작하도록 고정하려면?
+      - 위치: fixed
+      - 시작 위치: bottom -100px
+      - 크기: 20px × 20px
+      - 배경색: 청록색 반투명 (rgba)
+      - 모양: 원형
+      - 애니메이션: rise (8초, 반복, ease-in)
+      - z-index: 0 (다른 요소보다 뒤에 배치)
+    */
+    .bubble{
+        position:fixed;
+        bottom:-100px;
+        width:20px;
+        height:20px;
+        background-color: rgba(0, 121, 0.2);    /*청록색 반투명*/
+        border-radius: 50%;
+        animation: rise 8s infinite ease-in;
+        z-index:0;
+    }
+
+    /* Q2: 물방울이 위로 떠오르며 크기와 투명도가 변하도록 애니메이션을 정의하려면?
+      - 시작: 아래 위치, scale(1), opacity 0.5
+      - 중간: 위로 이동 -300px, scale(1.2), opacity 1
+      - 끝: 더 위로 -600px, scale(0.8), opacity 0
+    */ 
+        @keyframes rise{
+      0%{  transform:translateY(0)        scale(1);          opacity:0.5; }
+      50%{ transform:translateY(-300px)   scale(1.2);        opacity:1;   }
+      100%{transform:translateY(-600px)   scale(0.8);        opacity:0;   }
+    } 
+    /* Q3: 여러 개의 물방울을 화면에 흩뿌리듯 배치하려면?
+      - nth-of-type를 사용해 위치(left), 크기(width/height), 애니메이션 지연(animation-delay) 설정
+      - 각 물방울마다 다른 위치와 크기, 시작 시간 부여
+    */   
+    .bubble:nth-of-type(1) { left: 10%; animation-delay: 0s; }
+    .bubble:nth-of-type(2) { left: 25%; animation-delay: 2s; width: 15px; height: 15px; }
+    .bubble:nth-of-type(3) { left: 40%; animation-delay: 4s; width: 25px; height: 25px; }
+    .bubble:nth-of-type(4) { left: 60%; animation-delay: 1s; width: 18px; height: 18px; }
+    .bubble:nth-of-type(5) { left: 75%; animation-delay: 3s; width: 22px; height: 22px; }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <div class="container">
+            <h1>나의 포트폴리오</h1>
+            <div class="card">
+                <p><img src="./portfolioimg/portfolio1.jpg" alt="프로젝트1 썸네일"></p>
+                <h2> 쇼핑몰 웹앱</h2>
+                <p>React + Firebase 기반의 쇼핑몰 웹 애플리케이션</p>
+                <p>사용 기술: React, Firebase, Styled-components</p>
+                <a href="#" class="more-btn">더보기</a>
+        </div>   <!-- end div 1-->
+
+
+        <div class="card">
+            <p><img src="./portfolioimg/portfolio2.jpg" alt="프로젝트2 썸네일"></p>
+            <h2> AI 챗봇 서비스</h2>
+            <p>Python 기반의 자연어 처리 챗봇 시스템</p>
+            <p>사용 기술: Flask, TensorFlow, NLP</p>
+            <a href="#" class="more-btn">더보기</a>
+        </div>   <!-- end div 2-->
+
+        <div class="card">
+            <p><img src="./portfolioimg/portfolio3.jpg" alt="프로젝트3 썸네일"></p>
+            <h2> 자연어 AI 챗봇 서비스</h2>
+            <p>Python 기반의 자연어 처리 챗봇 시스템</p>
+            <p>사용 기술: Flask, TensorFlow, NLP</p>
+            <a href="#" class="more-btn">더보기</a>
+        </div>   <!-- end div 3-->
+
+        <div class="clear">이 포트폴리오는 실제 프로젝트를 기반으로 구성되었으며,
+                                각 프로젝트는 GitHub에서 확인할 수 있습니다.</div>
+    </div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+</body>  
+
+</html>
+---
+---
+>>>> CSS 
+CSS 다음 빈칸에 알맞은 코드를 채우시오.
+  <div class="container c1">
+    <div class="item i1">aaa</div>
+    <div class="item i2">bbbbb</div>
+    <div class="item i3">cc</div>
+  </div>
+
+
+/* [c1] 기본 html 흐름  display의 어떤속성이다  
+AAA
+BBB
+CCC
+*/
+.c1{ ①  }
+
+/* [c2] 자식요소들을 가로로 정렬하고, 유연한 레이아웃 사용하려고한다.   
+AAA  BBB   CCC
+*/
+.c2{ ②   }
+
+/* [c3] flex 방향 :기본  
+AAA  BBB   CCC
+*/
+.c3{  ③    ④    }
+
+/* [c4] flex 방향 : column - 거꾸로 세로방향  
+CCC
+BBB
+AAA     
+*/
+.c4{ ⑤   ⑥   }
+
+/* [c5] flex 방향 : 네비게이션 + 오른쪽정렬  
+HOME  ABOUT		CONTACT
+*/
+.c5{  ⑦   }  	   /* 5-1. 네이게이션메뉴 가로배치 - 줄바꿈 방지 */
+.c5 .item{ ⑧   }	    /* 5-2. 항목들 사이즈-크기를 한번에 설정 (none)  */
+.c5 .item.i3{ ⑨    }  /*  5-3.  마지막항목을 오른쪽 끝으로 정렬 */ 
+
+
+
+
+>>>> CSS  ANSWER
+CSS 다음 빈칸에 알맞은 코드를 채우시오.
+  <div class="container c1">
+    <div class="item i1">aaa</div>
+    <div class="item i2">bbbbb</div>
+    <div class="item i3">cc</div>
+  </div>
+
+
+/* [c1] 기본 html 흐름  display의 어떤속성이다  
+AAA
+BBB
+CCC
+*/
+.c1{ ① display: block; }
+
+/* [c2] 자식요소들을 가로로 정렬하고, 유연한 레이아웃 사용하려고한다.   
+AAA  BBB   CCC
+*/
+.c2{ ② display: flex; }
+
+/* [c3] flex 방향 :기본  
+AAA  BBB   CCC
+*/
+.c3{  ③ display: flex;  ④ flex-direction: row;  }
+
+/* [c4] flex 방향 : column - 거꾸로 세로방향  
+CCC
+BBB
+AAA     
+*/
+.c4{ ⑤ display: flex;  ⑥ flex-direction: column-reverse;  }
+
+/* [c5] flex 방향 : 네비게이션 + 오른쪽정렬  
+HOME  ABOUT		CONTACT
+*/
+.c5{  ⑦ display: flex; }  	   /* 5-1. 네이게이션메뉴 가로배치 - 줄바꿈 방지 */
+.c5 .item{ ⑧ flex : none;   }	    /* 5-2. 항목들 사이즈-크기를 한번에 설정 (none)  */
+.c5 .item.i3{ ⑨ margin-left:auto;  }  /*  5-3.  마지막항목을 오른쪽 끝으로 정렬 */ 
+
+ 
+---
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOTSTRAP</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="web006_1.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mycontainer">
+        <h3>외부CSS적용방법</h3>
+        <ol>
+            <li>  css파일만들기</li>
+            <li>  사용하는 파일에서 link</li>
+        </ol>
+    </div><!--end div1-->
+    <div class="container">
+        <h3>2. bootstrap?</h3>
+        <p class="alert alert-warning">
+            프론트엔드 프레임워크, HTML, CSS, JS 
+            다양한 디자인요소들을 미리 만들어 놓은 도구모음
+        </p>
+    </div><!--end div2-->
+</body>
+</html>
+<!--web006_1_bootstrap-->
+---
+---
+@charset "UTF-8";
+/*Q1. mycontainer 가로 사이즈 50% 페이지정중앙배치*/
+.mycontainer{width: 50%; margin: 2em auto;}
+/*Q2. mycontainer h3 왼쪽선, 패딩, 배경색*/
+.mycontainer h3{border-left:10px solid black; padding:1em; background-color: beige;}
+
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOTSTRAP-2</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="m-3" style="background-color:bisque">
+        <h3 class="container">1. container    vs  container-fluid</h3>
+        <div class="container       bg-warning p-3 text-white">container</div><!--end div-->
+        <div class="container-fluid bg-success p-3 text-white">container-fluid</div><!--end div-->
+    </div>
+    <!--bg-warning 배경색, text-white 글자색하얀색, pd-3 상하좌우패딩 m-3 상하좌우마진-->
+    <div class="m-3" style="background-color:bisque">
+        <h3> 2. row 아파트 층</h3>
+        <div class="container bg-warning"></div>
+        <div class="row bg-danger p-3">2층</div>
+        <div class="row bg-success p-3">1층</div>
+    </div>
+    <div class="m-3" style="background-color:bisque">
+        <h3> 3. col-sm-*(숫자:12 맞추기)</h3>
+        <div class="container bg-warning">
+            <!-- 2-10  -->
+            <div class="row bg-danger p-3 text-white">
+                <div class="col-sm-2 ">1</div>
+                <div class="col-sm-10 ">2</div>
+            </div>
+            <!-- 5-5-2  -->
+            <div class="row bg-danger p-3 text-white">
+                <div class="col-sm-5 ">1</div>
+                <div class="col-sm-5 ">2</div>
+                <div class="col-sm-2 ">3</div>
+            </div>
+            <!-- 3-3-3-3 -->
+            <div class="row bg-danger p-3 text-white">
+                <div class="col-sm-3 ">1</div>
+                <div class="col-sm-3 ">2</div>
+                <div class="col-sm-3 ">3</div>
+                <div class="col-sm-3 ">4</div>
+            </div>
+            <!-- 4-4-4 -->
+            <div class="row bg-danger p-3 text-white">
+                <div class="col-sm-4 ">1</div>
+                <div class="col-sm-4 ">2</div>
+                <div class="col-sm-4 ">3</div>
+            </div>
+            <div class="row bg-success p-3">
+                <div class="col-sm-4 bg-primary text-white p3">1층 1칸</div>
+                <div class="col-sm-4 bg-warning text-white p3">1층 2칸</div>
+                <div class="col-sm-4 bg-primary text-white p3">1층 3칸</div>
+            </div>
+        </div><!--end container-->
+    </div>
+</body>
+</html>
+<!--web006_2_bootstrap-->---
+---
+---
+부트스트랩 템플릿
+1. ctrl + shift + p
+2. Configure Snippets
+3. 템플릿
+{
+  "Bootstrap Template": {
+    "prefix": "myarea",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang=\"ko\">",
+      "<head>",
+      "  <meta charset=\"UTF-8\">",
+      "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "  <title>BOOTSTRAP</title>",
+      "  <!-- Latest compiled and minified CSS -->",
+      "  <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\">",
+      "",
+      "  <!-- Latest compiled JavaScript -->",
+      "  <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\"></script>",
+      "</head>",
+      "<body>",
+      "  <!-- 여기에 콘텐츠를 추가하세요 -->",
+      "</body>",
+      "</html>"
+    ],
+    "description": "부트스트랩 5.3.3 기반 HTML 템플릿"
+  }
+}
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOTSTRAP</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <!-- 여기에 콘텐츠를 추가하세요 -->
+   <!--         중앙     패딩-3 곡선-->
+   <div class="container p-3 rounded border border-success">
+        <h3>1. CSS</h3>
+        <p class="alert alert-warning"> 사용방법 : btn(컴포넌트) btn-primary(색상) </p>
+        <p>primary(파랑), success(초록), info(하늘색), warning(노랑), danger(빨강 / )</p>
+        <div>
+            <button type="button" class="btn">Basic</button>
+            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="button" class="btn btn-secondary">Secondary</button>
+            <button type="button" class="btn btn-success">Success</button>
+            <button type="button" class="btn btn-info">Info</button>
+            <button type="button" class="btn btn-warning">Warning</button>
+            <button type="button" class="btn btn-danger">Danger</button>
+            <button type="button" class="btn btn-dark">Dark</button>
+            <button type="button" class="btn btn-light">Light</button>
+            <button type="button" class="btn btn-link">Link</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary">Primary</button>
+            <button type="button" class="btn btn-outline-secondary">Secondary</button>
+            <button type="button" class="btn btn-outline-success">Success</button>
+            <button type="button" class="btn btn-outline-info">Info</button>
+            <button type="button" class="btn btn-outline-warning">Warning</button>
+            <button type="button" class="btn btn-outline-danger">Danger</button>
+            <button type="button" class="btn btn-outline-dark">Dark</button>
+            <button type="button" class="btn btn-outline-light text-dark">Light</button>    
+        </div>
+        <div class="container mt-3 border border-success">
+            <h3>2. navbar</h3>
+            <p class="alert alert-warning "> Q. navbar색상바꾸기</p>
+            <nav  av class="navbar navbar-expand-sm navbar-dark bg-success">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Search">
+                    <button class="btn btn-primary" type="button">Search</button>
+                </form>
+                </div>
+            </div>
+            </nav>
+        </div>
+   </div>
+   <div>
+        <div class="container mt-3 border border-success">
+        <h3>3. table</h3>
+    <table class="table table-striped table-bordered table-hover table-success">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john@example.com</td>
+        </tr>
+        <tr>
+            <td>Mary</td>
+            <td>Moe</td>
+            <td>mary@example.com</td>
+        </tr>
+        <tr>
+            <td>July</td>
+            <td>Dooley</td>
+            <td>july@example.com</td>
+        </tr>
+        </tbody>
+    </table>
+   </div>
+
+    <div>
+        <div class="container mt-3 border border-success">
+        <h3>4. 많이 사용하는CSS</h3>
+        <dl>
+            <dt>1. 레이아웃</dt> <dt>.container (아파트) .row(층) .col-sm-*(12칸)</dt>
+            <dt>2. margin/padding(1~5)</dt>
+            <dt> m-3(top, right, bottom, left) , mt-3(top) ,
+                 mb-3(bottom) , ms-3(start) , me-3(end) , my-3(상하) , mx-3(좌우)  </dt>
+            <dt> p-3(top, right, bottom, left), p-3 , pt-3(top) ,
+                 pb-3(bottom) , ps-3(start) , pe-3(end) , py-3(상하) , px-3(좌우)  </dt>
+            <dt>3. 배경/글자</dt>
+            <dd> bg-primary, bg-info, bg-success, bg-warning, bg-danger</dd>
+            <dd class="bg-success text-warning py-3 px-3 rounded"> 
+                text-primary, text-info, text-success, text-warning, text-danger</dd>
+        </dl>
+   </div>
+
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨한승현 포트폴리오✨</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    div#demo{height:300px; overflow:hidden;}
+  </style>
+</head>
+<body>
+    <!--header-->
+    <header class="header">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-success">
+        <div class="container-fluid">
+            <a class="navbar-brand me-auto" href="javascript:void(0)">한승현</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav d-flex ms-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">포트폴리오</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">About me</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Gallery</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Contact</a>
+                </li>
+
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="text" placeholder="Search">
+                <button class="btn btn-primary" type="button">Search</button>
+            </form>
+
+            </div>
+        </div>
+        </nav>  
+    </header>
+
+
+    <!--visual-->
+    <section class="visual">
+                <!-- Carousel -->
+        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+            <img src="./portfolioimg/My1.png" alt="code" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+            <img src="./portfolioimg/My2.jpg" alt="coding" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+            <img src="./portfolioimg/My3.jpg" alt="U" class="d-block w-100">
+            </div>
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+        </div>
+    </section>
+
+    <!--info-->
+    <section class="info">
+       <div class="container">
+         <h3>About me</h3>
+            <div class="row">
+                <div class="col-sm-4"> <!-- w-25 w-50 w-75 w-100 -->
+                    <p><img src="./img/2.png" class="w-50" alt=""></p>
+                    <h4>한승현</h4>
+                    <ul>
+                        <li>h48097435@gmail.com</li>
+                        <li><a href="https://github.com/HSH703/fullstack.-d._seunghyun.git">
+                            깃허브 포트폴리오</a></li>
+                    </ul>
+                </div><!--col-sm-4 -->
+                <div class="col-sm-4">
+                    <h4> Computer Engineering</h4>
+                    <ul>
+                        <li>MSA기반 플러터(Dart)활용 자바(JAVA)프론트엔드 
+                            백엔드 풀스택 웹(앱)개발(25.08.25 ~ 26.02.27)</li>
+                    </ul>
+                    <h4>KeyWord</h4>
+                    <ul class="d-flex">
+                        <li><input type="button" value="열정" class="btn btn-danger"></li>
+                        <li><input type="button" value="성실" class="btn btn-warning"></li>
+                        <li><input type="button" value="끈기" class="btn btn-info"></li>
+
+                    </ul>
+                </div><!--col-sm-4 -->
+                <div class="col-sm-4">3
+                        <div class="container my-3">
+                            <h2>Striped Progress Bars</h2>
+                            <p>The .progress-bar-striped class adds stripes to the progress bars:</p> 
+                            <h4>SKILLS</h4>
+                            <div class="progress my-3">
+                                <div class="progress-bar progress-bar-striped" style="width:80%">JAVA 80%</div>
+                            </div>
+                            <div class="progress my-3">
+                                <div class="progress-bar bg-success progress-bar-striped" style="width:90%">SPRING 90%</div>
+                            </div>
+                            <div class="progress my-3">
+                                <div class="progress-bar bg-info progress-bar-striped" style="width:90%">ORACLE</div>
+                            </div>
+                            <div class="progress my-3">
+                                <div class="progress-bar bg-warning progress-bar-striped" style="width:85%">REACT 85%</div>
+                            </div>
+                            <div class="progress my-3">
+                                <div class="progress-bar bg-danger progress-bar-striped" style="width:85%">AWS 85%</div>
+                            </div>
+                        </div>
+                </div><!--col-sm-4 -->
+           </div> <!-- div row-->
+       </div><!--container-->
+    </section>
+
+
+    <!--portfolio-->
+    <section class="portfolio"></section>
+
+
+    <!--contact-->
+    <section class="contact"></section>
+
+
+    <!--footer-->
+    <footer class="footer"></footer>
+
+
+</body>
+</html>
+---
+# ■ WebBasic
+## 6 배치요소
+
+■1. Web  Basic  복습문제
+■1. Web  Basic  복습문제
+■1. Web  Basic  복습문제
+■1. Web  Basic  복습문제
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+CSS 다음 빈칸에 알맞은 코드를 채우시오.
+  <h3>📦 003. 푸터 (아래 고정)</h3>
+  <div class="container c3">
+    <div class="item i1">© 2025 Pizza Planet</div>
+  </div>
+
+/* Q1: 푸터를 아래쪽에 고정하려면?  */
+/* Q2: 푸터를 아래쪽으로 밀어내려면?   */
+    .c3{  ① display:flex;    ②  flex-direction:column;   ③  height:300px;   }
+    .c3 .i1{  ④ margin-top:auto;  }    
+
+ 
+
+>1. 부트스트랩 템플릿
+1.  ctrl + shift + p
+2.  Configure Snippets - html
+3.  템플릿
+
+```
+{
+  "Bootstrap Template": {
+    "prefix": "my",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang=\"ko\">",
+      "<head>",
+      "  <meta charset=\"UTF-8\">",
+      "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "  <title>BOOTSTRAP</title>",
+      "  <!-- Latest compiled and minified CSS -->",
+      "  <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\">",
+      "",
+      "  <!-- Latest compiled JavaScript -->",
+      "  <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\"></script>",
+      "</head>",
+      "<body>",
+      "  <!-- 여기에 콘텐츠를 추가하세요 -->",
+      "</body>",
+      "</html>"
+    ],
+    "description": "부트스트랩 5.3.3 기반 HTML 템플릿"
+  }
+}
+
+```
+
+
+> 2. 부트스트랩 사용법
+1. CSS
+사용방법 : btn(컴포넌트) btn-primary(색상)
+
+2. 많이 사용하는 CSS정리
+1. 레이아웃
+.container (아파트) > .row (층) > .col-sm-* (12칸)
+
+2. margin/padding (1~5)
+m-3(top, right, bottom, left) , mt-3(top) , mb-3(bottom) , ms-3(start), me-3(end) ,my-3(상하), mx-3(좌우)
+p-3(top, right, bottom, left) , pt-3(top) , pb-3(bottom) , ps-3(start), pe-3(end) ,py-3(상하),px-3(좌우)
+
+3. 배경/글자
+bg-primary, bg-info, bg-success, bg-warning, bg-danger
+
+4. 가로
+w-25   w-50  w-75  w-100
+
+
+
+> 3. 자기소개페이지만들기
+
+---
+---
+## Track002 - html + css + js/jquery (WEB BASIC) (20250915~20250919)
 
 ---

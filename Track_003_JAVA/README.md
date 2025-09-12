@@ -3929,5 +3929,303 @@ public class Array008 {
 */
 ---
 ---
+package com.company.java007_ex;
+
+import java.util.Scanner;
+
+public class Repeat015_1 {
+	public static void main(String[]args) {
+		//변수
+		char ch;
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("문자를 입력하세요.>");
+		ch=scanner.next().charAt(0);
+		//처리
+		     if(ch=='m') {System.out.println("mango");}
+		else if(ch=='n') {System.out.println("noodle");}
+		else if(ch=='o') {System.out.println("orange");}
+		else {System.out.println("m,n,o가 아닙니다.");}
+
+		//출력
+	}
+}
+
+---
+---
+package com.company.java007_ex;
+
+import java.util.Scanner;
+
+public class Repeat015_2 {
+	public static void main(String[]args) {
+		//변수
+		int num;
+		Scanner scanner = new Scanner(System.in);
+		//입력
+		System.out.println("숫자를 입력하세요.>");
+		num=scanner.nextInt();
+		//처리
+		switch (num) {
+		case 1: {System.out.println("mango");} break;
+		case 2: {System.out.println("noodle");} break;
+		case 3: {System.out.println("orange");} break;
+		default : {System.out.println("숫자가 아닙니다.");}
+		break;
+		}
+		
+		//출력
+	}
+}
+
+---
+---
+package com.company.java007_ex;
+
+public class Repeat015_3 { 
+	public static void main(String[]args) {
+		//for
+		System.out.println("for 문으로 출력");
+		for (int i=5; i>=1; i--){System.out.print(i + " ");}
+		System.out.println();
+		//while
+		System.out.println("while 문으로 출력");
+		int j=5; 
+		while(j>=1){
+			System.out.print(j + " "); 
+			j--;
+			}
+		
+		System.out.println();
+		//do while
+		System.out.println("do while 문으로 출력");
+		int k=5;
+		do {
+			System.out.print(k + " ");
+			k--;
+			} while(k>=1);
+		
+		System.out.println();
+
+		
+	}
+
+}
+
+---
+---
+package com.company.java007_ex;
+
+public class Repeat015_4 {
+	public static void main(String[]args) {
+		int [] nums = new int[3];
+		int data =10;
+		
+		//값 넣기
+		for(int i=0; i<nums.length; i++)
+		{nums[i]=data; data+=10;}
+		
+		//값 출력
+		for(int i=0; i<nums.length; i++)
+		{System.out.println(nums[i] + "");}
+		
+		
+		
+	}
+
+}
+---
+package com.company.java005_ex_MiniProject_Bank; 
+import java.util.Scanner;
+
+public class Bank001_Control {
+   public static void main(String[] args) {
+      //변수
+      int num = -1; String id = "", pass="";  double balance=0;
+      Scanner scanner = new Scanner(System.in);
+      
+      //입력+처리+ 출력
+       for(;;){  
+          //■기능 1. 메뉴판
+          System.out.print("\n\n== BANK ==" + 
+             "\n1. 추가" + "\n2. 조회" + "\n3. 입금" + "\n4. 출금" + "\n5. 삭제 > "     
+          );  
+          num= scanner.nextInt();
+          //■기능 2. 
+               if(num==9){ System.out.println("종료합니다.");  break;   }
+          else if(num==1){ 
+             System.out.print("ID   입력 > "); id=scanner.next();
+             System.out.print("PASS 입력 > "); pass=scanner.next();
+             System.out.print("금액  입력 > "); balance=scanner.nextDouble();    
+          }else if(num==2 || num==3|| num==4|| num==5){ 
+             //   ■1. 사용자 인증
+             System.out.print("ID   입력 > "); String tempId=scanner.next();
+             System.out.print("PASS 입력 > "); String tempPass=scanner.next();
+             if( !(id.equals(tempId)  && pass.equals(tempPass) )) {
+                System.out.println("아이디와 비밀번호를 확인해주세요!");
+                continue; // 아래꺼 진행하지마!
+             }
+            //2. 2,3,4,5 각각에 해당하는 처리
+             switch(num){
+                case 2 : 
+                   System.out.println("\nID >"+id + "\nPASS > "+ pass + "\n잔액 > "+ balance); 
+                break;
+                case 3 : 
+                   System.out.print("입금할 금액 > ");  double input = scanner.nextDouble();
+                   balance +=input;  
+                   System.out.println("입금을 완료했습니다.");
+                break;
+                case 4 : 
+                   System.out.print("출금할 금액 > ");  double output = scanner.nextDouble();
+                   if(output>balance) { System.out.println("잔액이 모자랍니다.");  continue; }
+                   balance -=output;  
+                   System.out.println("출금을 완료했습니다."); 
+                break;
+                case 5 : 
+                   System.out.println("삭제하시겠습니까?"); String answer = scanner.next();  
+                   if(!answer.toLowerCase().equals("y")) {
+                      System.out.println("삭제를 취소했습니다."); continue;
+                   }
+                   id=pass=""; balance=0;
+                   System.out.println("삭제를 완료했습니다.");
+                break;
+             }
+         } // end else if
+           
+      }// end for 
+   }// end main
+}//end class
+
+/*
+ for(;;){ 무한반복
+    ■기능 1. 메뉴판
+    ■기능 2. 
+         if(9){ 빠져나오기   }
+    else if(1){ 사용자에게 추가}
+    else if(2,3,4,5){ 
+       ■1. 사용자 인증
+        2. 2,3,4,5 각각에 해당하는 처리
+          switch(){
+             case 2 : 정보출력 break;
+             case 3 : 입금 break;
+             case 4 : 출금 break;
+             case 5 : 삭제 break;
+          }
+    } // end else if
+ }// end for
+ 
+ */
+
+
+
+
+
+
+/*  하루에 하나씩 힌트나가요~~~!
+   천천히 정리하면서 익히면서 도전이요~~!  이번주~ 다음해서 숙제~!
+
+Step1. 무한반복으로 만드는 메뉴만들기   
+   for(;;){ //1-1 무한반복
+      //1-2 빠져나올조건 9
+      //1-3 입력받은번호가   if   or  switch
+      1을 입력하면 추가기능입니다. 출력구문까지만
+      2를 입력하면 조회기능입니다. 출력구문까지만
+      3을 입력하면 입금기능입니다. 출력구문까지만
+      4를 입력하면 출금기능입니다. 출력구문까지만
+      5를 입력하면 삭제기능입니다. 출력구문까지만
+      9를 입력하면 종료합니다.    출력구문까지만
+   }
+   
+   ■ 힌트
+   for(;;) { 
+      System.out.println("숫자1을 입력하세요.");
+      int a = scanner.nextInt();
+      if(a == 1) { break;}
+   }
+   
+Step 2 추가
+               //아이디입력  > _입력받기
+               //비밀번호입력 > _입력받기
+               //잔액입력    > _입력받기         
+Step 3 조회
+               System.out.println("2.조회기능입니다."); 
+               //변수
+               String tempid, temppass;
+               //입력  2-1. 사용자에게 임시아이디와 임시비밀번호 입력받기
+               System.out.print("아이디입력  >");      tempid=scanner.next();
+               System.out.print("비밀번호입력  >");   temppass=scanner.next();
+               //처리+출력
+               //     2-2. if( 아이디와 임시아이디가 같아야하고 비번과 임시비밀번호가 같다면 ){ 사용자정보출력 }
+               //          else {다르면 정보를 확인해주세요.}
+*/
+---
+---
+package com.company.java005_ex_MiniProject_Bank;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Bank002_Array {
+	public static void main(String[] args) {
+		// 변수 0 1 2
+		String[] id = new String[3]; // one two three
+		String[] pass = new String[3]; // 1111 2222 3333
+		double[] balance = new double[3];// 1100 2200 3300
+		int num = -1;
+		Scanner scanner = new Scanner(System.in);
+
+		// + 입력+ 처리 + 출력
+		while (num != 9) { // 9가 아니라면 계속 무한반복
+			System.out.println(Arrays.toString(id));
+			System.out.println(Arrays.toString(pass));
+			System.out.println(Arrays.toString(balance));
+			// ■ 기능 1. 메뉴판
+			System.out.println("\n\n WELCOME BANK SYSTEM\n" + "\n[1] 계좌추가" + "\n[2] 계좌조회" + "\n[3] 입금하기"
+					+ "\n[4] 출금하기" + "\n[5] 계좌삭제" + "\n\n번호를 선택하세요:");
+			num=scanner.nextInt();
+			     if(num==1) {//1-1. 빈칸인지 확인 후 
+			    	 //ver-1 if(0번이 빈칸이라면){find는 0} if(1번이 빈칸이라면){find는 1}
+			    	 //ver-2 if(0번이 빈칸이라면){find는 0} if(1번이 null){find는 1}
+		    	 	 //ver-3 if(id[0] == null){  find=0; } if( id[1] ==null ){ find-1;}
+			    	 //ver-4 찾았으면 나오기 추가 - 백만개의 자료있다고하면 ~! 시간 오래걸림.
+			    	 int find=-1;
+			    	 for(int i=0; i<id.length; i++) {if(id[1] ==null) {find=1; break;}}
+	 			 //1-2/ 유저 계정에 입력받기}
+		    	 System.out.print("[1]아이디   입력>");   id[find] = scanner.next();
+		    	 System.out.print("[2]비밀번호  입력>");   pass[find] = scanner.next();
+		    	 System.out.print("[3]금액    입력>");   balance[find] = scanner.nextDouble();
+			     }
+			else if(num==2||num==3||num==4||num==5){
+						/*  >>> 2-1. 인증정보,*/ 
+						//변수 
+						int find =-1; String tempId="", tempPass="";
+						//1. 사용자에게 아이디 입력받기	 + 2. 사용자에게 비밀번호 입력받기
+						System.out.println("[1]아이디   입력> ");  tempId = scanner.next();
+						System.out.println("[2]비밀번호   입력> "); tempPass = scanner.next();
+						
+						//처리
+						//3. ver-0 int find =1;   없는 번호   /문자열 비교는 equals 
+						//3. ver-1 사용자에게 입력받은아이디와 id[0]번이 같고 사용자에게입력받은 비밀번호와 pass[0]번이면 사용자번호는 0
+						//3. ver-1 사용자에게 입력받은아이디와 id[1]번이 같고 사용자에게입력받은 비밀번호와 pass[1]번이면 사용자번호는 1
+  						//3. ver-2 if(사용자에게 입력받은아이디와 id[2]번이 같고 사용자에게입력받은 비밀번호와 pass[2]번이면) {사용자번호는 2}
+  						if(사용자에게 입력받은아이디와 id[2]번이 같고 사용자에게입력받은 비밀번호와 pass[2]번이면) {사용자번호는 2}
+						//출력
+						//4. 만약 find==-1이라면 유저정보 못찾음!
+						if(find ==1) {System.out.println("아이디와 비밀번호를 입력해주세요!"); continue;}
+						
+						 /* 2-2. 각각의 처리*/
+				}
+			     
+			else{  System.out.println("메뉴를 확인하세요.");}
+
+		}
+		
+
+	}// end main
+}// end class
+
+---
+---
+## Track003 - JAVA (20250915 ~ 20250919)
 
 ---
