@@ -100,9 +100,9 @@
  ## 트러블슈팅 주소
  |이름|주소|
  |-|-|
- |Github 트러블슈팅|https://github.com/HSH703/fullstack.-d._seunghyun/blob/master/Track_001_Github/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85.md|
+ |Github   트러블슈팅|https://github.com/HSH703/fullstack.-d._seunghyun/blob/master/Track_001_Github/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85.md|
  |Webbasic 트러블슈팅|https://github.com/HSH703/fullstack.-d._seunghyun/blob/master/Track_002_web_basic/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85.md|
- |JAVA 트러블슈팅|https://github.com/HSH703/fullstack.-d._seunghyun/blob/master/Track_003_JAVA/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85.md|
+ |JAVA   트러블슈팅|https://github.com/HSH703/fullstack.-d._seunghyun/blob/master/Track_003_JAVA/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85.md|
 ### 트러블슈팅 (1)
 ```bash
 TJ-BU-703-P03@DESKTOP-5CVIKGS MINGW64 /c/KIMYOUNGMIN/workspace (master)
