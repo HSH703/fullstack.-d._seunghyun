@@ -4227,5 +4227,582 @@ public class Bank002_Array {
 ---
 ---
 ## Track003 - JAVA (20250915 ~ 20250919)
+package com.company.java007_ex;
 
+public class ArrayPractice {
+	public static void main(String[]args) {
+		char data='a';
+		char [] chars = new char[3];
+		
+		for (int i=0; i<chars.length; i++){chars[i]=data++;}
+		
+		for (int i=0; i<chars.length; i++){System.out.println(chars[i]);}
+		
+	}
+}
+---
+---
+package corm.comapny.java007;
+
+import java.util.Arrays;
+
+public class Arr2_001 {
+	public static void main(String[]args) {
+		int [] [] arr = {	{1,2,3}, //00 01 02 
+							{4,5,6}	//10 11 12
+						}; 
+		System.out.println(arr); //[[I@5aaa6d82
+		System.out.println( Arrays.toString(arr)); //[[I@73a28541, [I@6f75e721]
+		System.out.println( Arrays.deepToString(arr));//[[1, 2, 3], [4, 5, 6]]
+		
+		//ver-1 눈에 보이는 대로
+		System.out.println("ver-1");
+		System.out.print(arr[0][0] +'\t');	System.out.print(arr[0][1] +'\t'); 	System.out.print(arr[0][2] +'\t');
+		System.out.println();
+		System.out.print(arr[1][0] +'\t');	System.out.print(arr[1][1] +'\t'); 	System.out.print(arr[1][2] +'\t');
+		System.out.println(); 
+
+		//ver-2 칸정리 {반복} {변수} for(시작ㅣ 종료; 변화) 
+		System.out.println("ver-2");
+		for (int kan=0; kan<=2; kan++){System.out.print(arr[0][kan] +'\t');}
+		System.out.println();
+		for (int kan=0; kan<=2; kan++){System.out.print(arr[1][kan] +'\t');}
+		System.out.println();
+
+		//ver-3 총정리
+		System.out.println("ver-3");
+		for(int ch=0; ch<=1; ch++) {
+		for (int kan=0; kan<=2; kan++){System.out.print(arr[0][kan] +'\t');}
+		System.out.println();
+		}
+		
+		System.out.println("ver-4");
+		//배열명(아파트) , length층	/ 배열명[0] [층].length 칸
+		for(int ch=0; ch<arr.length; ch++) { //아파트.층수
+				//층의 칸수
+		for (int kan=0; kan<arr[ch].length; kan++){System.out.print(arr[ch][kan] +'\t');}
+		System.out.println();
+
+		}
+
+
+		
+	} //end main
+} //end class
+---
+---
+package com.company.java007_ex;
+
+import java.util.Arrays;
+
+public class Array2Ex001 {
+	public static void main(String[]args) {
+		//변수 + 입력
+		int [] [] arr2= { {100,200,300,}, //00 01 02
+						  {400,500,600}	  //10 11 12
+		};
+		
+		System.out.println(arr2);
+		System.out.println(Arrays.toString(arr2));
+		System.out.println(Arrays.deepToString(arr2));
+		
+		//처리 + 출력
+		System.out.println("ver-1");
+		System.out.print(arr2 [0][0] + "\t"); System.out.print(arr2 [0][1] + "\t");	System.out.print(arr2 [0][2] + "\t");
+		System.out.println();
+		System.out.print(arr2 [1][0] + "\t"); System.out.print(arr2 [1][1] + "\t");	System.out.print(arr2 [1][2] + "\t");
+		System.out.println();
+		
+		System.out.println();
+		
+		System.out.println("ver-2");
+		for (int kan=0; kan<=2; kan++){System.out.print(arr2[0] [kan] + "\t");}
+		System.out.println();
+		for (int kan=0; kan<=2; kan++){System.out.print(arr2[1] [kan] + "\t");}
+		System.out.println();
+		
+		System.out.println("ver-3");
+		for(int ch=0; ch<=1; ch++) {		
+			for (int kan=0; kan<=2; kan++){System.out.print(arr2[ch] [kan] + "\t");}
+			System.out.println();
+		}
+		
+		System.out.println("ver-4 .length");
+      	for(int ch=0; ch<arr2.length; ch++) { //아파트의 층	
+			for (int kan=0; kan<arr2[ch].length; kan++) //층의 칸수
+			{System.out.print(arr2[ch] [kan] + "\t");}
+			System.out.println();
+		}
+
+		
+		
+	}
+
+}
+/*연습문제1)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex001
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+  
+   int[][] arr2={{100,200,300},{400,500,600}};
+
+   이중for 이용해서 출력하기
+*/
+---
+---
+package com.company.java007_ex;
+
+import java.util.Arrays;
+
+public class Array2Ex002 {
+	public static void main(String[]args) {
+		
+		int[][] arr2= {
+					  {101,102,103}, //00 01 02
+					  {201,202,203}  //10 11 12
+					  };
+		
+		
+		System.out.println(arr2);
+		System.out.println(Arrays.toString(arr2));
+		System.out.println(Arrays.deepToString(arr2));
+		
+		System.out.println("ver-1");
+		System.out.print(arr2[0][0] + "\t"); System.out.print(arr2[0][1] + "\t"); System.out.print(arr2[0][2] + "\t");
+		System.out.println();
+		System.out.print(arr2[1][0] + "\t"); System.out.print(arr2[1][1] + "\t"); System.out.print(arr2[1][2] + "\t");
+		System.out.println();
+
+		System.out.println();
+		
+		System.out.println("ver-2");
+		for(int kan=0; kan<=2; kan++){System.out.print(arr2[0][kan] + "\t");}
+		System.out.println();
+		for(int kan=0; kan<=2; kan++){System.out.print(arr2[1][kan] + "\t");}
+		System.out.println();
+		
+		System.out.println();
+		
+		System.out.println("ver-3");
+		for(int ch=0; ch<=1; ch++) {	//아파트의 층수   아파트 length
+			for(int kan=0; kan<=2; kan++){System.out.print(arr2[ch][kan] + "\t");} //층의 칸수 층의 칸 .length
+			
+			System.out.println();
+				}
+		System.out.println();
+
+		System.out.println("ver-4");
+		for(int ch=0; ch<arr2.length; ch++) {	
+			for(int kan=0; kan<arr2[ch].length; kan++){System.out.print(arr2[ch][kan] + "\t");}
+			System.out.println();
+				}
+
+
+		
+	}
+}
+
+/*연습문제2)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex002
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+  
+   int[][] arr2={{101,102,103},{201,202,203}};
+
+   이중for 이용해서 출력하기
+*/
+---
+---
+package corm.comapny.java007;
+
+public class Arr2_002 {
+	public static void main(String[] args) {
+		int[][] arr = new int[2][3]; // 2층 3칸
+										// 00 01 02
+										// 10 11 12
+										// 20 21 22
+		// ver-1 arr[0][0] = 1; arr[0][1] = 2; arr[0][2] = 3;
+		// ver-2
+		// int data=1;
+		// arr[0][0] = data++; arr[0][1] = data++; arr[0][2] = data++;
+		// arr[1][0] = data++; arr[1][1] = data++; arr[1][2] = data++;
+		// ver-3
+		// int data=1;
+		// for(int ch=0; ch<arr.length; ch++){arr[0][kan] = data++;} //아파트.층(몇층이니?)
+		// for(int kan=0; kan<arr[ch].length; kan++) {arr[1][kan] = data++;}
+		// ver-4
+
+		int data = 1;
+		for (int ch = 0; ch < arr.length; ch++) {
+			for (int kan = 0; kan < arr[ch].length; kan++) {
+				arr[ch][kan] = data++;
+			}
+		}
+
+		for (int ch = 0; ch <= arr.length; ch++) { // 아파트 .층(몇층이니?)
+			for (int kan =0; kan<arr[ch].length; kan++) { // 층은 몇칸이니?
+				System.out.print(arr[ch][kan] + "\t");
+			}
+			System.out.println();
+		}
+
+	}// end main
+}// end class
+---
+---
+package com.company.java007_ex;
+
+public class Array2Ex003 {
+	public static void main(String[]args) {
+		//변수 + 대입
+		int [][] arr = new int[2] [3]; // 00 01 02
+								       // 10 11 12
+				
+		//System.out.println("ver-1");
+		//arr [0][0] = 101; arr[0][1] = 102; arr[0][2] = 103;
+		
+		//System.out.println("ver-2");
+		//int data=1;
+		//arr[0][0] = data++; arr[0][1] = data++; arr[0][2] = data++;
+		//arr[1][0] = data++; arr[1][1] = data++; arr[1][2] = data++;
+		
+		//		System.out.println("ver-3");
+		//		int data=1;
+		//		for(int kan = 0; kan<arr[0].length; kan++) {arr[0][kan] = data++;}
+		//		for(int kan = 0; kan<arr[1].length; kan++) {arr[1][kan] = data++;}
+
+		System.out.println("ver-4");
+		int data=101;
+		for( int ch=0; ch<arr.length; ch++) {
+			for( int kan=0; kan<arr[ch].length; kan++) {arr[ch][kan] = data++;}
+		}
+		
+		for(int ch =0; ch<arr.length; ch++ ) {
+			for(int kan =0; kan<arr[ch].length; kan++){
+				System.out.print(arr[ch][kan] + "\t");
+			}
+			System.out.println();
+		}
+		
+		
+		
+	}
+}
+
+/*연습문제3)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex003
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+1. new 연산자 이용하여 다차원배열만들기
+2. for + length 이용해서 대입   
+3. for + length 이용해서 출력 
+   101       102       103
+   104    105    106
+*/
+---
+---
+package com.company.java007_ex;
+
+public class Array2Ex004 {
+	public static void main(String[]args) {
+		//변수
+		char arr[] [] =new char[2] [3]; //00 01 02
+									    //10 11 12
+		
+		
+		//		System.out.println("ver-1");
+		//		arr[0][0] = 'A'; arr[0][1] = 'B'; arr[0][2] = 'C'; 
+		
+		//		System.out.println("ver-2");
+		//		char data='A';
+		//		for(int ch=0; ch<arr.length; ch++) {
+		//			for(int kan =0; kan<arr[ch].length; kan++) 
+		//			{arr[0][kan]= data++;
+		//			}
+		//		}
+
+		//		System.out.println("ver-3");
+		//		char data = 'A'; 
+		//		for(int ch=0; ch<arr.length; ch++) {
+		//			for(int kan =0; kan<arr[ch].length; kan++)
+		//			{arr[ch][kan] = data++;
+		//			}
+		//
+		//		}
+		
+		//System.out.println("ver-4");
+		//입력
+		char data ='A';
+		for(int ch=0; ch<arr.length; ch++) {
+			for(int kan=0; kan<arr[ch].length; kan++) {arr[ch][kan] = data++;}
+			data='B'; //한 층이 끝나면 해야할 일
+		}
+		
+		//출력
+		for(int ch =0; ch<arr.length; ch++ ) {
+			for(int kan=0; kan<arr[ch].length; kan++) {
+				System.out.print(arr[ch][kan] + "\t");
+			}
+			System.out.println(); //한 층이 끝나면 해야할 일
+		}
+
+		
+		
+	}
+
+}
+/*연습문제4)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex004
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+1. new 연산자 이용하여 다차원배열만들기
+2. for + length 이용해서 대입   
+3. for + length 이용해서 출력 
+   A   B   C
+   B   C   D
+*/
+---
+---
+package com.company.java007_ex;
+
+public class Array2Ex005 {
+	public static void main(String[]args) {
+		//변수 + 입력
+		int [][] arr = {
+				{1,1,1},
+				{2,2,2},
+				{3,3,3}, 
+				{4,4,4}
+		};
+		
+		int total=0; double avg=0;
+		
+		
+		//처리-1 (총점구하기)
+		//total += arr[0][0];
+		//total += arr[0][1];	데이터 누적
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[j].length; j++) { 
+				System.out.print(total+=arr[i][j]);
+						}
+			System.out.println();
+		}
+		
+		//처리-2 12 = 층*칸 = arr.length * arr[0].length
+		 avg = (double)total/(arr.length * arr[0].length);
+		 
+		//출력
+		 System.out.println("총점> " + total);
+		 System.out.println("평균> " + avg);
+		
+		
+		
+		
+	}//end main
+}//end class
+
+/*연습문제5)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex005
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+1. 다음의 주어진조건을 이용하여 총점과 평균을 구하시오.
+
+ int[][] arr = {
+   { 1, 1, 1,},
+   { 2, 2, 2,},
+   { 3, 3, 3,},
+   { 4, 4, 4,},
+ };
+ int total=0;  double avg=0.0;
+ 출력내용:
+총점 : 30
+평균 : 2.5
+*/
+---
+---
+package com.company.java007_ex;
+
+public class Array2Ex006 {
+	public static void main(String[] args) {
+		int[][] arr = new int[5][5];
+		int data = 1;
+		
+		for (int ch = 0; ch < arr.length; ch++) {
+			for (int kan = 0; kan < arr[ch].length; kan++) {
+				arr[ch][kan] = data++;
+			}
+
+		}
+
+		for (int ch = 0; ch < arr.length; ch++) {
+			for (int kan = 0; kan < arr[ch].length; kan++) {
+				System.out.print(arr[ch][kan] + "\t");
+			}
+			System.out.println();
+		}
+
+	}
+
+}
+/*
+ * 연습문제6) array 패키지명 : com.company.java007_ex 클래스명 : Array2Ex006 > 2차원배열 1. new
+ * 로 만들고 5*5 2. 데이터 넣기 for+length 3. 데이터 출력 for+length
+ * 
+ * 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+ */
+---
+---
+package com.company.java007_ex;
+
+public class Array2Ex007 {
+	public static void main(String[]args) {
+		int [][] arr = new int [4][4];
+		
+		int data=1;
+		for(int ch=0; ch<arr.length; ch++) {
+			for(int kan=0; kan<arr[ch].length;kan++ ) {arr[ch][kan] = data++;}
+			data=1;
+		}
+		
+		
+		for(int ch=0; ch<arr.length; ch++) {
+			for(int kan=0; kan<arr[ch].length; kan++) {
+				System.out.print(arr[ch][kan] + "\t");
+				}
+		System.out.println();
+		}
+	}
+}
+/*연습문제7)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex007
+> 2차원배열   4*4
+1.  new 로 만들고 
+2.  데이터 넣기  for+length
+3.  데이터 출력  for+length
+1   2   3   4
+1   2   3   4
+1   2   3   4
+1   2   3   4
+*/
+---
+---
+package com.company.java007_ex;
+
+public class Array2Ex008 {
+	public static void main(String[]args) {
+		//변수
+		int[][] datas = { {  10, 10, 10 ,10},    //00 01 02 03 04 # → 04+=00 04+=01...
+						  {  20, 20, 20 ,20},    //10 11 12 13 14 # → 14+=10 14+=11...
+						  {  30, 30, 30 ,30},    //20 21 22 23 24 # → 24+=20 24+=21...
+				};  //3줄 4칸				     //30 31 32 33 34 
+											     //#↓ 30 += 00 30+=00....
+	int[][] result = new int[datas.length+1][datas[0].length+1];
+	//입력 result[0][0] = datas[0][0] 
+	//	  새로운 result 아파트 = 기준 datas 아파트
+	for(int ch=0; ch<datas.length; ch++) {
+		for(int kan =0; kan<datas[ch].length; kan++) {//아파트의 칸수
+			result[ch] [kan] = datas[ch][kan];
+		}
+	}
+
+	//처리(1) 가로방향		10 10 10 10 0	//00 01 02 03 04
+	//ver-1
+	//	result[0][4] += result[0][0];
+	//	result[0][4] += result[0][1];
+	//	result[0][4] += result[0][2];
+	//	result[0][4] += result[0][3];
+	
+	//	result[1][4] += result[1][0];
+	//	result[1][4] += result[1][1];
+	//	result[1][4] += result[1][2];
+	//	result[1][4] += result[1][3];
+	//	
+	//	result[2][4] += result[2][0];
+	//	result[2][4] += result[2][1];
+	//	result[2][4] += result[2][2];
+	//	result[3][4] += result[2][3];
+
+	//ver-2
+	//for (int kan=0; kan<result[0].length; -1 kan ++ ){result[0][4] += result[0]kan;  }
+	//for (int kan=0; kan<result[0].length; -1 kan ++ ){result[0][4] += result[0]kan;  }
+	//for (int kan=0; kan<result[0].length; -1 kan ++ ){result[0][4] += result[0]kan;  }
+
+	//ver-3
+	for(int ch = 0; ch < result.length; ch++) {
+		for(int kan = 0; kan<result[ch].length; kan++) {result [ch][4] += result[ch][kan];}
+	}
+	
+	//처리 (2) 세로방향
+	//ver-1
+	//result [3][0] += result[0][0];result [3][0] += result[1][0]; result [3][0] += result[2][0];
+	//result [3][1] += result[0][1];result [3][1] += result[1][1]; result [3][1] += result[2][1];
+	//result [3][2] += result[0][2];result [3][2] += result[1][2]; result [3][2] += result[2][2];
+	//result [3][2] += result[0][3];result [3][3] += result[1][3]; result [3][3] += result[2][3];
+	//ver-2
+	//for(int ch=0; ch<result.length-1; ch++) { result[3][0] += result[ch][0];   }
+	//for(int ch=0; ch<result.length-1; ch++) { result[3][1] += result[ch][0];   }
+	//for(int ch=0; ch<result.length-1; ch++) { result[3][2] += result[ch][0];   }
+	//for(int ch=0; ch<result.length-1; ch++) { result[3][3] += result[ch][0];   }
+	//ver-3
+	//for(int kan=0; kan<result[0].length; kan++) {
+	//	for(int ch=0; ch<result.length; ch++ ) {  result[3][kan] += result[ch][0];}}
+	//ver-4
+	/*for(int ch=0; ch<result.length; ch++) {
+		for(int kan=0; kan<result[ch].length; kan++) {
+			result[3][kan] += result[ch][0]
+		}
+	}
+	//처리 (3) 전체데이터
+	for (int ch =0; ch<result.length - 1; ch++) {
+		for(int kan=0; kan<result[ch].length - 1; kan++) {
+			result[3][4] += result[ch][kan];
+		}
+	}*/
+	
+	for (int ch =0; ch<result.length - 1; ch++) {
+		for(int kan=0; kan<result[ch].length - 1; kan++) {
+			result[ch][4] += result[ch][kan];	//4칸
+			result[3][kan] += result[ch][0];	//3층
+			result[3][4] += result[ch][kan];	//3층 4칸
+
+		}
+	}
+
+	//출력
+	for(int ch=0; ch<result.length; ch++) {// 아파트의 층
+		for(int kan=0; kan<result[ch].length; kan++ ) {//아파트의 칸수
+			System.out.print(result [ch][kan] + "\t");
+		}
+		System.out.println();
+	}
+	
+	
+	
+	}
+}
+
+/*연습문제8)  array
+패키지명 : com.company.java007_ex
+클래스명 :  Array2Ex008
+배열을 이용하여 다음의 프로그램을 작성하시오.   
+1. 다음의 주어진조건을 이용하여 총점과 평균을 구하시오.
+
+int[][] datas = {  {  10, 10, 10 ,10}, 
+            {  20, 20, 20 ,20}, 
+            {  30, 30, 30 ,30},  
+};  // 3층 4칸 
+int[][] result = new int[datas.length+1][datas[0].length+1];
+
+#1. result 에 datas데이터 복사하기
+#2. 가로방향누적데이터
+#3. 세로방향데이터누적
+#4. 총합
+
+출력내용:
+10   10   10   10   40   
+20   20   20   20   80   
+30   30   30   30   120   
+60   60   60   60   240   
+*/
 ---
