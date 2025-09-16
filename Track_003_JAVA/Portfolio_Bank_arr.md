@@ -1,0 +1,1 @@
+[20250916_Portfolio_ 영상](https://www.youtube.com/channel/UCQnqcdHVa0Ta0AcC26ll1Og)
