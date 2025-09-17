@@ -620,5 +620,32 @@ https://nbcamp.spartacodingclub.kr/blog/%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%8F%AC%ED
 
 ---
 ## Track001 -  github (20250915~20250919)
+## Track001 -  github
+
+> 1. (~18:00) 깃허브정리 day016.md ~ day018.md
+> 2. BANK 상담정리
+1) Java Control      -  내용바꾸기
+2) Java Array(3명)   -  내용바꾸기  ( 동영상, youtube, 깃허브정리  : readme)
+3) 자기소개페이지 -  (금)  css - transform / animation  
+                     +  js - 아이디어 추가해서 자바스크립트기능  
+
+1. 팀장뽑기 (아~ 이팀장이면 믿을만하다~~! )
+2. 팀장이  2,3,4,5차까지 만들 포트폴리오 주제 안내
+3. 팀원들은 가고 싶은팀 익명으로 투표
+4. 팀장은 팀원뽑기 (익명)
+5. 다시 고르기
+
+
+
+# ■ Github   
+### 12. 깃허브 협업 
+---
+1조 : 유희재, 한승현, 김정민, 강서현
+2조 : 성태훈, 길상현, 박현주 
+3조 : 최상욱, 김영민, 신준용
+3i1e         : https://github.com/kyoungsjjj0211/portfolio.git
+드래곤치킨     : https://github.com/taehun00/dragonchicken.git
+트리플윈      : https://github.com/suda77881/triple1
+
 
 ---
