@@ -2543,5 +2543,512 @@ w-25   w-50  w-75  w-100
 
 ---
 ---
+# ■ WebBasic
+## 7. JavaScript
+
+1. 출력
+	document.write("문자열")
+	console.log("문자열")
+
+2. 변수
+	var 전역변수
+	let 지역변수
+	const 상수
+
+3. 자료형
+	자료형 확인 - typeof()
+
+4. 이벤트 
+	onclick  - 클릭시
+	onmouseenter - 마우스를 위에 올렸을때
+	onmouseleave - 마우스를 뗐을때
+
+    window.addEventListener("load" , function(){   });
+
+5. 선택자
+   document.getElementById("아이디명")
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOTSTRAP</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <!--                                      --> 
+  <!--                                      --> 
+  <!-- 배경 원하는 색, 글자색 white, 안쪽여백 -3 -->
+   <div  class="bg-info text-white p-3">
+    <h1>001. 출력</h1>
+    <ul>
+        <li>document.write("문자열")</li>
+        <li>console.log("문자열")</li>
+    </ul>
+   </div><!--end div-->
+   <div class="container card my-3">
+    <h3 class="card-header">출력</h3>
+    <div class="card-body">
+        <script>
+            document.write("<p> Hello Js!</p>");
+            console.log("안녕 javascript"); 
+            //브라우저 개발자모드(F12) console탭
+        </script>
+    </div>
+   </div><!--end 실습 -->
+
+  <!--                                      --> 
+  <!--                                      --> 
+  <!-- 배경 원하는 색, 글자색 white, 안쪽여백 -3 -->
+   <div  class="bg-info text-white p-3">
+    <h1>002. 변수: var, let, const</h1>
+    <ul>
+        <li>var 전역변수("문자열")</li>
+        <li>let 지역변수("문자열")</li>
+        <li>const 상수  ("문자열")</li>
+    </ul>
+   </div><!--end div-->
+   <div class="container card my-3">
+    <h2 class="card-header">step1 : var 사용법</h2>
+     <div class="card-body">
+        <script>
+            //1. 전역변수 - 다시 선언시 덮어씀.
+            var global; //선언 - 자바스크립트 엔진변수명알려주기
+            console.log(global); //undefined
+            global=123; //사용
+            document.write(global);
+        </script>
+     </div>
+    <h2 class="card-header">step2 : var, let, const</h2>
+    <div class="card-body">
+        <script>
+        //1. var    
+            var global1=10; console.log(global1);
+            var global1=20; console.log(global1);
+        //2. let - 변수 중복선언 불가
+            let local=10; console.log(local1);
+            //Let Local=20; console.log(global);
+                local1=20; console.log(local1);
+        //3. const - 상수
+            const const1=30;  
+                  const1=40;  console.log(const1);
+             // Uncaught ReferenceError: global1 is not defined     
+             //  at web007_1_js.html:61:40
+        </script>
+    </div>
+   </div>
+
+
+  <!--                                      --> 
+  <!--                                      --> 
+  <!-- 배경 원하는 색, 글자색 white, 안쪽여백 -3 -->
+   <div  class="bg-info text-white p-3">
+    <h1>003. 자료형, 자료형확인 (typeof)</h1>
+    <ul>
+        <li>자료형</li>
+        <li>자료형확인(typeof)</li>
+    </ul>
+   </div><!--end div-->
+   <div class="container card my-3">
+    <h2 class="card-header">자료형실습</h2>
+    <div class="card-body">
+        <script>
+            let data1;               console.log(data1);
+                data1=10;            console.log(data1);
+                data1=3.14;          console.log(data1);
+                data1-true;          console.log(data1);
+                data1="abc";         console.log(data1);
+                data1=["sally",7];   console.log(data1);
+                data1={};            console.log(data1);
+                data1=function(){};  console.log(data1); //f(){}
+                                     console.log(typeof(data1));
+                data1=10; 
+                console.log(data1 + "10"); //10="10" 원하는 결과물이 20    
+                console.log(typeof(data1), '/' , typeof("10")); //10="10" 원하는 결과물이 20     
+                //          number                string
+                console.log(data1 + Number("10"));             
+        </script>
+    </div>
+   </div>
+
+
+
+
+</body>
+</html>
+<!--web007_1_js.html-->
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<div class="p-3 bg-primary text-white ">
+  <h1>004. EVENT</h1>
+  <ol>
+    <li>알림창</li>
+    <li>EVENT 구조</li>
+    <li>EVENT mouseenter/mouseleave</li>
+  </ol>
+</div>
+<div class="container card  my-3">
+  <h2  class="card-header">004. EVENT- Step1. 알림창</h2>
+  <div class="card-body">
+    <h4>Step1. 알림창</h4>
+      <script>
+      /*
+        //리턴값 메서드명(파라미터)
+        //alert(), prompt("질문"), confirm("yes , no")
+        let name = prompt("당신의 이름은?" , "예) 홍길동" )
+        console.log(name);
+        alert("당신의 이름은" + name + "입니다.");
+
+        let answer = confirm("정말 취소하시겠습니끼?");
+        console.log(   typeof(answer)   );
+        */
+      </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+      <script>
+
+        //1. 나이를 입력받으세요  (prompt
+        //2. 나이를 알림창으로 출력해주세요 (alert) 
+        //////////////////////////////
+      /*  let age = prompt("당신의 나이는?");
+        console.log();
+        alert("당신의 나이는" + age + "입니다.");
+      */
+      </script>
+  </div>
+
+</div>
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-3">
+  <h2  class="card-header">004. EVENT- Step2. EVENT</h2>
+  <div class="card-body">
+    <h4>Step2. EVENT</h4>
+    <!-- 이벤트대상 : button 이벤트 : onclick 이벤트핸들러: alert('haha')   -->
+    <input type="button" value="EVENT1"   
+    title="버튼을 클릭하세요.(test)"  onclick="alert('haha');"
+     class="btn btn-outline-primary"      />
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre class="alert alert-warning">
+    1. DOG - 멍멍 버튼을 클릭하면 멍멍 알림창
+    2. CAT - 야옹 버튼을 클릭하면 야옹 알림창
+    3. FIVE-COUNT - 멍멍 버튼을 클릭하면 alert가 5번 나오게 5 4 3 2 1 알림창
+
+    </pre>
+    <input type="button"  value="DOG-멍멍"
+           title="버튼1"   class="btn btn-success"
+           onclick = "alert('멍멍');"/>
+    <input type="button"  value="CAT-야옹" 
+           title="버튼2"   class="btn btn-success" 
+           onclick = "alert('야옹')"/>
+    <input type="button"  value="FIVE-COUNT"  
+           title="버튼3"   class="btn btn-success" 
+           onclick = "alert('5'); alert('4'); alert('3'); alert('2'); alert('1');" /> 
+           <!--on click = "alert( on click은 두번 사용안됨.);""-->
+  </div>
+ </div>
+  <!--     -->
+  <!--     -->
+  <!--     -->
+  <div class="container card  my-3">
+    <h2  class="card-header">004. EVENT- Step2. EVENT mouseenter/mouseleave</h2>
+    <div class="card-body">
+      <h4>Step3. EVENT - mouseenter/mouseleave</h4>
+      <div id="box"   
+           onmouseenter="this.style.backgroundColor='#fff3cd' "   
+           onmouseleave="this.style.backgroundColor='#cff4fc' " 
+           class="alert alert-success">
+        <strong>Success!</strong> Java script:)
+      </div>
+      <script>
+      </script>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+      window.addEventListener("load", function(){
+        document.getElementById("addEvent").onclick = function(){
+             alert(5); alert(4); alert(3); alert(2); alert(1);
+       };
+      });
+</script>
+</head>
+<body>
+
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<div class="mt-5  p-3 bg-primary text-white ">
+  <h1>005.선택자 </h1>
+  <ol>
+    <li>document.getElementById</li>
+    <li>window.addEventListener</li>
+    <li>document.getElementById / getElementsByTagName / querySelector</li>
+    <li>value, innerHTML </li>
+  </ol>
+</div>
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 - STEP1. document.getElementById</h2>
+  <div class="card-body">
+    <h4 id="step1">STEP1. document.getElementById</h4>
+    <input type="button" value="ById" 
+           id="byid" title="버튼을 클릭하세요.(js)" 
+           class="btn btn-outline-primary"      />
+    <script>
+      //            이벤트대상              이벤트     =      이벤트핸들러
+      document.getElementById("byid").onclick = function(){
+        alert("hoho");
+      };
+      // step1을 클릭하면 본인이름 알림창띄우기
+      document.getElementById("step1").style.cursor = "pointer";
+      document.getElementById("step1").onclick = function (){
+        alert("홍길동");
+      }
+    </script>
+
+
+
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre class="alert alert-warning">
+    1. 아이디가 byidex 인것을 getElementById 이용해 선택
+    2. 클릭시 prompt이용해서 당신이 좋아하는 색상 물어보고
+    3. alert 이용해서 알림창띄우기 
+    </pre>
+    <input type="button"  value="ByIdEx-당신이좋아하는색상"  title="버튼4"  id="byidex"   class="btn btn-success" />
+    <script>
+      document.getElementById("byidex").onclick = function(){
+        let color = prompt("당신이 좋아하는 색상은?");
+        alert ("당신이 좋아하는 색상은" + color + "입니다.");
+      };
+    </script>
+  </div>
+</div>
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 - STEP2. window.addEventListener</h2>
+  <div class="card-body">
+    <h4>STEP2. window.addEventListener</h4>
+    <pre class="alert alert-warning">
+    1. 아이디가 addEvent 인것을  getElementById 이용해 선택
+    2. 클릭시 5,4,3,2,1 alert창 다섯번띄우기
+    </pre> 
+    <input type="button"  value="addEventListener"  title="버튼4"  id="addEvent"    class="btn btn-outline-primary"    />
+    <script>
+      /*document.getElementById("addEvent").onclick = function(){
+      alert(5); alert(4); alert(3); alert(2); alert(1);
+      };*/
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre class="alert alert-warning">
+    0. 스크립트가 document 어느위치에서든지 동작가능하게
+    1. 아이디가 addEventEx인것을  getElementById 이용해 선택
+    2. 클릭시 prompt이용해서 당신이 좋아하는 1~5사이의 숫자 물어보고
+    3. alert이용해서 알림창띄우기 
+    </pre>    
+    <input type="button"  value="addEventEx-Five Count"  title="버튼5"  id="addEventEx"  class="btn btn-success" />
+    <script>
+      window.addEventListener("load", function(){
+        let target= document.getElementById("addEventEx")
+        target.onclick = function(){
+          let like = prompt("좋아하는 숫자는 1~5");
+          alert("당신이 좋아하는 숫자는" + like + "입니다."); 
+          target.style.backgroundColor="#000";
+          target.style.color="#fff";
+       };
+      });
+    </script>    
+  </div>
+</div>
+
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 - Step3. document.getElementById / getElementsByTagName / querySelector  </h2>
+  <div class="card-body">
+    <h4>STEP3. document.getElementById / getElementsByTagName / querySelector</h4> .
+    <ul id="animal">
+      <li>DOG</li>
+      <li id="cat">CAT</li>
+      <li id="pig">PIG</li>
+    </ul>
+    <script>
+      //1. step1 #animal 선택하기 
+ 
+      //2. 그 안에 동물들(li) 찾기
+ 
+
+      //3. 꾸미기 
+    </script>
+    <script>
+     //4. 만능 querySelector 
+
+      //5. 만능 모든요소가져오기 querySelectorAll
+ 
+    </script>
+
+
+    <ul id="color">
+      <li>RED</li>
+      <li id="orange">ORANGE</li>
+      <li id="gold">GOLD</li>
+    </ul>
+    <script>
+      // 6. querySelector
+ 
+      //7. parentElement
+ 
+      //8. 제일가까운 상위부모 
+
+      //9. 형제요소 
+      
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX </h4>
+    <ul id="fruits">
+      <li>apple</li>
+      <li id="banana">banana</li>
+      <li id="coconut">coconut</li>
+    </ul>
+    <script>
+      //Q1) document.getElementsByTagName 이용해서  모든 input 에 배경색 black, 글자색 white , 여백 10px주기
+      //Q2) document.getElementsById 이용해서 test2 선택 배경색 #ccc
+      //Q3) document.querySelector 이용해서 test3 선택 test3를 클릭하면 width:200px; 로 수정
+
+      
+    </script>
+  </div>
+</div>
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-3">
+  <h2  class="card-header">005.선택자 - STEP4. value, innerHTML </h2>
+  <div class="card-body">
+    <h4>STEP4. value, innerHTML </h4>
+    <div class="row">
+      <div class="col"><input type="text"    id="value_target"  class="form-control"
+                         placeholder="input에서는 value"  readonly/></div>
+      <div class="col"><input type="button"  value="value"  title="value_target"  id="value"  class="btn btn-outline-primary" /></div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col"> <div class="inner_target  alert alert-success"></div>  </div>
+      <div class="col"><input type="button"  value="value"  title="value_target"  id="inner"   class="btn btn-outline-primary" /></div>
+    </div>
+
+    <script>
+ 
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <input type="button"  value="click"         id="test1"    class="btn btn-success"   />
+    <input type="button"  value="value"         id="test2"    class="btn btn-success"   />
+    <input type="button"  value="innerHtml"     id="test3"    class="btn btn-success"   />
+    <input type="button"  value="MOUSEOVER-OUT" id="test4"    class="btn btn-success"   />
+    <div class="result_target  my-5">JAVASCRIPT</div>
+
+    <pre>
+    브라우저가 로딩이 되면
+    Q1) #test1를 클릭하면 본인이름 입력받고 입력받은 값 알림창 띄우기
+    Q2) #test2를 클릭하면 #test2의 value값을 INPUT으로 수정
+    Q3) #test3를 클릭하면
+    1.  .result_target영역안의 문자열을 알림창으로 띄우고
+    2.  .result_target영역안을 본인이름으로 수정
+    Q4) #test4를 마우스를 올리면(mouseover)  #test7의 배경색을 crimson으로
+                    마우스를 떼면(mouseout)     #test7의 배경색을 black으로
+
+     https://www.w3schools.com/js/js_events.asp
+    </pre>
+    <script>
+      
+    </script>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>
+---
+---
 
 ---
