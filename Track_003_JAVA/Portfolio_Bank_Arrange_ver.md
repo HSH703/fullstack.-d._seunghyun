@@ -1,0 +1,1 @@
+[Bank_Portfolio_영상](https://www.youtube.com/channel/UCQnqcdHVa0Ta0AcC26ll1Og)
