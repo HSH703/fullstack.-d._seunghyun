@@ -6354,6 +6354,166 @@ public class MethodEx010 {
  * 
  */
 ---
+## java
 ---
+package com.company.java008_ex;
 
+import java.util.Scanner;
+
+public class Repeat020_1 {
+	public static void main(String[]args) {
+		//변수
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("1. for문으로 출력");
+		for(;;) {
+			System.out.println("문자를 입력>");
+			char ch=scanner.next().charAt(0);
+			if(ch == '+'||ch=='-' || ch=='*' ||ch=='/') {
+				break;
+			}
+			
+		}
+		
+		System.out.println("2. while문으로 출력");
+		while(true) {
+			System.out.println("문자를 입력>");
+			char ch=scanner.next().charAt(0);
+			if(ch == '+'||ch=='-' || ch=='*' ||ch=='/') {
+				break;
+			}
+			
+		}
+
+		System.out.println("3. do while문으로 출력");
+		 do{
+			System.out.println("문자를 입력>");
+			char ch=scanner.next().charAt(0);
+			if(ch == '+'||ch=='-' || ch=='*' ||ch=='/') {
+				break;
+			}
+		}while(true);
+
+		
+		
+		
+	}//end main
+}//end class
+
+/* 무한반복 사용해서 풀기
+*/
+---
+---
+package com.company.java008_ex;
+
+public class Repeat020_2 {
+	public static void main(String[]args) {
+		int[][] arr = new int[2][3];
+		int num=101;
+		
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				arr[i][j]=num++;
+			}
+			num=201;
+		}
+		
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				System.out.print(arr[i][j]+"\t");
+			}
+			System.out.println();
+		}
+		
+	}//end main
+
+}// end class
+---
+---
+package com.company.java008_ex;
+
+public class Repeat020_3 {
+	
+	public static void dog() {
+		System.out.println("멍멍");
+	}
+	
+	
+	/////////////////////////////////////
+	public static void main(String[]args) {
+		System.out.println("강아지가 등장합니다.");
+		dog();
+		
+	}//end main
+	///////////////////////////////////
+}//end class
+---
+---
+package com.company.java008_total;
+
+public class Test_Total004 {
+	public static void main(String[]args) {
+		
+		//Method (이차원 배열) 복습문제 1
+		char[][] arr = new char [2][3]; //00 01 02 / 10 11 12
+		char ch ='A';
+		
+		for (char i=0; i<arr.length; i++) { //층
+			for(char j=0; j<arr[i].length; j++) { //칸
+				arr[i][j] = ch++;
+			}
+			ch = 'a';	//한 층이 끝나면 해야할 일
+		}
+		
+		for(char i=0; i<arr.length; i++) {
+			for(char j=0; j<arr[i].length; j++) {
+				System.out.print(arr[i][j] + "\t");
+			}
+			System.out.println();
+		}
+		
+		//Method Overloading 복습문제 2
+		//c
+		
+		
+		
+		
+		
+	}//end main
+}// end class
+---
+---
+package com.company.java008_total;
+
+import java.util.Arrays;
+
+public class Test_Total005 {
+	
+	public static void print(int[]arr) { for(int i=0; i<arr.length; i++) { arr[i]+=10; } }
+	
+	public static void main(String[] args) {
+		int[] arr = { 1, 2, 3 };
+		// call by value -   파라미터 ( 기본값 ) - 값을 복사해서 사용
+		// public static int   print( int a ) {}
+		System.out.println(print(arr[1]));  //2
+		
+
+		// call by reference -        파라미터 ( 주소값 ) -  주소를 참조해서(따라가서) 원본의 값을 바꿈
+		// public static void   print(     int[] arr ) {}
+		print(arr);
+		System.out.println(Arrays.toString(arr)); 
+	}
+	
+	public static int print(int i) { return i; }  //###
+}
+
+/*
+6. 이차원배열
+A  B  C
+a  b  c
+
+
+7. 메서드 오버로딩
+
+*/
 ---
