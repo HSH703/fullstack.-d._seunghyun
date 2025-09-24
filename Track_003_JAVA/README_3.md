@@ -6519,5 +6519,1274 @@ a  b  c
 ---
 ---
 # JAVA (20250922~20250926)
+---
+package com.company.java009;
+
+//1. 클래스는 부품객체
+//2. 클래스는 속성(멤버변수)와 행위(멤버함수)
+
+class A1{}
+//////////////////////////////////////////////////////
+public class Class001 { 
+	public static void main(String[]args) { //jve - main 구동시점
+		int i = 10;
+		A1  a = new A1();	//인스턴스화/ 4-1 new (heap 1번지 공간빌리기, 객체생성)
+							//		   4-2 A1() 초기화 	
+							//		   4-3 a 1번지라는 주소 주기
+		System.out.println(a); //A1@73a28541 
+	}
+}
+///////////////////////////////////////////////////////
+/* [runtime data area]
+----------------------------------------------------- 
+[method : 정보,   static,   final: 공용공간] 1)
+	A1. class, Class001.class 2)
+----------------------------------------------------- 
+[heap : 동적 ]				[stack: 잠깐 빌리기]
+ 							i [10]
+ 							| main 3)
+----------------------------------------------------- 
+
+*/
+---
+
+● 2. 생성자
+1. 생성자 
+ - new 연산자에 의해 호출 [초기화] 담당 
+
+2. 기본생성자 (디폴트 생성자) 
+ - 모든클래스에 생성자가 반드시 존재
+ - 생선자 선언을 생략하면 컴파일러가 자동을 기본생성자 추가
+ - 개발자가 선언시 컴파일러가 자동생성을 취소
+
+3. 생성자형식
+class A{
+    public A(){}
+    public A( String name ){} // 파라미터, 알규먼트가 있는 생성자
+}
+
+1) 리턴값 없음
+2) 클래스명과 동일
+3) 디폴트생성자를 생성해야하는 경우 : 오버로딩, 상속
+
+4. 초기화순서
+기본값      명시적초기화    초기화블록      생성자
+---
+package com.company.java009;
+
+//1. 클래스는 부품객체
+//2. 클래스는 속성(멤버변수)와 행위(멤버함수)
+
+class A1{}
+//////////////////////////////////////////////////////
+public class Class001 { 
+	public static void main(String[]args) { //jve - main 구동시점
+		int i = 10;
+		A1  a = new A1();	//인스턴스화/ 4-1 new (heap 1번지 공간빌리기, 객체생성)
+							//		   4-2 A1() 초기화 	
+							//		   4-3 a 1번지라는 주소 주기
+		System.out.println(a); //A1@73a28541 
+		A1 a2 = new A1();
+		A1 a3 = new A1();
+		
+		
+	}
+}
+///////////////////////////////////////////////////////
+/* [runtime data area]
+----------------------------------------------------- 
+[method : 정보,   static,   final: 공용공간] 1)
+	A1. class, Class001.class 2)				클래싀      :  설계도
+----------------------------------------------------- 
+[heap : 동적 ]				[stack: 잠깐 빌리기] 	객체        : a, a2, a3
+ 3번지 : A1{}		  ←		a3  [  3번지  ]	  인스턴스(각각)  : a1, a2, a3
+ 2번지 : A1{}		  ←		a2  [  2번지  ]	
+ 1번지 : A1{}		  ←		a1  [  1번지  ]		 		
+ 							  i [10]
+ 							| main 3)
+----------------------------------------------------- 
+
+*/
+---
+---
+package com.company.java009;
+
+//1. 클래스는 부품객체
+//2. 클래스는 속성(멤버변수)과 행위(멤버함수)
+class Animal002{ //Animal = 부품
+	//속성 - 멤버변수
+	String name; 
+	int		age;
+	//행위 - 멤버함수
+	void show() {  System.out.println(this.name + "\t" + this.age);}
+}//end class Animal002
+///////////////////////////////////////////////////////////////////
+public class Class002 {
+	public static void main(String[]args) {
+		Animal002 a1 = new Animal002();  
+		//1. new (1번지, 객체생성) 2. Animal002()초기화 3/ a1 주소 = 1번
+		a1.name = "dog"; a1.age=3; a1.show();
+		Animal002 a2 = new Animal002(); 
+		a2.name = "alpha";a2.age=7;  a2.show();
+	}//end main
+}//end class
+///////////////////////////////////////////////////////////////////
+/*
+--------------------  [runtime data area]
+[method: 정보, static, final : 공용정보] 
+Animal002.class , Class002.class(public이 붙어있기 때문에 우선순위가 올라감.)
+								클래스(설계도)  → (인스턴스화) 객체(Object/ a1,a2)
+-----------------------------------							→ 인스턴스(dog, alpha) 
+[heap: 동적]						 |	[stack: 잠깐빌리기]
+19번째 : 2번지(new-alpha, age=7)	← a2 [2번지]	a2.show() {this.name (2번지의 name) }				  							 
+18번째 : 1번지(new-null, age=0)	← a2 [2번지]					  
+17번째 : 1번지(new-dog, age=3)	← a1 [1번지]	 a1.show(){  this.name (1번지의 name)  }		
+15번째 : 1번지(new-null, age=0)	← a1 [1번지]										
+									[main]
+-----------------------------------
+*/
+---
+---
+package com.company.java009;
+
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class Car31 extends Object{}// 생성자	Car31() - 컴파일러가 기본생성자를 자동생성
+class Car32 extends Object{ 
+	String color;
+	// alt + shift + s ★ 밑에서 3번째( 2,3,4 ) 
+	public Car32() {super();} // ## Object()
+	public Car32(String color) {super();this.color = color;}
+	@Override public String toString() {return "Car32 [color=" + color + "]";}
+}
+//class Car33 extends Car32{} 
+//////////////////////////////////////////////////////////////
+public class Ckass003_constructor {
+	public static void main(String[]args) {
+		Car31 car1 = new Car31(); //1. new (메모리빌리고, 객체생성)  2. Car31()	초기화 	3. car1 번지
+		System.out.println(car1); //Car31@5594a1b5 
+		
+		Car32 car2 = new Car32(); 
+		System.out.println(car2 + "\t" + car2.color);//Car32@6a5fc7f7 → Car32 [color=null]	null
+		
+		Car32 car3 = new Car32("red");
+		System.out.println(car3 + "\t" + car3.color);//				    Car32 [color=red]	red
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////
+/* Q1. 클래스란? [ 설계도 ]       			   예) [Car31.class , Car32.class, Class003.class   ] 
+ * Q2. 객체?    [ 실제(new)로만든 장난감(들)   ] 예) [car1  , car2 , car3    ]
+ * Q3. 인스턴스? [ 각각의 장난감들             ]	예) [ car1  , car2 (null) , car3(red)    ]  
+ */
+
+---
+---
+package com.company.java009;
+
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+/*	Object									2) Object	{    }	   3)		
+      ↑ 
+    Product [name=null, price=0]        	1) Product()super();}  4)   Product p1 = new Product();
+ */
+class Product{  //상속받을게 Object, Object 생갹가능 
+	String name;
+	int price;
+	public Product() {super();}
+	public Product(String name, int price) {super();this.name = name;this.price = price;}
+	@Override public String toString() {return "Product [name=" + name + ", price=" + price + "]";}
+}
+	
+/////////////////////////////////////////////////////////////////	
+public class Class004 {
+	public static void main(String[] args) {
+		Product p1 = new Product();
+		System.out.println(p1);
+	}
+}
+/////////////////////////////////////////////////////////////////	
+/*
+-----------------------------------[ runtime data area ]
+[method: 정보, static, finla : 공용정보] 	Product.class , Class004.class
+--------------------------------------------------------
+[heap: 동적]						 	|       [stack : 잠깐빌리기] 	Product p1 = new Product();
+					Object();		
+1번지{ name=null, price=0}				←   p1[1번지]
+									|	 	main
+--------------------------------------------------------
+
+*/
+---
+---
+package com.company.java009_ex;
+
+	//1. 클래스는 부품객체
+	//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class Student001 {
+	//멤버변수
+	String name;
+	int no, kor, eng, math;
+	//멤버함수
+	void info() {
+		System.out.println("이름: " + this.name);
+		System.out.println("총점: " + (this.kor + this.eng + this.math) );
+		System.out.printf("평균: %.2f ", (this.kor + this.eng + this.math)/3.0);
+	}
+}
+////////////////////////////////////////////////////////////////
+public class ClassEx001 {
+	public static void main(String[] args) {
+		Student001 s1 = new Student001();
+		// 1) new (1번지-객체생성) 2) Student001()초기값 3) s1 주소 
+		s1.name = "first";
+		s1.no = 11;
+		s1.kor = 100;
+		s1.eng = 100;
+		s1.math = 99;
+		s1.info();
+
+	}// end main
+}// end class
+////////////////////////////////////////////////////////////////
+/* ■ Student001	  s1 = new Student001();
+------------------------------------[ run time ]
+[mtehod: 정보, static, final : 공용정보 ]
+	Student001/class , ClassEx001.class	1)
+-------------------------------------------------------
+[heap: 동적] 							|[stack : 잠깐빌리기]
+											s1.info(){}
+1번지	{name=first,no=11, kor=100, eng=100, math=99} ← s1[1번지]
+													   | main 2
+-------------------------------------------------------
+
+*/
+
+
+/*
+ * 연습문제1) class 패키지명 : com.company.java009_ex 클래스명 : ClassEx001 class
+ * Student001{ 멤버변수 : String name; int no, kor, eng, math; 멤버함수 : void info() }
+ * 
+ * public class ClassEx001{ public static void main(String[] args) { Student001
+ * s1 = new Student003(); s1.name="first"; s1.no=11; s1.kor=100; s1.eng=100;
+ * s1.math=99; s1.info(); } } 출력내용 : 이름: first 총점 : 299 평균 : 99.67
+ * 
+ */
+---
+---
+package com.company.java009_ex;
+
+import java.util.Scanner;
+
+class MyPrice001 {
+	//상태 - 멤버변수
+	String name;
+	int price;
+	//행위 - 멤버함수
+	void input() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("상품이름 입력>");
+		 this.name = scanner.next();
+		System.out.println("상품가격 입력>");
+		this.price = scanner.nextInt();
+	}
+
+	void show() {
+		System.out.println("상품정보 입니다.");
+		System.out.printf("상품이름: %s / 상품가격: %d" , this.name, this.price);
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+public class ClassEx002 {
+	public static void main(String[] args) {
+		MyPrice001 p1 = new MyPrice001();
+		p1.input();
+		p1.show();
+
+	}
+}
+/////////////////////////////////////////////////////////////////
+/*■MyPrice001	p1 = new MyPrice001();
+------------------------------------[ runtime data area]
+[method: 정보, static, final : 공용정보]
+MyPrice001.class , ClassEx002.class						클래스(설계도)
+-----------------------------------------------------	객체(p1)  인스턴스(p1.name="apple" / p1.price=1500)
+[heap: 동적] 							|[stack: 잠깐빌리기]
+										   p1 input(){   }
+1번지								       p1 input(){   }
+{	name=null, price=0, input(), show()} ← p1[1번지]
+										| main
+-----------------------------------------------------
+
+*/
+/*
+ * 연습문제2) class 패키지명 : com.company.java009_ex 클래스명 : ClassEx002 class
+ * MyPrice001{ 멤버변수 : String name; int price; 멤버함수 : void input() 입력받는 기능 / void
+ * show() 출력해주는 기능 } public class ClassEx002{ public static void main(String[]
+ * args) { MyPrice001 p1 = new MyPrice001(); p1.input(); p1.show(); } } 출력내용 :
+ * 상품이름 입력 > apple 상품가격 입력 > 1500
+ * 
+ * 상품정보입니다 상품이름 : apple / 상품가격 : 1500
+ */
+---
+---
+package com.company.java009_ex;
+//1. 클래스는 부품객체
+
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class Coffee {
+	String name;
+	int num, price;
+
+	public Coffee() {
+		super();
+		this.name = "아메리카노";
+		this.num = 1;
+		this.price = 2000;
+	}
+
+	public Coffee(String name, int num, int price) {
+		super();
+		this.name = name;
+		this.num = num;
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "Coffee [name=" + name + " , num=" + num + ", price=" + price + ", ]";
+	}
+
+	// 멤버함수 : void(){} 커피정보출력
+	void show() {
+		System.out.println("==========커피");
+		System.out.println("커피명 : " + this.name);
+		System.out.println("커피잔수 : " + this.num);
+		System.out.println("커피가격 : " + this.price * this.num);
+	}
+}
+
+//////////////////////////////////////////////////////////////
+public class ClassEx003 {
+	public static void main(String[] args) {
+		Coffee a1 = new Coffee("까페라떼", 2, 4000);
+		a1.show();
+		Coffee a2 = new Coffee();
+		a2.show();
+
+	}// end main
+}// end class
+//////////////////////////////////////////////////////////////
+/*
+ * 연습문제3) class 패키지명 : com.company.java009_ex 클래스명 : ClassEx003 -- 생성자 작성하시오.
+ * class Coffee{ 멤버변수 : String name; int price, num; 멤버함수 : void show(){}
+ * //커피정보출력 } public class Class003 { public static void main(String[] args) {
+ * Coffee a1 = new Coffee("까페라떼" ,2 , 4000); a1.show(); Coffeea2 = new Coffee();
+ * a2.show(); } } 출력내용 : =====커피 커피명 : 까페라떼 커피잔수 : 2 커피가격 : 8000 =====커피 커피명 :
+ * 아메리카노 커피잔수 : 1 커피가격 : 2000
+ */
+---
+---
+package com.company.java009_ex;
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+import java.util.Scanner;
+
+class TV{
+	String channel; int volume;
+	void input(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("channel입력>"); this.channel=scanner.next();
+		System.out.println("volune 입력>"); this.volume=scanner.nextInt();
+	}
+	void show(){System.out.println(this.channel + "\t" + this.volume);}
+	
+	public TV() {super();}
+	public TV(String channel, int volume) {super();this.channel = channel;this.volume = volume;}
+	@Override public String toString() {return "TV [channel=" + channel + ", volume=" + volume + "]";}
+}
+	
+
+
+//////////////////////////////////////////////////////
+public class ClassEx004 {
+	public static void main(String[]args) {
+		   TV  t1 = new TV("JDBC" , 8);
+		   t1.show(); 
+		   TV  t2 = new TV();
+		   t2.input();  
+		   t2.show();
+
+	}
+}
+//////////////////////////////////////////////////////
+/*연습문제4)  class
+패키지명 : com.company.java009_ex
+클래스명 :  ClassEx004
+-- 생성자 작성하시오.
+class TV{
+//상태-멤버변수  : 채널/볼륨 String channel; int volume;   
+//행위-멤버함수  : 채널, 볼륨 입력: input() / 출력 : show()
+}
+public class ClassEx004 {
+    public static void main(String[] args) {
+   TV  t1 = new TV("JDBC" , 8);
+   t1.show(); 
+   TV  t2 = new TV();
+   t2.input();  
+   t2.show();
+   }
+}
+출력내용 :
+JDBC   8
+
+* channel입력>youtube
+* volume 입력>10
+youtube   10
+*/
+---
+---
+package com.company.java009_ex;
+
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+class Card{
+	int cardNum; boolean  isMembership;
+	void input() {}
+	void show () {}
+	
+	public Card() {super();}
+	public Card(int cardNum, boolean isMembership) {super();this.cardNum = cardNum;this.isMembership = isMembership;}
+	@Override public String toString() {return "Card [cardNum=" + cardNum + ", isMembership=" + isMembership + "]";}
+	//####
+}//end class Card
+
+
+
+
+
+//////////////////////////////////////////////////////
+public class ClassEx005 {
+	public static void main(String[]args) {
+		   Card  c1= new Card(); 
+		   System.out.println(c1);  //Card [cardNum=0, isMembership=false]
+	}//end main
+}//end class
+//////////////////////////////////////////////////////
+/*연습문제5)  class
+패키지명 : com.company.java009_ex
+클래스명 :  ClassEx005
+-- 생성자 작성하시오.
+class Card{
+   //상태-멤버변수  : 채널/볼륨 int cardNum; boolean  isMembership;   
+   //행위-멤버함수  : 채널, 볼륨 입력: input() / 출력 : show()
+}
+public class ClassEx005{
+   public static void main(String[] args) {
+   Card  c1= new Card(); 
+   System.out.println(c1);  
+   }
+}
+
+출력내용 :
+Card[cardNum=0, isMembership=false]
+*/
+---
+---
+package com.company.java009_ex;
+
+import java.util.Scanner;
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class Score{
+	String stdid; int kor,eng,math,total,avg;  
+	void total() {this.total = this.kor + this.eng + this.math;}
+	void avg  () {this.avg = this.total/3;}
+	void info () {
+			this.total(); this.avg();
+			System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\n"
+					, "학번", "KOR", "ENG", "MATH", "TOTAL", "AVG");
+			System.out.printf("%-5s\t%-5d\t%-5d\t%-5d\t%-5d\t%-5d\n"
+					, stdid, kor, eng, math, total, avg);
+	}
+	public Score() {super();	}
+	public Score(String stdid, int kor, int eng, int math) {
+		super(); this.stdid = stdid; this.kor = kor; this.eng = eng; this.math = math;}
+	
+	
+	
+
+	
+	
+}//end class Score
+
+
+////////////////////////////////////////////////////////////////////
+public class ClassEx006 {
+	public static void main(String[]args) {
+		   Score  s1= new Score("std1234" , 100, 100 , 99 ); 
+		   s1.info();	
+	}//end main 
+}//end class 
+
+////////////////////////////////////////////////////////////////////
+/*연습문제6)  class
+패키지명 : com.company.java009_ex
+클래스명 :  ClassEx006
+-- 생성자 작성하시오.
+class Score{
+   //상태-멤버변수  :  String stdid; int kor,eng,math,total,avg;   
+   //행위-멤버함수  :  void total() 총점구해주기
+   //               void avg()  평균구하기
+   //               void info()   학생정보출력  ※힌트2)  info(){    total();  avg();     }  다른메서드에서 메서드 사용가능  
+   //※ 힌트1) 생성자 :Score() / Score(stdid, kor, eng, math)
+}
+public class ClassEx006{
+   public static void main(String[] args) {
+   Score  s1= new Score("std1234" , 100, 100 , 99 ); 
+   s1.info();
+   }
+}
+
+출력내용 :
+학번   kor   eng   math   total   avg
+std1234   100   100   99   299   99.67
+
+*/
+---
+---
+package com.company.java009_ex;
+
+import java.util.Scanner;
+
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+class Calc{
+	int num1, num2;  char op;  double result;
+	void input() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("\n\n숫자1 입력 >" ); this.num1 = scanner.nextInt();
+		System.out.print("숫자2 입력 >" ); this.num2 =scanner.nextInt();
+		System.out.print("연산자 입력 >"); this.op = scanner.next().charAt(0);
+	}
+	void opcalc() {
+		 if(this.op=='+') {this.result = this.num1 + this.num2;}
+	else if(this.op=='-') {this.result = this.num1 - this.num2;}
+	else if(this.op=='*') {this.result = this.num1 * this.num2;}
+	else if(this.op=='/') {this.result = this.num1 / (double)this.num2;}
+	}
+	void show() {
+		this.opcalc();
+		if(this.op== '/') {
+			System.out.printf("%d %c %d = %.2f" , this.num1, this.op, this.num2 , this.result);
+		}else {
+			System.out.printf("%d %c %d = %.2f" , this.num1, this.op, this.num2 , this.result);
+			}
+		
+	}
+	
+	public Calc() {super();}
+	public Calc(int num1, int num2, char op) {
+		super(); this.num1 = num1; this.num2 = num2; this.op = op;}
+	
+	
+	
+}//end class Calc
+////////////////////////////////////////////////////////////////
+public class ClassEx007 {
+	public static void main(String[]args) {
+		   Calc  c1= new Calc(10,3,'+');  
+		   c1.show(); //10+3=3
+		   
+		   Calc  c2= new Calc();  
+		   c2.input();   
+		   c2.show(); 
+
+	}//end main
+}//end class
+////////////////////////////////////////////////////////////////
+/*연습문제7)  class
+패키지명 : com.company.java009_ex
+클래스명 :  ClassEx007
+-- 생성자 작성하시오.
+class Calc{
+   //상태-멤버변수  :  int num1, num2;  char op;  double result;
+   //행위-멤버함수  :  void input()   입력받기
+   //               void opcalc() +더하기계산, -라면 -계산  , *라면 *계산 , /라면 /계산 
+   //                      void show()    연산출력   
+}
+public class ClassEx007{
+   public static void main(String[] args) {
+   Calc  c1= new Calc(10,3,'+');  
+   c1.show();
+   
+   Calc  c2= new Calc();  
+   c2.input();   
+   c2.show(); 
+    
+   }
+}
+
+출력내용)
+10+3=3
+
+숫자1> 10
+숫자2> 3
+연산자> /
+10/3=3.33
+*/
+---
+---
+package com.company.java009_ex;
+
+import java.util.Scanner;
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class AnimalCharacter {
+    // 상태 - 멤버변수  
+    String name;  
+    String type;  // 육식 or 초식  
+    int baseSpeed;  
+    int specialBoost;
+    double finalSpeed;
+	public AnimalCharacter() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public AnimalCharacter(String name, String type, int baseSpeed, int specialBoost) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.baseSpeed = baseSpeed;
+		this.specialBoost = specialBoost;
+	}
+	// 행위 - 멤버함수  
+    void input() {
+    	Scanner scanner = new Scanner(System.in);
+    	System.out.println("이름 입력 >"); this.name = scanner.next();
+    	System.out.println("동물의 유형 입력 >"); this.type = scanner.next();
+    	System.out.println("기본속도 입력 >"); this.baseSpeed = scanner.nextInt();
+    	System.out.println("특수능력치 입력 >"); this.specialBoost = scanner.nextInt();
+    }  //사용자 입력 받기  
+    void calculateSpeed() {
+    	 if(this.type.equals("육식")) {this.finalSpeed=this.baseSpeed+this.specialBoost*0.2;}
+    else if(this.type.equals("초식")) {this.finalSpeed=this.baseSpeed+this.specialBoost*0.1;}
+    }
+	void show() {
+		calculateSpeed();
+		System.out.println("동물캐릭터" + this.name);
+		System.out.println("타입" + this.type);
+		System.out.println("최종속도" + this.finalSpeed);
+	} 
+    
+    
+    
+	
+}//end class AnimalCharacter
+
+
+
+///////////////////////////////////////////////////////////////
+public class ClassEx008 {
+	public static void main(String[]args) {
+        AnimalCharacter a1 = new AnimalCharacter("치타", "육식", 100, 30);
+        a1.show();
+
+        AnimalCharacter a2 = new AnimalCharacter();
+        a2.input();
+        a2.show();
+
+	}//end main
+}//end class
+///////////////////////////////////////////////////////////////
+/*패키지명: com.company.java009_ex 
+클래스명: ClassEx008 
+주제: 동물 캐릭터를 생성하고, 능력치를 계산하여 출력하는 프로그램
+
+■설명
+AnimalCharacter 클래스를 만들어서 동물 이름, 타입(육식/초식), 기본 속도, 특수 능력치를 입력받고, 최종 속도를 계산해 출력한다. 
+특수 능력치는 타입에 따라 다르게 적용된다.
+육식 동물: 특수 능력치가 속도에 +20%
+초식 동물: 특수 능력치가 속도에 +10%
+
+-- 생성자 작성하시오.
+
+class AnimalCharacter {
+    // 상태 - 멤버변수  
+    // String name;  
+    // String type;  // 육식 or 초식  
+    // int baseSpeed;  
+    // int specialBoost;  
+    // double finalSpeed;
+
+    // 행위 - 멤버함수  
+    // void input() : 사용자 입력 받기  
+    // void calculateSpeed() : 타입에 따라 속도 계산  
+    // void show() : 캐릭터 정보 출력
+}
+
+public class ClassEx007 {
+    public static void main(String[] args) {
+        AnimalCharacter a1 = new AnimalCharacter("치타", "육식", 100, 30);
+        a1.show();
+
+        AnimalCharacter a2 = new AnimalCharacter();
+        a2.input();
+        a2.show();
+    }
+}
+
+
+
+■ 출력내용 
+🦁 동물 캐릭터: 치타
+🌿 타입: 육식
+🚀 최종 속도: 106.00
+
+동물 이름> 토끼
+동물 타입(육식/초식)> 초식
+기본 속도> 60
+특수 능력치> 40
+🦁 동물 캐릭터: 토끼
+🌿 타입: 초식
+🚀 최종 속도: 64.00
+*/
+---
+## JAVA
+ package com.company.java010;
+
+//1.final	변경하지마
+// 클래스는 부품객체
+// 클래스는 상태(멤버변수)와                    행위(멤버함수)
+// 상속 X     [상수: 변하지 않는 값]           [override 자식한테 내꺼쓰지마!] X 
+final class FinalEx extends Object{
+  final	static String gaecheon = "10-3";  //클래스변수 - method area - new X - 생성자 - this X > now  
+  String name;  //인스턴스변수 - heap area - new O - 생성자O - this O > 메모리 각각
+  final void show() {	System.out.println( FinalEx.gaecheon + "\t" + name );}
+}
+/*
+class FinalSon extends FinalEx{ 
+	//@Override void show() { super.show();  }
+	// 오버라이드 - 상속시 자식클래스에서 부모의 클래스를 재수정
+}
+*/
+/////////////////////////////////////////////////////////
+public class Final001 {
+	public static void main(String[]args) {
+		//FinalEx.gaecheon = "10-1";	//The final field FinalEx.gaecheon cannot be assigned
+		FinalEx saram = new FinalEx();
+		saram.name = "SH";
+		saram.show(); 
+	}//end main
+}//end class
+/////////////////////////////////////////////////////////
+---
+---
+package com.company.java010;
+
+//public(아무데서나) > protected(extends) > default (같은폴더내에서만) > private(클래스안에서만)
+
+
+class UserSon1 extends UserInfo{
+	public void show() {
+		System.out.println("홍길동 아버지 이름 > " + super.name); //자식 - public
+		System.out.println("홍길동 아버지 금고번호 > " + super.safeCode); // 자식 - protected
+		System.out.println("홍길동 아버지 집 > " + super.house); //자식 - package (같은폴더에서)
+	  //System.out.println("부 IQ > " + super.IQ);
+        System.out.println("홍길동 아버지 IQ > " + super.getIQ());
+		
+
+
+	}
+}
+////////////////////////////////////////////////////////////////
+public class Modifier001 {
+	public static void main(String[]args) { 
+		System.out.println("\n\n1. 홍길동 아버지 정보");  //본인 : public> protected> default > private(X)
+		UserInfo user = new UserInfo();
+		user.name= "홍상직";	//public 아무데서나 접근 (홍길동씨 아버지)
+		user.safeCode= "1234";	//protected 본인꺼 접근가능
+		user.house= "전라남도 장성군";
+      //user.IQ= "148";	//iQ cannot be resolved or is not a field
+	}
+}
+////////////////////////////////////////////////////////////////
+
+---
+---
+package com.company.java010;
+// 1. 클래스는 부품객체
+// 2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class Farm{
+	//상태 - 멤버변수
+	String name;	// 인스턴스변수 - heap area - new 0 - 생성자 / cat(1번지).name , cat(1번지).name
+	int	   age; 	// 인스턴스변수 - heap area - new 0 - 생성자 / dog(2번지).name , dog(2번지).name
+	static String FarmName="(주) 동물농장"; // 클래스변수 - Farm.FarmName(=클래스명.변수명)    ( 명시적초기화 )
+	static int	  FarmNum;				  // 클래스변수 - method area - new X - 생성자X 
+	static String FarmBoss;
+	static{ FarmNum=2; FarmBoss="신동엽";    }  //초기화블록(=몰아서 초기화를 잡음.)
+	
+	//행위 - 멤버함수
+	static void num_plus() {  FarmNum++;   /*tnis.age++;*/ } // 클래스메서드(static 붙은 곳에는 this. 사용 불가)
+	
+	void show() { // 인스턴스메서드
+		System.out.println("\n\n:::::::::::::::::");
+		System.out.println("::이름 : " + this.name);
+		System.out.println("::나이 : " + this.age);
+		System.out.println("::인원 : " + Farm.FarmNum);
+
+	}
+}
+////////////////////////////////////////////////////////////////////////
+public class Static001 {
+	public static void main(String[]args) {
+		System.out.println("\n\n0. 동물농장");
+		System.out.println("::회사이름> : " + Farm.FarmName);
+		System.out.println("::회사사장> : " + Farm.FarmBoss);
+		System.out.println("::회사인원> : " + Farm.FarmNum);
+		
+		System.out.println("\n\n1. 동물농장식구-this-각각");
+		//		1) new : 메모리빌리기, 객체생성 2) Farm() 초기화 3) cat 번지
+		Farm cat = new Farm(); 
+		cat.name = "sally"; cat.age=3; cat.show(); // 갖고 놀기 사용하기
+		Farm dog = new Farm();
+		dog.name = "alpha"; dog.age=7; Farm.num_plus();/*dog.num_plus();*/ dog.show(); 
+	}//end main
+}//end class
+////////////////////////////////////////////////////////////////////////
+/* 클래스 변수
+ 초기화순서 :    기본값    	             명시적초기화	               초기화블록                 생성자
+ * FarmNum	    0					   null						(O) 2					 X
+ * FarmBoss    null 				   null					 (O) 신동엽					 X
+ * FarmName    null					(주)동물농장				 (X) (주)동물농장      		 X
+ ////////////////////////////////////////////////////////////////////////////////////////////////////
+   인스턴스 변수
+ * cat		name=null, age=0     (X)name=null, age=0       (X)name=null, age=0      name=null, age=0 
+ * dog		name=null, age=0     (X)name=null, age=0       (X)name=null, age=0      name=null, age=0 
+
+------------------------[ runtime data area]
+[method: 정보, static, final : 공용정보]
+    Farm.class, Static001.class     	★ 클래스 : 설계도
+    FarmNum=2;    FarmBoss="신동엽";     FarmName="(주) 동물농장";
+----------------------------------------------------------------
+[heap: 동적]                  | [stack : 잠깐빌리기] 
+2번지{name=null, age=0}    ←    dog[2번지]
+1번지{name=null, age=0}    ←    cat[1번지]
+					         | main 
+----------------------------------------------------------------
+*/
+---
+---
+package com.company.java010;
+
+public class UserInfo{
+	public    String name;
+	protected String safeCode;  //자식
+	          String house;
+    private   int    IQ; 
+    
+    public int getIQ() {return IQ;}
+    public void setIQ(int iQ) {this.IQ = iQ;} 
+}
+---
+---
+package com.company.java010_ex;
+	//1. 인스턴스변수, 클래스변수, 지역변수 를 구분하시오.  
+	//2. 인스턴스메서드, 클래스메서드 구분하시오.
+	//3. 오류나는 이유는?
+	//4. runtime data area 위치영역 그림그리기
+
+class Sawon3{ 
+	// 클래스는 부품객체
+    int pay      =10000;      //인스턴스변수 - heap area - new O - 생성자
+    static int su=10;         //클래스변수   - method area - new X - 생성자 X > 바로사용 
+  //static int basicpay=pay;  //클래스변수   - method area - new X - 생성자 X > 바로사용 
+    						  //static - this 사용불가  / static - 당장 사용 , this - new하고 난 다음에 사용.
+    static int basicpay2;     //클래스변수  - method area - new X - 생성자 X > 바로사용 
+    
+    // 클래스는 상태(멤버변수)와 행위(멤버함수)
+    // 클래스메서드 - method area - new X - 생성자 X - Sawon3.showSu(); > 바로사용
+    public static void showSu() {   System.out.println(su);  }    
+    // 클래스메서드 - method area - new X - 생성자 X - Sawon3.showPay(); > 바로사용
+    // * static은 this 사용 불가 / this.(각각) new 사용
+    // public static void showPay() {   System.out.println(this.pay);  }    
+    
+    //인스턴스메서드 - heap area 0 new O - 생성자
+    public  void  showAll001() {   
+       System.out.println(su);  // static 사용가능 - new 전에 메모리상에 static 올라가 있음.
+       System.out.println(this.pay);  //this 사용가능 
+    } 
+    // 클래스메서드 - method area - new X - 생성자 X - Sawon3.showAll002()
+    public static  void  showAll002() {   
+       // showAll001();   			 * static은 this사용(인스턴스) 불가 
+      // System.out.println(this.pay);
+    } 
+} 
+
+
+
+///////////////////////////////////////////////////////////////
+public class MemberVarEx001 {
+	public static void main(String[]args) {//args 지역변수
+			   Sawon3   sola = new Sawon3();  //1) new 번지, 객체생성 2) 생성자초기화 3) sola 번지(지역변수)
+			   sola.showAll001();
+			  
+			
+	}//end main
+}//end class
+///////////////////////////////////////////////////////////////
+/*_ex
+클래스명 :  MemberVarEx001
+-- class Sawon3작성해주세요 
+1. 인스턴스변수, 클래스변수, 지역변수 를 구분하시오.
+2. 인스턴스메서드, 클래스메서드 구분하시오.
+3. 오류나는 이유는?
+class Sawon3{ 
+    int pay      =10000;    
+    static int su=10;     
+    static int basicpay=pay;    
+    static int basicpay2;    
+    
+    public static void showSu() {   System.out.println(su);  }          
+    public static void showPay() {   System.out.println(this.pay);  }    
+  
+    public  void  showAll001() {   
+       System.out.println(su);  
+       System.out.println(this.pay);  
+    } 
+    public static  void  showAll002() {   
+        showAll001();    
+       System.out.println(this.pay);
+    } 
+} 
+public class MemberVarEx001{
+  public static void main(String[] args) {
+   Sawon3   sola = new Sawon3();  
+   sola.showAll001();
+  }
+}
+*/
+
+
+/*
+------------------------[ runtime data area]
+[method: 정보, static, final : 공용정보]
+ > Sawon3.class / MemberVarEx001.class	1)
+ > static : Sawon3.su , Sawon3.basicpay2 , Sawon3.showSu(), Sawon3.showAll002()
+------------------------------------
+[heap: 동적]          		| [stack : 잠깐빌리기]
+							  showAll001();
+1번지(pay=0, showAll001() ) ←  sola[1번지] 42번째줄
+					   		| main
+------------------------------------
+*/
+---
+---
+package com.company.java010_ex;
+	//- 문제 1. 다음 코드에서 인스턴스변수, 클래스변수, 지역변수를 구분하시오.  ( 보관되는 영역도 추가 )
+	//- 문제 2. 인스턴스메서드와 클래스메서드를 구분하시오.  
+	//- 문제 3. 오류가 발생하는 이유를 설명하시오. 
+	//- 문제 4. runtime data area 위치영역 그림그리기
+
+class Student {
+    String name = "홍길동";  //인스턴스변수 - heap area - new O - 생성자 O - this(각각)
+    int kor = 90;          //인스턴스변수 - heap area - new O - 생성자 O - this(각각)       
+    int eng = 85;          //인스턴스변수 - heap area - new O - 생성자 O - this(각각)
+    
+    static int studentCount = 0;   //클래스변수 - method area - new X - 생성자 X - static(new) 
+ // static int total = this.kor + this.eng;  //클래스변수  - method area - new X - 생성자 X - static(new)
+    							   // static 은 인스턴스(this) 사용불가
+    static int maxScore = 100;     //클래스변수 - method area - new X - 생성자 X - static(new)
+
+    public Student() {	//생성자
+        studentCount++; //static 사용가능            
+    }
+
+    public int getTotalScore() { //인스턴스메서드 
+        return kor + eng;        //  
+    }
+
+    public static void showStudentCount() {	//클래스메서드 - method area - new X - 생성자 X - static(new)
+        System.out.println("전체 학생 수: " + studentCount);  
+    }
+
+   public static void showName() {	//클래스메서드 - - method area - new X - 생성자 X - static(new)
+  //     System.out.println(name);  //* static은 인스턴스(this) 사용불가
+   }
+
+    public void showInfo() { //인스턴스메서드 - heap area - new O - 생성자 O - this(각각)
+        System.out.println("이름: " + this.name);            
+        System.out.println("총점: " +this. getTotalScore());    
+    }
+}
+
+
+
+
+/////////////////////////////////////////////////////////////
+public class MemberVarEx002 {
+    public static void main(String[] args) { //지역변수
+        Student s1 = new Student();    //지역변수 
+        Student s2 = new Student();    //지역변수
+
+        s1.showInfo();                  
+        Student.showStudentCount();    
+    }//end main
+}//end class
+
+
+
+
+
+/*
+------------------------[ runtime data area]
+[method: 정보, static, final : 공용정보]
+Student.studentCount, Student.maxScore, Student.showStudentCount(), Student.showName
+------------------------------------
+[heap: 동적]            | [stack : 잠깐빌리기]
+2번지 
+{name=null, kor=90, eng=85 /   ←  s2[2번지]
+getTotalScore(), showInfo()} 
+
+
+1번지 
+{name=null, kor=90, eng=85 /   ←  s1[1번지]
+getTotalScore(), showInfo()} 
+------------------------------------
+*/
+
+
+/*초기화  :        기본값     명시적초기화    초기화블록    생성자   
+studentCount		0        =0            x         O
+masScore            0        =100          x         O
+s1{name, kor, eng} {name=null, kor=0, eng=0} {name=홍, kor=90, eng=85}  xname=홍, kor=90, eng=85  
+s2{name, kor, eng} {name=null, kor=0, eng=0} {name=홍, kor=90, eng=85}  xname=홍, kor=90, eng=85  
+*/
+
+/////////////////////////////////////////////////////////////
+
+/*
+패키지명 : com.company.java010_ex
+클래스명 : MemberVarEx002
+-- class Student 작성해주세요
+*/
+---
+---
+package com.company.java010_ex;
+//Q1. 자바의 접근자를 넓은범위에서 좁은범위로 적으시오.
+//public > protected(extends) > default(같은폴더) > private(클래스안에서만)
+
+class ToyBox{
+	public  String sharedToy = "블록"; 	//누구나 꺼내서 놀 수 있어요.
+	private String secretToy = "로봇";	//다른 친구들이 이 장난감을 못 보게 하려면
+	        String familyToy = "퍼즐";	//같은 집(package, 폴더)에 살고 있어서 형이 퍼즐을 볼 수 있게 하려면
+}
+
+//////////////////////////////////////////////////////////////////////
+public class Modifier001_Friend {
+	public static void main(String[]args) {
+        ToyBox box = new ToyBox();
+        System.out.println(box.sharedToy); //O	블록
+    //  System.out.println(box.secretToy); //X
+        System.out.println(box.familyToy); //O	퍼즐
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////////////
+
+/*연습문제1)   
+패키지명 : com.company.java010_ex
+클래스명 :  ModifierEx001
+
+
+Q1.   자바의 접근자를 넓은범위에서 좁은범위로 적으시오.
+      public > protected > default > private
+Q2.   public class ToyBox 를 다은 문제 단계별을 이용해서 작성하시오.
+	  
+Q3.   public class Modifier001_Friend 를  작성하고 문제를 풀으시오.
+
+
+[문제 1]
+길동이는 장난감 상자에 블록을 넣었어요. 이 블록은 누구나 꺼내서 놀 수 있어요.  
+자바 코드에서 이 장난감은 어떤 modifier로 선언되어야 할까요?
+
+public class ToyBox {
+    _____ String sharedToy = "블록";
+}
+
+
+[문제 2]
+길동이는 로봇 장난감을 혼자만 갖고 놀고 싶어요.  
+다른 친구들이 이 장난감을 못 보게 하려면 어떤 modifier를 써야 할까요?
+
+public class ToyBox {
+    _____ String secretToy = "로봇";
+}
+
+[문제 3]
+길동이의 형이 같은 집에 살고 있어서 퍼즐 장난감을 같이 쓰고 싶어요.  
+형이 퍼즐을 볼 수 있게 하려면 어떤 modifier를 써야 할까요?
+
+public class ToyBox {
+    _____ String familyToy = "퍼즐";
+}
+
+[문제 4]
+다음은 친구가 장난감 상자를 열어보는 코드입니다.  
+친구가 볼 수 있는 장난감은 무엇일까요?
+
+public class Friend {
+    public static void main(String[] args) {
+        ToyBox box = new ToyBox();
+        System.out.println(box.sharedToy);
+        System.out.println(box.secretToy);
+        System.out.println(box.familyToy);
+    }
+}
+
+*/
+---
+---
+package com.company.java010_ex;
+
+import com.company.java010.UserInfo;
+
+class UserSon2 extends UserInfo{
+	public void show() {
+		System.out.println("홍길동 아버지 이름    > " + super.name); //자식 - public
+		System.out.println("홍길동 아버지 금고번호 > " + super.safeCode); // 자식 - protected
+	  //System.out.println("홍길동 아버지 집 > " + super.house); //자식 - package (같은폴더에서)
+	  //System.out.println("부 IQ > " + super.IQ);
+        System.out.println("부 IQ > " + super.getIQ());
+	}//■Q1. super.house를 못쓰는 이유는  UserInfo 클래스의 house는 접근자가 package (java010폴던에서만)
+	//     UserSon2클래스는 (java010_ex 폴더안에 있음.)
+}
+////////////////////////////////////////////////////////////////
+public class Modifier002 {
+	public static void main(String[]args) { 
+		System.out.println("\n\n1. 홍길동 아버지 정보");  //본인 : public> protected> default > private(X)
+		UserInfo user = new UserInfo();
+		user.name= "홍상직";	//public 아무데서나 접근 (홍길동씨 아버지)
+	 //user.safeCode= "1234";	//protected 본인꺼 접근가능 ■ Q2. 오류이유? extends 상속받은적이 없음. 
+	 //user.house= "전라남도 장성군";  ■ Q3. 오류이유? 같은 폴더아님 - java010_ex 폴더안에 있음.
+     //user.iO;	//iO cannot be resolved or is not a field
+		user.setIQ(148);
+		System.out.println(user.getIQ());
+	}
+}
+////////////////////////////////////////////////////////////////
+---
+---
+package com.company.java010_ex;
+class Area1{
+	static double pi=3.141592;
+
+	static double rect(int a, int b){ return a*b ;}
+	static double triangle(int a, int b){return a*b*0.5;}
+
+}//end class Area1
+
+
+
+////////////////////////////////////////////////////////////
+public class StaticEx001 {
+	public static void main(String[]args) {
+		   System.out.println("원의 면적    : " + 10 * 10 * Area1.pi);   // 클래스명.변수  , 클래스 변수    ,method , (static)
+		   //public static 메서드명 (파라미터){해야할일}
+		   //public static double rect(int a, int b){return a*b;}
+		   System.out.println("사각형의 면적 : " + Area1.rect(10, 5));    // 클래스명.메서드 , 클래스 메서드  ,method , (static)
+		   //public static 메서드명 (파라미터){해야할일}
+		   //public static double triangle(int a, int b){return a*b*0.5;}
+		   System.out.println("삼각형의 면적 : " + Area1.triangle(10, 5));// 클래스명.메서드 , 클래스 메서드  ,method , (static)
+	}//end main
+}//end class
+////////////////////////////////////////////////////////////
+
+/*연습문제1)  static
+패키지명 : com.company.java010_ex
+클래스명 :  StaticEx001
+-- class Area1 작성해주세요   ※ pi값은 3.14159
+public class StaticEx001{
+  public static void main(String[] args) {  
+   System.out.println("원의 면적    : " + 10 * 10 * Area1.pi);
+   System.out.println("사각형의 면적 : " + Area1.rect(10, 5));
+   System.out.println("삼각형의 면적 : " + Area1.triangle(10, 5));
+  }
+}
+
+출력내용 : 
+원의 면적    : 314.159
+사각형의 면적 : 50.0
+삼각형의 면적 : 25.0
+*/
+---
+---
+package com.company.java010_ex;
+class Mobile2{  
+    String   serialNo;	  // 인스턴스변수, heap area, new O, this, 생성자O
+    static  int count=0;  // 클래스변수, method, new X, this X, 생성자X 지금당장바로~!
+    
+    public Mobile2() {
+    	//객체를 한개씩 만들때마다   serialNo에 숫자를 한개씩 증가시키는데, ++count
+    	this.serialNo = "2030-" + ++count;
+    }
+}//end class Mobile2
+//////////////////////////////////////////////////////////////
+public class StaticEx002 {
+	public static void main(String[]args) {
+	     Mobile2 m1 = new Mobile2(); //1. new 공간빌리기  2. 생성자()  3. 번지
+	     Mobile2 m2 = new Mobile2(); 
+	     Mobile2 m3 = new Mobile2();  
+	     Mobile2 m4 = new Mobile2();  
+
+	     System.out.println("모바일 갯수는 모두 "+ Mobile2.count +"개 입니다."); //클래스명.변수 클래스변수 ◆ 4
+	     System.out.println("m1의 제품번호 " + m1.serialNo);  //1	m1(1번지).변수명 ◆ 2030-1
+	     System.out.println("m2의 제품번호 " + m2.serialNo);  //2  m1(2번지).변수명 ◆ 2030-2
+	     System.out.println("m3의 제품번호 " + m3.serialNo);  //3
+	     System.out.println("m4의 제품번호 " + m4.serialNo);  //4
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////
+
+/*연습문제2)  static
+패키지명 : com.company.java010_ex
+클래스명 :  StaticEx002
+-- class Mobile2   작성해주세요    
+
+
+class Mobile2{  
+      String   serialNo;
+      static  int count=0; 
+} 
+
+public class StaticEx002{
+  public static void main(String[] args) {
+     Mobile2 m1 = new Mobile2(); //1. new 공간빌리기  2. 생성자()  3. 번지
+   Mobile2 m2 = new Mobile2(); 
+   Mobile2 m3 = new Mobile2();  
+   Mobile2 m4 = new Mobile2();  
+
+   System.out.println("모바일 갯수는 모두 "+ Mobile2.count +"개 입니다.");   
+   System.out.println("m1의 제품번호 " + m1.serialNo);  //1
+   System.out.println("m2의 제품번호 " + m2.serialNo);  //2
+   System.out.println("m3의 제품번호 " + m3.serialNo);  //3
+   System.out.println("m4의 제품번호 " + m4.serialNo);  //4
+  }
+}
+
+출력된결과:
+모바일 갯수는 모두 4개 입니다.
+m1의 제품번호 2030-1
+m2의 제품번호 2030-2
+m3의 제품번호 2030-3
+m4의 제품번호 2030-4
+*/
+---<!--day022.md까지-->
+---
 
 ---

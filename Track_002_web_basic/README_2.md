@@ -3049,7 +3049,440 @@ w-25   w-50  w-75  w-100
 </body>
 </html>
 ---
+
+## Track002 - html + css + js/jquery(20250922~20250926)
 ---
-# Webbasic (20250922~20250926)
+# ■ Webbasic
+- 자기소개페이지
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨한승현 포트폴리오✨</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    /* VISUAL */
+    div#demo {       height: 300px;    overflow: hidden; }
+
+    /* about me */
+    .info{ background-color: aliceblue; }
+    .container_1{background-color: rgba(135, 207, 235, 0.927);
+                 border-radius: 50px;   
+    }
+    /* Q1. about me   각부분들 여백주기  */
+    .info h4{ margin: 5% 0; }
+    /* Q2. KeyWord 나와있는 ul태그에 class="keyWord"  */
+    .keyWord li{  list-style-type:none;  margin-right:10px; }
+    /* Q3. h3태그에 중앙배치 , 밑줄  */
+    .info h3{  text-decoration: underline; font-size: 2.2em;} 
+    .hidden{position:absolute; left:-999px; 
+             width:1px; height:1px; overflow:hidden;
+            clip:rect(0,0,0,0); /* 요소를 잘라서 시각적으로 완전히 숨김 - 구형브라우저 호환*/
+            border:0; 
+            white-space: nowrap; /* 줄바꿈방지 - 텍스트 한줄로 */
+    }
+
+  </style>
+</head>
+<body>
+  <!-- H1~H6 제목태그붙이기 -->
+  <!-- PORTFOLIO -->
+
+  <!-- header -->
+  <header  class="header">
+    <h1 class="hidden"> 한승현 포트폴리오</h1>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <h2 class="hidden">주메뉴</h2>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)">한승현</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">포트폴리오</a>
+                </li>            
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">About Me</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Gallery</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Contact</a>
+                </li>
+            </ul> 
+            </div>
+        </div>
+    </nav>
+  </header>
+
+  <!-- visual -->
+  <section  class="visual">
+    <!-- Carousel -->
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+    </div>
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="./SelfPage.img/SelfPage_1.jpg" alt="img_1" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+        <img src="./SelfPage.img/SelfPage_2.jpg" alt="img_2" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+        <img src="./SelfPage.img/SelfPage_3.jpg" alt="img_3" class="d-block w-100">
+        </div>
+    </div>
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+    </div>
+  </section>
+
+  <!-- info -->
+  <section  class="info p-5"  >
+    <div class="container_1">
+        <h3 class="p-5 text-center">About Me</h3>
+        <div class="row">
+            <div class="col-sm-4"> <!-- w-25  w-50 w-75 w-100 -->
+                <p><img src="./SelfPage.img/Profile_1.png" class="w-50" alt=""/></p>
+                <h4>한승현</h4>
+                <ul>
+                    <li>h48097435@gmail.com</li>
+                    <li><a href="https://github.com/HSH703/fullstack.-d._seunghyun.git"> 
+                        깃허브 포트폴리오 </a></li>
+                </ul>
+            </div><!-- col-sm-4 -->
+            <div class="col-sm-4">
+                <h4>Computer Engineering</h4>
+                <ul>
+                    <li>MSA기반 플러터(Dart)활용 자바(JAVA)프론트엔드
+                        백엔드 풀스택 웹(앱)개발 (25.08.25~ 26.02.27)</li>
+                </ul>
+
+                <h4>KeyWord</h4>
+                <ul  class="d-flex keyWord">
+                    <li><input type="button" value="열정"  class="btn btn-danger"/></li>
+                    <li><input type="button" value="성실"  class="btn btn-warning"/></li>
+                    <li><input type="button" value="끈기"  class="btn btn-info"/></li>
+                </ul>
+            </div><!-- col-sm-4 -->
+            <div class="col-sm-4">
+                <h4>SKILLS</h4>
+                <div class="progress my-3">
+                    <div class="progress-bar bg-info progress-bar-striped" style="width:80%">JAVA 80%</div>
+                </div> 
+                <div class="progress my-3">
+                    <div class="progress-bar bg-warning progress-bar-striped" style="width:90%">SPRING 90%</div>
+                </div> 
+                <div class="progress my-3">
+                    <div class="progress-bar bg-danger progress-bar-striped" style="width:90%">ORACLE 90%</div>
+                </div> 
+                <div class="progress my-3">
+                    <div class="progress-bar bg-primary progress-bar-striped" style="width:85%">REACT 85%</div>
+                </div>    
+                <div class="progress my-3">
+                    <div class="progress-bar bg-success progress-bar-striped" style="width:85%">AWS 85%</div>
+                </div>                              
+            </div><!-- col-sm-4 -->
+        </div> <!-- row -->
+    </div><!-- container -->
+  </section>
+
+  <!-- portfolio -->
+  <section  class="portfolio">
+        <h3 class="text-center">Portfolio</h3>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- <img src="./img/portfolio1.jpg"  alt=""/> -->
+                    <iframe class="2-100 no border"
+                        src="https://www.youtube.com/embed/RAnwa37fVqE?si=u4xtRebhqwCa0oI3" title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                 
+                           <p class="text-center m-3"><a href="#" class="btn btn-danger"> 포트폴리오 더보기 </a></p>
+                </div><!--end col-sm-4-->
+                <div class="col-sm-4">
+                    <h4> spring boot + jpa + react  portfolio</h4>
+                    <ul>
+                        <li><strong>Spring Boot + JPA</strong> 기반의 백엔드와 데이터 처리 로직 구현</li>
+                        <li><strong>React</strong>를 활용한 사용자 중심의 프론트엔드 UI 개발</li>
+                        <li><strong>JWT 인증</strong>과 <strong>CI/CD 자동 배포</strong>로 보안성과 효율성 강화</li>
+                    </ul>         
+                </div><!--end col-sm-4-->
+                <div class="col-sm-4">
+                    <h4> 기술스택 </h4>
+                    <ul>
+                        <li>Spring Boot 2.7.14</li>
+                        <li>Spring Security 5.7.x</li>
+                        <li>Spring Data JPA 2.7.x</li>
+                        <li>Hibernate 5.6.x</li>
+                        <li>Oracle 11</li>
+                        <li>React 18.x</li>
+                        <li>Axios 1.x</li>
+                        <li>React Router v6</li>
+                        <li>JWT</li>
+                        <li>Git & GitHub</li>
+                        <li>GitHub Actions</li>
+                    </ul>
+
+                </div><!--end col-sm-4-->
+            </div><!--end row-->
+        </div><!--end container-->
+
+  </section>
+
+  <!-- contact  - form  text-start   text-center   text-end  -->
+  <section  class="contact m-5">
+    <div class="container">
+        <h3 class="text-center">Contact Me</h3>
+        <p class="text-center">  성장형 개발자 한승현에게 문의 주세요! </p>
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "bQUeSy1eztAn6ZdqL",
+            });
+        })();
+        ///////////////////////////////////////////
+        function sendEmail( e ){
+            e.preventDefault(); //무조건 전송기능 막기
+            var templateParams = {
+            name:    document.getElementById("name").value,
+            email:   document.getElementById("email").value,
+            title:   document.getElementById("title").value,
+            message: document.getElementById("message").value,
+            };
+
+            emailjs.send('sh201008', 'template_ti8kmke', templateParams).then(
+            (response) => {
+                alert("메일이 성공적으로 전송되었습니다.");
+                console.log('SUCCESS!', response.status, response.text);
+            },
+            (error) => {
+                alert("메일 전송에 실패했습니다.");
+                console.log('FAILED...', error);
+            },
+            );
+        }
+        ///////////////////////////////////////////
+
+
+
+        </script>
+        <form onsubmit="sendEmail(event)">
+            <div class="mb-3 mt-3">
+                <label for="name" class="form-label">name:</label>
+                <input type="text" class="form-control" id="name" 
+                       placeholder="이름을 적어주세요!" name="name">
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="email" class="form-label">email:</label>
+                <input type="email" class="form-control" id="email" 
+                       placeholder="email을 적어주세요!" name="email">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="title" class="form-label">title:</label>
+                <input type="text" class="form-control" id="title" 
+                       placeholder="제목을 적어주세요!" name="title">
+            </div>
+
+            <div class="mb-3">
+                <label for="text">message:</label>
+                <textarea class="form-control" rows="5" id="message" name="message"></textarea>            
+            </div>
+            <div class="mb-3 text-end">
+                <button type="submit" class="btn btn-success">메일보내기</button>
+            </div>
+        </form> 
+    </div><!--end container-->
+  </section>
+
+  <!-- footer -->
+  <footer  class="footer  text-center  bg-secondary  text-white p-5">
+    &copy;  copyrights  company  2025 all. rights reserved 
+  </footer>
+
+
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOTSTRAP</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <!-- 여기에 콘텐츠를 추가하세요 -->
+       <div>
+        <h3 class="card-header">ex 001.</h3>
+        <pre>
+          repeat024.html
+          0. 스크립트는 어디서든 동작 가능
+          1. 아이디가 fontSizeBtn인 버튼을 선택
+          2. 클릭 시 1~5 사이 숫자 입력받음
+          3. 입력한 숫자에 따라 h3 제목 글자 크기 변경
+        </pre>
+        <input type="button" value="addEventEx-1~5 Like" 
+        title="버튼5" id="addEventEx" class="btn btn-success"> 
+        <script> 
+            window.addEventListener("load",function(){
+                document.getElementById("addEventEx") .onclick=function(){
+                    let like = prompt("좋아하는 숫자 1~5", "1~5");
+                    alert("좋아하는 숫자는" + like + "입니다.");
+                };
+            });
+        </script>
+    </div>
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<div class="mt-5  p-3 bg-primary text-white ">
+  <h1>005.선택자  Ex</h1>
+  <ol>
+    <li><mark>document.getElementById</mark></li>
+    <li>window.addEventListener</li>
+    <li>document.getElementById / getElementsByTagName / querySelector</li>
+    <li>value, innerHTML </li>
+  </ol>
+</div> 
+
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 -   Step3. document.getElementById Ex1 </h2>
+  <h3 id="ex1">Target</h3>
+  <div class="card-body">
+       <pre class="alert alert-success">
+          repeat024.html
+          0. 스크립트는 어디서든 동작 가능
+          1. 아이디가 fontSizeBtn인 버튼을 선택
+          2. 클릭 시 1~5 사이 숫자 입력받음
+          3. 입력한 숫자에 따라 h3 제목 글자 크기 변경
+      </pre>
+      <input type="button" value="Change Font Size" 
+            id="fontSizeBtn" class="btn btn-warning" />
+        <script> 
+            window.addEventListener("load",function(){ // 0. 스크립트는 어디서든 동작 가능
+              document.getElementById("fontSizeBtn").onclick=function(){  //1. 아이디가 fontSizeBtn인 버튼을 선택
+               document.getElementById("ex1").style.fontSize = prompt("fontSize선택(1~5)") + "em";
+              };
+            });
+        </script>
+  </div>
+</div>  
+  
+
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5"  id="a">
+  <h2  class="card-header">005.선택자 -   Step3. document.getElementById Ex2 </h2>
+  <div class="card-body">
+    <pre class="alert alert-info">
+        repeat023.html
+        0. 스크립트는 어디서든 동작 가능
+        1. 아이디가 colorChangeBtn인 버튼을 선택
+        2. 클릭 시 좋아하는 색상을 prompt로 입력받음
+        3. 입력한 색상으로 카드 배경색 변경
+    </pre>
+    <input type="button" value="Change Background Color" 
+           id="colorChangeBtn" class="btn btn-primary" />
+    <script>
+      window.addEventListener("load",function(){ // 0. 스크립트는 어디서든 동작 가능
+              document.getElementById("colorChangeBtn").onclick=function(){
+            document.getElementById("a").style.backgroundColor = prompt("카드배경색 입력");
+          };
+        });
+    </script>
+  </div>
+</div>  
+  
+
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5"  id="a1">
+  <h2  class="card-header">005.선택자 -   Step3. document.getElementById Ex2 </h2>
+  <div class="card-body">
+    <pre class="alert alert-secondary"> 
+        0. 스크립트는 어디서든 동작 가능
+        1. 아이디가 borderStyleBtn인 버튼을 선택
+        2. 클릭 시 테두리 스타일 입력받음 (solid, dashed, dotted 등)
+        3. 카드에 입력한 테두리 스타일 적용
+    </pre>
+    <input type="button" value="Change Border Style" 
+           id="borderStyleBtn" class="btn btn-danger" />
+    <script>
+        window.addEventListener("load",function(){
+          document.getElementById("borderStyleBtn").onclick=function(){
+            document.getElementById("a1").style.border = "10px " + prompt("테두리스타일 입력") + " red";
+          };
+        });
+    </script>
+
+  </div>
+</div>  
+  
+
+
+
+
+</body>
+</html>
+--- <!--day022.md까지>
+---
 
 ---
