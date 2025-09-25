@@ -3484,5 +3484,1069 @@ w-25   w-50  w-75  w-100
 </html>
 --- <!--day022.md까지>
 ---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOTSTRAP</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container card">
+        <h3 id="ex1" class="card-header">repeat023.html</h3>
+         <div class="card-body">
+            <pre class="alert alert-warning">
+                0. 스크립트는 어디서든 동작 가능
+                1. 아이디가 fontSizeBtn인 버튼을 선택
+                2. 클릭 시 1~5 사이 숫자 입력받음
+                3. 입력한 숫자에 따라 h3 제목 글자 크기 변경
+            </pre>
+            <input type="button" value="Change Font Size" 
+                    id="fontSizeBtn" class="btn btn-warning" />
+            <script>
+            window.addEventListener("load",function(){
+                document.getElementById("fontSizeBtn").onclick=function(){
+                    document.getElementById("ex1").style.fontSize=prompt("fontSize선택(1~5)") + "em";
+                }; 
+            }); 
+            </script>       
+        </div>
+    </div> 
+
+</body>
+</html>
+---
+---
+자기소개페이지
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨한승현 포트폴리오✨</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    /* VISUAL */
+    div#demo {       height: 300px;    overflow: hidden; }
+
+    /* about me */
+    .info{ background-color: aliceblue; }
+
+    .container_1{background-color: rgba(9, 233, 236, 0.783);
+                 border-radius: 60px; 
+                 display:flex;
+                 align-items:flex-start;  
+                 display:flex;
+                 align-items:flex-start;  
+         }
+    .h4{transform: scaleX(2);}
+    .container_1 .card{background-color:whitesmoke;}
+
+    /* Q1. about me   각부분들 여백주기  */
+    .info h4{ margin: 5% 0; }
+    /* Q2. KeyWord 나와있는 ul태그에 class="keyWord"  */
+    .keyWord li{  list-style-type:none;  margin-right:10px; }
+    /* Q3. h3태그에 중앙배치 , 밑줄  */
+    .info h3{  text-decoration: underline; font-size: 2.2em;} 
+    .hidden{position:absolute; left:-999px; 
+             width:1px; height:1px; overflow:hidden;
+            clip:rect(0,0,0,0); /* 요소를 잘라서 시각적으로 완전히 숨김 - 구형브라우저 호환*/
+            border:0; 
+            white-space: nowrap; /* 줄바꿈방지 - 텍스트 한줄로 */
+    }
+
+    /*info*/
+    .info .card{flex:21%; 
+                box-sizing:border-box;
+    }
+    .card img{
+    width: 40%;
+
+    border-radius:10px;
+    object-fit: cover;
+    border:3px solid #0ed9c1;
+    }
+
+
+    /*portfolio*/
+    .portfolio{ flex:21%;
+                box-sizing: border-box;
+                background-color: aquamarine;
+                border-radius: 80px;
+            }
+
+    /*contact*/
+    .container_2{background-color:beige;
+                 border-radius: 50px;
+            }
+ 
+    /*구름 모양*/
+  .cloud {
+        position: absolute;
+        top: 100px;
+        left: -200px; 
+        width: 150px;
+        height: 80px;
+        background-color:rgba(135, 207, 235, 0.925) ;
+        animation: floatCloud 10s linear forwards;
+        }
+
+            @keyframes floatCloud{
+      0%{  transform:translateX(0)        scale(1);          opacity:0.5; }
+      50%{ transform:translateX(-300px)   scale(1.2);        opacity:1;   }
+      100%{transform:translateX(-600px)   scale(0.8);        opacity:0;   }
+    } 
+
+    .cloud:nth-of-type(1) { left: 10%; animation-delay: 0s; }
+    .cloud:nth-of-type(2) { left: 25%; animation-delay: 2s; width: 15px; height: 15px; }
+    .cloud:nth-of-type(3) { left: 40%; animation-delay: 4s; width: 25px; height: 25px; }
+    .cloud:nth-of-type(4) { left: 60%; animation-delay: 1s; width: 18px; height: 18px; }
+    .cloud:nth-of-type(5) { left: 75%; animation-delay: 3s; width: 22px; height: 22px; }
+
+
+
+  </style>
+</head>
+<body>
+  <!-- H1~H6 제목태그붙이기 -->
+  <!-- PORTFOLIO -->
+
+  <!-- header -->
+  <header  class="header">
+    <h1 class="hidden"> 한승현 포트폴리오</h1>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <h2 class="hidden">주메뉴</h2>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)">한승현</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">포트폴리오</a>
+                </li>            
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">About Me</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Gallery</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Contact</a>
+                </li>
+            </ul> 
+            </div>
+        </div>
+    </nav>
+  </header>
+
+  <!-- visual -->
+  <section  class="visual">
+    <!-- Carousel -->
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+    </div>
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="./imagie/SelfPage_1.jpg" alt="selfPage_1" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+        <img src="./imagie/SelfPage_2.jpg" alt="selfPage_2" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+        <img src="./imagie/SelfPage_3.jpg" alt="SelfPage_3" class="d-block w-100">
+        </div>
+    </div>
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+    </div>
+  </section>
+
+  <!-- info -->
+  <section  class="info p-5"  >
+    <div class="container_1">
+        <h3 class="p-5 text-center ">About Me</h3>
+        <div class="row">
+            <div class="card mx-3">
+            <div class="col-sm-4 "> <!-- w-25  w-50 w-75 w-100 -->
+                <p><img src="./imagie/Profile_1.png" class="w-100" alt=""/></p>
+                <h4 >한승현</h4>
+                <ul>
+                    <li>h48097435@gmail.com</li>
+                    <li><a href="https://github.com/HSH703/fullstack.-d._seunghyun.git"> 
+                        깃허브 포트폴리오 </a></li>
+                </ul>  
+            </div><!-- col-sm-4 -->
+            </div><!--end card-->
+            <div class="card">
+            <div class="col-sm-4">  
+                <h4>Computer Engineering</h4>
+                <ul>
+                    <li>MSA기반 플러터(Dart)활용 자바(JAVA)프론트엔드
+                        백엔드 풀스택 웹(앱)개발 (25.08.25~ 26.02.27)</li>
+                </ul>
+
+                <h4>KeyWord</h4>
+                <ul  class="d-flex keyWord">
+                    <li>
+                        <input type="button" value="열정"  class="btn btn-danger" id="PassionBtn"/>
+                        <script>
+                            window.addEventListener("load", function(){
+                                document.getElementById("PassionBtn").onclick=function() {
+                                    let answer = prompt("당신은 어떤 개발자입니까?");
+                                    alert("당신은" + answer + "개발자입니다.");
+                                };
+                            });
+                        </script>
+                    </li>
+                    <li><input type="button" value="성실"  class="btn btn-warning" id="FaithfulnessBtn"/>
+                        <script>
+                            window.addEventListener("load", function(){
+                                document.getElementById("FaithfulnessBtn").onclick=function() {
+                                    let answer = prompt("당신은 어떤 개발자입니까?");
+                                    alert("당신은" + answer + "개발자입니다.");
+                                };
+                            });
+                        </script>
+                    </li>
+                    <li><input type="button" value="끈기"  class="btn btn-info" id="TenacityBtn"/>
+                        <script>
+                            window.addEventListener("load", function(){
+                                document.getElementById("TenacityBtn").onclick=function() {
+                                    let answer = prompt("당신은 어떤 개발자입니까?");
+                                    alert("당신은" + answer + "개발자입니다.");
+                                };
+                            });
+                        </script>
+                    </li>
+
+                </ul>   
+            </div><!-- col-sm-4 -->
+            </div><!--end card-->
+            <div class="card">
+            <div class="col-sm-4">   
+                <h4>SKILLS</h4>
+                <div class="progress my-3">
+                    <div class="progress-bar bg-info progress-bar-striped" style="width:80%">JAVA 80%</div>
+                </div> 
+                <div class="progress my-3">
+                    <div class="progress-bar bg-warning progress-bar-striped" style="width:90%">SPRING 90%</div>
+                </div> 
+                <div class="progress my-3">
+                    <div class="progress-bar bg-danger progress-bar-striped" style="width:90%">ORACLE 90%</div>
+                </div> 
+                <div class="progress my-3">
+                    <div class="progress-bar bg-primary progress-bar-striped" style="width:85%">REACT 85%</div>
+                </div>    
+                <div class="progress my-3">
+                    <div class="progress-bar bg-success progress-bar-striped" style="width:85%">AWS 85%</div>
+                </div>                                 
+            </div><!-- col-sm-4 -->
+            </div><!--end card-->
+        </div> <!-- row -->
+    </div><!-- container -->
+  </section>
+
+  <!-- portfolio -->
+  <section  class="portfolio">
+        <h3 class="text-center">Portfolio</h3>
+
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                <div class="col-sm-4">
+                    <!-- <img src="./img/portfolio1.jpg"  alt=""/> -->
+                    <iframe class="2-100 no border" 
+                    src="https://www.youtube.com/embed/RAnwa37fVqE?si=HoDup7Xx2K_i87zh" title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                    
+                          <p class="text-center m-3"><a href="#" class="btn btn-info text-white"> 포트폴리오 더보기 </a></p>
+
+                    <iframe class="2-100 no border"
+                        src="https://www.youtube.com/embed/RAnwa37fVqE?si=u4xtRebhqwCa0oI3" title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                 
+                           <p class="text-center m-3"><a href="#" class="btn btn-primary text-white"> 포트폴리오 더보기 </a></p>
+                </div><!--end col-sm-4-->
+                </div><!--end card-->
+                <div class="card">
+                <div class="col-sm-4">
+                    <h4> spring boot + jpa + react  portfolio</h4>
+                    <ul>
+                        <li><strong>Spring Boot + JPA</strong> 기반의 백엔드와 데이터 처리 로직 구현</li>
+                        <li><strong>React</strong>를 활용한 사용자 중심의 프론트엔드 UI 개발</li>
+                        <li><strong>JWT 인증</strong>과 <strong>CI/CD 자동 배포</strong>로 보안성과 효율성 강화</li>
+                    </ul>         
+                </div><!--end col-sm-4-->
+                </div><!--end card-->
+                <div class="card">
+                <div class="col-sm-4">
+                    <h4> 기술스택 </h4>
+                    <ul>
+                        <li>Spring Boot 2.7.14</li>
+                        <li>Spring Security 5.7.x</li>
+                        <li>Spring Data JPA 2.7.x</li>
+                        <li>Hibernate 5.6.x</li>
+                        <li>Oracle 11</li>
+                        <li>React 18.x</li>
+                        <li>Axios 1.x</li>
+                        <li>React Router v6</li>
+                        <li>JWT</li>
+                        <li>Git & GitHub</li>
+                        <li>GitHub Actions</li>
+                    </ul>
+
+                </div><!--end col-sm-4-->
+                </div><!--end card-->
+            </div><!--end row-->
+        </div><!--end container-->
+
+  </section>
+
+  <!-- contact  - form  text-start   text-center   text-end  -->
+  <section  class="contact m-5">
+    <div class="container_2">
+        <h3 class="text-center">Contact Me</h3>
+        <p class="text-center">  성장형 개발자 한승현에게 문의 주세요! </p>
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "bQUeSy1eztAn6ZdqL",
+            });
+        })();
+        ///////////////////////////////////////////
+        function sendEmail( e ){
+            e.preventDefault(); //무조건 전송기능 막기
+            var templateParams = {
+            name:    document.getElementById("name").value,
+            email:   document.getElementById("email").value,
+            title:   document.getElementById("title").value,
+            message: document.getElementById("message").value,
+            };
+
+            emailjs.send('sh201008', 'template_ti8kmke', templateParams).then(
+            (response) => {
+                alert("메일이 성공적으로 전송되었습니다.");
+                document.getElementById("name").value =""
+                document.getElementById("email").value =""
+                document.getElementById("title").value ="";
+
+                console.log('SUCCESS!', response.status, response.text);
+            },
+            (error) => {
+                alert("메일 전송에 실패했습니다.");
+                console.log('FAILED...', error);
+            },
+            );
+        }
+        ///////////////////////////////////////////
+
+
+
+        </script>
+        <form onsubmit="sendEmail(event)">
+            <div class="mb-3 mt-3">
+                <label for="name" class="form-label">name:</label>
+                <input type="text" class="form-control" id="name" 
+                       placeholder="이름을 적어주세요!" name="name">
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="email" class="form-label">email:</label>
+                <input type="email" class="form-control" id="email" 
+                       placeholder="email을 적어주세요!" name="email">
+            </div>
+                        <div class="mb-3 mt-3">
+                <label for="title" class="form-label">title:</label>
+                <input type="text" class="form-control" id="title" 
+                       placeholder="제목을 적어주세요!" name="email">
+            </div>
+
+            <div class="mb-3">
+                <label for="text">message:</label>
+                <textarea class="form-control" rows="5" id="message" name="comment"></textarea>            
+            </div>
+            <div class="mb-3 text-end">
+                <button type="submit" class="btn btn-success">메일보내기</button>
+            </div>
+        </form> 
+    </div><!--end container-->
+  </section>
+
+  <!-- footer -->
+  <footer  class="footer  text-center  bg-secondary  text-white p-5">
+    &copy;  copyrights  company  2025 all. rights reserved 
+  </footer>
+
+
+<!-- Code injected by live-server -->
+<script>
+   // <![CDATA[  <-- For SVG support
+   if ('WebSocket' in window) {
+      (function () {
+         function refreshCSS() {
+            var sheets = [].slice.call(document.getElementsByTagName("link"));
+            var head = document.getElementsByTagName("head")[0];
+            for (var i = 0; i < sheets.length; ++i) {
+               var elem = sheets[i];
+               var parent = elem.parentElement || head;
+               parent.removeChild(elem);
+               var rel = elem.rel;
+               if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                  var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                  elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+               }
+               parent.appendChild(elem);
+            }
+         }
+         var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+         var address = protocol + window.location.host + window.location.pathname + '/ws';
+         var socket = new WebSocket(address);
+         socket.onmessage = function (msg) {
+            if (msg.data == 'reload') window.location.reload();
+            else if (msg.data == 'refreshcss') refreshCSS();
+         };
+         if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+            console.log('Live reload enabled.');
+            sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+         }
+      })();
+   }
+   else {
+      console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+   }
+   // ]]>
+</script>
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+      window.addEventListener("load", function(){
+        document.getElementById("addEvent").onclick = function(){
+             alert(5); alert(4); alert(3); alert(2); alert(1);
+       };
+      });
+</script>
+</head>
+<body>
+
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<div class="mt-5  p-3 bg-primary text-white ">
+  <h1>005.선택자 </h1>
+  <ol>
+    <li>document.getElementById</li>
+    <li>window.addEventListener</li>
+    <li>document.getElementById / getElementsByTagName / querySelector</li>
+    <li>value, innerHTML </li>
+  </ol>
+</div>
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 - STEP1. document.getElementById</h2>
+  <div class="card-body">
+    <h4 id="step1">STEP1. document.getElementById</h4>
+    <input type="button" value="ById" 
+           id="byid" title="버튼을 클릭하세요.(js)" 
+           class="btn btn-outline-primary"      />
+    <script>
+      //            이벤트대상              이벤트     =      이벤트핸들러
+      document.getElementById("byid").onclick = function(){
+        alert("hoho");
+      };
+      // step1을 클릭하면 본인이름 알림창띄우기
+      document.getElementById("step1").style.cursor = "pointer";
+      document.getElementById("step1").onclick = function (){
+        alert("홍길동");
+      }
+    </script>
+
+
+
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre class="alert alert-warning">
+    1. 아이디가 byidex 인것을 getElementById 이용해 선택
+    2. 클릭시 prompt이용해서 당신이 좋아하는 색상 물어보고
+    3. alert 이용해서 알림창띄우기 
+    </pre>
+    <input type="button"  value="ByIdEx-당신이좋아하는색상"  title="버튼4"  id="byidex"   class="btn btn-success" />
+    <script>
+      document.getElementById("byidex").onclick = function(){
+        let color = prompt("당신이 좋아하는 색상은?");
+        alert ("당신이 좋아하는 색상은" + color + "입니다.");
+      };
+    </script>
+  </div>
+</div>
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 - STEP2. window.addEventListener</h2>
+  <div class="card-body">
+    <h4>STEP2. window.addEventListener</h4>
+    <pre class="alert alert-warning">
+    1. 아이디가 addEvent 인것을  getElementById 이용해 선택
+    2. 클릭시 5,4,3,2,1 alert창 다섯번띄우기
+    </pre> 
+    <input type="button"  value="addEventListener"  title="버튼4"  id="addEvent"    class="btn btn-outline-primary"    />
+    <script>
+      /*document.getElementById("addEvent").onclick = function(){
+      alert(5); alert(4); alert(3); alert(2); alert(1);
+      };*/
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre class="alert alert-warning">
+    0. 스크립트가 document 어느위치에서든지 동작가능하게
+    1. 아이디가 addEventEx인것을  getElementById 이용해 선택
+    2. 클릭시 prompt이용해서 당신이 좋아하는 1~5사이의 숫자 물어보고
+    3. alert이용해서 알림창띄우기 
+    </pre>    
+    <input type="button"  value="addEventEx-Five Count"  title="버튼5"  id="addEventEx"  class="btn btn-success" />
+    <script>
+      window.addEventListener("load", function(){
+        let target= document.getElementById("addEventEx")
+        target.onclick = function(){
+          let like = prompt("좋아하는 숫자는 1~5");
+          alert("당신이 좋아하는 숫자는" + like + "입니다."); 
+          target.style.backgroundColor="#000";
+          target.style.color="#fff";
+       };
+      });
+    </script>    
+  </div>
+</div>
+
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-5">
+  <h2  class="card-header">005.선택자 - Step3. document.getElementById / getElementsByTagName / querySelector  </h2>
+  <div class="card-body">
+    <h4>STEP3. document.getElementById / getElementsByTagName / querySelector</h4> .
+    <ul id="animal">
+      <li>DOG</li>
+      <li id="cat">CAT</li>
+      <li id="pig">PIG</li>
+    </ul>
+    <script>
+      window.addEventListener("load", function(){           
+        //1. step1 #animal 선택하기 
+        let animal = document.getElementById("animal");
+        console.log(animal);
+        //2. 그 안에 동물들(li) 찾기
+        let anis = animal.getElementsByTagName("li");
+        console.log(anis); //li 태그들 다....찾아서.
+
+        //3. 꾸미기 
+        //anis.style.color = "#f00";  //blue, #f00(빨간색) -- 오류 style 개별요소에 적용, 전체적용 X
+        //HTMLCollection(3) ~~ 오류코드
+        anis[0].style.color="blue";
+        anis[1].style.color="#f00";
+      });
+    </script>
+    <script>
+     window.addEventListener("load", function(){
+      //4. 만능 querySelector (#animal)
+      let animal2= document.querySelector("#animal");
+      console.log(animal2)
+      animal2.style.border="5px dotted crimson";
+      animal2.style.padding="20px";
+      animal2.style.borderRadius="20px";
+      //5. 만능 모든요소가져오기 querySelectorAll
+       let alis = document.querySelectorAll("#animal li");
+       for(let i=0; i<alis.length; i++){
+          alis[i].style.fontWeight="bold";
+          alis[i].style.textDecroation="underline";
+          alis[i].style.backgroundColor="black";
+          alis[i].style.color="white";
+       }
+     });
+    </script>
+
+
+    <ul id="color">
+      <li>RED</li>
+      <li id="orange">ORANGE</li>
+      <li id="gold">GOLD</li>
+    </ul>
+    <script>
+      //Q1. #color 선택하기 color라는 변수에 담기
+      //Q2. 안에 있는 li태그들 선택
+      //Q3. 첫번째 RED의 굵게 fontweight="bold";
+      window.addEventListener("load", function(){
+        let color = document.getElementById("color");
+        let lis   = color.getElementsByTagName("li");
+        lis[0].style.fontWeight = "bold";
+      });
+
+      
+
+      // 6. querySelector(for문 X), querySelectorAll(각 요소에 for(){}문 입력하기.) 이용하기
+      //Q4. #color선택 - 배경 crimson, 글자색 white 
+      window.addEventListener("load", function(){
+        let color2 = document.querySelector("#color");
+        color2.style.backgroundColor = "crimson";
+        color2.style.color = "white";
+      });
+    
+      window.addEventListener("load", function(){;
+      // 6. querySelector(for문 X), querySelectorAll(각 요소에 for(){}문 입력하기.) 이용하기
+      let cs = document.querySelector("#color");
+      let children = cs.children;
+      console.log(children);
+      //7. parentElement
+       let child = document.querySelector("#orange");
+       orange.parentElement.style.border="5px dashed orange";
+       orange.parentElement.style.borderRadius="20px";
+      //8. 제일가까운 상위부모 
+      orange.closest("ul").style.padding="20px";
+      //9. 형제요소 
+      orange.previousElementSibling.style.textAlign="center";
+      orange.nextElementSibling.style.textAlign="right";
+      })
+
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX </h4>
+    <ul id="fruits">
+      <li>apple</li>
+      <li id="banana">banana</li>
+      <li id="coconut">coconut</li>
+    </ul>
+    <script>
+      window.addEventListener("load", function(){
+      //Q1) document.getElementsById 이용해서  #fruits 선택  
+        let fruits = document.getElementById("fruits");
+      //Q2) document.getElementsByTagName 이용해서  
+      //   #fruits 안의 모든 li에 배경색 black, 글자색 white , 여백 10px주기
+      //Q2) document.getElementsById 이용해서 banana 선택 배경색 gold
+      //Q3) document.querySelector 이용해서 coconut 선택 
+      //  coconut를 클릭하면 width:200px; 로 수정
+        let fruitArr = fruits.getElementsByTagName("li");
+        //fruitsArr.style.backgroundColor="black"; 배열명:style 
+          for(let i=0; i<fruitArr.length; i++){
+            fruitArr[i].style.backgroundColor="black";
+            fruitArr[i].style.color="white";
+            fruitArr[i].style.padding="10px";
+          }
+          document.getElementById("banana").style.backgroundColor="gold";
+          document.querySelector("#coconut").onclick = function(){ 
+            //document.querySelector("#coconut").style.width="200px";
+            this.style.width="200px"; //this. 내가 선택한 이벤트 대상
+          };   
+        });
+
+    </script>  
+  </div>
+</div>
+
+<!--     -->
+<!--     -->
+<!--     -->
+<div class="container card  my-3">
+  <h2  class="card-header">005.선택자 - STEP4. value(input 안에 있는 값), innerHTML(일반태그안의 콘텐츠) </h2>
+  <div class="card-body">
+    <h4>STEP4. value, innerHTML </h4> 
+    <div class="row">
+      <div class="col"><input type="text"    id="value_target"  class="form-control"
+                         placeholder="input에서는 value"  /></div>
+      <div class="col"><input type="button"  value="value"  title="value_target"  id="value"  class="btn btn-outline-primary" /></div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col"> <div class="inner_target  alert alert-success"></div>  </div>
+      <div class="col"><input type="button"  value="innerHTML"  title="value_target"  id="inner"   class="btn btn-outline-primary" /></div>
+    </div>
+
+    <script>
+      window.addEventListener("load",function(){
+        //value
+        let value = document.querySelector("#value");
+        value.addEventListener("click", function(){
+          let value_target = document.querySelector("#value_target"); 
+          alert(value_target.value); //input 대상의.value
+          value_target.value=""; //input 대상의값 지우기
+        });
+        //innerHTML 
+        let inner = document.querySelector("#inner");
+        inner.addEventListener("click", function(){
+          let inner_target = document.querySelector(".inner_target");
+          inner_target.innerHTML = "WELCOME JS!"; //내용을 대입
+          alert(inner_target.innerHTML);
+        });
+      });
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <input type="button"  value="click"         id="test1"    class="btn btn-success"   />
+    <input type="button"  value="value"         id="test2"    class="btn btn-success"   />
+    <input type="button"  value="innerHtml"     id="test3"    class="btn btn-success"   />
+    <input type="button"  value="MOUSEOVER-OUT" id="test4"    class="btn btn-success"   />
+    <div class="result_target  my-5">JAVASCRIPT</div>
+
+    <pre>
+    <!-- 브라우저가 로딩이 되면
+    Q1) #test1를 클릭하면 본인이름 입력받고 입력받은 값 알림창 띄우기
+    Q2) #test2를 클릭하면 #test2의 value값을 INPUT으로 수정
+    Q3) #test3를 클릭하면
+    1.  .result_target영역안의 문자열을 알림창으로 띄우고
+    2.  .result_target영역안을 본인이름으로 수정
+    Q4) #test4를 마우스를 올리면(mouseover)  .result_target의 배경색을 crimson으로
+                    마우스를 떼면(mouseout)     .reult_target의 배경색을 black으로 -->
+
+     https://www.w3schools.com/js/js_events.asp
+    </pre>
+    <script>
+      window.addEventListener("load", function(){
+        let test1 = document.querySelector("#test1");
+        test1.addEventListener("click", function(){
+         let name = prompt("당신의 이름을 입력하세요.");
+          alert(name);
+        });
+
+        document.querySelector("#test2").addEventListener("click", function(){
+          this.value="INPUT";
+        });
+
+        let test3 = document.querySelector("#test3");
+        let test3_target = document.querySelector(".result_target");
+          test3.addEventListener("click", function(){
+            alert(test3_target.innerHTML);
+            test3_target.innerHTML="한승현";
+          });
+        
+      
+          let test4 = document.querySelector("#test4");
+          test4.addEventListener("mouseover", function(){
+            test3_target.style.backgroundColor="crimson";
+          });
+          test4.addEventListener("mouseleave", function(){
+            test3_target,style.backgroundColor="black";
+          });
+      });
+
+
+
+
+
+    </script>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>
+---<!--day023.md-->
+---
+## webbasic
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOTSTRAP</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <!-- 여기에 콘텐츠를 추가하세요 -->
+   <div class="container card">
+        <h3 class="card-header">001. repeat </h3>
+         <div class="card-body">
+            <h4>EX</h4>
+            <input type="button"  value="click"         id="test1"    class="btn btn-success"   />
+            <input type="button"  value="value"         id="test2"    class="btn btn-success"   />
+            <input type="button"  value="innerHtml"     id="test3"    class="btn btn-success"   /> 
+            <div class="result_target  my-5">JAVASCRIPT</div>
+            <pre>
+            브라우저가 로딩이 되면
+            Q1) #test1를 클릭하면 본인이름 입력받고 입력받은 값 알림창 띄우기
+            Q2) #test2를 클릭하면 #test2의 value값을 INPUT으로 수정
+            Q3) #test3를 클릭하면
+            1.  .result_target영역안의 문자열을 알림창으로 띄우고
+            2.  .result_target영역안을 본인이름으로 수정
+
+            </pre>
+            <script>
+                window.addEventListener("load", function(){
+                  let test1 = document.querySelector("#test1");
+                  test1.addEventListener("click",function(){
+                   let name = prompt("이름을 입력하세요");
+                    alert(name);
+                  });
+                  document.querySelector("#test2").addEventListener("click",function(){
+                    this.value = "INPUT"; //input
+                  }); 
+                  let test3 = document.querySelector("#test3");
+                  let test3_target = document.querySelector(".result_target");
+                  test3=addEventListener("click",function(){
+                    alert(test3_target.innerHTML);  //input 아닌애들
+                    test3_target.innerHTML = "한승현";
+                  });
+                });
+
+            </script>
+        </div>
+   </div>
+</body>
+</html>
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<div class="p-3 bg-primary text-white ">
+  <h1>006. function </h1>
+  <ol>
+    <li>function- 명시적</li>
+    <li>a태그에서의 이벤트</li>
+  </ol>
+</div>
+<div class="container card  my-3">
+  <h3  class="card-header">006. FUNCTION - STEP1. function</h3>
+  <div class="card-body">
+    <h4>STEP1. function </h4>
+    <pre>
+    1.  function 선언   - function 함수이름(){}
+    2.  function 사용   - 함수이름();
+    </pre>
+    <input type="button"  value="FUNCTION1"  title="FUNCTION"  id="fn1"   class="btn btn-outline-primary" />
+    <script>
+      //이벤트대상                    이벤트   이벤트핸들러
+      //브라우저  로딩  이벤트핸들러 
+      window.addEventListener("load", function(){
+        document.querySelector("#fn1").addEventListener("click", function(){  
+                        //1. function(){}; 익명적함수 (이름 X) -콜백, 이벤트핸들러
+            //alert("hello~! Js!"); 
+            fn1();
+        });
+      });
+ 
+      //2.       마법상자이름    명시적함수(이름 O)
+      // 호이스팅 : 코드실행전에 메모리가 올라감(무거움), 선언전 호출가능
+      //fn1();
+      function         fn1(){ alert("hello~! Js!");   };
+      //fn1(); 
+
+      //3. 함수표현식 - 변수에 할당하는 방식
+      //fn11(); //선언전 호출하면 에러발생
+      const fn11 = function(){ alert("Hello2")  };
+      //fn11();
+      
+      //4. 화살표함수 - react
+      const fn12 = () => alert("Hello3");
+      //fn12();
+      
+      //5. 즉시시행함수 - 정의하자마자 실행되는 함수, 주로 초기화 용도
+      (function(){ alert ("Hello4"); })();
+
+
+  </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre>
+      1. fn2를 누르면 - window.onload / getElementById 이용
+      2. fn2()  만들기 - 1,2,3,4,5 alert 창 5번 띄우기
+      3. #fn2에서 클릭할때 fn2() 호출
+      </pre>
+      <input type="button"  value="버튼2"  title="버튼2"    id="fn2"  class="btn btn-success" />
+      <script> 
+        //명시적함수로 문제풀기
+        window.addEventListener("load", function(){
+           let fn2Btn= document.getElementById("fn2"); 
+            fn2Btn.addEventListener("click", function(){
+              fn2();
+          });
+        });
+        function fn2(){ 
+          alert(1); alert(2); alert(3); alert(4); aleret(5); 
+        };
+
+      </script>
+  </div>
+</div>
+
+
+
+
+<div class="container card  my-3">
+  <h3  class="card-header">006. FUNCTION - STEP2. a 태그에서 event</h3>
+  <div class="card-body">
+    <h4>STEP2. a 태그에서 event </h4>
+    <!--<a href="https://www.naver.com/"   class="btn btn-outline-primary target_a" >EVENT</a>-->
+    <a href="#"   class="btn btn-outline-primary target_a" >EVENT</a>
+
+    <script>
+      //이벤트대상                    이벤트   이벤트핸들러
+      //브라우저  로딩  이벤트핸들러 
+
+  </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>STEP3. a 태그에서 event 사용예</h4>
+    <div class=" w-25  bg-primary    rounded  p-2 text-white  text-center ">
+      <h1>Score   <span class="target_num">0</span></h1>
+    </div>
+    <div class="w-25 text-center m-2">
+      <a href="#" class="btnPlus   btn btn-outline-primary">plus</a>
+      <a href="#" class="btnMinus  btn btn-outline-primary">minus</a>
+    </div>
+    <script>
+      window.addEventListener("load", function(){
+        let link = document.querySelector(".target_a"); //css 표현방법
+        link.addEventListener("click", function(e){
+          e.preventDefault(); //이벤트의 기본동작 막기.
+          alert("A link!"); //target 대상이 A일때, 다른 페이지로 넘어감.
+        });
+      });
+
+      //Q1. .btnPlus를 클릭하면  .target_num 안의 숫자가 올라간다. 
+      //Q2. .btnMius를 클릭하면  .target_num 안의 숫자가 내려간다.
+      window.addEventListener("load", function(){
+        let num=0;
+        //힌트1) .btnPlus   찾아오기
+        //힌트2) .btnMinus   찾아오기
+        //힌트3) .target   찾아오기
+        let btnPlus=document.querySelector(".btnPlus");
+        let btnMinus=document.querySelector(".btnMinus");
+        let target=document.querySelector(".target_num");
+        //힌트4) 1을 - 클릭하면  - 일반태그이므로  target_num    innerHTML  접근   ++num;
+        btnPlus.addEventListener('click', function(e){
+          e.preventDefault();     target.innerHTML = ++num;
+        });
+        //힌트5) 2를 - 클릭하면  - 일반태그이므로  target_num    innerHTML  접근   ++num;
+        btnMinus.addEventListener('click', function(e){
+          e.preventDefault();     target.innerHTML = --num;
+        });
+      });
+
+    </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <div class="w-25  bg-success  rounded  p-2  mx-auto text-white  text-center target_box">
+      <h1>ROTATE</h1>
+    </div>
+    <div class="w-25 text-center m-2">
+      <a href="#" class="btnLeft   btn btn-outline-success">LEFT ROTATE</a>
+      <a href="#" class="btnRight  btn btn-outline-success">RIGHT ROTATE</a>
+    </div>
+    <script>
+       window.addEventListener("load", function(){
+        let cnt=0;
+        //1. .btnLeft 대상찾기 
+        //2. .btnRight 대상찾기 
+        //3. .target_box 대상찾기
+        let btnLeft=document.querySelector(".btnLeft");
+        let btnRight=document.querySelector(".btnRight");
+        let target_box=document.querySelector(".target_box");
+        //4. 1을 클릭하면 style.transform = rotate(45deg);
+        //  style.transform = "roate("+  45*cnt + "deg)";
+        //  style.transform = "roate("+ -45*cnt + "deg)";
+
+        btnLeft.addEventListener("click", function(e){
+          e.preventDefault();    target_box.style.transform="rotate("+ (--cnt*45) + "deg)";
+        });
+        btnRight.addEventListener("click", function(e){
+          e.preventDefault();    target_box.style.transform="rotate("+  (++cnt*45) + "deg)";
+        });
+       });
+    </script>
+  </div>
+</div>
+
+
+
+</body>
+</html>
+---<!--day024.md-->
 
 ---

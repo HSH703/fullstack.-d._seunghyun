@@ -7788,5 +7788,1095 @@ m4의 제품번호 2030-4
 */
 ---<!--day022.md까지-->
 ---
+---
+package com.company.java010_ex;
+//- 문제 1. 다음 코드에서 인스턴스변수, 클래스변수, 지역변수를 구분하시오.  ( 보관되는 영역도 추가 )
+//- 문제 2. 인스턴스메서드와 클래스메서드를 구분하시오.  
+//- 문제 3. 오류가 발생하는 이유를 설명하시오.
+//- 문제 4. runtime data area 위치영역 그림그리기
+//- 문제 5. 다음과 같이 출력되도록 코드를 작성하시오.
 
+//클래스는 부품객체
+//클래스는 상태(멤버변수)와 행위(멤버함수)
+
+class LunchTray {
+	//멤버변수	(1. 클래스변수 : 공용 , 2. 인스턴스변수 : this(각각)  , 3. 지역변수: 임시)
+    String owner;  //인스턴스변수 - heap area - new O - 생성자 O - this. O      
+    int rice = 90; //인스턴스변수 - heap area - new O - 생성자 O - this. O              
+    int soup = 85; //인스턴스변수 - heap area - new O - 생성자 O - this. O             
+
+    static int trayCount = 0; //클래스변수 - method area - new X - 셍성자 X - (right)now     
+  //static int totalFood = rice + soup; // ★static 은 this. 사용불가X 
+    									//클래스변수 - method area - new X - 셍성자 X - (right)now     
+    static int maxRice = 100; //클래스변수 - method area - new X - 셍성자 X - (right)now           
+    
+    //멤버함수
+    public LunchTray() {
+    	// owner 이름 : std-1, 급식판수 숫자올리기
+    	this.owner = "std-" + ++trayCount;
+    }
+    
+    public int getFoodAmount() { return rice + soup;}//인스턴스메서드 - heap area - new O - 생성자 O - this. O
+    
+    
+	public static void showTrayCount() { //클래스메서드 - 
+        System.out.println("전체 급식판 수: " + trayCount);   
+    }
+
+    public static void showOwner() { //클래스메서드
+      //System.out.println(owner); //★static 은 this. 사용불가X 
+    }
+
+    public void showTray() {  //클래스메서드
+        System.out.println("\n\n:: 주인 이름: " + owner);  // this              
+        System.out.println("총 음식량: " + this.getFoodAmount()); //static    
+    }
+}
+
+//LunchTray() { }
+//:: 주인 이름: std-1
+//총 음식량: 175
+//전체 급식판 수: 1
+
+
+///////////////////////////////////////////////////////////////////
+public class MemberVarEx003 {
+	
+	public static void main(String[]args) {
+        LunchTray tray1 = new LunchTray();  // 1. new(메모리, 객체)  2) 생성자(인스턴스변수초기화사용가능)
+        tray1.showTray();                    
+        LunchTray.showTrayCount();  //클래스.메서드();       
+
+        LunchTray tray2 = new LunchTray();  //
+        tray2.showTray();                   
+        LunchTray.showTrayCount();         
+	}//end main
+}// end class
+
+
+/*
+ public LunchTray(){
+ 	//owner 이름: std-1, 급식판수 숫자올리기
+ 	this.owner = "std-" + ++trayCount;
+ } 
+ 
+------------------------[ runtime data area]
+[method: 정보, static, final : 공용정보]
+>1. LunchTray.class  ,  MemberVarEx003.class
+>2. LunchTray.trayCount        ,  LunchTray.,maxRice
+    LubchTray.showTrayCount()  ,  LunchTray.showOwner()
+------------------------------------
+[heap: 동적]             		    | [stack : 잠깐빌리기]
+								      tray2[2번지] showTray();
+1번지{owner=std-2, rice=90, soup=85} ← tray2[2번지] 
+									  tray1[1번지] showTray();
+1번지{owner=std-1, rice=90, soup=85} ← tray1[1번지]  
+					     		    | main
+------------------------------------
+*/
+
+/*초기화순서 :   초기값     명시적초기화     초기화블록     생성자
+//////////////////////////////////////////////////////////////////////////////
+TrayCount       0          = 0          X 0     공용으로 사용관련  X
+maxRice			0		   = 100        X 100	생성자안에서 클래스변수 사용가능
+//////////////////////////////////////////////////////////////////////////////
+owner		   null        X null		X null		X "std-1" (this)	this.owner = "std-" + ++trayCount;
+rice  		    0			90 			X 90		X 90	
+soup			0			85			X 85		X 85
+//////////////////////////////////////////////////////////////////////////////
+*/
+
+///////////////////////////////////////////////////////////////////
+/*연습문제3)  멤버변수
+패키지명 : com.company.java010_ex
+클래스명 :  MemberVarEx003
+
+:: 주인 이름: std-1
+총 음식량: 175
+전체 급식판 수: 1
+
+
+:: 주인 이름: std-2
+총 음식량: 175
+전체 급식판 수: 2
+
+ 
+class LunchTray {
+    String owner;        
+    int rice = 90;               
+    int soup = 85;               
+
+    static int trayCount = 0;      
+
+    static int totalFood = rice + soup;
+
+    static int maxRice = 100;       
+
+    public int getFoodAmount() {
+        return rice + soup;         
+    }
+
+    public static void showTrayCount() {
+        System.out.println("전체 급식판 수: " + trayCount);   
+    }
+
+    public static void showOwner() { 
+       System.out.println(owner);
+    }
+
+    public void showTray() {
+        System.out.println("\n\n:: 주인 이름: " + owner);                
+        System.out.println("총 음식량: " + getFoodAmount());     
+    }
+}
+
+
+public class MemberVarEx003 {
+   public static void main(String[] args) {
+        LunchTray tray1 = new LunchTray();   
+        tray1.showTray();                    
+        LunchTray.showTrayCount();         
+
+        LunchTray tray2 = new LunchTray();   
+        tray2.showTray();                   
+        LunchTray.showTrayCount();         
+   }
+} 
+
+
+
+*/
+---
+---
+package com.company.java011_ex;
+
+
+//1. 클래스는 부품객체(클래스변수 / 인스턴스변수) 
+class User002 { 
+	   final String nation = "Korea";  //인스턴스변수 - method area - new X - 생성자 X - now 
+	   final String jumin;   		   //
+	   String name;					   //
+	   
+	   
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수)
+	   public User002() { jumin="00000"; }
+	   public User002(String jumin, String name) {
+	      this.jumin = jumin;
+	      this.name = name;
+	   }
+	}//end class User002
+
+
+//////////////////////////////////////////////////////////////////
+public class FinalEx {
+	public static void main(String[]args) {
+	      User002 user1 = new User002("123456-1234567", "아이유");
+	      System.out.println(user1);   
+	      
+	    //user1.nation = "USA";     //cannot be assigned  
+	    //user1.jumin  = "123123-1234321"; //final
+	      user1.name = "IU"; 
+	      System.out.println(user1);   
+
+		
+		
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////////
+/*연습문제1)  final
+패키지명 : com.company.java011_ex
+클래스명 : FinalEx
+다음코드에서 오류나는 부분을 찾아 주석달고 이유를 적으시오.
+class User002 {
+   final String nation = "Korea";   
+   final String jumin;   
+   String name;
+
+   public User002() { jumin="00000"; }
+   public User002(String jumin, String name) {
+      this.jumin = jumin;
+      this.name = name;
+   }
+}
+ public class FinalEx {
+   public static void main(String[] args) {
+      User002 user1 = new User002("123456-1234567", "아이유");
+      System.out.println(user1);   
+      
+      user1.nation = "USA";      
+      user1.jumin  = "123123-1234321"; 
+      user1.name = "IU"; 
+      System.out.println(user1);   
+   }
+}
+
+
+*/
+---
+---
+package com.company.java010; //##1
+//public(어디서든지) > protected(상속 extends) > package(default 같은 폴더에서만) > private(클래스내)
+public class Milk{  // java010에 설정해주세요!
+	   private int  mno;   
+	   private String mname;  
+	   private  int mprice;  
+	   //alt + shift + s (2,3,4 / getter+setter)
+	   public Milk() {super();}
+	   public Milk(int mno, String mname, int mprice) { super(); this.mno = mno; this.mname = mname; this.mprice = mprice;}
+	   @Override
+	   public String toString() { return "Milk [mno=" + mno + ", mname=" + mname + ", mprice=" + mprice + "]"; }
+	  
+	   public String getMname() { return mname;} public void setMname(String mname) { this.mname = mname;  }
+	   public int getMno() { return mno; } public void setMno(int mno) {  this.mno = mno;}
+	   public int getMprice() { return mprice; } public void setMprice(int mprice) {  this.mprice = mprice; }
+	   
+	   
+	   
+	}//end class Milk
+---
+---
+package com.company.java010_ex; //##2.
+
+import com.company.java010.Milk; //##3.
+
+////////////////////////////////////////////////////////////
+public class ModifierEx002 {
+	public static void main(String[]args) {
+	      Milk m1 = new Milk();  
+	      System.out.println( m1 );  
+	      m1.setMprice(2000);       
+	      System.out.println( m1 );
+
+	}//end main
+}//end class
+
+/*
+------------------------[ runtime data area]
+[method: 정보, static, final : 공용정보]
+> Milk.class , ModifierEx002.class
+------------------------------------
+[heap: 동적]            | [stack : 잠깐빌리기]
+------------------------------------
+*/
+
+////////////////////////////////////////////////////////////
+
+/*연습문제2)  지정접근자
+패키지명 : com.company.java010_ex
+클래스명 : ModifierEx2
+다음과 같이 코드를 작성하시오.
+ㅁ출력된화면
+   Milk [mno=0, mname=null, mprice=0]
+   Milk [mno=0, mname=null, mprice=2000]
+   
+ㅁ주어진조건
+public class Milk{  // java011_ex에 설정해주세요!
+   private int  mno;   
+   private String mname;  
+   private  int mprice;  
+}
+public class ModifierEx2{ // java011 패키지에 설정해주세요.
+   public static void main(String[] args) {
+      Milk m1 = new Milk();  
+      System.out.println( m1 );  
+      m1.setMprice(2000);       
+      System.out.println( m1 );
+   } // end main
+} // end class
+*/
+---
+---
+package com.company.java011_ex;
+
+import com.company.java010_ex.Score;
+
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수) 
+
+
+/////////////////////////////////////////////////////////
+public class ModifierEx3{    // java011 패키지에 설정해주세요.
+   public static void main(String[] args) {
+      Score iron = new Score();     
+      Score hulk = new Score("hulk" , 20,50,30);    
+	      
+      // Score.info()위에 메서드작성해주세요!  ##
+      // setter를 이용해주세요!
+      iron.setName("iron"); iron.setKor(100); iron.setEng(100); iron.setMath(100);
+	      
+      Score.info();     // 클래스메서드
+      iron.show();          
+      hulk.show();   
+	      
+   }//end main
+}//end class
+/////////////////////////////////////////////////////////
+
+/*연습문제3)  지정접근자
+패키지명 : com.company.java011_ex
+클래스명 : ModifierEx3
+다음과 같이 코드를 작성하시오.
+
+ㅁ출력된화면
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+이름   국어   영어   수학   총점   평균   합격여부   장학생   랭킹
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+iron   100   100   100   300   100.00   합격   장학생   **********
+hulk   20   50   30   100   33.33   불합격      ***
+
+
+
+
+
+ㅁ주어진조건
+public class Score{
+   private String name;
+   private int kor, eng, math , total;
+   private double aver;
+   private String p  , s  , rank;
+} // java011_ex에 설정해주세요!
+
+public class ModifierEx3{    // java011 패키지에 설정해주세요.
+   public static void main(String[] args) {
+      Score iron = new Score();     
+      Score hulk = new Score("hulk" , 20,50,30);    
+      
+      // Score.info()위에 메서드작성해주세요!  ##
+      // setter를 이용해주세요!
+      iron.setName("iron"); iron.setKor(100); iron.setEng(100); iron.setMath(100);
+      
+      Score.info();     // 클래스메서드
+      iron.show();          
+      hulk.show();   
+   }
+
+}
+
+Score.info() 사용시화면
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+이름   국어   영어   수학   총점   평균   합격여부   장학생   랭킹
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+*/
+---
+---
+package com.company.java010_ex;
+
+public class Score{ 
+	
+	//멤버변수(private - getters/setters)
+	   private String name; //인스턴스변수 - heap area
+	   private int kor, eng, math , total;
+	   private double aver;
+	   private String p  , s  , rank;
+	   
+	 //멤버함수 (alt + shift + s / alt + s / 2,3,4 getters/setters)
+	 //1. 생성자(default / name kor, eng, math ★필수 / all arg )
+	 
+	   //2. 상태확인(toString) 
+	 @Override
+	 public String toString() {
+		 return "Score [name=" + name + ", kor=" + kor + ", eng=" + eng + ", math=" + math + ", total=" + total
+				+ ", aver=" + aver + ", p=" + p + ", s=" + s + ", rank=" + rank + "]";
+	}
+	 public Score(String name, int kor, int eng, int math) {
+		super();
+		this.name = name;
+		this.kor = kor;
+		this.eng = eng;
+		this.math = math;
+	}
+	 public Score() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	 
+	 public Score(String name, int kor, int eng, int math, int total, double aver, String p, String s, String rank) {
+		super();
+		this.name = name;
+		this.kor = kor;
+		this.eng = eng;
+		this.math = math;
+		this.total = total;
+		this.aver = aver;
+		this.p = p;
+		this.s = s;
+		this.rank = rank;
+	}
+	 //3. getters/setters
+	 public String getName() { return name; } public void setName(String name) { this.name = name; }
+	 public int getKor() { return kor; } public void setKor(int kor) { this.kor = kor; }
+	 public int getEng() { return eng; } public void setEng(int eng) { this.eng = eng; }
+	 public int getMath() { return math; }  public void setMath(int math) { this.math = math; }
+	 public int getTotal() { return total; } public void setTotal(int total) { this.total = total; }
+	 public double getAver() { return aver; } public void setAver(double aver) { this.aver = aver; }
+	 public String getP() { return p; } public void setP(String p) { this.p = p; }
+	 public String getS() { return s; } public void setS(String s) { this.s = s; }
+	 public String getRank() { return rank; } public void setRank(String rank) { this.rank = rank; }
+	 //4. Score info() [공용] 클래스메서드 public static 클래스명.메서드
+	 public static void info() { 
+		 System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		 System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t"
+				 , "이름", "국어", "영어", "수학", "총점", "평균", "합격여부", "장학생", "랭킹");
+		 System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+	 }  
+	 //5. Iron.show(); hulk.show();
+	 public void show () {  
+		 
+		 process_total(); process_avg(); process_p();process_s (); process_rank  ();
+		 System.out.printf("%-5s\t%-5s\t%-5s\t%-5s\t%-5s\t%-2f\t%-5s\t%-5s\t%-10s\t"
+				 , name, kor, eng, math, total, aver, p, s, rank);
+		 System.out.println();
+	 } 
+	 
+	 //6. total 총점함수, ave 평균함수, p 합격여부함수, s 장학생함수, rank * 별체크함수(etc)
+	 public void process_total () { this.total = this.kor + this.eng + this.math;}
+	 public void process_avg   () { this.aver  = this.total/3.0;}
+	 public void process_p     () { this.p     = this.aver<60? "불합격":
+			 								     this.kor<40 || this.eng<40 || this.math<40? "재시험" : "합격" ;}
+	 public void process_s     () { this.s     = this.aver<95? "" : "장학생";}
+	 public void process_rank  () { this.rank  = ""; for(int i=0; i<(int)(this.aver/10); i++) {
+		 this.rank +="★";  }   }
+	} // java011_ex에 설정해주세요!
+---
+---
+package com.company.java011_ex;
+
+
+public class Pet{  
+	   private String name;  
+	   private int walkTime, snackCount, cuddleCount, moodScore;  
+	   private String snackStars, tailWag, todayMessage;
+	   
+
+	   public Pet() { super();}
+
+	   public Pet(String name, int walkTime, int snackCount, int cuddleCount) {
+		super();
+		this.name = name;
+		this.walkTime = walkTime;
+		this.snackCount = snackCount;
+		this.cuddleCount = cuddleCount;
+	}
+
+
+
+	   @Override
+	public String toString() {
+		return "Pet [name=" + name + ", walkTime=" + walkTime + ", snackCount=" + snackCount + ", cuddleCount="
+				+ cuddleCount + ", moodScore=" + moodScore + ", snackStars=" + snackStars + ", tailWag=" + tailWag
+				+ ", todayMessage=" + todayMessage + "]";
+	}
+	   
+	   public String getName() { return name; }  public void setName(String name) { this.name = name; }
+	   public int getWalkTime() { return walkTime; }  public void setWalkTime(int walkTime) { this.walkTime = walkTime; }
+	   public int getSnackCount() { return snackCount; }  public void setSnackCount(int snackCount) { this.snackCount = snackCount; }
+	   public int getCuddleCount() { return cuddleCount; }  public void setCuddleCount(int cuddleCount) { this.cuddleCount = cuddleCount; }
+    public int getMoodScore() { return moodScore; }  public void setMoodScore(int moodScore) { this.moodScore = moodScore; }
+	   public String getSnackStars() { return snackStars; }  public void setSnackStars(String snackStars) { this.snackStars = snackStars; }
+	   public String getTailWag() { return tailWag; }  public void setTailWag(String tailWag) { this.tailWag = tailWag; }
+	   public String getTodayMessage() { return todayMessage; }  public void setTodayMessage(String todayMessage) { this.todayMessage = todayMessage; }
+
+	   //행복도점수(계산) = 걸은시간 + (간식개수*10) + (쓰다듬횟수 * 5) 
+	   private void moodcalulate() {
+		   moodScore = walkTime + (snackCount * 10) + (cuddleCount * 5);
+		   
+		   //간식보상 if(행복도가 몇점이상이라면 ){ ~~ } ...
+		        if(moodScore >= 90) {this.snackStars = "★★★★★";}
+		   else if(moodScore >= 70) {this.snackStars = "★★★★"; }
+		   else if(moodScore >= 50) {this.snackStars = "★★★";  }
+		   else if(moodScore >= 30) {this.snackStars = "★★";   }
+		   else						{this.snackStars = "★"; }     
+		   //꼬리흔들기 if(행복도가 몇점이상이라면){ ~~ } ...
+		        if(moodScore >= 90) {this.tailWag = "흔들흔들흔들";}
+		   else if(moodScore >= 60) {this.tailWag = "흔들흔들";  }
+		   else if(moodScore >= 40) {this.tailWag = "살짝흔들";   }
+		   else						{this.tailWag = "꼬리내림"; }     
+		   //오늘의멘트 if(행복도가 몇점이상이라면){ ~~ } ...
+		        if(moodScore >= 90) {this.todayMessage = "오늘은 정말 행복했어요!";}
+		   else if(moodScore >= 60) {this.todayMessage = "좋은 하루였어요!";  }
+		   else if(moodScore >= 40) {this.todayMessage = "조금 더 놀아줘요!";   }
+		   else						{this.todayMessage = "외로웠어요..."; }     
+		   }//end moodcalculate
+	   
+	   public static void info() {
+		   System.out.println("======================================================");
+		   System.out.println( "이름 산책시간 간식개수 쓰다듬횟수 행복도 간식보상 꼬리흔들기 오늘의멘트");
+		   System.out.println("=======================================================");
+	   }
+	   public void show() {
+		    moodcalulate(); // 출력 전에 자동 계산
+		    System.out.printf("%-8s %-10d %-10d %-10d %-8d %-10s %-12s %s\n",
+		        name, walkTime, snackCount, cuddleCount, moodScore, snackStars, tailWag, todayMessage);
+		}
+	   
+	   
+	   
+	   
+	   
+	} // java011_ex에 설정해주세요!
+---
+---
+package com.company.java010_ex;
+
+import com.company.java011_ex.Pet;
+
+///////////////////////////////////////////////////////////
+public class ModifierEx004 {
+public static void main(String[] args) {  
+Pet kong = new Pet();       
+Pet nabi = new Pet("나비", 10, 1, 2);    
+
+// Pet.info()위에 메서드작성해주세요!  ##  
+// setter를 이용해주세요!  
+kong.setName("콩이"); kong.setWalkTime(60); kong.setSnackCount(3); kong.setCuddleCount(10);  
+
+Pet.info();     // 클래스메서드  
+kong.show();          
+nabi.show();  
+}//end main  
+}//end class
+///////////////////////////////////////////////////////////
+/*연습문제5) 지정접근자  
+패키지명 : com.company.java010_ex  
+클래스명 : ModifierEx004  
+다음과 같이 코드를 작성하시오.
+
+ㅁ출력된화면  
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+이름   산책시간   간식개수   쓰다듬횟수   행복도   간식보상   꼬리흔들기   오늘의멘트  
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+콩이   60분       3개       10회       95       ★★★★★     흔들흔들흔들   "오늘은 정말 행복했어요!"  
+나비   10분       1개       2회        40       ★★         살짝 흔들     "조금 더 놀아줘요!"  
+
+
+
+ㅁ주어진조건  
+
+1) 항목별 조건 및 계산 방식
+간식개수 (snackCount)
+사용자가 직접 입력하는 값 (예: kong.setSnackCount(3);)
+행복도 계산 시 10점씩 반영됨 → snackCount * 10
+
+2) 쓰다듬횟수 (cuddleCount)
+사용자가 직접 입력하는 값 (예: kong.setCuddleCount(10);)
+행복도 계산 시 5점씩 반영됨 → cuddleCount * 5
+
+3) 행복도 (moodScore)
+계산 공식:
+코드
+moodScore = walkTime + (snackCount * 10) + (cuddleCount * 5)
+예: 산책 60분, 간식 3개, 쓰다듬 10회 → 60 + 30 + 50 = 140
+
+4) 간식보상 (snackStars)
+행복도 점수 범위   간식보상 출력
+90 이상   ★★★★★
+70 이상   ★★★★
+50 이상   ★★★
+30 이상   ★★
+그 외   ★
+
+5)  꼬리흔들기 (tailWag)
+행복도 점수 범위   꼬리흔들기 출력
+90 이상   흔들흔들흔들
+60 이상   흔들흔들
+40 이상   살짝 흔들
+그 외   꼬리 내림
+
+6)  오늘의 멘트 (todayMessage)
+행복도 점수 범위   출력 멘트
+90 이상   "오늘은 정말 행복했어요!"
+60 이상   "좋은 하루였어요!"
+40 이상   "조금 더 놀아줘요!"
+그 외   "외로웠어요..."
+
+
+public class Pet{  
+private String name;  
+private int walkTime, snackCount, cuddleCount, moodScore;  
+private String snackStars, tailWag, todayMessage;  
+} // java011_ex에 설정해주세요!
+
+public class PetMoodEx{    // java011 패키지에 설정해주세요.  
+public static void main(String[] args) {  
+Pet kong = new Pet();       
+Pet nabi = new Pet("나비", 10, 1, 2);    
+
+//Pet.info()위에 메서드작성해주세요!  ##  
+//setter를 이용해주세요!  
+kong.setName("콩이"); kong.setWalkTime(60); kong.setSnackCount(3); kong.setCuddleCount(10);  
+
+Pet.info();     // 클래스메서드  
+kong.show();          
+nabi.show();   
+}  
+}
+*/
+---
+---
+package com.company.java010_ex;
+
+import com.company.java011_ex.Pet;
+
+///////////////////////////////////////////////////////////
+public class ModifierEx004 {
+public static void main(String[] args) {  
+Pet kong = new Pet();       
+Pet nabi = new Pet("나비", 10, 1, 2);    
+
+// Pet.info()위에 메서드작성해주세요!  ##  
+// setter를 이용해주세요!  
+kong.setName("콩이"); kong.setWalkTime(60); kong.setSnackCount(3); kong.setCuddleCount(10);  
+
+Pet.info();     // 클래스메서드  
+kong.show();          
+nabi.show();  
+}//end main  
+}//end class
+///////////////////////////////////////////////////////////
+/*연습문제5) 지정접근자  
+패키지명 : com.company.java010_ex  
+클래스명 : ModifierEx004  
+다음과 같이 코드를 작성하시오.
+
+ㅁ출력된화면  
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+이름   산책시간   간식개수   쓰다듬횟수   행복도   간식보상   꼬리흔들기   오늘의멘트  
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+콩이   60분       3개       10회       95       ★★★★★     흔들흔들흔들   "오늘은 정말 행복했어요!"  
+나비   10분       1개       2회        40       ★★         살짝 흔들     "조금 더 놀아줘요!"  
+
+
+
+ㅁ주어진조건  
+
+1) 항목별 조건 및 계산 방식
+간식개수 (snackCount)
+사용자가 직접 입력하는 값 (예: kong.setSnackCount(3);)
+행복도 계산 시 10점씩 반영됨 → snackCount * 10
+
+2) 쓰다듬횟수 (cuddleCount)
+사용자가 직접 입력하는 값 (예: kong.setCuddleCount(10);)
+행복도 계산 시 5점씩 반영됨 → cuddleCount * 5
+
+3) 행복도 (moodScore)
+계산 공식:
+코드
+moodScore = walkTime + (snackCount * 10) + (cuddleCount * 5)
+예: 산책 60분, 간식 3개, 쓰다듬 10회 → 60 + 30 + 50 = 140
+
+4) 간식보상 (snackStars)
+행복도 점수 범위   간식보상 출력
+90 이상   ★★★★★
+70 이상   ★★★★
+50 이상   ★★★
+30 이상   ★★
+그 외   ★
+
+5)  꼬리흔들기 (tailWag)
+행복도 점수 범위   꼬리흔들기 출력
+90 이상   흔들흔들흔들
+60 이상   흔들흔들
+40 이상   살짝 흔들
+그 외   꼬리 내림
+
+6)  오늘의 멘트 (todayMessage)
+행복도 점수 범위   출력 멘트
+90 이상   "오늘은 정말 행복했어요!"
+60 이상   "좋은 하루였어요!"
+40 이상   "조금 더 놀아줘요!"
+그 외   "외로웠어요..."
+
+
+public class Pet{  
+private String name;  
+private int walkTime, snackCount, cuddleCount, moodScore;  
+private String snackStars, tailWag, todayMessage;  
+} // java011_ex에 설정해주세요!
+
+public class PetMoodEx{    // java011 패키지에 설정해주세요.  
+public static void main(String[] args) {  
+Pet kong = new Pet();       
+Pet nabi = new Pet("나비", 10, 1, 2);    
+
+//Pet.info()위에 메서드작성해주세요!  ##  
+//setter를 이용해주세요!  
+kong.setName("콩이"); kong.setWalkTime(60); kong.setSnackCount(3); kong.setCuddleCount(10);  
+
+Pet.info();     // 클래스메서드  
+kong.show();          
+nabi.show();   
+}  
+}
+*/
+---
+---
+package com.company.java011_ex;
+
+
+public class Pet{  
+	   private String name;  
+	   private int walkTime, snackCount, cuddleCount, moodScore;  
+	   private String snackStars, tailWag, todayMessage;
+	   
+
+	   public Pet() { super();}
+
+	   public Pet(String name, int walkTime, int snackCount, int cuddleCount) {
+		super();
+		this.name = name;
+		this.walkTime = walkTime;
+		this.snackCount = snackCount;
+		this.cuddleCount = cuddleCount;
+	}
+
+
+
+	   @Override
+	public String toString() {
+		return "Pet [name=" + name + ", walkTime=" + walkTime + ", snackCount=" + snackCount + ", cuddleCount="
+				+ cuddleCount + ", moodScore=" + moodScore + ", snackStars=" + snackStars + ", tailWag=" + tailWag
+				+ ", todayMessage=" + todayMessage + "]";
+	}
+	   
+	   public String getName() { return name; }  public void setName(String name) { this.name = name; }
+	   public int getWalkTime() { return walkTime; }  public void setWalkTime(int walkTime) { this.walkTime = walkTime; }
+	   public int getSnackCount() { return snackCount; }  public void setSnackCount(int snackCount) { this.snackCount = snackCount; }
+	   public int getCuddleCount() { return cuddleCount; }  public void setCuddleCount(int cuddleCount) { this.cuddleCount = cuddleCount; }
+    public int getMoodScore() { return moodScore; }  public void setMoodScore(int moodScore) { this.moodScore = moodScore; }
+	   public String getSnackStars() { return snackStars; }  public void setSnackStars(String snackStars) { this.snackStars = snackStars; }
+	   public String getTailWag() { return tailWag; }  public void setTailWag(String tailWag) { this.tailWag = tailWag; }
+	   public String getTodayMessage() { return todayMessage; }  public void setTodayMessage(String todayMessage) { this.todayMessage = todayMessage; }
+
+	   //행복도점수(계산) = 걸은시간 + (간식개수*10) + (쓰다듬횟수 * 5) 
+	   private void moodcalulate() {
+		   moodScore = walkTime + (snackCount * 10) + (cuddleCount * 5);
+		   
+		   //간식보상 if(행복도가 몇점이상이라면 ){ ~~ } ...
+		        if(moodScore >= 90) {this.snackStars = "★★★★★";}
+		   else if(moodScore >= 70) {this.snackStars = "★★★★"; }
+		   else if(moodScore >= 50) {this.snackStars = "★★★";  }
+		   else if(moodScore >= 30) {this.snackStars = "★★";   }
+		   else						{this.snackStars = "★"; }     
+		   //꼬리흔들기 if(행복도가 몇점이상이라면){ ~~ } ...
+		        if(moodScore >= 90) {this.tailWag = "흔들흔들흔들";}
+		   else if(moodScore >= 60) {this.tailWag = "흔들흔들";  }
+		   else if(moodScore >= 40) {this.tailWag = "살짝흔들";   }
+		   else						{this.tailWag = "꼬리내림"; }     
+		   //오늘의멘트 if(행복도가 몇점이상이라면){ ~~ } ...
+		        if(moodScore >= 90) {this.todayMessage = "오늘은 정말 행복했어요!";}
+		   else if(moodScore >= 60) {this.todayMessage = "좋은 하루였어요!";  }
+		   else if(moodScore >= 40) {this.todayMessage = "조금 더 놀아줘요!";   }
+		   else						{this.todayMessage = "외로웠어요..."; }     
+		   }//end moodcalculate
+	   
+	   public static void info() {
+		   System.out.println("======================================================");
+		   System.out.println( "이름 산책시간 간식개수 쓰다듬횟수 행복도 간식보상 꼬리흔들기 오늘의멘트");
+		   System.out.println("=======================================================");
+	   }
+	   public void show() {
+		    moodcalulate(); // 출력 전에 자동 계산
+		    System.out.printf("%-8s %-10d %-10d %-10d %-8d %-10s %-12s %s\n",
+		        name, walkTime, snackCount, cuddleCount, moodScore, snackStars, tailWag, todayMessage);
+		}
+	   
+	   
+	   
+	   
+	   
+	} // java011_ex에 설정해주세요!
+---<!--day023.md-->
+---
+>>>>>>>>>>>>>>>>>>>>>>>>
+1. UMl설계도
+2. BANK 부품     class Bank{   }
+1) 정보보관 클래스 : UserInfo[ -id, -pass, -balance ]
+2) 기능클래스 : 
+   Add      [  exec() ]
+   Show     [  exec() ]
+   Deposit  [  exec() ]
+   Withdraw [  exec() ]
+   Delete   [  exec() ]
+   Login    [  exec() ]
+>>>>>>>>>>>>>>>>>>>>>>>>
+---
+package com.company.java010_bank;
+
+import java.util.Scanner;
+
+//1. 클래스는 부품객체
+//2. 상태와 행위
+
+public class BANK_Main {
+	//상태 : 멤버변수
+	UserInfo userinfo;		//정보보관용도 - model db
+	Add    add;
+	Show  show;
+	Deposit deposit;   
+	Withdraw withdraw; 
+	Delete delete;     
+	Login login;   
+	
+	//행위 : 멤버함수(초기화)
+	public BANK_Main() {
+		this.userinfo  = new UserInfo("", "", 0); //##
+		this.add       = new Add(this.userinfo );
+		this.show      = new Show(this.userinfo);
+		this.deposit   = new Deposit(this.userinfo); // Q1. deposit 입금기능
+		this.withdraw  = new Withdraw(this.userinfo); //출금기능
+		this.delete    = new Delete(this.userinfo);  //삭제기능
+		this.login     = new Login(this.userinfo);  //run 메서드안에 기능
+
+	}
+
+	public void run() {
+		Scanner scanner = new Scanner(System.in);
+		int num=-1; 
+		while(num !=9){
+			  System.out.println(this.userinfo + "\t" + System.identityHashCode(this.userinfo));
+	          System.out.print("\n\n🌟💰 WELCOME TO BANK SYSTEM 💰🌟\n" + 
+	                  "\n[1] ➕ 계좌 추가" + "\n[2] 🔍 계좌 조회" + "\n[3] 💵 입금하기" + "\n[4] 💸 출금하기" + "\n[5] 🗑️ 계좌 삭제  "
+	                  +"\n\n👉 번호를 선택하세요:");		
+		num = scanner.nextInt();
+		switch(num) {
+		case 1 : this.add.exec(); break;
+		case 2 : case 3 : case 4 : case 5 : 
+			//1. 유저정보확인
+			if(this.login.exec()==-1) {System.out.println("유저정보를 확인해주세요"); break;}
+			//2. 각각의 처리
+			switch(num) {
+			case 2 : this.show.exec(); break;
+			case 3 : this.deposit.exec(); break;	//## 추가3
+			case 4 : this.withdraw.exec(); break;
+			case 5 : this.delete.exec(); break;
+			}
+			break;
+			}
+		}
+		
+	}
+	
+	public static void main(String[]args) {
+		BANK_Main bank = new BANK_Main();
+		bank.run();
+
+		
+		
+	}//end main
+}//end class
+/*기능 : 유저추가
+*/ 
+---
+---
+package com.company.java010_bank;
+
+public class UserInfo {
+	private String id;
+	private String pass;
+	private double balance;
+	//alt + shift + s / alt + s/
+	
+	public UserInfo() { super();}
+	public UserInfo(String id, String pass, double balance) 
+	{ super(); this.id = id; this.pass = pass; this.balance = balance; }
+	
+	@Override public String toString() 
+	{ return "UserInfo [id=" + id + ", pass=" + pass + ", balance=" + balance + "]"; }
+	
+	public String getId() { return id; } public void setId(String id) { this.id = id; }
+	public String getPass() { return pass; } public void setPass(String pass) { this.pass = pass; }
+	public double getBalance() { return balance; } public void setBalance(double balance) { this.balance = balance; }
+	
+}
+
+/* 1명분의 유저정보보관
+ * [-id:String, -pass:String, -balance: String]
+*/
+---
+---
+package com.company.java010_bank;
+
+import java.util.Scanner;
+
+//1. 부품객체 
+//2. 상태와 행위
+public class Add {
+	//상태 : 멤버변수	(Scanner X)
+	UserInfo userinfo;
+
+	public Add() { super();}
+	public Add(UserInfo userinfo) { super(); this.userinfo = userinfo; }
+	
+	//행위 : 멤버함수 (Scanner 입력해야됨.)
+	public void exec() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("[1]아이디     입력 > "); this.userinfo.setId(scanner.next()); 
+		System.out.println("[2]비밀번호    입력 > "); this.userinfo.setPass(scanner.next());
+		System.out.println("[3]잔액       입력 > "); this.userinfo.setBalance(scanner.nextDouble());
+		
+		//this.userinfo = new UserInfo(id, pass, balance);
+		System.out.println("사용자 추가완료 : " + this.userinfo);
+		
+	}
+}
+
+/*기능 : 유저추가
+*/
+---
+---
+package com.company.java010_bank;
+
+public class Show {
+	//상태 : 멤버변수
+	private UserInfo userinfo;
+
+	public Show() { super();} 
+	public Show(UserInfo userinfo) { super(); this.userinfo = userinfo; }
+	
+	//행위 : 멤버함수
+	void exec() {
+		System.out.println("\nID> " + this.userinfo.getId()
+							+ "\nPASS> " + this.userinfo.getPass()
+							+ "\nBALANCE> " + this.userinfo.getBalance());
+	}
+}
+/*기능 : 유저추가
+*/
+---
+---
+package com.company.java010_bank;
+
+import java.util.Scanner;
+
+//1. 클래스는 부품객체
+//2. 상태와 행위
+public class Deposit {
+	
+	//상태 : 멤버변수
+	UserInfo userinfo;
+	
+	//행위 : 멤버함수
+	public Deposit() { super();}
+	public Deposit(UserInfo userinfo) {super(); this.userinfo = userinfo;}
+	public UserInfo getUserinfo() { return userinfo; } public void setUserinfo(UserInfo userinfo) { this.userinfo = userinfo; };
+
+
+	public void exec() {
+		//setter / getter 이용해서 사용자에게 입금받기
+		//변수
+		Scanner scanner = new Scanner(System.in);
+		//입력 - 사용자에게 입금할 금액 입력받기
+		System.out.println("입금할 금액을 입력해주세요. > ");
+		double balance = scanner.nextDouble();
+		//처리 - setter를 이용해서 입금할 금액 셋팅
+		this.userinfo.setBalance( userinfo.getBalance() + balance);
+		//출력 - 입금이 완료되었습니다. 출력
+		System.out.println("입금이 완료되었습니다.");
+		
+	}//end exec
+}//end class
+/*기능 : 입금기능
+*/
+---
+---
+package com.company.java010_bank;
+
+public class Delete {
+	//상태 : 멤버변수
+	UserInfo userinfo;
+	
+	//행위 : 멤버함수
+	public Delete() { super();}
+	public Delete(UserInfo userinfo) {super(); this.userinfo = userinfo;}
+
+
+	public void exec() {
+		//setter / getter 이용해서 유저정보삭제, 초기화
+		//setter / getter 이용해서 사용자에게 출금받기
+		//변수
+		
+		//입력 
+		//처리 - setter를 이용해서 이름 null, 비번 null, 잔액 0으로~~
+		this.userinfo.setId("");
+		this.userinfo.setPass("");
+		this.userinfo.setBalance(0);
+		//출력 - 정보를 삭제했습니다. 출력
+		System.out.println("정보를 삭제했습니다.");
+	}
+
+}
+/*기능 : 유저정보삭제, 초기화
+*/
+---
+---
+package com.company.java010_bank;
+
+import java.util.Scanner;
+
+public class Login {
+	//상태 : 멤버변수
+	UserInfo userinfo;
+	
+	//행위 : 멤버함수
+	public Login() { super();}
+	public Login(UserInfo userinfo) {super(); this.userinfo = userinfo;}
+
+
+	public int exec() {
+		//setter / getter 이용해서 유저정보확인
+		//변수
+		int find = -1 ;
+		Scanner scanner = new Scanner(System.in);
+		//입력 - 사용자에게 아이디입력받기 / 비번입력받기 
+		System.out.println("[1]아이디를 입력하세요.");
+		String tempId = scanner.next();
+		System.out.println("[2]비밀번호를 입력하세요.");
+		String tempPass = scanner.next();
+		//처리 - 입력한 아이디와 userinfo .id가 같고, 입력한 비번과 userinfo.pass가 같다면, find = 1; 찾으면 1
+		if(tempId.equals(this.userinfo.getId()) && tempPass.equals(this.userinfo.getPass() )) 
+		{find=1;}
+		//출력 
+		return find;
+		
+	}//end exec
+}//end class Login
+
+/*기능 : 유저정보확인
+*/
+---
+---
+package com.company.java010_bank;
+
+import java.util.Scanner;
+
+public class Withdraw {
+	//상태 : 멤버변수
+	UserInfo userinfo;
+	
+	//행위 : 멤버함수
+	public Withdraw() { super();}
+	public Withdraw(UserInfo userinfo) {super(); this.userinfo = userinfo;}
+
+
+	public void exec() {
+		//setter / getter 이용해서 사용자에게 출금받기
+		//변수
+		double num;
+		Scanner scanner = new Scanner(System.in);
+		//입력 - 사용자에게 출금할 금액 입력받기
+		System.out.println("출금할 금액을 입력해주세요. > "); 
+		num = scanner.nextDouble();
+		//처리 - setter를 이용해서 출금할 금액 셋팅
+		this.userinfo.setBalance( userinfo.getBalance()-num);
+		//출력 - 출금이 완료되었습니다. 출력
+		System.out.println("출금이 완료되었습니다.");
+	}
+
+	
+	
+}
+/*기능 : 출금기능
+*/
+---<!--day024.md-->
 ---
