@@ -50,9 +50,9 @@
     </pre>
     <input type="button" value="ex1"  id="ex1"  title="버튼을 클릭하세요" class="btn btn-success"      />
     <script>
-      window.addEventListener("load," ,function(){
+      window.addEventListener("load" ,function(){
         let ex1 = document.querySelector("#ex1");
-        ex1.addEventListener("load", function(){
+        ex1.addEventListener("click", function(){
           let result = "불합격";
           let answer = prompt("평균을 입력하세요.");
             if(answer >=60 ) {alert("합격"); }
@@ -100,7 +100,7 @@
     </pre>
     <input type="button" value="switch1"  id="switch1"  title="버튼을 클릭하세요" class="btn btn-success"      />
     <script>
-      window.addEventListener("load," ,function(){
+      window.addEventListener("load" ,function(){
         let switch1 = document.querySelector("#switch1");
         switch1.addEventListener("click", function(){
           let ice = prompt("4,5,6 중에 입력하세요");
@@ -180,7 +180,7 @@
     Q5)		const list1 = [1	2	3	4	5];
     </pre>
     <script>
-      // for, while, do while
+   /*   // for, while, do while
       //A1)		1	2	3	4	5
         console.log("1. for문");
         for(let i=1; i<5; i++){console.log(i);}
@@ -223,7 +223,7 @@
         list1.forEach((ele, index, list) => { 
           console.log(ele+ "/" + index + "/"+ list );
         });
-      
+      */
     </script>
   </div>
 </div>
