@@ -8880,3 +8880,654 @@ public class Withdraw {
 */
 ---<!--day024.md-->
 ---
+## JAVA
+---
+● 6. 클래스다이어그램
+1. 시스템을 구성하는 클래스들 사이관계를 표현
+2. 클래스 - 객체를 생성하는 설계도
+3. staruml.io - 다운로드 - 설치
+4. 클래스
+------------------------------------
+[Animal1] 
+------------------------------------
+add - attribute (멤버변수)
+------------------------------------
+add - opperation (멤버함수) 
+------------------------------------
+5. uml 관계
+>1) 연관관계 ( 실선삼각형 (→) : 연결 , 한쪽은 알지만, 다른쪽은 상대방의 존재를 모름 )
+>2) 일반화관계 (상속, IS-A 고양이는 동물이다, 속이 빈 화살표 )
+     | 고양이는 동물이다(O), 사람도 동물이다(O), 동물은 고양이다? (X)   
+>3) 집합관계 ( 자동차 = 엔진 + 휠
+    속이 꽉 찬 다이아몬드(◆) - 생성자안에서 new(합성) ,
+    속이 빈 다이아몬드   (◇) - 생성자안에서 주소받아서 사용(집약))
+4) 의존관계
+5) 실체화관계(인터페이스)
+
+6. SOLID (원칙) 
+S : 단일책임(원칙)      - 한 클래스는 한 가지 일만해요. (쿠키굽기)
+O : 개방폐쇄(원칙)      - 새로운 쿠키는 쉽게 추가. (확장 O , 수정 X)
+L : 리스코프치환(원칙)   - 모든 쿠키는 같은 방식으로 만들수 있어요! 
+I : 인터페이스분리(원칙)  - 필요한 기능만 딱! 인터페이스 나누기.  
+D : 의존역전(원칙)       - 구체적인 쿠키말고, 추상적인 쿠키에 의존
+
+
+
+---
+---
+● 6. 상속
+
+
+---
+---
+package com.company.java011;
+
+//1. 클래스는 부품객체
+//2. 클래스는 상태와 행위
+
+
+//[설계도] 1단계 
+/*
+class Toy{	//default
+	//상태(멤버변수)
+	private String name;	//인스턴스변수 - heap area - new O - 생성자 O - this. [ 각각 ]
+	private int age;		//인스턴스변수
+	static final String company="(주) 703toyland";	//Toy.company	클래스.변수 - method area - new X - (now)
+	static int   num;	//클래스변수  (공용)
+	//행위(멤버함수)
+	public void show() {
+		System.out.println("NAME : " + this.name);
+		System.out.println("AGE : " + this.age);
+	}
+	//getter + setter - 멤버변수에 private가 있을때 사용.
+	public String getName() { return name; } public void setName(String name) { this.name = name; }
+	public int getAge() { return age; } public void setAge(int age) { this.age = age; }
+	
+	public Toy() { super();}
+	public Toy(String name, int age) { super(); this.name = name; this.age = age; }
+}
+*/
+//////////////////////////////////////////////////////////////
+public class Class_Repeat {
+	public static void main(String[]args) {
+			Toy kitty = new Toy();    //[장난감]2단계		1) new메모리,객체 2)생성자 3) kotty 번지
+			//kitty.setname="할로윈키티";//[갖고놀기]3단계
+			kitty.setName("할로윈키티"); kitty.setAge(52); kitty.show();
+			Toy gundam = new Toy("건담", 47);//[장난감]2단계
+			gundam.show();					//[갖고놀기]3단계
+	}
+}
+//////////////////////////////////////////////////////////////
+/* 초기화 순서 :        기본값		 명시적초기화	          초기화블록		 생성자
+(static)conpany     null	 ="(주)703toylan"     ="(주)703toylan"     X		Toy.name
+(static)num		  0         X      0            O        0		  X		Toy.age
+------------------------------------------------------------------------------
+ kitty {name=null, age=0}		유지                유지            유지
+ gundam{name=null, age=0}	    유지                유지            {name="건담", age=40}
+*/
+
+/* 
+method[클래스정보] 
+>Toy.class ,  Class_Repeat.class, Toy.company="(주) 703.toyland", Toy.name=0
+--------------------------------------------
+heap [동적]  					| stack [임시저장공간] 
+2번지 {name="건담",age=47}   	    ←   gundam (2번지) 
+1번지 {name="할로윈키티",age=52}     ←   kitty (1번지) 
+								| 	main
+---------------------------------------------
+*/
+---
+package com.company.java011;
+
+class Toy{	//default
+	//상태(멤버변수)
+	private String name;	//인스턴스변수 - heap area - new O - 생성자 O - this. [ 각각 ]
+	private int age;		//인스턴스변수
+	static final String company="(주) 703toyland";	//Toy.company	클래스.변수 - method area - new X - (now)
+	static int   num;	//클래스변수  (공용)
+	static {num=0;}
+	//행위(멤버함수)
+	public void show() {
+		System.out.println("NAME : " + this.name);
+		System.out.println("AGE : " + this.age);
+	}
+	//getter + setter - 멤버변수에 private가 있을때 사용.
+	public String getName() { return name; } public void setName(String name) { this.name = name; }
+	public int getAge() { return age; } public void setAge(int age) { this.age = age; }
+	
+	public Toy() { super();}
+	public Toy(String name, int age) { super(); this.name = name; this.age = age; }
+	@Override public String toString() { return "Toy [name=" + name + ", age=" + age + "]"; } 
+}
+---
+---
+package com.company.java011;
+
+import java.util.Arrays;
+
+public class ClassArr001 { // ★클래스에서는 생성자 불러서 셋팅할수 있게 하기.
+	public static void main(String[]args) {
+		// 사용방법 1.
+		// 1) Toy[] 나 주소 받을수 있어~!
+		Toy [] toys = new Toy[3];  // 2) new 번지, Toy형태의 자료형 3개
+		System.out.println("1. " + toys);
+		System.out.println("2. " + Arrays.toString(toys));
+		
+		toys[0] = new Toy();
+		toys[0].setName("할로윈키티"); toys[0].setAge(52);
+		System.out.println("3.  " + toys[0]);
+		
+		// 사용방법 2.
+		Toy[] toys2 = new Toy[] {
+				new Toy("할로윈키티" ,52), new Toy("건담", 47)
+		};
+		// toys[0].name, toys[0].age
+		// toys[1].name, toys[1].age
+		
+		for(int i=0; i<toys.length; i++) { toys2[1].show();}
+	}//end main
+}//end class
+
+/* 
+method[클래스정보] 
+>Toy.class ,  Class_Repeat.class, Toy.company="(주) 703.toyland", Toy.name=0
+--------------------------------------------
+heap [동적]  					| stack [임시저장공간] 
+1번지 [null] [null | null] 	 	← toys [1번지]   
+								| 	main
+---------------------------------------------
+*/
+---
+---
+package com.company.java011_ex;
+
+import java.util.Arrays;
+
+//1. 클래스는 부품객체 
+//2. 클래스는 상태(멤버변수)와 행위(멤버함수) 
+class Apple{   //// 실행 main과 파일을 분리해주세요!
+	   //  	상태(멤버변수)	
+	   private String name;
+	   private String order;
+	   private int num;
+	   private int price;
+	   
+	   //   행위(멤버함수) default / field / toString / getter+setter
+	   public Apple() {super();} //default 생성자
+	   public Apple(String name, String order, int num, int price) 
+	   { super(); this.name = name; this.order = order; this.num = num; this.price = price; }
+	   @Override public String toString() { return "Apple [name=" + name + ", order=" + order + ", num=" + num + ", price=" + price + "]"; }
+	   
+	   //getter / setter  
+	   public String getName() { return name; } public void setName(String name) { this.name = name; }
+	   public String getOrder() { return order; } public void setOrder(String order) { this.order = order; }
+	   public int getNum() { return num; } public void setNum(int num) { this.num = num; }
+	   public int getPrice() { return price; } public void setPrice(int price) { this.price = price; } 
+	}//end class Apple
+
+///////////////////////////////////////////////////////////////////////////
+public class ClassArrEx1{
+	  public static void main(String[] args) {
+	        Apple[] apples= new Apple[3]; //apples = [null | null | null]
+	        //위의 화면처럼 값 셋팅
+	        
+	        apples [0] = new Apple("RED", "iron", 2, 1000);
+	        apples [1] = new Apple("GREEN", "hulk", 1, 1500);
+	        apples [2] = new Apple("GOLD", "captain", 3, 2000);
+
+	        //apples = [1번지 | 2번지 | 3번지]
+			//apples [0] = new Apple("RED", "iron", 2, 1000);
+			//apples [1] = new Apple("GREEN", "hulk", 1, 1500);
+			//apples [2] = new Apple("GOLD", "captain", 3, 2000);
+
+	        System.out.println("ver - 1 for");
+	        for(int i=0; i<apples.length; i++) {System.out.println(apples[i]);}
+	        
+	        System.out.println("\nver - 2 .향상된 for");
+	        for(Apple a : apples ) {System.out.println(a);}
+	        
+	        Apple [] apples2 = new Apple[] {
+        				new Apple("RED", "iron", 2, 1000),
+        				new Apple("GREEN", "hulk", 1, 1500),
+        				new Apple("GOLD", "captain", 3, 2000)
+	        };
+	        System.out.println(Arrays.deepToString(apples2));
+	        
+	        //출력
+			//Apple [name=RED, order=iron, num=2, price=1000]
+			//Apple [name=GREEN, order=hulk, num=1, price=1500]
+			//Apple [name=GOLD, order=captain, num=3, price=2000]
+	        
+	  }//end main
+	}//end class
+///////////////////////////////////////////////////////////////////////////
+
+/*● 5. 클래스배열
+
+  클래스[]  배열명 = new 클래스[갯수];
+  
+  String[]   arr     = new String[3];  
+  A1     []   carr   = new A1[3];  // [null, null, null ]
+  ※ null  - 공간은 있지만 값이 비어있어!
+   
+  carr[0]  = new  A1();  ※ 생성자를 불러서 인스턴스변수를 초기화해 사용가능하게만들기
+  1번지{  name="" }  ←  carr[0] 1번지
+
+
+
+
+연습문제1)  클래스배열
+패키지명 : com.company.java011_ex
+클래스명 : ClassArrEx1
+다음과 같이 코드를 작성하시오.
+ㅁ출력된 화면
+Apple [name=RED, order=iron, num=2, price=1000]
+Apple [name=GREEN, order=hulk, num=1, price=1500]
+Apple [name=GOLD, order=captain, num=3, price=2000]
+
+ㅁ주어진 옵션
+
+
+*/
+---
+---
+package com.company.java011_ex;
+/* 클래스의 재사용
+Object        {         }
+  ↑
+MobileNote    { show() }
+  ↑
+MobileNote7   { iris,face / newShow() } 
+  ↑
+MobileNote8   { ◎face     / ◎newShow() }  
+  ↑
+MobileNote9   { battery   / ◎newShow() } 
+
+----------------------------------------------
+MobileNote9 my9 = new MobileNote0();
+----------------------------------------------
+1. MobileNote9 은 MobileNote 이다.
+2.     생성자호출순서 : MobileNote9()  →  MobileNote8()  → MobileNote7() → MobileNote()   → Object()
+3.     객체생성순서  :  Object → MobileNote → MobileNote7 → MobileNote8 → MobileNote9
+
+	3번지 : {battery / ◎newShow() }
+			→ {◎newShow() / ◎face}
+	 		→ {iris, face / newShow() } → { show() } 
+	 Q. note8, note7의 newShow() 호출방법은?
+
+
+----------------------------------------------
+MobileNote8 my8 = new MobileNote8();
+----------------------------------------------
+1. MobileNote8 은 MobileNote 이다.
+2.     생성자호출순서 :  MobileNote8()  → MobileNote7() → MobileNote()   → Object()
+3.     객체생성순서  :  Object → MobileNote → MobileNote7 → MobileNote8
+
+	2번지 : {◎face / ◎newShow() } → {iris, face / newShow() } → { show() } 
+
+    오버라이딩 : 상속시 부모와 같은 메서드를 자식에게 맞게 수정
+----------------------------------------------
+MobileNote7 my7 = new MobileNote7();
+----------------------------------------------
+1.     MobileNote7  는    MobileNote 이다.
+2.     생성자호출순서 :  MobileNote7()  → MobileNote()  → Object()
+3.     객체생성순서  :  Object → MobileNote → MobileNote7
+    1번지 : { iris,face / newShow() } - { show() }
+    
+*/
+
+
+class MobileNote extends Object{
+	//멤버변수 없음
+	void show() {
+		System.out.println("MobileNote입니다.");
+	}
+}
+class MobileNote7 extends MobileNote{
+	private String iris;
+	private String face;
+	
+	public MobileNote7() {super();}
+	public String getIris() { return iris; }     public void setIris(String iris) { this.iris = iris; }
+    public String getFace() { return face; }     public void setFace(String face) { this.face = face; } 
+
+	void newShow() {
+		System.out.println("NOTE7 객체 기능(OverriNOTding)\n"
+				 	+ "iris = " + this.iris + "\n"
+				 	+ "face = " + this.face + "\n");
+	}
+}
+class MobileNote8 extends MobileNote7{
+	private String face;
+
+	public String getFace() { return face; }  public void setFace(String face) { this.face = face; }
+	//##
+	@Override
+	void newShow() {
+		super.newShow();
+		System.out.println("\nNOTE8 객체 기능(OverriNOTding)추가\r\n"
+				+ "face = " + this.face );
+	}
+}
+class MobileNote9 extends MobileNote8{
+	private int battery;
+	
+	public int getBattery() { return battery; }    public void setBattery(int battery) { this.battery = battery; }
+
+	//##
+	@Override
+	void newShow() {
+	super.newShow(); //super.MoblieNote8
+	System.out.println("\nNOTE9 객체 기능(OverriNOTding)추가\r\n"
+			+ "battery 예쁘게 사용하기\r\n" + "battery = " + this.battery);
+	}
+}
+
+///////////////////////////////////////////////////////////////
+public class ClassEx002 {
+    public static void main(String[] args) {
+		//        MobileNote7 my7 = new MobileNote7();
+		//        my7.setIris("brown");
+		//        my7.setFace("pretty");
+		//        my7.newShow();
+		//
+		//        MobileNote8 my8 = new MobileNote8();
+		//        my8.setFace("pretty"); 
+		//        my8.newShow();
+		
+		//        MobileNote9 my9 = new MobileNote9();
+		//        my9.setBattery(24); 
+		//        my9.newShow();
+        
+    	MobileNote9 my92 = new MobileNote9();
+		my92.setIris("black"); 
+	    my92.setFace("cuty");
+		my92.setBattery(24); 
+	    my92.newShow();
+
+    	
+		//3. 출력 결과 
+		//
+		//NOTE7 객체 기능(OverriNOTding)
+		//iris = brown
+		//face = pretty
+
+        
+        
+        
+    }//end main
+}//end class
+
+//////////////////////////////////////////////////////////////
+/*연습문제2)     클래스 상속과 메서드 오버라이딩
+패키지명 : com.company.java011_ex 
+클래스명 : ClassEx002.java
+
+1. 아래 조건에 맞게 ClassEx002.java 파일을 작성하고,
+   main() 메서드를 수정하여 다음과 같은 출력 결과가 나오도록 하시오.
+2. 주어진 코드 (수정 전)
+```java
+
+```
+//NOTE8 객체 기능(Overriding) 추가
+//face = pretty
+//
+//NOTE9 객체 기능(Overriding) 추가
+//battery 예쁘게 사용하기!
+//battery = 24
+
+
+//4. 클래스 구조 설명
+//클래스명      멤버변수        멤버메서드
+//MobileNote   없음                        void show()
+//MobileNote7   String iris, String face  void newShow()
+//MobileNote8   String face                 void newShow()
+//MobileNote9   int battery                 void newShow()
+//모든 멤버변수는 private으로 선언
+//
+//-각 클래스는 MobileNote 클래스를 상속받음
+//-newShow() 메서드는 각 클래스에서 오버라이딩되어 고유한 출력 형식을 가짐
+
+
+//5. 요구사항
+//-MobileNote 클래스를 기반으로 상속 구조를 설계할 것 (MobileNote7, MobileNote8, MobileNote9 모두 상속)
+//-각 클래스에서 setter 메서드를 통해 멤버변수 값을 설정할 수 있도록 구현할 것
+//-newShow() 메서드를 오버라이딩하여 출력 형식을 문제에서 제시한 형태로 맞출 것
+//-출력 순서와 내용이 정확히 일치하도록 main() 메서드를 구성할 것
+
+
+
+*/
+---
+---
+package com.company.java011_ex;
+/*    Object 							  Object
+ 		↑									↑
+ 	  Grand    {one(), two()}			   Aunt		  						
+ 	  	↑					   ↑             ↑
+ 	  Father   { three() }	 Uncle	{one(), two(), four()}
+
+*/
+class Grand extends Object {
+    public void one() { System.out.println("grand : one"); }
+    public void two() { System.out.println("grand : two"); }
+}
+class Father extends Grand{
+	public void three() {System.out.println("Father : three");}
+}
+class Uncle extends Grand{
+	public void four() { System.out.println("Uncle : four");}
+	@Override public void two () { System.out.println("Uncle : two");}
+	@Override public void one () { System.out.println("Uncle : one");}
+} 
+class Aunt {
+	String name="mimi";
+	@Override public String toString() {return "Aunt [name=" + name + "]";} // Object 오버라이딩
+}
+/////////////////////////////////////////////////
+public class ClassEx003 {
+	public static void main(String[]args) {
+		Father papa = new Father();
+		papa.one(); papa.two(); 
+		//Q1. uncle이 쓸수 있는 메서드는?   Uncle	{one(), two(), four()} → Grand    {one(), two()}
+		//Q2. 25번째줄에서 출력되는 내용은?   Uncle	{one(), two(), four()} → Grand    {one(), two()}
+		//Q3. 18, 19번째의 개념은?  @Override : 상속시 부모와 같은 메서드를 자식클래스에 맞게 수정한것!
+		
+		
+	}//end main
+}//eend class
+/////////////////////////////////////////////////
+/*연습문제3)    클래스 상속과 메서드 호출 우선순위
+패키지명 : com.company.java011_ex 
+클래스명 : ClassEx003.java
+
+1. 아래 조건에 맞게 ClassEx003.java 파일을 작성하고, 
+   빈칸을 채운 뒤 main() 메서드를 실행하여 출력 결과를 예상하시오.
+2. 주어진 코드 (수정 전)
+```java
+class Grand extends Object {
+    public void one() { System.out.println("grand : one"); }
+    public void two() { System.out.println("grand : two"); }
+}
+// (1) Father 클래스가 Grand 클래스를 상속받도록 수정
+public class Father {
+    public void three() { System.out.println("Father : three"); }
+}
+
+```
+3. 출력 결과  
+ 
+grand : one
+grand : two
+Father : three
+
+4. 클래스 구조 설명
+클래스명        상속 관계       주요 메서드
+1) Object   최상위 클래스           -
+2) Grand      Object → Grand         one(), two()
+3) Father   Grand → Father       three()
+4) Uncle      Object → Uncle 
+5) Aunt      Object → Aunt     
+- 모든 클래스는 Object 클래스를 기본적으로 상속받음
+- Grand 클래스는 one()과 two() 메서드를 정의
+- Father 클래스는 Grand를 상속받아 three() 메서드를 추가
+
+5. 요구사항
+- Father 클래스가 Grand 클래스를 상속받도록 extends 키워드를 활용할 것
+- main() 메서드에서 Father 객체를 생성하고 one(), two(), three() 메서드를 순서대로 호출할 것
+- 상속 관계에 따라 메서드 호출 우선순위를 이해하고 출력 결과를 정확히 예측할 것
+- Uncle, Aunt 클래스도 Object를 상속받는 구조로 확장 가능하므로, 필요 시 추가 구현할 것
+*/
+---
+---
+package com.company.java011_ex;
+/*    Object 							  Object
+ 		↑									↑
+ 	  Grand    {one(), two()}			   Aunt		  						
+ 	  	↑					   ↑             ↑
+ 	  Father   { three() }	 Uncle	{one(), two(), four()}
+
+*/
+class Grand extends Object {
+    public void one() { System.out.println("grand : one"); }
+    public void two() { System.out.println("grand : two"); }
+}
+class Father extends Grand{
+	public void three() {System.out.println("Father : three");}
+}
+class Uncle extends Grand{
+	public void four() { System.out.println("Uncle : four");}
+	@Override public void two () { System.out.println("Uncle : two");}
+	@Override public void one () { System.out.println("Uncle : one");}
+} 
+class Aunt {
+	String name="mimi";
+	@Override public String toString() {return "Aunt [name=" + name + "]";} // Object 오버라이딩
+}
+/////////////////////////////////////////////////
+public class ClassEx003 {
+	public static void main(String[]args) {
+		Father papa = new Father();
+		papa.one(); papa.two(); 
+		//Q1. uncle이 쓸수 있는 메서드는?   Uncle	{one(), two(), four()} → Grand    {one(), two()}
+		//Q2. 25번째줄에서 출력되는 내용은?   Uncle	{one(), two(), four()} → Grand    {one(), two()}
+		//Q3. 18, 19번째의 개념은?  @Override : 상속시 부모와 같은 메서드를 자식클래스에 맞게 수정한것!
+		
+		
+	}//end main
+}//eend class
+/////////////////////////////////////////////////
+/*연습문제3)    클래스 상속과 메서드 호출 우선순위
+패키지명 : com.company.java011_ex 
+클래스명 : ClassEx003.java
+
+1. 아래 조건에 맞게 ClassEx003.java 파일을 작성하고, 
+   빈칸을 채운 뒤 main() 메서드를 실행하여 출력 결과를 예상하시오.
+2. 주어진 코드 (수정 전)
+```java
+class Grand extends Object {
+    public void one() { System.out.println("grand : one"); }
+    public void two() { System.out.println("grand : two"); }
+}
+// (1) Father 클래스가 Grand 클래스를 상속받도록 수정
+public class Father {
+    public void three() { System.out.println("Father : three"); }
+}
+
+```
+3. 출력 결과  
+ 
+grand : one
+grand : two
+Father : three
+
+4. 클래스 구조 설명
+클래스명        상속 관계       주요 메서드
+1) Object   최상위 클래스           -
+2) Grand      Object → Grand         one(), two()
+3) Father   Grand → Father       three()
+4) Uncle      Object → Uncle 
+5) Aunt      Object → Aunt     
+- 모든 클래스는 Object 클래스를 기본적으로 상속받음
+- Grand 클래스는 one()과 two() 메서드를 정의
+- Father 클래스는 Grand를 상속받아 three() 메서드를 추가
+
+5. 요구사항
+- Father 클래스가 Grand 클래스를 상속받도록 extends 키워드를 활용할 것
+- main() 메서드에서 Father 객체를 생성하고 one(), two(), three() 메서드를 순서대로 호출할 것
+- 상속 관계에 따라 메서드 호출 우선순위를 이해하고 출력 결과를 정확히 예측할 것
+- Uncle, Aunt 클래스도 Object를 상속받는 구조로 확장 가능하므로, 필요 시 추가 구현할 것
+*/
+---
+---
+package com.company.java011_ex;
+/*4. 클래스 구조 설명
+  Object					■ 3. Object(){ 									   } ■ 4.
+ 	↑
+Color 클래스 :  				■ 2. Color(){   name=null         /  name=0        } ■ 5. 
+     ↑
+Green 클래스  : void show(){} ■ 1. Green(){					show()      		} ■ 6.
+               				 ■ 0. 1번지
+------------------------------------------------------------------------------------
+Green mygreen = new Green(); 
+------------------------------------------------------------------------------------
+1. 	Green은 Color이다, Green은 Object이다.
+*/
+class Color{
+	public String name;
+	private int num;
+	
+	public Color() {super();}
+	public int getNum() { return num; }  public void setNum(int num) { this.num = num; }
+	@Override public String toString() { return "Color [name=" + name + ", num=" + num + "]"; }
+	}
+class Green extends Color{
+	void show() {
+		System.out.println("GREEN");
+		System.out.println("NAME : " + this.name);
+		System.out.println("NUM : " + this.getNum()); //private
+	}
+	
+}
+
+////////////////////////////////////////////////////////////
+public class ExtendsEx001 {
+    public static void main(String[] args){
+        Green mygreen = new Green();
+        mygreen.name = "LIGHT_GREEN";
+        mygreen.setNum(5);
+        mygreen.show();
+        
+        
+		//5 요구사항
+		//1) Color와 Green 클래스의 상속 관계를 활용할 것
+		//2) main() 메서드에서 직접 name과 num에 값을 할당할 수 있도록 접근 제어자를 고려할 것
+		//3) show() 메서드를 통해 출력 형식을 맞출 것
+ 
+		//3.출력 결과 
+		//GREEN
+		//NAME : LIGHT_GREEN
+		//NUM : 5
+        
+        
+        
+
+    }//end main
+}//end class
+////////////////////////////////////////////////////////////
+/*연습문제1)  멤버변수
+패키지명 : com.company.java011_ex
+클래스명 :   ExtendsEx001.java
+1. 아래 조건에 맞게 Extends002.java 파일을 작성하고, main() 메서드를 수정하여 다음과 같은 출력 결과가 나오도록 하시오.
+2. 주어진 코드 (수정 전)
+```java
+4. 클래스 구조 설명
+//Color 클래스 : 멤버 변수:  name (String, public)  / num (int, private)
+// ↑
+Green 클래스  :  //멤버 변수:  name (String, public), num (int, private)
+
+
+```
+*/
+---<!--day025.md-->
+---
