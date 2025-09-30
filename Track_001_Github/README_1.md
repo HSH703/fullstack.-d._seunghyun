@@ -652,3 +652,81 @@ https://nbcamp.spartacodingclub.kr/blog/%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%8F%AC%ED
 ---
 # github (20250922~20250926)
 ---
+# ■ Github
+## Track001 -  github
+
+> 1. (~18:00) 깃허브정리 day017.md
+> 2. BANK 상담정리
+1) Java Control      -  내용바꾸기
+2) Java Array(3명)   -  내용바꾸기  ( 동영상, youtube, 깃허브정리  : readme)
+3) 자기소개페이지 -  (금)  css - transform / animation  
+                     +  js - 아이디어 추가해서 자바스크립트기능  
+
+1. 팀장뽑기 (아~ 이팀장이면 믿을만하다~~! )
+2. 팀장이  2,3,4,5차까지 만들 포트폴리오 주제 안내
+3. 팀원들은 가고 싶은팀 익명으로 투표
+4. 팀장은 팀원뽑기 (익명)
+5. 다시 고르기
+
+
+
+# ■ Github   
+### 12. 깃허브 협업 
+---
+1조 : 유희재, 한승현, 김정민, 강서현
+2조 : 성태훈, 길상현, 박현주 
+3조 : 최상욱, 김영민, 신준용
+3i1e         : https://github.com/kyoungsjjj0211/portfolio.git
+드래곤치킨     : https://github.com/taehun00/dragonchicken.git
+트리플윈      : https://github.com/suda77881/triple1
+---<!--day021.md-->
+---
+### 12. 깃허브 협업 
+---
+1. html + css + js/jquery      [개인]
+2. spring + mybatis + jstl     
+3. node + react
+4. spring boot + thymeleaf + jpa + mybatis + react  
+5. flutter + spring boot + jpa + mybatis + react
+---<!--day022.md-->
+
+---
+
+
+
+
+
+# JAVA (20250929~20251002)
+---
+## 취업 (자격증) 
+>1. 자바 part002 -  OOP  
+>2. WEB BASIC   -  자기소개페이지 (목)
+>3. 이력서 (전공자-100개 1개 , 비전공자 200개 1개) 
+  [필수]SQLD - join, subquery
+  [선택]네트워크관리사 2급 (중하), AWS Certified Cloud Practitioner ,  리눅스마스터 2급, 정보처리기능사 
+■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ 
+■  09.29 / 11.04 / 10.13 일정확인   
+■3. 네트워크관리사 2급(중하)
+>>>>>>   ~ 2025.09.29 (필기 접수 )  :   ■■11월 2일 시험  /   11월4일 발표
+>>>>>>   ~ 2025.11.04 (실기 접수 )  :   ■■11월 30일 시험  /  12월9일 발표
+■4. Sqld 시험 (중)
+>>>>>>   ~ 2025.10.13  (필기 접수 ) :   ■■11월 16일 시험    /  12월 12일 발표  
+■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ 
+ 
+## Track001 -  github
+# ■ Github   
+### 12. 깃허브 협업 
+---
+1. html + css + js/jquery      [개인]
+2. spring + mybatis + jstl     
+3. node + react
+4. spring boot + thymeleaf + jpa + mybatis + react  
+5. flutter + spring boot + jpa + mybatis + react
+
+Step1. 팀깃허브 (git)
+Step2. 팀원 - 브랜치
+Step3. mission002_자격증.md
+   같이 할친구들~! 준비
+--- <!--day026.md-->
+---
+

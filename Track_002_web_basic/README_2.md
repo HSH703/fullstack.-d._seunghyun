@@ -4550,3 +4550,607 @@ w-25   w-50  w-75  w-100
 ---<!--day024.md-->
 
 ---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<!--                                    -->
+<div class="p-3 bg-primary text-white ">
+  <h1>007. CONTROL</h1>
+  <ol>
+    <li>IF</li>
+    <li>SWITCH</li>
+    <li>FOR/WHILE/DO WHILE</li>
+  </ol>
+</div>
+<!--                                    -->
+<!--                                    -->
+<div class="container card  my-3">
+  <h3  class="card-header">007. CONTROL - Step1. IF</h3>
+  <div class="card-body">
+    <h4>Step1. IF</h4>
+      <script>
+       // if(조건){조건이 true }
+       // else    {조건이 false}
+        let data = 1;
+        if( data==1) {  console.log("1이다.");  }
+       else{console.log("1이 아니다."); } 
+      </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre>
+      평균을 입력하세요 __입력받기
+      만약 평균이 60점 이상(60점포함)이라면 합격, 아니면 불합격 출력
+    </pre>
+    <input type="button" value="ex1"  id="ex1"  title="버튼을 클릭하세요" class="btn btn-success"      />
+    <script>
+      window.addEventListener("load" ,function(){
+        let ex1 = document.querySelector("#ex1");
+        ex1.addEventListener("click", function(){
+          let result = "불합격";
+          let answer = prompt("평균을 입력하세요.");
+            if(answer >=60 ) {alert("합격"); }
+          else               {alert("불합격");}
+        });
+      });
+    </script>
+  </div>
+</div>
+
+
+
+
+<!--                                    -->
+<!--                                    -->
+<div class="container card  my-3">
+  <h3  class="card-header">007. CONTROL - Step2. SWITCH</h3>
+  <div class="card-body">
+    <h4>Step2. SWITCH</h4>
+      <script>
+      /*
+      swtich(  처리하고 싶은 대상    ){
+          case 대상의상태:    처리;  break;
+          case 대상의상태:    처리;  break;
+          case 대상의상태:    처리;  break;
+          default : 기본처리
+      } */
+        let data2 =2; 
+        switch(data2){
+          case 1: console.log("1이다. "); break;
+          case 2: console.log("2이다. "); break;
+          case 3: console.log("3이다. "); break;
+          default : console.log("1, 2, 3이 아니다. "); break;
+        } 
+      </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre>
+      4,5,6 중에 입력하세요
+      4번 월드콘  ,  5번 구구콘 , 6번 설레임 알림창을 띄우시오.
+    </pre>
+    <input type="button" value="switch1"  id="switch1"  title="버튼을 클릭하세요" class="btn btn-success"      />
+    <script>
+      window.addEventListener("load" ,function(){
+        let switch1 = document.querySelector("#switch1");
+        switch1.addEventListener("click", function(){
+          let ice = prompt("4,5,6 중에 입력하세요");
+          //alert(typeof(ice));
+          switch(Number(ice)){ //문자열을 숫자로 입력
+            case 4 : alert ("월드콘"); break; 
+            case 5 : alert ("구구콘"); break; 
+            case 6 : alert ("설레임"); break; 
+            default : alert("4,5,6이 아닙니다."); break;
+          }
+        });
+      });
+
+    </script>
+  </div>
+</div>
+
+
+
+
+<!--                                    -->
+<!--                                    -->
+<div class="container card  my-3">
+  <h3  class="card-header">007. CONTROL - Step3. FOR/WHILE/DO WHILE</h3>
+  <div class="card-body">
+    <h4>Step3. FOR/WHILE/DO WHILE</h4>
+      <script>
+      /*
+        STEP1 for  - 반복횟수 알때
+        for(  초기문; 조건문; 증감문 ){  }
+
+        STEP2 while- 반복횟수 모를때
+        초기문;
+        while(  조건문 ){     증감문;  }
+
+        STEP3 do while- 한번은 실행을 해야할때
+        초기문;
+        do{     증감문;  } while(  조건문 );
+
+        STEP4 향상된 for
+        for( index  in 객체 ){   }*/
+        window.addEventListener("load," ,function(){
+          console.log("step1-for");
+          for(let i=1; i<4; i++){ console.log(i);}
+
+          console.log("step2-  while"); 
+          let i=1; while(i<4){console.log(i); i++;}
+
+          console.log("step3- do while"); 
+          let i2=1; do{console.log(i2); i2++;}while(i2<4);
+
+          console.log("step4. 향상된 for");
+          const list = ['a', 'b', 'c'];
+
+          for(let i in list ){console.log(i+ "/" + list[i] )}
+
+          console.log("step4. 향상된 for 2");
+          list.forEach(  (ele, index, lise )=> {  //e-i-l
+            console.log(ele + "/" + index + "/" + lise);
+          });
+        });
+      
+
+      </script>
+  </div>
+  <!--     -->
+  <!--     -->
+  <hr/>
+  <div class="card-body">
+    <h4>EX</h4>
+    <pre>
+    for, while, do while
+    Q1)		1	2	3	4	5
+    Q2)		5	4	3	2	1
+    Q3)		2	4	6
+    Q4)		hello1		hello2		hello3
+    Q5)		const list1 = [1	2	3	4	5];
+    </pre>
+    <script>
+   /*   // for, while, do while
+      //A1)		1	2	3	4	5
+        console.log("1. for문");
+        for(let i=1; i<5; i++){console.log(i);}
+        console.log("2. while문");
+        let i1=1;  while(i1<5){console.log(i1); i1++;}
+        console.log("3.do while문");
+        let i2=1;  do{console.log(i2); i2++;}while(i2<5);
+
+      //A2)		5	4	3	2	1
+        console.log("1. for문");
+        for(let i3=5; i3>1; i3--){console.log(i3);}
+        console.log("2. while문");
+        let i4=5;  while(i4>1){console.log(i4); i4--;}
+        console.log("3.do while문");
+        let i5=5;  do{console.log(i5); i5--;}while(i5>1);
+
+      //A3)		2	4	6
+        console.log("1. for문");
+        for(let i6=2; i6<7; i6+=2){console.log(i6);}
+        console.log("2. while문");
+        let i7=2;  while(i7<7){console.log(i7); i7+=2;}
+        console.log("3.do while문");
+        let i8=2;  do{console.log(i8); i8+=2;}while(i8<7);
+
+      //A4)		hello1		hello2		hello3
+        console.log("1. for문");
+        for(let i9=1; i9<4; i9++){console.log("hello"+i9 );}
+        console.log("2. while문");
+        let i10=1;  while(i10<4){console.log("hello"  + i10); i10++;}
+        console.log("3.do while문");
+        let i11=1;  do{console.log("hello"+ i11 ); i11++;}while(i11<4);
+
+      // 향상된 for , forEach
+      //A5)		const list1 = [1	2	3	4	5];
+      const list1 = [1,	2,	3,	4,	5];
+      console.log("A5-1 for문");
+        for(let i in list1){console.log(i + "/" + list1[i])} //index
+
+      console.log("A5-2 foreach문");
+        list1.forEach((ele, index, list) => { 
+          console.log(ele+ "/" + index + "/"+ list );
+        });
+      */
+    </script>
+  </div>
+</div>
+
+
+</body>
+</html>
+---<!--day025.md-->
+
+
+# Webbasic (20250929~20251002)
+---
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!--                                    -->
+    <!--                                    -->
+    <!--                                    -->
+    <!--                                    -->
+    <!--                                    -->
+    <div class="p-3 bg-primary text-white ">
+        <h1>009. OBJECT  </h1>
+        <ol>
+            <li>array</li>
+            <li>object</li>
+            <li>ajax</li>
+        </ol>
+    </div><!-- end navi  -->
+
+
+    <!--                -->
+    <!--                -->
+    <!--                -->
+    <div class="container card  my-3">
+        <h3  class="card-header">009. OBJECT - STEP1. Array</h3>
+        <div class="card-body">
+          <h4>STEP1. Array </h4>
+          <pre>
+            1. 배열
+            1) 필요한 데이터를 한꺼번에 묶어사용
+            2) 배열접근시 index(0,1,2) 접근
+
+            2. 사용법(1) 리터럴
+            const  arr1 = [1,2,3];  //arr1[0] , arr1[1] , arr1[2]
+
+            3. 사용법(2) 객체
+            const  arr2 = new Array(1,2,3);
+            const  arr3 = new Array(3);
+          </pre>
+          <script>
+            console.log("사용법(1) 리터럴");
+            const arr1 = [1,2,3]; 
+            for( let i in arr1 ){console.log(arr1[i]);  }
+
+            console.log("사용법(2) 배열생성자");
+            const arr2 = new Array(1,2,3); 
+            for(let i in arr2 ){console.log(arr2[i]);  }
+
+            console.log("사용법(3) 배열생성자-2");
+            const arr3 = new Array(3);
+            arr3[0] = 1; arr3[1] = 2;  arr3[2] = 3;
+            for(let i in arr3 ){console.log(arr3[i]);  }
+
+            console.log("사용법(4) 원하는 콘텐츠 다");
+            let arr4 = ["sally", "cat", "3", "7.8"];
+            for(let i in arr4 ){console.log(arr4[i]);  }
+
+          </script>
+        </div>
+        <!--     -->
+        <!--     -->
+        <hr/>
+        <div class="card-body">
+          <h4>EX</h4>
+          <pre>
+            1) 배열이름 animal
+            dog, cat , duck, monkey  각각의 데이터 셋팅
+            for문으로 출력해주기
+          
+            2) 배열이름 myCat
+            cat, alpha, 3, 경기도시흥
+            for+length문으로 출력해주기
+           </pre>
+           <script>
+              console.log("ex1, animal");
+              const animal = new Array(4);
+              animal[0] = "dog"; animal[1] = "cat"; animal[2] = "duck"; animal[3] = "monkey";
+              for(let i in animal){console.log(animal[i]);}
+              for(let i=0; i<animal.length; i++){console.log(animal[i]);}
+
+
+              console.log("ex2, myCat");
+              let myCat = ["cat", "alpha", "3", "경기도시흥"];
+              for(let i=0; i<myCat.length; i++){console.log(myCat[i]);}
+
+
+            </script>
+        </div>
+    </div><!-- end container  -->
+
+
+
+    <!--                -->
+    <!--                -->
+    <!--                -->
+    <br/>
+    <br/>
+    <br/>
+    <hr/>
+    <div class="container card  my-3">
+        <h3  class="card-header">009. OBJECT - STEP2. Object</h3>
+        <div class="card-body">
+          <h4>STEP2. Object </h4>
+          <pre>
+            1. 배열 - index     0,1,2,,,
+            let arr = [1,2,3];
+
+            2. 객체  - key:value
+            예) 두껍아~ 헌집주면 새집다오~
+                객체야~ key를 줄께~ value 주세요!
+            let obj = {1:'one', 2:'two',3:'three' };
+           </pre>
+           <script>
+             let arr = ['Number', 1,2,3];
+             console.log(arr); 
+             console.log(typeof(arr)); //object 
+             console.log(arr[0]); //array - index 접근
+
+              let obj = {'o1': 'one' , 'o2':'two'};
+              console.log(obj);
+              console.log( typeof (obj)); // object 
+              console.log(obj['o1']); // 내가만든 key
+              console.log(obj.o1); // 객체.key
+            </script>
+        </div>
+        <!--     --> 
+        <!--     --> 
+        <hr/>
+        <div class="card-body">
+          <h4>EX</h4>
+          <pre>
+            Q1) car객체 만들기
+              차이름(name), 차색상(color), 년식(year)을 프로퍼티로 지정하기
+              좋아하는 값 넣으세요~!
+            Q2) score객체 만들기
+               국어(kor) , 영어(eng), 수학(math)을 프로퍼티로 지정하기
+               값 100 , 100, 99 넣고
+               총점, 평균 구하기
+               출력내용 : 총점 299
+                         평균 99.67
+            </pre>
+            <script>
+              console.log("ex1");
+              let car1 = {name: 'CARNIVAL' , color:'BLACK', year:'2026'};
+              console.log(car1);
+
+              let car2 = {}; //중간중간에 생각나서 추가할때.
+              car2.name='CARNIVAL'; car2.color='BLACK', car2.year=2026;
+              console.log(car2);
+
+              console.log("ex2"); 
+              let score={kor:100, eng:100, math:99};
+              let total = score.kor + score.eng + score.math;
+              let avg = total/3; 
+              console.log('총점 : ' + total);
+              console.log('평균 : ' + avg);
+            </script>
+        </div>
+    </div><!-- end container  -->
+
+
+
+    <!--                -->
+    <!--                -->
+    <!--                -->
+    <br/>
+    <br/>
+    <br/>
+    <hr/>
+    <div class="container card  my-3">
+        <h3  class="card-header">009. OBJECT - STEP3. Ajax</h3>
+        <div class="card-body">
+          <h4>STEP1. Ajax-text </h4>
+          <p><input type="button"  id="xml"
+              value="xmlHttpRequest1"  class="btn btn-outline-primary"  onclick="show1()"/></p>
+          <div class="alert alert-primary result r1"  id="result1"></div>
+          <script>
+ 
+          </script>
+        </div>
+        <!--     -->
+        <!--     -->
+        <hr/>
+        <div class="card-body">
+          <h4>STEP2. Ajax-json </h4>
+          <p><input type="button"  id="json"
+              value="xmlHttpRequest2"  class="btn btn-outline-primary"  onclick="show3()"/></p>
+          <div class="alert alert-primary result json1"  id="json2"></div>
+          <script>
+            function show3(){
+              //1.  XMLHttpRequest : 서버와 비동기적으로 데이터 교환
+                xmlhttp = new XMLHttpRequest();
+              //2.  onreadystatechange
+              //readyState ( 0  로딩중  ,,, 4서버처리끝) / status ( 200  성공)	/responseText(  처리내용 )
+              xmlhttp.onreadystatechange = function(){
+                //alert("1: " + xmlhttp.readyState );    alert("2: " + xmlhttp.status );
+                if(   xmlhttp.readyState == 4  && xmlhttp.status == 200  ){
+                  let data  = JSON.parse(  xmlhttp.responseText );
+                  let result = data.name + "/" + data.age;
+                  document.getElementById("json2").innerHTML = result;
+                }
+              };
+              //3. 파일연결
+              xmlhttp.open("get" , "./data/json1.json" ,   true);
+              //4. 파일전송
+              xmlhttp.send();
+            }
+          </script>
+        </div>
+        <!--     -->
+        <!--     -->
+        <!--     -->
+        <!--     -->
+        <hr/>
+        <div class="card-body">
+          <h4>STEP3. Ajax-xml </h4>
+          <p><input type="button"  id="xml"
+              value="xmlHttpRequest2"  class="btn btn-outline-primary"  onclick="show5()"/></p>
+          <div class="alert alert-primary result xml1"  id="xml1"></div>
+          <script>
+ 
+          </script>
+        </div>
+        <!--     -->
+        <!--     -->
+    </div><!-- end container  -->
+
+</body>
+</html>
+---<!--day026.md-->
+---
+### $ () = jquery야 () 찾아와~ 
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>DBDBIG</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+</head>
+<body>
+    <!--                                    -->
+    <!--                                    -->
+    <!--                                    -->
+    <!--                                    -->
+    <!--                                    -->
+    <div class="p-3 bg-primary text-white">
+      <h1>010. JQUERY</h1>
+      <ol>
+        <li>선택자</li>
+        <li>효과</li>
+        <li>많이쓰는 예제</li>
+      </ol>
+    </div><!-- end navi  -->  
+    
+    <script>
+      window.addEventListener("load",function(){
+        //document.getElementById();
+        //document.getElementsByTagName();
+        //document.querySelector("p");
+        let ps = document.querySelectorAll("p"); 
+        console.log(ps);
+      });
+
+      // $ == JQUERY    $(대상) : jquery야 찾아와. / 이렇게해.
+      //$(document).ready(function(){ }); //end raady
+      $(function(){
+        //1. 일반태그
+        $("p").css({"color": "blue" , "fontSize": "15px" });
+        //2. #아이디
+        $("#hello").css({"backgroundColor":"black" , "color":"white", });
+        //3. .클래스
+        $(".greeting").css({"fontSize":"20px" , "textAlign":"center","textDecoration" : "underline"});
+        //4. 자식태그    $("ul > li" = 바로 직속 태그에 적용.)
+        $("ul > li").css({"color":"gold"});
+        //5. 첫번째
+        $("div:first").css({"border":"10px dotted black"});
+        $(".item").css({"cursor":"pointer"});
+        $(".item").on("click",function(){
+          $(".item").prev().css({"textAlign":"center"});
+          $(".item").next().css({"textAlign":"right"});
+        });
+        $(".card").on("mouseenter",function(){
+          $(this).css({"backgroundColor":"green", "color":"white"});
+        }).on("mouseleave",function(){
+          $(this).css({"backgroundColor":"white", "color":"black"});
+        });
+      });
+    </script>
+
+    <!--                -->
+    <!--                -->
+    <!--                -->
+    <div class="container card  my-3">
+      <p id="hello">안녕!</p>
+      <p class="greeting">반가워!</p>
+      <ul>
+        <li>사과</li>
+        <li>바나나</li>
+      </ul>
+      <div>첫 번째 박스</div>
+      <div>두 번째 박스</div>
+
+      <p>앞에 있는 문장</p>
+      <p class="item">이건 선택된 문장</p>
+      <p>뒤에 있는 문장</p>
+    </div> 
+
+
+
+    <div class="container ex">
+      <h3>연습문제1</h3>
+      <pre class="alert alert-warning">
+        1. jquery를 이용해 클래스가 ex인것 찾기
+        2. 위아래 바깥쪽여백 - 시계방향 top, right bottom, left 50px  , 선은 1px solid #ddd , 모서리곡선 10px
+      </pre>
+      <script>
+        $(function(){
+          $(".ex")
+          .css({"margin":"50px auto", "padding":"20px",
+                "border":"1px solid #ddd" , "borderRadius":"10px"}); 
+        });
+      </script>  
+
+    <form action="/action_page.php">
+      <div class="mb-3 mt-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      </div>
+      <div class="mb-3">
+        <label for="pwd" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+      </div>
+      <div class="form-check mb-3">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="remember"> Remember me
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div><!--end container-->
+  
+  
+</body>
+</html>
+---<!----day027.md>
+
+---
+
+---

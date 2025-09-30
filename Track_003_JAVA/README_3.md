@@ -9530,4 +9530,953 @@ Green 클래스  :  //멤버 변수:  name (String, public), num (int, private)
 ```
 */
 ---<!--day025.md-->
+
+# JAVA (20250929~20251002)
 ---
+package com.company.java012;
+
+/*
+1. 클래스는 부품객체
+2. 상속은 재활용
+	Object                  Object 
+	   ↑   			           ↑
+	 TestA1		            TestB1
+	 (int a)		        (int b)
+	 110v, -자형나사		    220v, +자형나사
+*/
+class TestA1 extends Object{int a;}
+class TestB1 extends Object{int b;}
+
+//////////////////////////////////////////////////////////////
+public class Poly001 {
+	public static void main(String[]args) {
+		TestA1 ta1 = new TestA1();
+		
+		//TestB1 tb1 = ta1;
+		// Q. 오류나는이유는?
+		//Type mismatch: cannot convert from TestA1 to TestB1
+		//클래스도 자료형 (틀-objecet) 
+		
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////
+---
+---
+package com.company.java012;
+/*
+1. 클래스는 부품객체	 2. 상태와 행위	 3. 상속은 재활용
+	Object                  
+	   ↑   			          
+	 TestA2	(int a , toString)	 
+	   ↑ 
+	 TestB2 (int b , toString)  	    
+*/
+class TestA2 extends Object{
+	int a=10;
+	@Override public String toString() { return "TestA2 [a=" + a + "]"; }
+}
+class TestB2 extends TestA2{
+	int b=20;
+	@Override public String toString() { return "TestB2 [b=" + b + "]"; }
+}
+	
+////////////////////////////////////////////////////////////////
+public class Poly002 {
+	public static void main(String[]args) {
+		// 부모 = 자식 (Upcasting)
+		TestA2 ta = new TestB2(); 
+		// 1. TestA2 ta {int a , toString}
+		// 2. 		 1번지 TestB2{ int b=20 , toString } → TestA2() { int a=10,  toString  → Object() }
+		// > 생성자는  인스턴스변수를 초기화해서 사용할수 있게 해줌.
+		// 3.   ta {int a=10 , toString} [1번지] = 1번지{int b=20 , [@toString} - {int a=10] ,-------} 
+		System.out.println(ta); //TestB2[b=20] : 자식
+		System.out.println(ta.a);  //10
+		System.out.println(((TestB2)ta).b); //20
+	}
+}
+////////////////////////////////////////////////////////////////
+---
+---
+package com.company.java012;
+/*
+1. 클래스는 부품객체	 2. 상태와 행위	 3. 상속은 재활용
+	Object                  
+	   ↑   			          
+	 TestA3	(int a , toString)	 
+	   ↑ 
+	 TestB3 (int b , toString) 
+*/
+class TestA3 extends Object{
+	int a=10;
+	@Override public String toString() { return "TestA3 [a=" + a + "]"; }
+}
+class TestB3 extends TestA3{
+	int b=10;
+	@Override public String toString() { return "TestB3 [b=" + b + "]"; }
+}
+
+///////////////////////////////////////////////////////
+public class Poly003 {
+	public static void main(String[]args) {
+	// 자식 = 부모 downcasting
+	TestB3 tb = (TestB3) new TestA3(); 
+	// 1. TestB3 tb 범위 : TestB3(int b  , @toString) - TestA3 (int a , ------)
+	
+	// 2. TestA3()는 : (int a , toString)만 처리
+	// 3. TestB3(int b , toString) 보장안됨.
+	// 보장(int b , toString) / (생성자를 호출한적 X => 오류) - (int a , toString) (1번지) 
+	//										     = 1번지(int a , toString) 
+	/* Exception in thread "main" java.lang.ClassCastException: class com.company.java011.TestA3 cannot be cast to class com.company.java011.TestB3 
+	 * (com.company.java011.TestA3 and com.company.java011.TestB3 are in module JAVA2025 of loader 'app')
+	at JAVA2025/com.company.java011.Poly003.main(Poly003.java:23)
+	*/
+	
+	}//end main
+}//end class
+///////////////////////////////////////////////////////
+---
+---
+package com.company.java012;
+/*
+1. 클래스는 부품객체	 2. 상태와 행위	 3. 상속은 재활용
+	Object                  
+	   ↑   			          
+	 TestA4	(int a , toString)	 
+	   ↑ 
+	 TestB4 (int b , toString) 
+*/
+class TestA4 extends Object{
+	int a=10;
+	@Override public String toString() { return "TestA4 [a=" + a + "]"; }
+}
+class TestB4 extends TestA4{
+	int b=20;
+	@Override public String toString() { return "TestB4 [b=" + b + "]"; }
+}
+///////////////////////////////////////////////////////////////////
+public class Poly004 {
+	public static void main(String[]args) {
+		TestA4 ta = new TestA4();
+		// 1. {int a , toString} = 1000번지 {int a , toString}
+		TestB4 tb = new TestB4();
+		// 2. tb: {int b , toString} - {int b , ---------}
+		//				 = 2000번지 (int b , @toSring)-{int a , -------}
+		ta = new TestB4(); //5. 부모에 자식을 담은적이 있어야 한다.
+						   // 부모 = 자식 / 업캐스팅 / 타입캐스팅 X
+		// ta: {int a , toString} = 3000번지 {int b , @toString}-{int a , --------}
+		tb		  = (TestB4) ta; // 4. 자식 = 부모 / 다운캐스팅 / 타입캐스팅 O (설계할떄 필요)
+		// 3. tb: {int b , @toString} - {int a , ---------}
+		//							 = 3000번지{int b , [ @toString)-( int a], ---------} 
+		
+		System.out.println(tb);
+		System.out.println(tb.b);
+		System.out.println(tb.a);
+
+	}
+}
+///////////////////////////////////////////////////////////////////
+---
+---
+package com.company.java012;
+/*
+	Object
+	  ↑
+	Animal { String name; int age;}
+	  ↑	  
+     Cat {String number; void show()}
+*/
+/*
+Object
+  ↑
+Animal { String name; int age;}
+↑	  ↑
+Person	  {String jumin; void show()}
+*/
+
+class Animal{
+	String name; int age;
+	public Animal() { super();}	//Object() 컴파일러가 자동생성 X → 오버로딩과 상속시
+	public Animal(String name, int age) {  super(); this.name = name; this.age = age; }
+	void show() {System.out.println("Animal");}
+}
+class Cat    extends Animal{
+	String number; 
+	public void show() { System.out.println("Cat > " + super.name + "/" + super.age);}
+}
+class Perosn extends Animal{
+	String jumin;
+	public void show() { System.out.println("Person > " + super.name + "/" + super.age);}
+}
+
+/////////////////////////////////////////////////////////////
+public class Poly005 {
+	public static void main(String[]args) {
+		//하나의 타입(부모)으로 여러타입의 객체(자식들)를 관리
+		// 부모 = 자식 / 업캐스팅 / 타입캐스팅 X
+		Animal [] anis = {  new Cat() , new Cat(), new Perosn(), new Perosn()  }; 
+		// 1. 보장 : {String name; int age; /show()}
+		// 					  = new Cat(){number , @show() } - Animal{String name; int age; / show()}
+		// 1. 보장 : {String name; int age;}
+		// 					  = new Person(){jumin , @show() } - Animal{String name; int age;/ -------}
+		Animal controller = null;
+		controller = anis[0];  controller.show(); 
+		controller = anis[1];  controller.show(); 
+		controller = anis[2];  controller.show(); 
+		controller = anis[3];  controller.show(); 
+	}
+}
+/////////////////////////////////////////////////////////////
+---
+---
+package com.company.java012_ex;
+//Q1. 상속도를 그리시오. 
+/* 
+   Object 
+     ↑
+   TestA2 {a=10, toString}
+     ↑
+   TestB2 {b=10, toString}
+*/
+class TestA2 extends Object{  
+   int a=10;
+   @Override public String toString() { return "TestA2 [a=" + a + "]"; }    
+}
+class TestB2 extends TestA2{
+   int b=10;
+   @Override public String toString() { return "TestB2 [b=" + b + "]"; }   
+}
+/////////////////////////////////////////////////
+public class PolyEx001 {
+   public static void main(String[] args) {
+	  // 부모 = 자식 / 업캐스팅 / 타입캐스팅 X
+      TestA2  ta = new TestB2();
+      //Q2. 15번째줄에서   TestA2  ta 는 클래스의 무엇을 사용할수 있을까요? 코드의 의미
+      //A. TestA2{a=10/ toString}
+      //Q3. 15번째줄에서   TestB2() 는 클래스의 무엇을 사용할 수 있을까요?
+      //A. 1000번지 TestB2 {b=10/ @toString} - TestA2{a=10/------} 
+	  //A. ta[1000번지] = 1000번지 TestB2 {b=10. [@toString} - TestA2{a=10]/-------}
+
+      System.out.println(ta); // Q4. 출력내용과 이유?   TestA2  vs  TestB2 
+      						  // A. TestB2 : Override가 되서
+      System.out.println(ta.a); // Q5.사용가능? 10
+      //System.out.println(ta.b); // Q6.사용가능? 타입캐스팅 사용시 가능
+   }
+}
+/////////////////////////////////////////////////
+---
+---
+package com.company.java012_ex;
+//Q1. 상속도를 그리시오. 
+/*
+  Object 
+    ↑
+  TestA3 {a=10, ---------}
+    ↑
+  TestB3 {b=10, @toString}
+*/
+
+class TestA3  extends Object{  
+ int a=10;
+ @Override public String toString() { return "TestA3 [a=" + a + "]"; }
+}
+class TestB3  extends TestA3{  
+ int b=10;
+ @Override public String toString() { return "TestB3 [b=" + b + "]"; }
+} 
+/////////////////////////////////////////////////
+public class PolyEx002 {
+ public static void main(String[] args) {
+	// 자식 = 부모 / 다운캐스팅 / 타입캐스팅 O
+    TestB3  tb =  (TestB3) new TestA3();
+    //Q2. 15번째줄에서   TestB3  tb는 클래스의 무엇을 사용할수 있을까요? 코드의 의미
+    //A.  {b=10, @toString} - {a=10, -------}
+    //Q3. 15번째줄에서   (TestB3) new TestA3() 클래스의 무엇을 사용할 수 있을까요?
+    //A.  					  {a=10, toString}
+    //Q4. 코드상에서는 문제가 없는데 코드를 실행하면 오류가 나는 이유는?
+    //A. tb : {b=10, @toString} - {a=10, -------} = 1000번지{a=10, toString()}
+    //        {b=10,} 이 부분을 객체생성한적이 없음. 
+    //타입캐스팅에는 문제가 없으나, 객체생성이 안되어 있으므로 실행에서 오류가 발생한다.
+ }
+}
+/////////////////////////////////////////////////
+---
+---
+package com.company.java012_ex;
+//Q1. 상속도를 그리시오. 
+/*
+	Object ■ 3)							■ 4)  
+	  ↑
+	TestA4 ■ 2) {a=10, ---------}		■ 5)  
+	  ↑
+	TestB4 ■ 1) {b=20, @toString}		■ 6)  
+*/
+class TestA4  extends Object{  
+ int a=10;
+ @Override public String toString() { return "TestA4 [a=" + a + "]"; }
+}
+class TestB4  extends TestA4{  
+ int b=20;
+ @Override public String toString() { return "TestB4 [b=" + b + "]"; }
+}
+/////////////////////////////////////////////////
+public class PolyEx003 {
+ public static void main(String[] args) {
+    TestA4  ta = new TestA4();
+    //Q2. TestA4  ta 사용할수 있는범위는? A. {a=10 / toString}
+    //Q3. new TestA4() 는  heap area 에서 호출되는 생성자의 순서와 객체가 만들어지는 순서는?
+    //  A: 생성자호출 : 2->3 TestA4() → Object() / 객체 4->5 Object() → TestA4
+    // 	ta   {a=10 / toString} = 1000번지 {a=10/toString} - {}
+    
+    TestB4  tb = new TestB4();  
+    //Q4. TestB4  tb 사용할수 있는범위는? A: {b=20 / @toString} - {a=10 / ------}
+    //Q5. new TestB4() 는  heap area 에서 호출되는 생성자의 순서와 객체가 만들어지는 순서는?
+    //    A: 생성자 1->2->3 TestB4() → Object() / 객체: 4->5->6
+    //	  tb {b=20 / @toString} - {a=10 / -------} = 2000번지 {b=20 / @toString} - {a=10/-------}
+    
+    //■ 부모 = 자식 / 업캐스팅 / 타입캐스팅 X
+    ta = new TestB4();
+    //Q6. ta가 사용할수 있는 보장하는 변수와 메서드는? A: {a=10 / toString}
+    //Q7.ta = new TestB4(); 에서 new TestB4() 에서 사용할수 있는 범위는? 
+    //   ta{a=10 /toString} = 3000번지 {b=20 / @toString} - {a=10 / -------}
+    //■ 자식 = 부모 / 다운캐스팅 / 타입캐스팅 O
+    tb         = (TestB4) ta;   
+    //Q8. tb         = (TestB4) ta;   에서 tb가 사용할수 있는 범위는? A: {b=20 / @toString} - {a=20 / ------} 
+    //Q9. 컴피일러시  tb         = (TestB4) ta;  오류가 안나는 이유는? 
+    //A : tb{b=20 / @toString} - {a=10 / -------} = 3000번지 {b=20 / [@toString} - {a=20] / ------} 
+    
+    System.out.println(tb);  //Q10. 출력내용과 그이유는? TestB4
+    System.out.println(tb.b);//Q11. 출력내용? 20
+    System.out.println(tb.a);//Q12. 출력내용?	10
+    
+ }
+}
+/////////////////////////////////////////////////
+---
+---
+package com.company.java012_ex;
+//Q1. 상속도 그리기
+/*
+	Object
+	  ↑
+	 papa {int money =10000 , -------}
+	  ↑
+	 Son  {int money =1500 , @toString}
+*/
+class Papa extends Object{  
+	   int money = 10000;     
+	   public Papa() { super(); }
+	   public void sing() {  System.out.println("GOD-거짓말");  }
+	}// end class
+	class Son extends Papa{ 
+	   int money = 1500;
+	   public Son() { super(); }
+	   @Override public void sing() {  System.out.println("빅뱅-거짓말"); }
+	} // end class
+//////////////////////////////////////////////////////	
+	public class PolyEx004 {
+		   public static void main(String[] args) { 
+		      Papa mypapa = new Son();    
+		      // Q3. Papa mypapa 의미?
+		      //  A. mypapa {int money = 10000 / toString} - {int money = 1500 / toString}
+		      // Q4. 인스턴스화한 실제 메모리 빌려온그림
+		      //  A. Son {int money = 1500 / [@toString} - {int money = 10000] / ------}
+		      System.out.println(mypapa.money); // Q5.  출력   A. 10000
+		      mypapa.sing();  //Q6. 출력  A. 빅뱅 - 거짓말
+		       // Q7. mypapa.money 를 이용해서  1500 출력되게 해주세요.  
+		       // 
+	   }//end main
+	}//end class
+//////////////////////////////////////////////////////
+/* 연습문제4)  다형성
+패키지명 : com.company.java012_ex
+클래스명 : PolyEx004
+다음과 같이 코드를 작성하시오.
+// Q1. 상속도 그리기
+// Q2. 각클래스에서 사용할수있는 멤버변수/멤버메서드
+*/
+---
+---
+package com.company.java012_ex;
+
+public class PolyEx005 {
+
+}
+/*연습문제5)  다형성
+패키지명 : com.company.java012_ex
+클래스명 : PolyEx005
+다음과 같이 코드를 작성하시오.
+class Parent7  extends Object{
+   int x = 100;
+   public Parent7() { super(); }
+   void method() { System.out.println("Parent Method"); }
+} 
+class Child7 extends Parent7 {
+   int x = 200;
+   public Child7() { super(); }
+   @Override  void method() { System.out.println("Child Method"); }
+}
+public class PolyEx002 {
+   public static void main(String[] args) {
+      Parent7 p = new Child7();     
+      // Q3.  Parent7 p   보장하는 범위   
+      // Q4. 인스턴스화 했을때 사용가능한 범위 : new Child7()  
+      
+                            Child7 c = new Child7();     
+      System.out.println("p.x = " + p.x);  // Q5. 출력되는 내용   
+      p.method();  // Q6. 출력되는 내용     
+      System.out.println("c.x = " + c.x);   // Q7. 출력되는 내용  
+      c.method();   // Q8. 출력되는 내용   
+   }
+}
+
+*/
+---<!--day026.md-->
+---
+1. 다형성
+- 많은 형상을 띄는 성품
+- 여러타입의 객체(자식객체)를 하나의 타입(부모)으로 관리
+
+2. 부모는 자식을 담을수 있다. (업캐스팅)
+---------------------------
+Animal  [name, age / 먹기, 자기, 배변]
+   ↑
+  Cat     [card / 꾹꾹]
+---------------------------
+Animal ani = new Cat();   부모 = 자식   고양이는 동물이다. (O)
+
+2-1) Animal ani {name, age / 먹기, 자기 배변} 
+2-2) Cat() → Animal() → Object() 
+       {card / 꾹꾹} + {name, age / 먹기, 자기, 배변}
+
+3. 자식은 부모를 담을 수 있다.  (다운캐스팅)  
+Cat cat = new Animal()  자식 = 부모   동물은 고양이다. (X)
+
+3-1) Cat cat 
+     {card / 꾹꾹} + {name,  age / 먹기, 자기, 배변}
+3-2) new Animal()
+      	            {name, age / 먹기, 자기, 배변} 
+3-3) 만족못시키는 범위 생김.
+      {card / 꾹꾹} 
+> 3-4) 자식 = 부모  X ---> 코드가 돌아간다? 
+   ★해결방안
+    부모타입에서 자식생성자를 호출한 적이 있으면 사용가능. 
+    Animal ani = new Cat(); 		3000번지 {card / 꾹꾹} + [   {name, age / 먹기,자기, 배변}   ]
+     	자식생성자를 호출해서 자식의 범위를 쓸수 있게 만들었으므로 
+    Cat cat = (Cat)ani  ----> (Cat) = (자식 타입으로) 타입캐스팅 
+         부모객체에서 자식타입으로 [타입캐스팅]이 필요함
+         cat(3000번지) = 3000번지 {card / 꾹꾹} + [   {name, age / 먹기,자기, 배변}    ]
+
+● 9. abstract
+1. 추상화 
+  - 실체화된 객체들 간에 공통되는 특성을 추출
+  - 미완성적인 개념 ( new 사용하지 못함.) 
+  - 공통된 필드와 메서드의 이름을 통일할 목적 
+
+2. 추상클래스
+-----------------------------------------------------------------------
+abstract class Animal{
+   String name ; 	      // 인스턴스변수 - this - 각각
+   abstract void sound(); //abstract method()   - () 구현부가 없음. 
+}
+class Cat extends Animal {  @override void sound(){  야옹  } }
+class Dog extends Animal{  @override void sound(){  멍멍  } }
+------------------------------------------------------------------------
+
+● 10. interface
+1. interface
+  - 개발코드 변경없이 객체를 바꿔낄수 있도록 하는 역할
+
+2. abstract (Is A : 고양이는 동물이다) vs interface( can do this )
+   - 추상화 정도가 interface가 더 높다. 
+   1) abstract - 인스턴스변수                       , 일반메서드, 추상메서드 (abstract) 가질수 있음.  
+   2) interface - only!!상수 (public static final) + 추상메서드(public abstract) 만 가짐.
+
+
+
+3. 프로젝트 진행시 interface 사용 - 우리가 지정한 상수만 가져다 씀 (메서드도 동일) 
+     다른구성원들이 각각의 부분을 완성할때까지 기다리지 않고 
+     규약만 정해두고 본인 부분만 작성.
+(abstract : 프로젝트 진행시 지저분 해지므로 사용 지양) 
+
+4. interface 형식 - (설계클래스)
+----------------------------------------------------------
+interface 인터페이스명 {
+   상수;  //public static final //Method area - 공용사용
+   추상메서드; //public abstract {} X - this X
+}
+----------------------------------------------------------
+class interSon implements 인터페이스명 {}
+class interSon2 extends 클래스명 implements 인터페이스1, 인터페이스2{}
+---
+
+---
+package com.company.java012_ex;
+//Q1. 상속도 그리기
+//Q2. 각클래스에서 사용할수있는 멤버변수/멤버메서드
+/*
+	Object
+	  ↑
+	 papa {int money =10000 , sing - GOD}
+	  ↑
+	 Son  {int money =1500 , @sing - 빅뱅}
+*/
+class Papa extends Object{  
+	   int money = 10000;     
+	   public Papa() { super(); }
+	   public void sing() {  System.out.println("GOD-거짓말");  }
+	}// end class
+	class Son extends Papa{ 
+	   int money = 1500;
+	   public Son() { super(); } 
+	   @Override public void sing() {  System.out.println("빅뱅-거짓말"); }
+	} // end class
+//////////////////////////////////////////////////////	
+	public class PolyEx004 {
+		   public static void main(String[] args) { 
+		      Papa mypapa = new Son();    //부모 = 자식 / ( 업캐스팅 / 타입캐스팅 X)
+		      // Q3. Papa mypapa 의미? A: Papa 자료형 쓸수 있어. {money =10000 , sing }
+		      // Q4. 인스턴스화한 실제 메모리 빌려온그림     
+		      //  A: mypapa = {int money = 1500 / [@sing - 빅뱅} - {int money = 10000] / --------} 
+		      System.out.println(mypapa.money); // Q5.  출력   A. 10000
+		      mypapa.sing();  //Q6. 출력  A. 빅뱅 - 거짓말 
+		       // Q7. mypapa.money 를 이용해서  1500 출력되게 해주세요. 
+		      //      Son을 (Son)으로 타입캐스팅해서 붙여주기만 하면 된다. 
+		       System.out.println(((Son)mypapa).money );
+	   }//end main
+	}//end class
+/*
+	Object
+	  ↑
+	 papa {int money =10000 , sing - GOD}
+	  ↑
+	 Son  {int money =1500 , @sing - 빅뱅}
+*/
+	
+//////////////////////////////////////////////////////
+/* 연습문제4)  다형성
+패키지명 : com.company.java012_ex
+클래스명 : PolyEx004
+다음과 같이 코드를 작성하시오.
+*/
+---
+---
+package com.company.java012_ex;
+//1. 생성도그리기
+//2. 각클래스에서 사용할수있는 멤버변수/멤버메서드
+/*
+	 Object
+	   ↑ 
+	 Parent7  {int x = 100 / Parent Method}
+       ↑
+     Child7	  {int x = 200 / @Child Method}
+*/
+
+class Parent7  extends Object{
+	   int x = 100;
+	   public Parent7() { super(); }
+	   void method() { System.out.println("Parent Method"); }
+	} 
+	class Child7 extends Parent7 {
+	   int x = 200;
+	   public Child7() { super(); }
+	   @Override  void method() { System.out.println("Child Method"); }
+	   void papaMethod() {super.method();} 
+	}
+
+///////////////////////////////////////////////////////////////
+public class PolyEx005 {
+	   public static void main(String[] args) {
+		      Parent7 p = new Child7();     
+		      // Q3.  Parent7 p   보장하는 범위  
+		      //   A: p = {int x = 100 / Parent Method} - {int x = 200 / Child Method}
+		      // Q4. 인스턴스화 했을때 사용가능한 범위 : new Child7()  
+		      //   A: {int x =200 / [@Child Method} - {int x = 100] / Parent Method}
+              Child7 c = new Child7();     
+		      System.out.println("p.x = " + p.x);  // Q5. 출력되는 내용 A: p.x = 100
+		      p.method();  // Q6. 출력되는 내용  A: Child Method 
+		      System.out.println("c.x = " + c.x);   // Q7. 출력되는 내용  A: c.x = 200
+		      c.method();   // Q8. 출력되는 내용   A: Parent Method
+		      //Bonus Q9. main에서 부모에서도 호출가능? - Parent Method (X)
+		      ((Parent7)p).method();  //X 오버라이딩된 메서드를 직접호출하는 것은 불가능
+		      c.papaMethod(); // 자식에서 부모호출가능
+		      //((Child7)p).papaMehtod(); // 타입캐스팅 - 부모가 자식메서드 호출가능 (자식 생성자 호출시)
+	   }//end main
+	}//end class
+
+///////////////////////////////////////////////////////////////
+
+/*연습문제5)  다형성
+패키지명 : com.company.java012_ex
+클래스명 : PolyEx005
+다음과 같이 코드를 작성하시오.
+
+*/
+---
+---
+package com.company.java013;
+
+/* 	Abstract (is A)   일반클래스 + 설계
+    고양이는 동물이다 
+       개도 동물이다
+       
+        Animal
+        ↑    ↑
+       Cat  Dog
+*/
+abstract class Animal{       //일반클래스 + 설계
+	String name; 
+	abstract void eat();     //추상메서드가 있으면 반드시!! 추상클래스로 만들어줘야함.
+	abstract void sleep();   // 구현부가 없음 : {}X 
+	abstract void poo();     //추상화, 일반화, 설계: 공통의 속성, 구체적인 내용이 없음.
+}
+class Cat extends Animal{ //구현클래스 - 고양이는 동물이다.
+	@Override void eat() {System.out.println(super.name + "고양이 냠냠!");}
+	@Override void sleep() {System.out.println(super.name + "고양이 수면!");}
+	@Override void poo() {System.out.println(super.name + "고양이 시원!");}
+}
+class Dog extends Animal{ //구현클래스 - 강아지는 동물이다. 
+	@Override void eat() {System.out.println(super.name + "강아지 냠냠!");}
+	@Override void sleep() {System.out.println(super.name + "강아지 수면!");}
+	@Override void poo() {System.out.println(super.name + "강아지 시원!");}
+}
+public class Abstract001 {
+	public static void main(String[]args) {
+		//1. abstract class : 일반클래스 + 설계 
+		// Animal ani = new Animal();  new 메모리빌리고, 객체생성 / Animal () 초기화, {} 구현부 없음
+		
+		Animal ani = null;
+		ani = new Cat(); //부모 = 자식 , 업캐스팅, 타입캐스팅 필요없음 
+		ani.name = "sally"; ani.eat();
+		
+		ani = new Dog(); //부모 = 자식 , 업캐스팅, 타입캐스팅 필요없음 
+		ani.name = "alpha"; ani.eat();
+		
+		//2. 사용목적
+		Animal [] arr = {new Cat(), new Cat(), new Dog(), new Dog() };
+		int cnt=0;
+		for(Animal a : arr) { a.name = "ani" + ++cnt; a.eat();}
+	}
+}
+
+/* 	
+    Object
+      ↑ 
+    Animal  {  name / eat(), sleep(), poo() }
+    ↑    ↑
+   Cat  Dog {  @eat(), @sleep(), @poo()  }
+*/
+---
+---
+package com.company.java013_ex;
+
+/* 	   Abstract  :  일반클래스 + 설계  -  추상클래스: 공통기능 설계   
+ *   
+    		   Object 
+      			  ↑
+    			Robot   {   abstract charge(), move(), speak()  }
+    ↑		      ↑          	 ↑
+ CleaningRobot   SecurityRobot  CookingRobot   
+ {@charge(),      {@charge(),    {@charge(), 
+  @move(),         @move(),        @move(),
+  @speak()         @speak()        @speak()    
+ }                  }                }
+ 
+ 
+*/
+abstract class Robot{
+	String model; int batteryLevel; 
+	void   myrobot() {System.out.println("로봇입니다.");}
+	abstract void charge();	// 충전방식
+	abstract void move();   // 이동방식
+	abstract void speak();  // 말하기방식
+}
+class CleaningRobot extends Robot{
+	@Override void charge() {System.out.println("청소로봇 충전 중... 배터리");}
+	@Override void move() {System.out.println("청소로봇: 청소중...");}
+	@Override void speak() {  System.out.println("청소로봇 : 먼지를 제거합니다!"); }
+}
+class SecurityRobot extends Robot{
+	@Override void charge() {System.out.println("경비로봇 태양광 충전 중... 배터리");}
+	@Override void move() {System.out.println("경비로봇: 경비 중...");}
+	@Override void speak() { System.out.println("경비로봇 : 이상없음. 안전확보!");  }
+}
+class CookingRobot extends Robot{
+	@Override void charge() {System.out.println("요리로봇 인덕션 충전 중... 배터리");}
+	@Override void move() {System.out.println("요리로봇 : 요리 만드는중...");}
+	@Override void speak() {System.out.println("요리로봇: 오늘의 메뉴는 파스타입니다!");  }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+public class AbstractEx001 {
+	public static void main(String[]args) {
+		//Robot robot = new Robot(); //Q1. why? 구현부( {} )가 없음.
+		System.out.println("\n--- 로봇 배열 시뮬레이션 ---");
+		//   부모        =        자식1               자식2                   자식3
+		Robot [] bots   = {new CleaningRobot(), new SecurityRobot(), new CookingRobot()};
+		int   [] levels = {50, 70, 95 };
+		
+		//Q2. 
+		for( int i=0; i<bots.length; i++) {
+			bots[i].model = "Robo" + (i+1);
+			bots[i].batteryLevel = levels[i];
+			bots[i].charge(); System.out.println(bots[i].batteryLevel + "%");
+			bots[i].speak(); 
+			System.out.println();
+		}
+// bots[0]  = 1번지 CleaningRobot{@charge() , @move() , @speak() } 
+		//- Robot{model = "Robo1, batteryLevel=50 / -------, --------, -------}										
+// bots[1]  = 2번지 CleaningRobot{@charge() , @move() , @speak() } 
+		//- Robot{model="Robo2", batteryLevel=70 / -------, -------, -------}
+// bots[2]  = 3번지 CleaningRobot{@charge() , @move() , @speak() } 
+		//- Robot{model="Robo3", batteryLevel=95 / -------, ------, -------}
+	}//end main
+}//end class
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* 
+method area : 클래스정보
+ 	
+heap area: 동적, 배열					stack area : 임시
+1번지{model, battery, charge()x}  ← robot(1번지)
+--- 로봇 배열 시뮬레이션 ---
+Robo1 청소로봇 충전 중... 배터리 50%
+Robo1 청소로봇: 먼지를 제거합니다!
+Robo2 경비로봇 태양광 충전 중... 배터리 70%
+Robo2 경비로봇: 이상 없음. 안전 확보!
+Robo3 요리로봇 인덕션 충전 중... 배터리 95%
+Robo3 요리로봇: 오늘의 메뉴는 파스타입니다!
+*/
+---
+---
+ver-1
+package com.company.java013_ex;
+/*1) 상속도 구조
+			          Object
+		   		  	     ↑
+  	                 Astronaut {abstract explore(), report(), rest()}
+		 ↑               ↑             ↑
+	  Engineer      Biologtst        Piot
+	 {@explore(), 	{@explore(), 	 {@explore(),
+	  @report(),     @report(),       @report(),
+	  @rest()}       @rest()}         @rest()}   
+
+- Astronaut는 추상 클래스이며, 모든 대원이 공통적으로 수행해야 할 기능을 설계함
+- 각 대원 클래스는 Astronaut를 상속받아 기능을 구체적으로 구현함
+- rest() 메서드는 각 대원의 고유한 휴식 방식 출력  
+*/
+
+abstract class Astronaut {
+    protected String name; //인스턴스변수 / heap area / this. 각각
+    protected int stamina; //protected (상속받은 자식만 사용가능)
+
+    public void setName(String name) { this.name = name; }
+    public void setStamina(int stamina) { this.stamina = stamina; }
+    public int getStamina() { return stamina; }
+
+    abstract void explore();
+    abstract void report();
+    abstract void rest();
+}
+
+class Engineer extends Astronaut {
+    @Override void explore() { System.out.println(name + " 엔지니어 탐사: 기계 장치 점검 완료!"); }
+    @Override void report() { System.out.println(name + " 보고서: 에너지 시스템 안정적"); }
+    @Override void rest() { System.out.println(name + " 휴식: 공구 정리하며 재충전 중..."); }
+}
+class Biologist extends Astronaut {
+    @Override void explore() { System.out.println(name + " 생물학자 탐사: 외계 식물 샘플 채취!"); }
+    @Override void report() { System.out.println(name + " 보고서: 생명체 흔적 발견"); }
+    @Override void rest() { System.out.println(name + " 휴식: 생체 리듬 조절 중..."); }
+}
+class Pilot extends Astronaut {
+    @Override void explore() { System.out.println(name + " 파일럿 탐사: 항로 재설정 및 우주선 조종!"); }
+    @Override void report() { System.out.println(name + " 보고서: 궤도 진입 성공"); }
+    @Override void rest() { System.out.println(name + " 휴식: 조종석에서 짧은 명상..."); }
+}
+
+///////////////////////////////////////////////////////
+public class AbstractEx002 {
+	public static void main(String[]args) {
+        // Astronaut astro = new Astronaut();  // Q1. 왜 객체 생성이 불가능한가? A: 구현부( {} )가 없기 때문
+        // Astronaut {name, stamina / explore, report, rest }
+
+        System.out.println("\n--- 우주 탐사 대원 시뮬레이션 ---");
+        // crew[0] = Engineer{ explore(), report(), rest() } - { name = "Nova" , stamina = 75 / -----, -------, --------} 
+        // crew[1] = Biologist{ explore(), report(), rest() } - { name = "Nova" , stamina = 75 / -----, -------, --------} 
+        // crew[2] = Pilot{ explore(), report(), rest() } - { name = "Nova" , stamina = 75 / -----, -------, --------} 
+        //    부모        =      자식1              자식2          자식3
+        Astronaut[] crew = { new Engineer(), new Biologist(), new Pilot() };
+        String[] names = { "Nova", "Flora", "Jet" };
+        int[] stamina = { 75, 60, 85 };
+        
+
+        // Q2. 체력이 낮은 대원만 휴식  70미만이 휴식을 취하게 만들기 
+        // crew[n] = n번지 { Method } - { Instance변수  }
+        // crew[0] = 1번지 { explore(), report(), rest()} - {name, statmina}
+        for(int i=0; i<crew.length; i++) { 
+        	crew[i].setStamina(stamina[i]);  // 체력 crew[Engi. || Bio.|| Pilot  = i ].체력 = 체력[75 || 60|| 85  = i]
+        	crew[i].setName(names[i]) ;	   	 // 이름 crew[Engi. || Bio.|| Pilot  = i ].이름 = 이름["Nova" || "Flora"|| "Jet"  = i]
+        	crew[i].explore();  		     // crew[Engi. || Bio.|| Pilot  = i ].탐사(Engi. || Bio.|| Pilot)
+        	crew[i].report();			     // crew[Engi. || Bio.|| Pilot  = i ].보고서(Engi. || Bio.|| Pilot)
+        	crew[i].rest();				     // crew[Engi. || Bio.|| Pilot  = i ].휴식(Engi. || Bio.|| Pilot)
+        	//if(대원의 체력이 70미만이라면?){휴식을 취해야합니다. 출력}
+        	if(crew[i].stamina < 70) { crew[i].rest(); }
+        	else {System.out.println(crew[i].name + "는 충분한 체력을 유지중입니다. ");}
+        	System.out.println();
+        } 
+		
+		//출력화면
+		//--- 우주 탐사 대원 시뮬레이션 ---
+		//Nova 엔지니어 탐사: 기계 장치 점검 완료!
+		//Nova 보고서: 에너지 시스템 안정적
+		//Nova는 충분한 체력을 유지 중입니다.
+		//
+		//Flora 생물학자 탐사: 외계 식물 샘플 채취!
+		//Flora 보고서: 생명체 흔적 발견
+		//Flora 휴식: 생체 리듬 조절 중...
+		//
+		//Jet 파일럿 탐사: 항로 재설정 및 우주선 조종!
+		//Jet 보고서: 궤도 진입 성공
+		//Jet는 충분한 체력을 유지 중입니다.
+	}//end main 
+}//end class
+///////////////////////////////////////////////////////
+/*연습문제2)
+패키지명 : com.company.java013_ex 
+클래스명 : AbstractEx002.java
+다음과 같이 출력되게 main 코드를 작성하시오.
+주어진 조건
+
+            Object
+              ↑
+        Astronaut { abstract explore(), report(), rest() }
+   ↑            ↑               ↑ 
+Engineer     Biologist       Pilot
+{ @explore(), @explore(),    @explore(),
+  @report(),  @report(),     @report(),
+  @rest() }   @rest() }      @rest() }
+  
+
+2) 코드
+
+3) main
+public class AbstractEx002 {
+    public static void main(String[] args) {
+    }
+}
+
+
+*/
+---
+--- 
+ver-2
+package com.company.java013_ex;
+/*1) 상속도 구조
+			          Object
+		   		  	     ↑
+  	                 Astronaut {abstract explore(), report(), rest()}
+		 ↑               ↑             ↑
+	  Engineer      Biologtst        Piot
+	 {@explore(), 	{@explore(), 	 {@explore(),
+	  @report(),     @report(),       @report(),
+	  @rest()}       @rest()}         @rest()}   
+
+- Astronaut는 추상 클래스이며, 모든 대원이 공통적으로 수행해야 할 기능을 설계함
+- 각 대원 클래스는 Astronaut를 상속받아 기능을 구체적으로 구현함
+- rest() 메서드는 각 대원의 고유한 휴식 방식 출력  
+*/
+
+abstract class Astronaut {
+    protected String name;
+    protected int stamina;
+
+    public void setName(String name) { this.name = name; }
+    public void setStamina(int stamina) { this.stamina = stamina; }
+    public int getStamina() { return stamina; }
+
+    abstract void explore();
+    abstract void report();
+    abstract void rest();
+}
+
+class Engineer extends Astronaut {
+    @Override void explore() { System.out.println(name + " 엔지니어 탐사: 기계 장치 점검 완료!"); }
+    @Override void report() { System.out.println(name + " 보고서: 에너지 시스템 안정적"); }
+    @Override void rest() { System.out.println(name + " 휴식: 공구 정리하며 재충전 중..."); }
+}
+class Biologist extends Astronaut {
+    @Override void explore() { System.out.println(name + " 생물학자 탐사: 외계 식물 샘플 채취!"); }
+    @Override void report() { System.out.println(name + " 보고서: 생명체 흔적 발견"); }
+    @Override void rest() { System.out.println(name + " 휴식: 생체 리듬 조절 중..."); }
+}
+class Pilot extends Astronaut {
+    @Override void explore() { System.out.println(name + " 파일럿 탐사: 항로 재설정 및 우주선 조종!"); }
+    @Override void report() { System.out.println(name + " 보고서: 궤도 진입 성공"); }
+    @Override void rest() { System.out.println(name + " 휴식: 조종석에서 짧은 명상..."); }
+}
+
+///////////////////////////////////////////////////////
+public class AbstractEx002 {
+	public static void main(String[]args) {
+        // Astronaut astro = new Astronaut();  // Q1. 왜 객체 생성이 불가능한가? A: 구현부( {} )가 없기 때문
+
+        System.out.println("\n--- 우주 탐사 대원 시뮬레이션 ---");
+        Astronaut[] crew = { new Engineer(), new Biologist(), new Pilot() };
+        String[] names = { "Nova", "Flora", "Jet" };
+        int[] stamina = { 75, 60, 85 };
+        
+
+        // Q2. 체력이 낮은 대원만 휴식  70미만이 휴식을 취하게 만들기 
+        for(int i=0; i<crew.length; i++) { 
+        	crew[i].stamina = stamina[i]; 
+        	crew[i].name = names[i];
+        	crew[i].explore();  
+        	crew[i].report();
+        	crew[i].rest();
+        	if(crew[i].stamina < 70) { System.out.println("휴식을 취해야 합니다."); }
+        }
+		// crew[0] = 1번지 { explore(), report(), rest()} - {name, statmina}
+		
+		//출력화면
+		//--- 우주 탐사 대원 시뮬레이션 ---
+		//Nova 엔지니어 탐사: 기계 장치 점검 완료!
+		//Nova 보고서: 에너지 시스템 안정적
+		//Nova는 충분한 체력을 유지 중입니다.
+		//
+		//Flora 생물학자 탐사: 외계 식물 샘플 채취!
+		//Flora 보고서: 생명체 흔적 발견
+		//Flora 휴식: 생체 리듬 조절 중...
+		//
+		//Jet 파일럿 탐사: 항로 재설정 및 우주선 조종!
+		//Jet 보고서: 궤도 진입 성공
+		//Jet는 충분한 체력을 유지 중입니다.
+	}//end main 
+}//end class
+///////////////////////////////////////////////////////
+/*연습문제2)
+패키지명 : com.company.java013_ex 
+클래스명 : AbstractEx002.java
+다음과 같이 출력되게 main 코드를 작성하시오.
+주어진 조건
+
+            Object
+              ↑
+        Astronaut { abstract explore(), report(), rest() }
+   ↑            ↑               ↑ 
+Engineer     Biologist       Pilot
+{ @explore(), @explore(),    @explore(),
+  @report(),  @report(),     @report(),
+  @rest() }   @rest() }      @rest() }
+  
+
+2) 코드
+
+3) main
+public class AbstractEx002 {
+    public static void main(String[] args) {
+    }
+}
+
+
+*/
+---<!--day027.md-->
