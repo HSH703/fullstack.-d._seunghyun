@@ -10480,3 +10480,496 @@ public class AbstractEx002 {
 
 */
 ---<!--day027.md-->
+
+---
+package com.company.java013;
+
+//1. 클래스는 부품객체
+//2. 부품객체는 상태(멤버변수)와 행위(멤버함수) 
+//3. 상속 : 클래스의 재사용 (업그레이드 후 다음 클래스---(반복)) / 클래스는 단일상속
+//4. 인터페이스(부품객체) : can do this, 다중상속(interface일때만)
+
+/*  Papa{brain}   Mama{brain}
+         ↑ 			  ↑	
+              Son{}  --> 누구것을 가지고 갈지 모름...(다중상속 X) -> Java에서 금지시켜놓음.
+*/
+
+/* (속이 빈 점선)
+     Animal2 { Company="(주)메가스터디" / eat()}
+       ↑   ↑
+   Saram   Pig 
+ {@eat()} {@eat()}
+ 
+*/
+class Papa{int brain;}
+class Mama{int brain;}
+//class Son extends Papa, Mama{}   //Syntax error on token ",", . expected
+
+interface Animal2{
+	String Company="(주)메가스터디"; 
+	//public static final - [공용]클래스변수, Animal2.Company , method area , new X, this 각각 X 
+	void eat(); //public abstract 메서드 
+}
+class Saram implements Animal2{
+	@Override public void eat() {/*COMPANY="kakao";*/ System.out.println(Animal2.Company + "랍스터... 냠냠");
+	}
+}// The final field Animal2.Company cannot be assigned
+class Pig implements Animal2{
+	@Override public void eat() {/*COMPANY="kakao";*/ System.out.println(Animal2.Company + "꾸꾸리... 냠냠");
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+public class Interface001 {
+	public static void main(String[]args) {
+		//Q1. 오류이유
+		//Animal2 ani = new Animal2(); // Cannot instantiate the type Animal2
+		Animal2 [] anis = {new Saram(), new Saram(), new Pig() , };
+		for(Animal2 a : anis) {a.eat();}
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////////////////////////
+/* 
+ 1. 부모 = 자식           > 하나의 자료타입(부모)으로 여러타입(자식, 자식,,,, 자식들)을 관리
+ 2. 업캐스팅, 타입캐스팅 X,  > 부모가 메서드 사용시 자식의 메서드가 호출 @Override 
+
+*/
+---
+---
+package com.company.java013;
+//1. 클래스는 단일상속
+/*  Papa{brain}   Mama{brain}
+       ↑ 			  ↑	
+            Son{}  --> 누구것을 가지고 갈지 모름...(다중상속 X) -> Java에서 금지시켜놓음.
+*/
+class Papa2{int brain;}
+class Mama2{int brain;}
+//class Son extends Papa, Mama{}   //Syntax error on token ",", . expected
+
+    
+															
+/*2. 인터페이스는 다중상속 가능  <<Interface >> = 스테레오타입    
+ 		{inter()}						  {method()}            {method()} 
+     <<Interface >>Inter20    	<<Interface >>Inter21	   <<Interface >>Inter22
+								                  ↑ 			     ↑  (실선 + 속이빈화살표)
+				                                  <<Interface >>Inter23
+				 ⋯⋯⋯△				            	  ⋯⋯⋯△
+ <<class>>Papa2
+(실선 + 속이빈화살표)    		            								 
+			   	 Using1  extends Papa2 implements Inter23, Inter20	
+			   	 -{@method()}
+			   	 -{@method()}						       
+*/
+
+interface Inter20{void inter();}
+interface Inter21{void method();}
+interface Inter22{void method();}
+interface Inter23 extends Inter21, Inter22 {   } 
+
+//3. 많이 쓰는 형식 주요메인클래스 상속,           추가설계1      추가설계2   
+class Using1 extends Papa2           implements Inter23, Inter20{
+	@Override public void method() {   }
+	@Override public void  inter() {   }
+}
+
+public class Interface002 {
+	public static void main(String[]args) {
+		//Inter23 my = new Inter23();
+		Using1 my = new Using1();
+		
+		// instanceof 클래스확인, 상속확인( 내 부모? 족보확인) 
+		if(my instanceof Object)  {System.out.println("1. Object");}
+		if(my instanceof Papa2)   {System.out.println("2. Papa");}
+		//if(my instanceof Mama2)   {System.out.println("3. Mama2");}
+		//Incompatible conditional operand types Using1 and Mama2
+		if(my instanceof Inter20) {System.out.println("4. Inter20");}
+
+	}
+}
+---
+---
+package com.company.java013;
+
+/*
+			   원칙                              설명
+S - SRP (단일 책임 원칙)   클래스는 하나의 책임만 가져야 함. 즉, 변경의 이유가 하나여야 함.
+O - OCP (개방-폐쇄 원칙)   확장에는 열려 있고, 변경에는 닫혀 있어야 함. 기존 코드를 수정하지 않고 기능을 추가할 수 있어야 함.
+L - LSP (리스코프 치환 원칙)   하위 클래스는 상위 클래스의 기능을 대체할 수 있어야 함. 즉, 다형성을 지켜야 함.
+I - ISP (인터페이스 분리 원칙)   클라이언트는 자신이 사용하지 않는 메서드에 의존하면 안 됨. 인터페이스는 작고 명확하게 분리해야 함.
+D - DIP (의존 역전 원칙)   고수준 모듈은 저수준 모듈에 의존하면 안 되고, 추상화에 의존해야 함. 즉, 인터페이스에 의존하라는 뜻.
+
+1. S: (한클래스는 하나만)한 클래스는 한가지 일만 (쿠키반죽 반죽만, 쿠키굽기는 쿠키굽기만)
+2. O: (수정하지말고 기존것에 추가만.)새로운 쿠키 쉽게 추가 
+3. L: (다형성: 같은방식으로 처리) 모든 쿠키는 같은 방식으로 만들기 
+4. I: (필요한 기능만 딱!) 인터페이스 나누기 
+5. D: (추상적인 쿠키에 의존) 
+*/
+
+//1.    S: 단일책임의 원칙.
+class CookieMaker{
+	public void bakeCookie(String type) { System.out.println(type + "쿠키를 구워요!"); }
+}
+
+//2.    O: 개방-폐쇄의 원칙 (새로운쿠키를 추가할수 있지만, 기존코드 건들지 마세요!)
+interface Cookie{ void make(); }
+class ChocoCookie     implements Cookie{ @Override public void make() {System.out.println("초코쿠키");  } }
+class DeepChocoCookie implements Cookie{ @Override public void make() {System.out.println("딥초코쿠키");  } }
+class BananaCookie    implements Cookie{ @Override public void make() {System.out.println("바나나쿠키");  } }
+
+//3.    L: 리스코프 치환 ( 어떤 쿠키든 Cookie 인터페이스로 바꿔써도 문제없어요! 부모 = 자식 )
+class CookieFactory{
+	public void makeCookie(Cookie cookie) { //Cookie cookie = 각종 쿠키종류
+		cookie.make(); // 어떤 쿠키든 여기서 만들수 있어요~!
+	}
+}
+//4.    I: interface - 너무 많은 기능을 강요하지 말것!! 꼭 필요한 기능만 (절차)
+interface SimpleCookie{  void make(); /* make1(), make2()*/ }
+class SimpleCookieMake implements SimpleCookie{
+	@Override public void make() { System.out.println("쿠키 만든느 방법은 간단하게."); }
+}
+
+//5. 의존역전원칙 - CookieFactory는 구체적인 쿠키가 아니라 추상적인 Cookie에 의존
+class CookieShop{
+	private Cookie cookie;
+	public CookieShop() { super();}
+	public CookieShop(Cookie cookie) { super(); this.cookie = cookie; } 	//쿠키종류는 외부에서 넣어줘요!
+	public void sell(){System.out.println( "cookie가게에서...."); cookie.make(); } //어떤 쿠키든 팔수 있음!
+}
+
+///////////////////////////////////////////////////////////////
+public class SolidBasic {
+	public static void main(String[]args) {
+		//1.    S: 단일책임의 원칙.
+		System.out.println("1. S: 단일책임의 원칙 - 쿠키굽기(기계)");
+		CookieMaker maker = new CookieMaker();
+		maker.bakeCookie("초코");
+		maker.bakeCookie("오트밀");
+		maker.bakeCookie("라즈베리");
+
+		//2+3,   O, L
+		System.out.println("\n2. OL: 개방폐쇄 (레시피만 추가) + 리스코프(공장 - 어떤쿠키든굽기가능) 치환");
+		CookieFactory factory = new CookieFactory();
+		factory.makeCookie(new ChocoCookie());
+		factory.makeCookie(new DeepChocoCookie());
+		factory.makeCookie(new BananaCookie());
+
+		//4.      I 인터페이스 분리
+		SimpleCookie making = new SimpleCookieMake(); making.make();
+		
+		//5.      D 의존역적 : 어떤쿠키든 가게에서 팔수 있어요!
+		CookieShop shop = new CookieShop( new DeepChocoCookie() )
+		shop.sell();
+		
+	}
+}
+///////////////////////////////////////////////////////////////
+---
+---
+package com.company.java013_ex;
+
+/*   상속도  
+ 			                     Object
+                                    ↑
+                                  Board  
+                                { exec() }
+   ⋯⋯⋯△		              ⋯⋯⋯△                    ⋯⋯⋯△                   ⋯⋯⋯△			
+BoadInsert    		 BoardSelector             BoardUpdate             BoardDelete
+{ @exec(){글쓰기} }  { @exec(){글읽기} }       { @exec(){글수정} }       { @exec(){글삭제} }   --> 이렇게 출력해줘.
+      1. 인터페이스는 설계클래스 (상태: public static final / 행위 : public abstract )
+  					method area[공용], new X, 생성자 X, this 각각 X, abstract method()이 없어서
+  	  2. 부모 = 자식 : 한가지 타입(부모)으로 여러객체(자식들)를 관리목적
+  	            업캐스팅 / 타입캐스팅 X / 부모에서 메서드호출시 @Override가 되서 (업그레이드된) 자식의 메서드 호출
+      
+*/
+
+
+//1. 문제 설명
+//다음은 게시판 기능을 인터페이스로 추상화한 프로그램이다. 
+//Board 인터페이스는 게시판 기능의 공통 동작을 정의하며, 
+//BoardInsert, BoardSelect, BoardUpdate, BoardDelete 클래스는 이를 구현하여 각각의 기능을 수행한다.
+interface Board {    void exec();  }
+
+//2. 주어진 조건
+//구현 클래스들
+class BoardInsert implements Board{ @Override public void exec() { System.out.println("글쓰기"); }} 
+class BoardSelect implements Board{  @Override public void exec() {System.out.println("글읽기");}}  
+class BoardUpdate implements Board{  @Override public void exec() {System.out.println("글수정");}}  
+class BoardDelete implements Board{  @Override public void exec() {System.out.println("글삭제");}}  
+//- 각 클래스는 exec() 메서드를 오버라이딩하여 해당 기능을 출력한다.
+
+/*
+---------------------------------------------------------------------------------------------
+ method [공통: static, final, abstract]      Board , BoardInsert,,,, InterfaceEx001
+---------------------------------------------------------------------------------------------
+ heap                                     stack  
+ 4번지BoardDelete   {exec()글삭제 }         ← controller [4번지]   controller.exec();   //글삭제
+ 3번지BoardUpadate  {exec()글수정 }         ← controller [3번지]   controller.exec();   //글수정
+ 2번지BoardSelector {exec()글읽기 }         ← controller [2번지]   controller.exec();   //글읽기
+ 1번지BoardInsert   {exec()글쓰기 }         ← controller [1번지]   controller.exec();   //글쓰기
+  						                    controller [null]     주소 못담았어.
+*/
+
+
+///////////////////////////////////////////////////////////
+//3. 메인 클래스 작성 
+public class InterfaceEx001 {
+	public static void main(String[]args) {
+        Board controller = null; 
+        controller = new BoardInsert();  controller.exec();  // 글쓰기 기능
+        controller = new BoardSelect();  controller.exec();  // 글읽기 기능
+        controller = new BoardUpdate();  controller.exec();  // 글수정 기능
+        controller = new BoardDelete();  controller.exec();  // 글삭제 기능 
+
+		 /*
+		   if(controller instanceof Object     ) {System.out.println("코드");}
+		   if(controller instanceof BoardInsert) {System.out.println("글쓰기");}
+		   if(controller instanceof BoardSelect) {System.out.println("글읽기");}
+		   if(controller instanceof BoardUpdate) {System.out.println("글수정");}
+		   if(controller instanceof BoardDelete) {System.out.println("글삭제");}
+		   */
+
+        
+		//4.  실행 결과
+		//코드
+		//글쓰기
+		//글읽기
+		//글수정
+		//글삭제
+
+        
+	}//end main
+}//end class
+///////////////////////////////////////////////////////////
+
+/*연습문제1) 게시판 기능을 인터페이스로 구현하기
+패키지명 :  package com.company.java013_ex;
+클래스명 :  public class InterfaceEx001
+
+*/
+---
+---
+package com.company.java013_ex;
+//Q. Driver 클래스를 작성하시오. 
+//1. 상속도
+/*
+			Object 
+			   ↑
+			Vehicle   {public abstract void run();}
+			↑     ↑
+	MotorCycle     Car
+	{@run(){     {@run(){
+	오토바이가 		  자동자가 
+	달립니다.}}         달립니다.}}
+	
+	1. 인터페이스는 설계클래스 (상태: public static final / 행위: public abstract)
+				mtehod area[공용] , new X , 생성자 X, this 각각 X(공용) , {}X - 구현부 없음.
+	2. 부모 = 자식 : 한가지타입(부모)으로 여러객체(자식, 자식,,,,,,자식들) 관리
+		     업캐스팅 / 타입캐스팅 X / 부모에서(주체) 메서드호출시 오버라이드가 되서 자식메서드가 호출
+*/
+
+//Q.주어진조건
+interface Vehicle { public void run(); }
+class MotorCycle implements Vehicle { @Override public void run() { System.out.println("오토바이가 달립니다."); } }
+class Car        implements Vehicle { @Override public void run() { System.out.println("자동차가 달립니다."); } }
+
+class Driver {
+	void drive ( Vehicle v ){ v.run(); } 
+} // --> run - 실행.
+
+/* --------------------------------------------------------------------
+method[공통 : static, final, abstract]          Vechicle, MotorCycle, Car, Driver, InterfaceEx002
+-----------------------------------------------------------------------
+heap[동적]                                | stack[지역]
+										void drive(Vehicle v)         { v.run();} 
+								        driver.drive(MotorCycle:3번지) { Vehicle v = mo;  v(3번지).run();} 
+									    driver.drive(car:2번지)        { Vehicle v = car; v(2번지).run();} 
+3번지 MotorCycle {@run() 자동차달려    }    ← MotorCycle [3번지]
+2번지 Car        {@run() 자동차달려    }    ← Car        [2번지]
+1번지 Driver     {drive(Vehicle v); }    ← driver     [1번지]
+                                         | main      
+-----------------------------------------------------------------------
+
+*/
+
+
+///////////////////////////////////////////////////////
+//2. 사용법
+public class InterfaceEx002 {
+	public static void main(String[]args) {
+		  //3. 메인화면		
+	      Driver driver = new Driver();
+	      
+	      Car car = new Car();
+	      MotorCycle mo = new MotorCycle();
+	      //The method drive (Car) is undefined for the type Driver -- 오류 
+	      //메서드기본구조 : 리턴값 메서드명    ()      {}
+	      //              void drive (Vehicle v ){}
+	      driver.drive(car);
+	      driver.drive(mo);
+	      
+			//4. 실행화면
+			//자동차가 달립니다.
+			//오토바이가 달립니다.
+
+	      
+	      
+	}
+}
+///////////////////////////////////////////////////////
+/*연습문제2)  
+패키지명 :  package com.company.java013_ex;
+클래스명 :  public class InterfaceEx002
+*/
+---
+---
+package com.company.java014;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+
+//1. 콜렉션프레임워크 - 동적배열
+//2. 배열의 단점개선  - 한가지 자료형으로 사이즈 고정
+
+
+public class List001 {
+	public static void main(String[]args) {
+		//Step1. Array
+		String [] arr = new String[3]; // String 자료형 공간 3개 [고정]
+		arr [0] = "헐크";
+		System.out.println(Arrays.toString(arr));
+		
+		//Step2. 동적배열 - List 사용법(1)
+		List list = null; //  ctrl + shift + o  /F2(고정) 
+		     list = new ArrayList();  //자식
+		     list = new LinkedList(); //자식
+		     list = new Vector();     //자식
+
+		//Step3. <> 
+		List<String> list2 = new ArrayList<String>();    // 자료형에 상관없이 내가 넣고 싶은 만큼
+		list2.add("one");  	             //Object obj = 1; 
+		//list2.add(1);                    //Object obj = 1; 
+		list2.add(new String ("two"));   //Object obj = new String("two"); 
+		//list2.add(3.14);
+		//list2.add('A'); 
+		System.out.println(list2);
+		
+		//Step4. add(추가), get(가져오기), size(갯수), remove(삭제), contains ■ 
+	    List<String> list3 = new ArrayList<String>();
+		list3.add("apple");		
+		list3.add("banana");
+		list3.add("apple");
+		list3.add("coconut");
+		
+		System.out.println(list3);
+		System.out.println(list3.get(3) ); 
+		System.out.println(list3.size() );
+		System.out.println( list3.remove(0) + "/" + list3);
+		System.out.println(list3.contains("melon"));
+		System.out.println(list3.contains("coconut"));
+
+	}
+}
+---
+---
+package com.company.java014_ex;
+
+import java.util.ArrayList;
+import java.util.List;
+
+//1. 콜렉션프레임워크 = 동적배열
+//2. List - [기차] - 순번[index], 중복허용 
+//3. add, get, size, remove, contains
+
+////////////////////////////////////////////////////////////////
+public class ListEx001 {
+	public static void main(String[]args) {
+		//String [] arr = new String[3];
+		//arr[0] = "red";
+		//arr[1] = "green";
+		//arr[2] = "blue"; 
+		//System.out.println(Arrays.toString(arr));
+		
+		List <String> colors = new ArrayList<>();
+		colors.add("red");
+		colors.add("green");
+		colors.add("blue");
+		//colors.add(1);
+		
+		System.out.println("1 : " + colors);
+		System.out.println("2 : size + get ");
+		for(int i=0; i<colors.size(); i++) {System.out.print(colors.get(i) + "\t");}
+		
+		System.out.println("\n3 : 향상된 for문 > ");
+		for(String c : colors ) {System.out.println(c + "\t");}
+	}
+}
+////////////////////////////////////////////////////////////////
+/*연습문제1)  Collection  Framework
+패키지명 : com.company.java014_ex
+클래스명 : ListEx001
+다음과 같이 코드를 작성하시오.
+ 1.  ArrayList이용해서 colors 만들기
+ 2. red, green, blue 데이터 추가
+ 3. 출력
+*/
+---
+---
+package com.company.java014_ex;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+///////////////////////////////////////////////////////////////////// 
+public class ListEx002 {
+	public static void main(String[]args) {
+		//변수
+		List<String> numbers = new ArrayList<>(); //add, get, size, remove, contains
+		int num=-2;
+		Scanner scanner = new Scanner(System.in);
+
+		//입력
+		numbers.add("one");
+		numbers.add("two");
+		numbers.add("three");
+		System.out.println("숫자를 입력하세요.");
+		num = scanner.nextInt();
+
+		//처리  if / switch/ for
+		// 만약 1이라면,  numbers.get(0);  --> one
+		// 만약 2이라면,  numbers.get(1);  --> two 
+		// 만약 3이라면,  numbers.get(2);  --> three
+		//     if(num==1) {System.out.println(numbers.get(0));}
+		//else if(num==2) {System.out.println(numbers.get(1));}
+		//else if(num==3) {System.out.println(numbers.get(2));}
+		//else 			{System.out.println("1,2,3이 아니다.");}
+		
+		//	 if(num==1) {numbers.get(0);}   numbers.get(num-1);
+		//else if(num==2) {numbers.get(1);}   numbers.get(num-1);
+		//else if(num==3) {numbers.get(2);}   numbers.get(num-1);
+	
+
+		//출력 
+		System.out.println(numbers.get(num-1));
+		
+		
+		     
+	}//end main
+}//end clas
+/////////////////////////////////////////////////////////////////////
+
+
+/*연습문제2)  Collection  Framework
+패키지명 : com.company.java014_ex
+클래스명 : ListEx002
+1.  numbers ArrayList 만들기
+2.  one, two, three 데이터 추가
+3.  사용자에게 1,2,3 입력받기
+4.  1을 입력받으면 one 출력
+    2를입력받으면 two 출력
+    3을입력받으면 three 출력
+*/
+---<!--day028.md-->
