@@ -11368,5 +11368,517 @@ public class Show implements BankController {
 ---<!--day029.md-->
 ---
 # JAVA (20251010,20251013 ~20251017)
+---
+package com.company.java013_total;
+//1. 클래스는 부품객체
+//2. 클래스는 상태(멤버변수), 행위(멤버함수)
+//3. 클래스( 설계도 )  →  장난감 조립 → 사용하는 방법
+// 	  Coffee a1 = new Coffee("까페라떼" , 2, 4000)
+//	  3-0. 장난감 이름: Coffee a1
+//	  3-1. 장난감조립 : new → heap area 메모리빌리고 객체 생성
+//	  3-2. 장난감 만드는 방법 : Coffee("까페라떼" , 2, 4000) , 아무말 안하면? → 아메리카노 1잔, 2000원
+// 	  3-3. 장난감 갖고 놀수 있게 : a1 (어디에다가 만들었는지 번지) 
+
+//////////////////////////////////////////////////////////////// 1단계 설계도
+class Coffee{
+	//상태(멤버변수) //인스턴스 변수 - heap area - new 관련O - this. 관련 - 각각
+	String name;
+	int price, num; 
+	
+	//행위(멤버함수)
+	//생성자
+	public Coffee() {
+		super();
+		this.name = "아메리카노";
+		this.num = 1;
+		this.price = 2000;
+	}
+	public Coffee(String name,  int num ,int price) {
+		super();
+		this.name = name;
+		this.num = num;
+		this.price = price;
+	}
+	//toString
+	@Override
+	public String toString() {
+		return "Coffee012 [name=" + name + ", price=" + price + ", num=" + num + "]";
+	}
+	
+	void show() {
+		System.out.println("==========커피\r\n");
+		System.out.println("커피이름 : " + this.name );
+		System.out.println("커피잔수 : " + this.num );
+		System.out.println("커피가격 : " + this.price*this.num );
+	}
+}//end class Coffee
+
+////////////////////////////////////////////////////////////////
+public class Repeat001_oop {
+	public static void main(String[]args) {
+		Coffee a1 = null; //2번지에 있는 클래스 자료형으로 a1이라는 장난감만들꺼야라고 했지......장난감 만든적은 없음.
+			   a1 = new Coffee("까페라떼" , 2, 4000); //2단계 장난감조립
+		// 3. a1 (1000번지)   = 1. new 메모리빌리고(1000번지) 객체(장난감)생성 2.Coffee 생성자로 장난감 만드는 방법 - 초기화
+		a1.show(); //3단계 갖고놀기(1000번지). show()
+		Coffee a2 = new Coffee(); 
+		// 3. a2 (2000번지)   = 1. new 메모리빌리고(2000번지) 객체(장난감)생성 2.Coffee 생성자로 장난감 만드는 방법 - 초기화
+		a2.show();//3단계 갖고놀기(2000번지). show()
+	}//end main
+}//end class
+////////////////////////////////////////////////////////////////
+
+/*
+	초기화순서 
+	1. 기본값   {name = null, num= 0, price=0 / show()}
+	2. 명시적   {name = null, num= 0, price=0 / show()}
+	3. 초기화블록 {name = null, num= 0, price=0 / show()}
+	4. 생성자 {name = "아메", num= 1, price=2000 / show()}
+*/
+
+
+/************** 
+ Repeat001_oop.java
+ Repeat001_oop.class
+[method : 정보보관] 
+[1번지]: public Repeat001_oop.class ★ 
+[2번지]: Coffee.class
+------------------------------------------------------------
+[heap:동적]                           			|    [stack:지역] 
+												   ← a2(2000번지).show() @54번째줄  
+2000번지												                    (a2 실제로 만든 장난감, 객체, 인스턴스) 
+{name="아메", num=1, price = 2000}				   ← a2(2000번지).show() @52번째줄
+------------------------------------------------------------
+												   ← a1(1000번지).show() @51번째줄
+1000번지 
+{name-까페라떼, num=2, price=4000 / show() }		   ← a1(1000번지) @49번째줄
+													 a1(null)    @48번째줄
+												|    main ★
+------------------------------------------------------------
+*/
+---
+---
+package com.company.java013_total;
+//1. 클래스변수(static), 인스턴스변수(new:heap), 지역변수(stack)로 구분하고
+//2. 오류날만한 코드를 적으시오.
+
+class A{
+	int a; //인스턴스 변수 - heap area - new O - this. 관련있음
+	static String company="풀스택개발자과정"; //클래스변수 - method area - new X - A.company - this. X
+										  //"풀스택개발자과정" = 명시적초기화
+	static { company="MSA풀스택개발자과정"; }
+//	void method() {int a; System.out.println(a);} //지역변수 void method() 안에서만 사용 ★ 오류나는 위지는 여기~~!
+//	오류내용. The local variable a may not have been initialized
+	//해결)
+	void method () {int la =0; System.out.println(a);}
+}//end class A
+
+
+
+
+/////////////////////////////////////////////////////////
+public class Repeat002_class {
+	public static void main(String[]args) {
+		//1. 사용방법 : 설계도 - 장난감조립 ( new 생성자불러서 ) - 갖고놀기
+		//2. 위의 사용방법 툴이 깨짐. 
+		System.out.println(A.company); // 1번만 메모리공간이 만들어지고 바로 직접적으로 사용가능
+//		Company c1 = new c1 ();
+//		c1.method(){}; 
+		
+	}
+}
+/////////////////////////////////////////////////////////
+/*
+		초기화순서			         		기본값 				명시적초기화			초기화블록				생성자  
+시점1)지금바로 사용가능 company				null			  풀스택개발자과정	     MSA풀스택개발자과정
+시점2)필요시 객체만들때마다 생성 - a    		 0		     		x 값은 0    			x 값은 0				x 값은 0
+시점3)메서드변수 int la						쓰레기값 o  			x 쓰레기값 o          x 쓰레기값 o          x 쓰레기값 o
+	new 하고나서도
+	method() 사용할지말지모름. 		★ 지역변수는 개발자가 직접 초기화
+
+
+*/
+/************** 
+[method : 정보보관]  A.class, public Repeat002.class / static A.company
+------------------------------------------------------------
+[heap:동적]                             |       [stack:지역] 
+											   println(A.company)
+									   |        main
+------------------------------------------------------------
+*/
+---
+---
+package com.company.java013_total;
+//Q. 다음 클래스를 작성 후, 에러가 난다면 에러가 나는 이유는?
+//A. 인스턴스 변수가 아닌데, this.를 붙였기 때문
+/*  초기화순서						기본값			명시적초기화		초기화블록 		생성자
+ *  당장바로사용가능!
+1) [static] su 					 0				10 				x여전히 10 		관련없지만static 사용가능 일단 여전히 10
+2) [static] basicpay2			 0				x 여전히 0	    20000			관련없지만static 사용가능 일단 여전히 20000
+--------------------------------------------------------------------------------------------------
+ *new 객체만들때 생성 - 장난감만들때 필요시 생성
+ *장난감마다 각각 - 생성된 장난감 위치 번지 생김 this
+ *3) pay                0       10000 			x 여전히 10000 변경가능 여전히 10000
+*/
+
+
+
+class Sawon005{
+	//(1)인스턴스변수 - heap area - new O - 실체화 - this. 각각 - 생성자
+	int pay=10000; 
+	//(2)클래스변수 - method area - new X - [바로사용가능해야함.]
+	static int su = 10; //명시적초기화
+	
+//	static int basicpay = pay; //###000  / basicpay 메모리상에 올라가 있음, pay는 new 해서 사용해야함, 시점이 안맞음. 
+	// ★ static에서는 instatnce 사용불가
+	
+	static int basicpay2; 
+	static {basicpay2 = 20000;} //초기화블록
+	
+	//(3) 클래스메서드 - method - new X - [1.바로사용가능]
+	public static void showSu() {System.out.println(su);} //###001
+	
+	//(4) 인스턴스메서드 - heap area - new O - 실체화 - this. 각각 - 생성자 [2. new해서 객체만들어서 사용]
+	public static void showPay() {System.out.println(this.pay);}//###002
+	public void showAll001() {
+		System.out.println(su); //클래스변수 사용가능
+		System.out.println(this.pay); //인스턴스 변수 사용가능
+	}
+	//(5) 클래스메서드 - method - new X - [1.바로사용가능]
+	public void showAll002() { 
+//		showAll001();  // ★ static 에서는 instance 사용불가 - 시점이 안맞음
+//		System.out.println(this.pay); //★ static 에서는 instance 사용불가 - 시점이 안맞음
+	}
+
+}//end class Sawon005
+
+//////////////////////////////////////////////////////////////////////
+public class Repeat003_member {
+	public static void main(String[]args) {
+		Sawon005 sola = new Sawon005();
+		sola.showAll001();
+		
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////////////////
+---
+---
+package com.company.java013_total;
+//코드가 출력되도록 수정 
+//옵션1. 분류타입인  division, jumin번호는 바뀌면 안되게 설정하고, 
+//옵션2. 각 유저마다 데이터를 저장할 수 있게 만들기.
+//A,B,C,D 4가지 타입으로 분류할 수 있다.
+//1. 클래스는 부품객체
+//2. 클래스는 상태와 행위
+//3. 상태 - 인스턴스변수 ★, 클래스변수, 지역변수
+//4. 바뀌면 안됨 - static, final - 하지마★ (멤버변수 - 상수, 멤버메서드 - 오버라이딩하지마, 클래스 - 상속받지마)
+/*
+	초기화순서 		 	 초기값				 명시적초기화 				초기화블록 				생성자
+	division			\u0000				 x 유지 \u0000            x 유지 \u0000				처리 User004('B', "200101-1234567")
+	jumin			    null				 x 유지 null            x 유지 null				처리 User004()  \u0000, null
+*/
+
+//////////////////////////////////////////////////// 1단계 설계도
+class User004{
+	final char division; // \u0000
+	final String jumin;  // null
+	
+	public User004() {super();
+	this.division='A';
+	this.jumin = "123456-1234567";
+	} //필드있는 생성자를 만들면 자동생성이 깨짐. 
+	public User004(char division, String jumin) { super(); this.division = division; this.jumin = jumin; 	}
+	@Override
+	public String toString() {
+		return "User004 [division=" + division + ", jumin=" + jumin + "]";
+	}
+	
+}
+
+
+//////////////////////////////////////////////////////////
+public class Repeat004_final {
+	public static void main(String[]args) {
+		User004 c1 = new User004('B', "200101-1234567"); //2단계 장난감만들기
+		System.out.println(c1);
+		User004 c2 = new User004(); //2단계 장난감만들기
+		System.out.println(c2);
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////
+---
+---
+package com.company.java013_total;
+
+class Score{  //## public > protected> package(default) 아무것도 없는거 >  private
+	// 멤버변수 - private
+	private String name;    
+	private int kor, eng, math;   
+	private double avg;
+	private String pass;
+	
+	//멤버함수 - 기본생성자, 필드있는생성자, toString, getters/setters
+	public Score() { super(); }
+	public Score(String name, int kor, int eng, int math, double avg, String pass) { super(); this.name = name; this.kor = kor; this.eng = eng; this.math = math; this.avg = avg; this.pass = pass; }
+	public Score(String name, int kor, int eng, int math) { super(); this.name = name; this.kor = kor; this.eng = eng; this.math = math; }
+	
+	@Override public String toString() { return "Score [name=" + name + ", kor=" + kor + ", eng=" + eng + ", math=" + math + ", avg=" + avg + ", pass=" + pass + "]"; }
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getKor() {
+		return kor;
+	}
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+	public int getEng() {
+		return eng;
+	}
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+	public int getMath() {
+		return math;
+	}
+	public void setMath(int math) {
+		this.math = math;
+	}
+	public double getAvg() {
+		return avg;
+	}
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	
+	
+}
+
+class ScoreProcess{
+	public void process_avg(Score[] std) {
+		for( Score s :   std ) {   s.setAvg(   ( s.getKor() + s.getEng() + s.getMath()  ) / 3.0     );  }
+	}//  한명씩 꺼내와서   유저배열에서
+
+	public void process_pass(Score[] std) { 
+		for( Score s :   std ) {   //  한명씩 꺼내와서   유저배열에서
+			s.setPass(  s.getAvg()<60  ? "불합격":  
+							   s.getKor()<40 ||  s.getEng() <40 || s.getMath() <40 ? "재시험" : "합격"   );
+		}
+	}
+}
+
+
+
+class ScorePrint{
+	public void show(Score[] std) {
+		 System.out.println("=============================================================\r\n"
+		+ "이름\t국어\t영어\t수학\t평균\t합격여부\r\n"
+		+ "======================================================================");
+		 for(int i=0; i<std.length; i++) {
+			 System.out.println(std[i].getName()  + "\t" + std[i].getKor()  + "\t" +std[i].getEng()  + "\t" 
+						+  std[i].getMath()  + "\t" +  String.format("%.2f", std[i].getAvg())   
+						+ "\t" +  std[i].getPass());
+		 }
+	}
+}
+
+////////////////////////////////////////////////////////////
+public class Repeat005 {
+	public static void main(String[]args) {
+		Score[] std = new Score[3];
+		std[0] = new Score("아이언맨", 100, 100, 100);
+		std[1] = new Score("헐크", 90, 60, 80);
+		std[2] = new Score("블랙펜서", 20, 60, 90);
+		
+		ScoreProcess process = new ScoreProcess();
+		process.process_avg(std);
+		process.process_pass(std);
+		
+		ScorePrint print = new ScorePrint();
+		print.show(std);
+		
+	}//end main
+}//end class
+////////////////////////////////////////////////////////////
+---
+---
+package com.company.java013_total;
+/*
+	1. 클래스는 부품객체
+	2. 상태와 행위
+	3. 상속? 재사용
+*/
+//1. 클래스를 상속하는 이유는? 부모 클래스에서 자식 클래스의 내용을 출력하기 위해(반대도 가능.) = 재활용할려고
+//2. 상속도   >>C1 myc = new C1();
+/* 
+	Object		 #4 Object(){                     #5} 객체생성 
+	  ↑
+	  A1     {a} #3 A1(){                    #6. a=0} 
+	  ↑
+	  B1 	 {b} #2 B1(){                    #7. b=0}
+	  ↑
+	  C1 	 {c} #1 C1(){                    #8. c=0}
+	  
+	  객체호출순서 C1() 	B1()  A1()  Object()
+	  객체생성순서 Object  A1    B1    C1
+*/
+/**************    C1 myc = new C1();
+[method : 정보보관]  A1.class, B1.class, C1.class,  public Repeat006.class  ★1) 설계도
+------------------------------------------------------------
+[heap:동적]							|       [stack:지역]
+							myc(1번지).a = 10; myc(1번지).b = 20; myc(1번지).C = 30; @50번째줄
+Object () {    }
+	 A1() { a=0}
+	 B1() { b=0}
+1번지 C1() { c=0} 					  myc [1번지] @49번째줄
+									|  main
+------------------------------------------------------------
+> 생성자의 인스턴스 변수를 초기화해서 사용가능하게 해준다.
+*/
+
+//3. ##을 채우고 출력되는 결과는?
+class A1 extends Object { int a; public A1() {super();} }// Object 상속받기
+class B1 extends A1 	{ int b; public B1() {super();} }// A1 상속받기
+class C1 extends B1 	{ int c; public C1() {super();} 
+	public void showC() {
+		  System.out.println("상속받은 A클래스의 a : " + a);
+		  System.out.println("상속받은 B클래스의 b : " + b);
+		  System.out.println("자신멤버의 C클래스의 c: " + c);
+
+	}
+}//B1 상속받기
+
+//////////////////////////////////////////////////
+public class Repeat006 {
+	public static void main(String[]args) {
+		C1 myc = new C1();
+		myc.a = 10; myc.b = 20; myc.c = 30;
+		myc.showC();
+	}
+}
+//////////////////////////////////////////////////
+---
+---
+package com.company.java013_total;
+
+
+
+class Papa1 extends Object{  
+	int money = 10000;     
+	public Papa1() { super(); }
+	public void sing() {  System.out.println("GOD-거짓말");  }
+}// end class
+
+class Son2 extends Papa1{ 
+	int money = 1500;
+	public Son2() { super(); }
+	@Override public void sing() { System.out.println("빅뱅-거짓말"); }
+} // end class
+
+public class Repeat007 {
+  public static void main(String[] args) {
+	Papa1 mypapa = new Son2();    
+	System.out.println(mypapa.money);   //10000
+	mypapa.sing();     // 빅뱅 
+	System.out.println(((Son2)mypapa).money); // 1500 출력되게 해주세요.
+  }
+}
+/*
+[method : 정보보관] Papa1, Son2 , Repeat007
+------------------------------------------------------------
+[heap:동적]            			 			| [stack:지역] 
+> 생성자가 인스턴스변수를 초기화해서 사용가능하게 해준다.
+	   Papa1() {money = 10000 / -----   }
+[1번지] Son2()  {money = 1500 / @sing 빅뱅}  ← Papa1 mypapa [1번지] {money = 10000 / @sing }  @19번째줄
+											|  main
+------------------------------------------------------------
+*/
+
+/*
+Object
+  ↑
+Papa1 {money = 10000 / @sing GOD}
+  ↑
+ Son2 {money = 1500 / @sing 빅뱅}	  	  
+*/
+---
+---
+package com.company.java013_total;
+/*
+Q8.	 |	   abstract 		vs		     interface
+-----------------------------------------------------------
+	 | 둘다 설계가 가능한 클래스
+-----------------------------------------------------------
+공통점 | 자식객체를 통해서 코드를 구현
+-----------------------------------------------------------
+차이점 |	추상화 정도가 interface가 더 크다. 			        
+-----------------------------------------------------------
+abstract   - 인스턴스변수, 인스턴스메서드 사용가능
+interface  - 상수(public static final), abstracat메서드
+-----------------------------------------------------------
+
+*/
+
+
+////////////////////////////////////////////////////////////
+public class Repeat008 {
+	public static void main(String[]args) {
+		
+	}
+}
+////////////////////////////////////////////////////////////
+---
+---
+package com.company.java013_total;
+
+/* interface - can do this
+Driver	......>			Vehicle { run() }
+			-----△							-----△
+		MotorCycle								Car
+		{helmet() , @run() }				{@run() }
+*/
+
+
+interface Vehicle{public void run();}
+class MotorCycle implements Vehicle{
+	@Override public void run()
+	{System.out.println("오토바이가 달립니다.");}
+	public void helmet() {System.out.println("헬멧을 착용합니다");}
+}
+class Car implements Vehicle{
+	@Override public void run()
+	{System.out.println("자동차가 달립니다.");}
+}
+class Driver{
+	public void drive(Vehicle v){  //의존관계  - 다형성( 부모객체로 여러자식객체들을 관리 ) / 부모.메서드() 오버라이드되서 자식메서드
+		//자동차일때는 자동차가 달립니다. /오토바이 헬멧,달린다 
+		if(v instanceof MotorCycle) { ((MotorCycle) v).helmet();}  // helmet은 부모에게 없고 자식에게 있는 최신기술
+		v.run();  // 오버라이드되서 자식메서드
+	}   
+}
+public class Repeat009 {
+	public static void main(String[] args) {
+		Driver driver = new Driver();
+		
+		MotorCycle motorCycle = new MotorCycle();
+		Car car = new Car();
+		
+		driver.drive(car);  //public void drive(Vehicle v){ 해야할일  }   
+		System.out.println("\n\n>>자동차가 고장나서 교통수단을 바꿉니다");
+
+		driver.drive(motorCycle);//public void drive(Vehicle v){  자동차일때는 자동차가 달립니다. /오토바이 헬멧,달린다 }   
+	}
+}
+---<!--day030.md-->
+---
 
 ---
