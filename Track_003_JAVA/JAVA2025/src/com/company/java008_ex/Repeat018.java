@@ -1,0 +1,37 @@
+package com.company.java008_ex;
+
+public class Repeat018 {
+	public static void dog() {
+		System.out.println("멍멍");
+	}
+
+	public static void disp(int count, char ch) {
+		for (int i = 0; i < count; i++) {
+			System.out.print(ch + "*");
+		}
+		System.out.println();
+	}
+
+	public static String stdAvg(int score) {
+		if (score >= 90) {
+			return "A";
+		} else if (score >= 80) {
+			return "B";
+		} else if (score >= 70) {
+			return "C";
+		} else {
+			return "D";
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////
+	public static void main(String[] args) {
+		System.out.println("강아지가 등장합니다.");
+		dog();
+		System.out.println("강아지가 시험을 봤습니다. 점수를 공개합니다.");
+		disp(7, '*');
+		System.out.println("당신의 평균은?" + stdAvg(88));
+
+	}
+	///////////////////////////////////////////////////////////////////
+}

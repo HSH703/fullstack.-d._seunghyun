@@ -1,0 +1,35 @@
+package com.company.java005_ex;
+
+import java.util.Scanner;
+
+public class ForEx003 {
+	public static void main(String[]args) {
+		//GIGO
+		//변수 1~10까지의 합
+		int hap=0;	//hap을 담을 변수
+		
+		//입력 + 처리
+		//hap 변수에 1달기
+		//hap 변수에 2달기	
+		//hap = hap+1;	//hap[1]	0+1
+		//hap = hap+2;	//hap[2]	1+2
+		//hap = hap+3;	//hap[3]	3+3
+		//   {반복} 	{변수} 	for{시작; 종료; 변화;}
+		for (int i =1; i<=10; i++){ hap = hap+i;}
+		
+		//출력
+		//"" 1:	+2	+3	+4 +5	+6	+7	+8	+9	+10		=55
+		System.out.println("1~10까지의 합을 구하시오.>" + hap);
+
+	}
+}
+
+/*연습문제3)  
+패키지명 : com.company.java005_ex
+클래스명 :  ForEx003
+출력내용 :   for 이용
+1~10까지의 합을 구하시오.
+
+upgrade)  시간나면 도전!
+1+2+3+4+5+6+7+8+9+10=55
+*/
