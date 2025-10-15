@@ -172,3 +172,13 @@ SELECT *
     OR COMM IS NULL;
         -- (false) and true
 
+
+
+
+
+
+
+
+
+
+
