@@ -11879,6 +11879,811 @@ public class Repeat009 {
 	}
 }
 ---<!--day030.md-->
----
+# ■ Java Collection Framework
+- List
+- Set 
+- Map
+
+> file
+
 
 ---
+package com.company.java014;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class List002 {
+	public static void main(String[]args) {
+		//1. List - 원하는 자료형 원하는 갯수만큼
+		List list1 = new ArrayList();    // ctrl + shift + o
+		list1.add("one"); list1.add(1);	 // ★ 무분별한 데이터
+		System.out.println(list1);
+		
+		//2. List - <> ★ 제네릭스
+		List<String> list2 = new ArrayList<>();   
+		list2.add("one"); list2.add("banana"); list2.add("coconut"); //list2.add(3);
+		System.out.println(list2);
+		
+		//3.List - 활용	(add, get(번호), size, remove(번호), contains )
+		List<UserDTO> users = new ArrayList<>();
+		users.add( new UserDTO("aaa@gmail.com")); //사용자추가
+		users.add( new UserDTO("bbb@gmail.com"));
+		
+		System.out.println("1. get > "  + users.get(0));
+		System.out.println("2. size > " + users.size());
+		System.out.println("3. remove > " + users.remove(0));
+		System.out.println("4. contains > " + users.contains(new UserDTO("bbb@gmail.com")));
+		System.out.println("4. contains > " + users.contains(new UserDTO("ccc@gmail.com")));
+		
+		System.out.println(users);
+	}//end main
+}//end class
+class UserDTO{ //데이터보관 및 전송 목적
+	private static int cnt = 0;       // static(공용) 유저가 생기는만큼 자동카운트
+	private final int    	 no;      // final(수정X)
+	private String email;	 		  // 사용자가 입력하는 email
+	
+	//기본생성자, 필드생성자, toString, getters/setters
+	
+	public UserDTO() { this.no = cnt++; }// 유저번호 = 값; 값 넣고 1개증가
+	public UserDTO(int no, String email) { super(); this.no = no; this.email = email; }
+	public UserDTO(String email ) { this(); this.email = email;} //UserDto
+	
+	@Override public String toString() {return "UserDTO [no=" + no + ", email=" + email + "]";}
+	
+	public String getEmail() { return email; } 
+	public void setEmail(String email) { this.email = email; }
+	
+	public static int getCnt() {return cnt;}
+	
+	public int getNo() {return no;}
+	
+	
+	
+	
+}
+
+
+
+
+
+//0. 저장단위 : 변수 < 배열(같은 자료형 연달아서 여러개) < 클래스(내가 원하는 자료형 + 메서드) 
+//< 콜렉션프레임워크 < 파일 < DB
+//1. 배열 단점개선   - 한가지 자료형 사이즈 고정(정적배열) String [] arr = new String [3] 
+//2. 콜렉션프레임워크 - 동적배열 ( List ★ , Set , Map ) - 필수!!
+//3. List - [기차]  : 순서O , 중복O       , ( add, get, size, remove, cotains)
+//4. Set  - [주머니] : 순서X , 중복X      , ( add, X get(번호) → interator, size, remove, cotains)
+//5. Map  - [사전] : key:value, (entry)   ( put,   get(key) / iterator, size, remove, cotains)
+---
+---
+package com.company.java014_ex;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class IceCreamDTO {
+    private String name;
+    private int price;
+    //## 힌트1) 기본생성자 / 필드생성자 / toString / getters + setters
+	public IceCreamDTO() { super(); }
+	public IceCreamDTO(String name, int price) 
+	{ super(); this.name = name; this.price = price; }
+	
+	@Override public String toString() { return  name + " (" + price + "원)"; }
+	
+	public String getName() { return name; } 
+	public void setName(String name) { this.name = name; }
+	public int getPrice() { return price; }  
+	public void setPrice(int price) { this.price = price; } 
+}
+//////////////////////////////////////////////////////////////////////////
+public class ListEx003 {
+    public static void main(String[] args) {
+    	//## 힌트2) List로   IceCreamDTO 자료형만 입력받을수 있는 동적배열 만들기
+    	List<IceCreamDTO> list = new ArrayList<>();
+    	Scanner scanner = new Scanner(System.in);
+        // 🍦 가게 오픈 메시지
+        System.out.println("❄️🍦 Welcome to the Magical IceCream Land 🍦❄️");
+        System.out.println("✨ 오늘도 달콤한 하루가 시작됩니다! ✨");
+        System.out.println("🛎️ 손님~ 어떤 아이스크림을 원하시나요?");
+        System.out.println("--------------------------------------------------");
+        
+        //## 힌트3)  무한반복 - 빠져나올조건 0
+        while(true) {
+        	//## 힌트4)  메뉴판 - 번호 입력받기
+            System.out.println("\n🍧 IceCream Menu 🍧");
+            System.out.println("1️ 아이스크림 추가"); System.out.println("2️ 아이스크림 목록 보기");
+            System.out.println("3️ 아이스크림 제거"); System.out.println("4️ 아이스크림 존재 확인"); 
+            System.out.println("5️ 총 아이스크림 개수"); System.out.println("0️ 종료");
+            System.out.print("👉 선택: ");
+            int choice = scanner.nextInt();
+        	//## 힌트5)  각번호에 따라서  처리   ( add, get, size, remove, contains )
+            switch(choice) {
+            	case 1 :  //1. 추가 아이스트림 이름, 가격입력받아서 list에 추가 list.add(  아이스크림객체 )
+            		System.out.print("아이스크림 이름 : ");	String name = scanner.next();
+            		System.out.print("아이스크림 가격 : ");	int price = scanner.nextInt();
+            		list.add( new IceCreamDTO(name, price));  //##
+            		System.out.println("✅"  +name+  "추가 완료!");
+            	break;
+            	case 2 :  //2. 목록 아이스크림목록  list
+            		if(list.size() == 0) {  System.out.println("아직 등록된 아이스크림이 없습니다.");  break;  }
+            		//※ list.isEmpty() 비어있는지 확인
+            		for(IceCreamDTO  ice : list) { System.out.println("- " + ice); } //toString
+            		
+            	break;/////////////////////////////////////////////////////
+            	case 3 :  //3. 제거 아이스크림 이름입력받아서 제거   list.remove()
+            		System.out.print("제거할 아이스크림 이름 : ");	String rname = scanner.next();
+            		int find = -1;
+            		for(int i=0; i<list.size(); i++) {
+            			//		  해당번호의 이름    .같니(  입력한이름)
+            			if(  list.get(i).getName().equals(rname) ) { find=i; break; }
+            		}
+            		list.remove(find);  //##  해당번호 넣어서 삭제
+            		System.out.println("✅"  +rname+  "삭제 완료!");
+            	break;/////////////////////////////////////////////////////
+            	case 4 :  //4. 검색  내가 입력한 아이스크림이 있는지없는지 검색   contains  
+            		System.out.print("검색할 아이스크림 이름 : ");	String fname = scanner.next();
+            		boolean exists = false;
+            		for(IceCreamDTO  ice : list) { 
+            			if(ice.getName().equals(fname)) {exists = true;}
+            		} 
+            		System.out.println( exists? "존재합니다.":"존재하지 않습니다." );
+            	break;/////////////////////////////////////////////////////
+            	case 5 :  //5. 갯수  아이스크림총갯수  
+            		System.out.println("총 아이스크림 개수:" + list.size());
+            	break;
+            	case 0 :  //0. 아이스크림 문닫기 
+            		System.out.println("아이스크림 가게를 닫습니다. 다음에 또 만나요!");
+            	break;
+            	default : 
+            		System.out.println(" 잘못된 입력입니다. 다시 선택해주세요.");
+            }//end switch
+            if(choice == 0) { break; }
+        }//end while 
+    }//end main
+}//end class
+//////////////////////////////////////////////////////////////////////////
+
+
+/*
+> List
+🍨 연습문제4) List와 DTO를 활용한 아이스크림 가게 시뮬레이션   (~11:00)
+패키지명 : com.company.java014_ex 
+클래스명 : ListEx003
+
+1. 문제 개요
+아래 조건에 맞게 ListEx003.java 파일을 작성하고, 콘솔에서 실행되는 결과를 예측하시오. 
+이 프로그램은 아이스크림 가게를 운영하는 시뮬레이션으로, 
+사용자의 입력에 따라 아이스크림을 추가, 제거, 확인, 출력하는 기능을 포함한다.
+
+2. 클래스 구조
+클래스명	역할	주요 메서드
+IceCreamDTO	아이스크림 정보 저장 DTO   	/ getName(), getPrice(), toString()
+ListEx003   메인 실행 클래스	main(), List 활용
+
+- IceCreamDTO는 이름과 가격을 저장하는 데이터 객체
+- ListEx003                클래스는 List<IceCreamDTO>를 활용하여 아이스크림을 추가, 출력, 제거, 검색
+- add, get, size, remove, contains 메서드를 모두 활용
+
+3. 요구사항
+- IceCreamDTO 클래스를 정의하고, 
+이름과 가격을 저장할 수 있도록 생성자 및 getter 작성
+- ListEx003 클래스에서 List<IceCreamDTO>를 생성하고, add() 메서드로 아이스크림 추가
+get() 메서드로 목록 출력, size()로 개수 확인
+contains() 또는 stream().anyMatch()로 특정 아이스크림 존재 여부 확인
+removeIf()로 특정 아이스크림 제거
+메뉴는 무한 반복 구조로 구성되어 사용자가 0을 입력할 때까지 계속 실행됨
+각 메뉴 선택 시 출력되는 메시지를 보고 프로그램의 흐름을 이해할 것
+
+4. 콘솔 출력 흐름
+🎉 프로그램 시작 시 
+❄️🍦 Welcome to the Magical IceCream Land 🍦❄️  
+✨ 오늘도 달콤한 하루가 시작됩니다! ✨  
+🛎️ 손님~ 어떤 아이스크림을 원하시나요?  
+--------------------------------------------------
+📋 메뉴판 
+🍧 IceCream Menu 🍧  
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택:
+
+5. 각 메뉴 선택 시 출력 메시지
+5-1. 아이스크림 추가 
+아이스크림 이름: [사용자 입력]  
+가격: [사용자 입력]  
+[입력한 이름] 추가 완료!
+
+5-2. 아이스크림 목록 보기
+리스트가 비어있을 경우:
+현재 아이스크림 목록:  
+아직 등록된 아이스크림이 없습니다.
+
+아이스크림이 있을 경우:
+현재 아이스크림 목록:  
+- 초코 (1500원)  
+- 바닐라 (1300원)
+
+5-3. 아이스크림 제거 
+제거할 아이스크림 이름: [사용자 입력]  
+제거 완료!   또는   해당 아이스크림이 존재하지 않습니다.
+
+5-4. 아이스크림 존재 확인
+
+확인할 아이스크림 이름: [사용자 입력]  
+존재합니다!   또는   존재하지 않습니다.
+
+5-5. 총 아이스크림 개수
+총 아이스크림 개수: [리스트 크기]
+
+5-6. 종료
+아이스크림 가게를 닫습니다. 다음에 또 만나요!
+
+6. 추가 조건 (선택 사항)
+Scanner를 사용하여 사용자 입력을 처리할 것
+ArrayList<IceCreamDTO>를 사용하여 아이스크림 목록을 저장할 것
+toString() 메서드를 오버라이드하여 출력 형식을 예쁘게 만들 것
+이모지를 활용하여 콘솔 출력이 재미있고 직관적으로 보이도록 할 것
+
+
+전체출력화면 ) 
+❄️🍦 Welcome to the Magical IceCream Land 🍦❄️
+✨ 오늘도 달콤한 하루가 시작됩니다! ✨
+🛎️ 손님~ 어떤 아이스크림을 원하시나요?
+--------------------------------------------------
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 1
+🍓 아이스크림 이름: white
+💰 가격: 1500
+✅ white 추가 완료!
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 1
+🍓 아이스크림 이름: choco
+💰 가격: 1800
+✅ choco 추가 완료!
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 1
+🍓 아이스크림 이름: mango
+💰 가격: 2000
+✅ mango 추가 완료!
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 2
+🍨 현재 아이스크림 목록:
+- white (1500원)
+- choco (1800원)
+- mango (2000원)
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 3
+🗑️ 제거할 아이스크림 이름: mango
+🧹 제거 완료!
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 2
+🍨 현재 아이스크림 목록:
+- white (1500원)
+- choco (1800원)
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 4
+🔍 확인할 아이스크림 이름: mango
+❌ 없습니다!
+ 
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 4
+🔍 확인할 아이스크림 이름: white
+✅ 존재합니다!
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 5
+📦 총 아이스크림 개수: 2
+
+🍧 IceCream Menu 🍧
+1️ 아이스크림 추가
+2️ 아이스크림 목록 보기
+3️ 아이스크림 제거
+4️ 아이스크림 존재 확인
+5️ 총 아이스크림 개수
+0️ 종료
+👉 선택: 0
+👋 아이스크림 가게를 닫습니다. 다음에 또 만나요!
+
+*/ 
+---<!--day031.md-->
+---
+package com.company.java014;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+// 1. 콜렉션프레임워크 - [배열]의 단점을 개선한 [객체]만 저장가능한 [동적배열]
+// 2. List, Set, Map
+// List(기차) - index 순서 O, 중복허용 O, add / get(순서)/ size / rewmove(순서) / contains
+// Set(주머니) - index 순서 X, 중복허용 X, add / 향상된for, iterator(대용량처리시 사용) / size / remove(객체) / contains 
+
+class Candy{
+	String name;
+	int price;
+	//생성자 , 필드생성자, toString
+	public Candy() {super();}
+	public Candy(String name, int price) { super(); this.name = name; this.price = price; }
+	@Override public String toString() { return "Candy [name=" + name + ", price=" + price + "]"; }
+	
+	//hashCode()
+	//1. Candy 클래스확인용도
+	@Override public int hashCode() { return Objects.hash(name, price); }
+	//2. 사용자가 넣어준 값을 비교
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Candy other = (Candy) obj;
+		return Objects.equals(name, other.name) && price == other.price;
+	} 
+	
+}
+
+/////////////////////////////////////////////////////////////
+public class Set001 {
+	public static void main(String[]args) {
+		Set<Integer> set1 = new HashSet<>();
+		set1.add(1); 			  // Integer e = 1 (기본값)
+		set1.add(new Integer(1)); // Integer e = new Integer(1) (부품객체)
+		set1.add(1);			  // 부품객체    = 기본값 (Integer - wrapper 클래스)
+		set1.add(2);			  // 기본값으르 자동으로 - 객체화 - 부품객체
+		set1.add(3);			  // int → Integer , float → Float   AutoBoxing. 
+		System.out.println(set1); // [1, 2, 3]
+		
+		Set<Candy> set2 = new HashSet<>();
+		set2.add(new Candy ("츕파츕스"    , 300));
+		set2.add(new Candy ("츕파츕스"    , 300));
+		set2.add(new Candy ("츕파츕스"    , 300));
+		set2.add(new Candy ("청포도알사탕" , 4500));
+		set2.add(new Candy ("멘톨"       , 5500));
+		System.out.println(set2);
+		System.out.println(set2.size()); //3
+	}//end main
+}//end class
+/////////////////////////////////////////////////////////////
+---
+---
+package com.company.java014;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+//1. 콜렉션프레임워크 - [배열]의 단점을 개선한 [객체]만 저장가능 [동적배열]
+//2. List, Set, Map
+//List(기차)  - index 순서O , 중복허용 O , add / get(순서) / size / remove(순서) / contains 
+//Set(주머니) -  index 순서x , 중복허용 X , add / 향상된 for, iterator / size / remove(객체) / contains 
+//Map(사전)   - key:value → entry  한쌍 , put / get(key) ,향상된 for, iterator / size / remove(key) / contains 
+
+public class Map001 {
+	public static void main(String[] args) {
+		Map<   String, Integer> map = new HashMap<>();
+		map.put("one"  , 1);  //키, 값
+		map.put("two"  , 2);  //키, 값
+		map.put("three", 3);  //키, 값
+		
+		System.out.println("1 : " + map);
+		System.out.println("2 : " + map.get("two"));
+		System.out.println("3 : " + map.size());
+		System.out.println("4 : " + map.remove("two"));
+		System.out.println("5 : " + map.containsKey("one"));
+		System.out.println(map.entrySet());  // key:value 한묶음, 한쌍 - [one=1, three=3]
+		
+		for( Entry<String, Integer> one : map.entrySet() ) { 
+			System.out.println( one.getKey() +"/" + one.getValue()); 
+		}
+		Iterator<Entry<String, Integer>> iter   =   map.entrySet().iterator();   //1) iter→ [one=1, three=3]
+		while(iter.hasNext()) {// 2)처리대상확인 [iter→one=1, three=3]
+			Entry<String, Integer> temp = iter.next();  // [one=1]
+			System.out.println( temp.getKey() +"/" + temp.getValue()); 
+		}
+	}
+}
+---<!--day032.md-->
+---
+package com.company.java014_ex;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Scanner;
+import java.util.Set;
+//1(~16:45) / 2()
+// set : 순서X, 중복허용 X  - add , get, size, remove, contains
+class UserInfo2{
+    private int no; private  String name; private  int age;
+    //Q1. 생성자, 필드생성자, toString, getters/setters , hashCode / equals
+    public UserInfo2() { super(); }
+    public UserInfo2(int no, String name, int age) { super(); this.no = no; this.name = name; this.age = age; }
+    @Override public String toString() { return "UserInfo2 [no=" + no + ", name=" + name + ", age=" + age + "]"; }
+    public int getNo() { return no; } public void setNo(int no) { this.no = no; } public String getName() { return name; } public void setName(String name) { this.name = name; } public int getAge() { return age; } public void setAge(int age) { this.age = age; }
+    // 클래스UserInfo2 인지확인
+    @Override public int hashCode() { return Objects.hash(age, name, no); }
+    // 인스턴스안의 값확인
+    @Override public boolean equals(Object obj) { if (this == obj) return true; if (obj == null) return false; if (getClass() != obj.getClass()) return false; UserInfo2 other = (UserInfo2) obj; return age == other.age && Objects.equals(name, other.name) && no == other.no; }
+}
+public class SetEx001 {
+   public static void main(String[] args) {
+      Scanner scanner = new Scanner(System.in);
+      Set<UserInfo2> sets = new HashSet<>();  //Q2.
+      // Q3. sets 에  UserInfo2 데이터 넣기
+      sets.add(new UserInfo2(1, "아이언맨" , 50));
+      sets.add(new UserInfo2(2, "헐크" , 40));
+      sets.add(new UserInfo2(3, "캡틴" , 120));  //주소
+      sets.add(new UserInfo2(3, "캡틴" , 120));  //주소
+      // Q4. 향상된 for / Interator 이용해서 데이터 출력 (3명만 출력되게- 같은자료 중복안되게) equals/hashCode
+      double avg = 0.0;
+      for( UserInfo2 u: sets) {
+         System.out.println(u.getNo() + " - " + u.getName() + " - " + u.getAge());
+         avg += u.getAge();
+      }
+      // Q5. 사용자들의 이름 입력받기 - 이름을 입력받으면 해당하는  유저의 자료출력
+      System.out.println("> 찾을 유저이름 : ");
+      String find = scanner.next();
+      for(UserInfo2 u: sets) {
+         if(u.getName().equals(find)) {  System.out.println(u);  break; }
+      }
+      // Q6. 사용자들의 나이 평균처리
+      System.out.println("나이평균 > " + avg/sets.size());
+   }
+}
+---
+---
+package com.company.java014_ex;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
+
+/////////////////////////////////////////////////////////
+//map : 사전 - entry(key, value) / put, get, size, remove, contains
+public class MapEx001 {
+	public static void main(String[]args) {
+		//Q1. map에 데이터 추가
+		Scanner scanner = new Scanner(System.in);
+		Map<String, String> map = new HashMap<>();
+		map.put("피구왕", "통키");
+		map.put("제빵왕", "김탁구");
+		map.put("요리왕", "비룡");
+		
+		System.out.println("=====================\r\n" + "KING\tNAME\r\n");
+		for( Entry<String, String> k: map.entrySet()) {
+			System.out.println(k.getKey() + "\t" + k.getValue());
+		}
+		System.out.println("KING의 정보를 제공중입니다. \r\n" + "이름을 입력해주세요> ");
+		String find = scanner.next();
+		//Q2.피구왕  통키
+		System.out.println( map.containsKey(find)? find + "-" + map.get(find) : "찾는 왕 없음!" );
+	}
+}
+/////////////////////////////////////////////////////////
+/*연습문제2)  Collection  Framework
+패키지명 : com.company.java014_ex
+클래스명 : MapEx001
+1. MAP 만들기
+KEY   VALUE
+피구왕   통키
+---------------------
+제빵왕   김탁구
+---------------------
+요리왕   비룡
+
+Map<String, String> map = new HashMap<>();
+
+2 다음과 같이 문제풀기
+==============================
+KING   NAME
+==============================
+피구왕   통키
+---------------------
+제빵왕   김탁구
+---------------------
+요리왕   비룡
+---------------------
+KING의 정보를 제공중입니다
+이름을 입력하세요> 제빵왕
+
+제빵왕 : 김탁구
+*/
+---<!--day033.md-->
+---
+package com.company.java015;
+
+//1. 클래스는 부품객체 - 설계도(틀, can do this~!)
+//2. 상태 + 행위     - interface ( public static final / public abstract )
+//////////////////////////////////////////////////////////////////////////////////////
+interface Inter1{ void method(); }
+class Inter1Impl implements Inter1{
+	@Override public void method() { System.out.println("Hello :D"); }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+public class Lambda001 {
+	public static void main(String[]args) {
+		//#1. interface 구현객체(자식) 
+		//부모    = 자식
+		Inter1 i1 = new Inter1Impl(); i1.method();
+		//#2. 익명이너클래스 (test목적, 1번 쓰고 버릴목적, 잘안쓰는 이벤트 목적) 
+		//Inter1 i2 = new Inter1Impl(); i2.method(); // interface는 추상메서드이기때문에 new 사용못함.
+		Inter1 i21 = new Inter1() {
+			@Override public void method() { System.out.println("일회용-HELLO :D");}	
+		}; i21.method();
+		Inter1 i22 = new Inter1() {
+			@Override public void method() { System.out.println("일회용-HELLO :D");}	
+		}; i22.method();
+
+		//#3. lambda 
+		
+		Inter1 i3 = () -> {System.out.println("줄이기!~ 일회용-HELLO :D:D:D");};
+		i3.method();
+		
+		
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////
+---
+---
+package com.company.java015;
+
+//////////////////////////////////////////////////////////
+
+interface InterA2{ void hi(); }
+interface InterB2{ void hi(String name); }
+interface InterC2{ String hi(); }
+interface InterD2{ String hi(int num, String name); }
+//////////////////////////////////////////////////////////
+public class Lambda002 {
+	public static void main(String[]args) {
+		//interface InterfaceA2{ void hi (); }
+		System.out.println("\n\n[STEP1] 매게변수 X, 리턴값 X");
+		//1-1. 익명객체 hi 출력 
+		InterA2 a  = new InterA2(){
+			@Override public void hi() {System.out.println("hi");}
+		}; a.hi();
+		//1-2. 람다식 () -> {}; 
+		InterA2 a2 = ()->{System.out.println("hi2");}; a2.hi();
+		InterA2 a3 = ()-> System.out.println("hi3");   a3.hi();  // 처리할 일이 1줄이면? { } 생략 가능. 
+																 //여러줄일때는 {} 사용~ ( {} 생략하면 출력 X)
+		
+		//interface InterB2{ void hi(String name); }
+		System.out.println("\n\n[STEP2] 매개변수 O, 리턴값 X");
+		//2-1. 익명객체 hi sally!출력
+		InterB2 b = new InterB2() {
+			@Override public void hi(String name) { System.out.println("hi! " + name); }
+		}; b.hi("Sally");
+		
+		//2-1. 람다식()->{};
+		InterB2 b2 = (String name) -> { System.out.println("hi! " + name); 
+		}; b2.hi("Alpha");
+		InterB2 b3 = (name) -> { System.out.println("hi! " + name); 
+		}; b3.hi("buja");
+		InterB2 b4 =  name ->  System.out.println("hi! " + name);  //name, age ,,, 복수입력X
+		 b4.hi("빨강이");
+		
+		 //interface InterC2{ String hi(); } 리턴값주는법?
+		System.out.println("\n\n[STEP3] 매개변수 X, 리턴값 X");
+		//3-1 익명객체 Good: Day출력	
+		InterC2 c = new InterC2() {
+			@Override public String hi() {return "Good : Day~! ";}	
+		};
+		System.out.println( c.hi() );
+		
+		//3-2. 람다식 ()->{};
+		InterC2 c2 = ()->{return "G:ood Day~!";};
+		System.out.println("c2.hi()");
+		
+		InterC2 c3 = ()->{return "G:ood Day~!";};
+		System.out.println("c3.hi()");
+		
+		//interface InterD2{ String hi(int num, String name); }
+		System.out.println("\n\n[STEP4] 매개변수 O, 리턴값 O");
+		//4-1. 익명객체 System.out.println(d.hi( 1, "sally")); //hi sally ★
+		//			  System.out.println(d.hi( 2, "sally")); //hi sally ★★
+		InterD2 d1 = new InterD2() {
+			@Override public String hi(int num, String name) {
+				String star = "";
+				for(int i=0; i<num; i++) {star+="★";}
+				return   "hi" + name + star; 
+				}
+		};
+		System.out.println(d1.hi( 1, "sally"));
+		System.out.println(d1.hi( 2, "sally"));
+
+		//4-2. 람다식() -> {};
+		InterD2 d2 = (int num, String name)->{
+			String star = "";
+			for(int i=0; i<num; i++) {star+="★";}
+			return   "hi" + name + star; 
+		};	
+		System.out.println(d2.hi( 3, "alpha")); //hi sally ★★★
+		System.out.println(d2.hi( 4, "alpha")); //hi sally ★★★★
+
+		InterD2 d3 = (num,  name)->{
+			String star = "";
+			for(int i=0; i<num; i++) {star+="★";}
+			return   "hi" + name + star;
+		};	
+		System.out.println(d3.hi( 5, "buja")); //hi sally ★★★★★
+		System.out.println(d3.hi( 6, "buja")); //hi sally ★★★★★★
+	}//end main
+}//end class
+//////////////////////////////////////////////////////////
+---
+---
+package com.company.java015;
+
+class RefClass{   void method(String str) { System.out.println(str);} }
+interface InterUsing{ void inter ( RefClass c , String str);}
+
+//////////////////////////////////////////////////////////
+public class Lambda003 {
+	public static void main(String[]args) {
+		//#1. 익명클래스
+		InterUsing a1 = new InterUsing() {
+			@Override
+			public void inter(RefClass c, String str) { c.method(str); }
+		};
+		a1.inter( new RefClass(), "Hello :)");
+		
+		//#2. 람다()->{}
+		//InterUsing a2 = (RefClass c , String str)->{c.method(str);};
+		InterUsing a2 = ( c, str ) -> { c.method(str); }; //직접 구현
+		a1.inter(new RefClass(), "Hello :):)"); //RefClass클래스의 method 사용
+		
+		//#3.   :: 표현식(참조)
+		InterUsing a3 = RefClass::method; //자동연결 1) RefClass  2)method
+		a3.inter(new RefClass(), "Hello:):):)");
+		//////////////////////////////////////////////////////////
+		//#4. interface InterBasic{ int method(int a, int b); }
+		// 1단계 기본형태
+		InterBasic basic = (int a, int b)->{ return Math.max(a,b); }; //max 둘중에 큰 값 하나 출력.
+		System.out.println(basic.method(10, 3));
+		
+		//2단계 1단계에서 자료형 , {return} 제거
+		InterBasic basic2 = ( a,  b)-> Math.max(a,b); 
+		System.out.println(basic.method(100, 3));
+		
+		//3단계 (a, b), Math.max 에서 '.' 제거후, '::' 추가
+		InterBasic basic3 =  Math::max; 
+		System.out.println(basic.method(1000, 3));
+		
+		//
+		InterBasic basic4 = (a, b)->Math.min(0, 0); // ()-> return
+		System.out.println(basic4.method(10, 3));
+		
+		InterBasic basic5 = Math::min; // ()-> return
+		System.out.println(basic4.method(10, 3));
+		
+		//#4. interface 	//순서2) 어떤 클래스갖고선 어떤메서드 사용했다.
+		InterString basic6 = (a, b)->a.compareTo(b); 
+		System.out.println( basic6.compare("apple", "applebanana") ); // "apple", "applebanana" 둘이 비교해서 다르면? 음수
+		System.out.println( basic6.compare("apple", "banana") );      // "apple", "banana" 둘이 비교해서 다르면? 음수 (-1/ 하나 작음)
+		//문자열이 같으면? 0 ,(음수) a<b a가 b보다 앞에옴.  
+		//				   (양수) a>b a가 b보다 뒤에옴.
+		
+		InterString basic7 = String::compareTo; //java.lang.String.compareTo 순서3)
+		System.out.println( basic7.compare("coconut", "banana") ); 
+		//문자열이 같으면? 0 ,(음수) a<b a가 b보다 앞에옴.  
+		//				   (양수) a>b a가 b보다 뒤에옴.
+
+		InterParse basic8 = s->  Integer.parseInt(s); //Integer parseInt 사용
+		System.out.println( basic8.parse("10") + 3 ); //13
+		InterParse basic9 = Integer::parseInt;        //Integer parseInt 사용
+		System.out.println( basic9.parse("10") + 3 ); //13
+
+		//
+		InterAbs basic10 = a -> {return Math.abs(a);}; //절대값 10 Math abs 사용
+		System.out.println( basic10.apply(-10) );
+		InterAbs basic11 = a -> Math.abs(a); 		   //절대값 10 Math abs 사용
+		System.out.println( basic11.apply(-10) );
+		InterAbs basic12 = Math::abs;			       //절대값 10 Math abs 사용
+		System.out.println( basic12.apply(-10) );
+
+		//InterPrint basic13 = (s) -> { System.out.println(s); };
+		//InterPrint basic13 = s -> System.out.println(s); 
+		InterPrint basic13 = System.out::println;  //System.out     println;
+		basic13.print("Hello Lambda");
+		
+		//ex1) 람다식을 구현해주세요.
+		//힌트) System.out.println("hi".Length() ); //출력시 5
+		//System.out.println( ex1. getLength("hello") );  //결과 5
+		//Ex1 ex1 = (s)->s.length();
+		//Ex1 ex1 =  s->s.length();
+		Ex1 ex1 = String::length;  //인터페이스에서 메서드 찾기...
+		System.out.println(ex1.getLength("hello") );
+		
+		//ex2) 람다식을 구현해주세요.
+		//ex2. getLength("lambda:)");      //결과 출력- lambda:)
+		//Ex2 ex2 = (String s) ->{ System.out.println(s); };
+		//Ex2 ex2 =      s     -> System.out.println(s);
+		Ex2 ex2 = System.out::println;
+		ex2.print("lambda:)");				//결과 lambda :)
+		
+		
+	}
+}
+//////////////////////////////////////////////////////////
+//														 1) (파라미터) 확인 2) -> return 값 확인
+interface InterBasic{ int method(int a, int b); }        // (a, b) -> return
+interface InterString{int compare(String a, String b); } // 순서1) (a, b) -> return
+interface InterParse{ int parse(String s);      }        // (s) -> return
+interface InterAbs{ int apply(int a);           }		 // (a) -> return
+interface InterPrint{ void print(String s) ;    }		 // (s) -> return //리턴값 X
+
+interface Ex1{ int getLength(String s);         }		 //(String s) -> return
+interface Ex2{ void print (String s);           }		 //(String s) -> return X
+---<!--day034.md-->
