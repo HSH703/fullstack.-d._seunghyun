@@ -1,4 +1,4 @@
-package com.company.java015;
+package com.company.java015_lambda_stream;
 
 class RefClass{   void method(String str) { System.out.println(str);} }
 interface InterUsing{ void inter ( RefClass c , String str);}

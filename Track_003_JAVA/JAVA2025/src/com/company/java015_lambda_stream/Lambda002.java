@@ -1,4 +1,4 @@
-package com.company.java015;
+package com.company.java015_lambda_stream;
 
 //////////////////////////////////////////////////////////
 

@@ -1,4 +1,4 @@
-package com.company.java015;
+package com.company.java015_lambda_stream;
 
 //1. 클래스는 부품객체 - 설계도(틀, can do this~!)
 //2. 상태 + 행위     - interface ( public static final / public abstract )

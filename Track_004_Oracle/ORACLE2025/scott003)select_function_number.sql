@@ -70,7 +70,7 @@ select case deptno
             when 10 then '부서10'
             when 20 then '부서20'
             when 30 then '부서30'
-            else                 '부서X '
+            else         '부서X '
         end
 from emp; --case end
 
@@ -144,11 +144,142 @@ select empno, ename, comm
         when comm > 0      then '수당 : ' || comm
      end
 from emp;
+-------------------------------------------------------------------------------------
+
+-- ##1. 문자열 연습문제   (19~44)
+-- https://sally03915.github.io/stackventure_250825/004_oracle/oracle004_select_fn#14
+-------------------------------------------------------------------------------------
+
+-- 사고확장 - 말장난이므로 잘 생각해보고 문제만 보고 풀 수 있도록 하기!!
+-- https://sally03915.github.io/stackventure_250825/004_oracle/oracle004_select_fn#68
+--힌트1) 
+-- Ex1. EMP 테이블에서 다음과 같은 결과가 나오도록 SQL문을 작성하시오.
+--EMP 테이블에서 ENAME이 다섯글자 이상이며 여섯글자 미만인 사원을 조회하시오.
+--MASKING_EMPNO 는 EMPNO 앞두자리외 뒷자리를 *로 출력
+--MASKING_ENAME 는 사원이름의 첫글자만 보여주고 나머지는 *로 출력
+--※ 앞자리 추출 - SUBSTR(문자열, 어디에서, 몇개)
+--※ RPAD - RPAD( 문자열, 몇자리, 채울값)
+
+-- Step1)   select     from   where  구문적기
+-- Step2)   from  채우기
+-- Step3)   where  채우기  -  ENAME이 다섯글자 이상이며 여섯글자 미만인 사원을 조회
+--          length(ename)  이상  5   그리고      length(ename)  이하 6
+-- Step4)   오른쪽채우기 rpad  (  substr(empno에서 , 첫번째부터, 2글자  )  , 4자리 맞추기 , '*'로 채우기   ) 
+select empno masking_empno, ename masking_ename
+, rpad( substr (empno, 1,2), 4, '*' ), rpad( substr(ename, 1 ,1 )  ,5 ,'*' )
+from emp 
+where length(ename) >= 5 and length(ename) <= 6;
+
+--select empno masking_empno, ename masking_ename
+--, rpad(substr ( empno, 1,2 ) , 4, '*'), rpad( substr (ename, l,2), 5, '*' )
+--from emp 
+--where length(ename) >= 5 and length(ename) <= 6; 
+
+
+ 
+-- EX002 trunc vs round (sqld자격증시험에서 비교 문제 나옴 !!)
+--힌트2)  
+--EMP 테이블에서 다음과 같은 결과가 나오도록 SQL문을 작성하시오.
+--EMP 테이블에서 사원들의 월 평균 근무일 수는 21.5일
+--2 하루 근무시간을 8시간으로 보았을때 사원들의 하루급여(DAY_PAY) 와 시급(TIME_PAY)을 계산하여 결과를 조회하시오.
+--※ 하루급여는 소수점 세번째 자리에서 버리고(TRUNC), 시급은 두번째 소수점에서 반올림(ROUND)하시오
+
+-- Step1)   select     from   where  구문적기
+-- Step2)   from  채우기
+-- Step4)   select 채우기    -  trunc( 급여(sal)/21.5  , 2 )  소수점 버리기 /  round( 급여(sal)/21.5/8 , 1   )
+-- 한달급여
+-- 월급여
+select empno, ename, sal  
+,trunc( sal / 21.5 , 2) day_pay, round(sal / 21.5 / 8, 1 ) time_pay
+from emp;
+--where
+
+--select  empno, ename, sal,  trunc(  sal/21.5  ,2)   day_pay     , round( sal/21.5/8 , 1)  time_pay
+--from    emp;
+--where ; --조건 X
+
+
+--EX003
+--힌트3)  
+---  EMP 테이블에서 다음과 같은 결과가 나오도록 SQL문을 작성하시오. 
+--1. EMP테이블에서 사원들은 입사일(HIREDATE)을 기준으로 3개월이 지난 후 첫 월요일에 정직원이 됨
+--2. 사원들이 정직원이 되는 날짜(R_JOB)를 YYYY-MM-DD 형식으로 오른쪽과 같이 출력하시오.
+--3. 추가 수당(COMM)이 없는 사원들의 추가수당은 N/A로 출력하시오.
+
+-- Step1)   select     from   where  구문적기
+-- Step2)   from  채우기
+-- Setp3)   입사일(HIREDATE)을 기준으로 3개월이 지난 후 첫 월요일에 정직원이 됨  ADD_MONTHS(HIREDATE, 3)  3개월뒤
+--           첫월요일   - NEXT_DAY(ADD_MONTHS(HIREDATE, 3), '월요일')
+--           문자열로   - TO_CHAR(NEXT_DAY(ADD_MONTHS(HIREDATE, 3), '월요일'), 'YYYY-MM-DD')
+--          추가수당이 있는지 확인      NVL(  TO_CHAR(COMM)  , 'N/A'  ) null 이라면 'N/A'
+select empno, ename, hiredate, comm
+,to_char (next_day (add_months( hiredate, 3 ), '월요일'), 'YYYY-MM-DD' )
+,nvl ( to_char (comm) , 'n/a')
+from emp;
+--where
+
+--select    empno, ename, hiredate 
+--    , TO_CHAR(NEXT_DAY(ADD_MONTHS(HIREDATE,3) , '월요일') ,'YYYY-MM-DD')     R_JOB    
+--     3개월이(ADD_MONTHS) / 첫 월요일 NEXT_DAY( 날짜 , '월요일'  ) / 1~7, '일'(1), '월'(2) TO_CHAR  YYYY-MM-DD
+--    , NVL(  TO_CHAR( COMM ) , 'N/A'   ) COMM 
+--from      emp;
+--where
+
+--Ex004)
+--힌트4)  EMP 테이블에서 다음과 같은 결과가 나오도록 SQL문을 작성하시오.
+--1. 직속상관의 사원번호(MGR)를 다음과 같은 조건을 기준으로 변환해서 CHG_MGR열에 출력하시오
+--1) 직속상관의 사원번호가 존재하지 않을경우 : 00000
+--2) 직속상관의 사원번호 앞 두자리가 75일 경우 : 5555
+--3) 직속상관의 사원번호 앞 두자리가 76일 경우 : 6666
+--4) 직속상관의 사원번호 앞 두자리가 77일 경우 : 7777
+--5) 직속상관의 사원번호 앞 두자리가 78일 경우 : 8888
+--6) 그 외 직속상관 사원번호의 경우 : 본래 직속상관의 사원번호 그대로 출력
+
+-- Step1)   select     from   where  구문적기
+-- Step2)   from  채우기
+-- Step3)   case  when   then  end   구문 채우기
+--      case   처리대상(mgr)
+--          when   사원번호가 존재하지 않을경우(mgr  is null)  then   '00000'
+--          when   직속상관의 사원번호 앞 두자리(문자열일부분)   substr(  mgr , 첫글자부터(1), 몇개(2) ) = '78'   then   '8888'
+--          when   직속상관의 사원번호 앞 두자리(문자열일부분)   substr(  mgr , 첫글자부터(1), 몇개(2) ) = '77'   then   '7777'
+--          when   직속상관의 사원번호 앞 두자리(문자열일부분)   substr(  mgr , 첫글자부터(1), 몇개(2) ) = '76'   then   '6666'
+--          when   직속상관의 사원번호 앞 두자리(문자열일부분)   substr(  mgr , 첫글자부터(1), 몇개(2) ) = '75'   then   '5555'
+--          else   to_char(mgr)
+--      end   CHG_MGR
+select empno, ename, mgr
+,   case
+        when mgr is null                  then '0000'
+        when substr( mgr, 1, 2  ) = '78'  then '8888'
+        when substr( mgr, 1, 2  ) = '77'  then '7777'
+        when substr( mgr, 1, 2  ) = '76'  then '6666'
+        when substr( mgr, 1, 2  ) = '75'  then '5555'
+        else to_char(mgr)
+    end  chg_mgr
+from emp; 
+--where
+
+--select   empno, ename, mgr, 
+--        case
+--            when  mgr is null  then  '0000'
+--            when  substr(  mgr  , 1, 2 )  = '78' then  '8888'
+--            when  substr(  mgr  , 1, 2 )  = '77' then  '7777'
+--            when  substr(  mgr  , 1, 2 )  = '76' then  '6666'
+--            when  substr(  mgr  , 1, 2 )  = '75' then  '5555'
+--            else  to_char(mgr)
+--        end chg_mgr    
+--from    emp
+--where 
 
 
 -------------------------------------------------------------------------------------
--- ##1. 문자열 연습문제   (19~44)
--- https://sally03915.github.io/stackventure_250825/004_oracle/oracle004_select_fn#14
+
+
+-------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 
