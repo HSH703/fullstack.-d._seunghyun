@@ -12899,3 +12899,13 @@ public class Stream003 {
 }//end class
 ---<!--day035.md-->
 # JAVA (20251020~20251024)
+---
+java017_newtowk 
+  Thread001.java ~ Thread004_interrupt
+java017_newtowk_ex
+  (ThreadEx001~ThreadEx003_2)
+---<!----day037.md>
+
+---
+
+---
