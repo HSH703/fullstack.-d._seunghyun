@@ -4,7 +4,7 @@ import java.awt.Toolkit;
 
 //1. 프로세스 - 실행중인 프로그램
 //2. 프로세스 - 자원(데이터, 메모리) + Thread(실제작업수행)
-public class Tread001 {
+public class Thread001 {
 	public static void main(String[]args) {
 		System.out.println("001. Thread");
 		//1. 코어(일꾼수)   Runtime 환경클래스
