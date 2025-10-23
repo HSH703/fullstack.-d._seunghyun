@@ -210,10 +210,101 @@ ORDER BY DEPTNO, SAL;
 --EMP 테이블을 이용하여 다음과 같이 출력하시오.
 --부서번호(DEPTNO) , 평균급여(AVG_SAL) , 최고급여(MAX_SAL) , 최저급여(MIN_SAL) , 사원수(CNT) 를 조회하시오
 --평균급여를 출력시 소수점을 제외하고 각 부서번호별로 출력하시오.
-select deptno, avg(sal), 
-from emp 
+
+--힌트)
+--STEP1)
+--SELECT    부서번호(DEPTNO) , 평균급여(AVG_SAL) , 최고급여(MAX_SAL) , 최저급여(MIN_SAL) , 사원수(CNT)
+--FROM      EMP  
+--GROUP BY  집계함수빼고 GROUP의 기준점;
+--STEP2)  평균급여를 출력시 소수점을 제외 - TRUNC( AVG(SAL))
+--TRUNC
+SELECT DEPTNO, TRUNC(AVG(SAL)) AVG_SAL, MAX(SAL) MAX_SAL, MIN(SAL) MIN_SAL, COUNT(*) CNT
+FROM EMP
+GROUP BY DEPTNO;
+
+--ROUND
+SELECT DEPTNO, ROUND(AVG(SAL)) AVG_SAL, MAX(SAL) MAX_SAL, MIN(SAL) MIN_SAL, COUNT(*) CNT
+FROM EMP
+GROUP BY DEPTNO;
 
 
+--Ex002
+--EMP 테이블을 이용하여 다음과 같이 출력하시오.
+--같은직책(JOB)에 종사하는 사원이 3명 이상인 직책과 인원수를 출력하시오.
+
+--힌트) 
+--STEP1)     같은직책(JOB)에    /    종사하는 사원이 3명 이상인 직책과    인원수
+--SELECT     직책(JOB) , 인원수
+--FROM       EMP  
+--GROUP BY  집계함수빼고 GROUP의 기준점;
+--HAVING     사원이 3명 이상인 직책
+--ORDER BY COUNT(*) DESC, JOB DESC;  --정렬
+
+SELECT   JOB, COUNT(*) 
+FROM     EMP
+GROUP BY JOB
+HAVING COUNT(*)>=3
+ORDER BY COUNT(*) DESC, JOB DESC;
+
+--Ex003
+--EMP 테이블을 이용하여 다음과 같이 출력하시오.
+--사원들의 입사년도(HIRE_YEAR)를 기준으로 부서별 몇명이 입사했는지 조회하시오.
+
+--힌트) 
+--STEP1)     
+--SELECT     입사년도(HIRE_YEAR)를 기준으로     / 부서별    / 몇명이 입사
+--FROM       EMP  
+--GROUP BY   입사년도(HIRE_YEAR)를 기준으로     / 부서별 
+
+-- STEP2)
+--  입사년도(HIRE_YEAR)를 기준으로   TO_CHAR(   입사일 , 'YYYY' )/ SUBSTR 사용해도 됨.
+SELECT    TO_CHAR( HIREDATE, 'YYYY' ) HIRE_YEAR, DEPTNO, COUNT(*) CNT
+FROM      EMP
+GROUP BY  TO_CHAR( HIREDATE, 'YYYY' ), DEPTNO;
+--ORDER BY  TO_CHAR( HIREDATE, 'YYYY' ), DEPTNO;
+
+--Ex004
+--EMP 테이블을 이용하여 다음과 같이 출력하시오.
+--추가수당(COMM)을 받는 사원수와 받지않는 사원수를 조회하시오.
+
+--힌트) 
+--STEP1)     
+--SELECT     추가수당(COMM)을 받는 사원수 - 받으면 O ,  안받으면 X  / 전체 카운트
+--FROM       EMP  
+--GROUP BY   추가수당(COMM)을 받는 사원수 - 받으면 O ,  안받으면 X
+
+-- STEP2)
+-- NVL2(    추가수당(COMM) , 받으면 O ,  안받으면 X )
+select   NVL2(comm , 'O', 'X' )EXIST_COMM, count(*) cnt
+from     emp
+group by NVL2(comm , 'O', 'X' );
+
+--DECODE
+SELECT decode(COMM, null, 'X', 'O') EXIST_COMM, COUNT(*) CNT
+FROM   EMP 
+GROUP BY COMM;
+
+--CASE
+SELECT CASE WHEN comm is null THEN 'X'  ELSE 'O' END EXIST_COMM, COUNT(*) CNT
+FROM   EMP 
+GROUP BY COMM;
+
+
+
+--Ex005
+--EMP 테이블을 이용하여 다음과 같이 출력하시오.
+--각 부서의 입사연도별 사원수, 최고급여, 급여합, 평균급여를 출력하고
+--각 부서별 소계와 총계를 출력하시오. (ROLLUP)
+
+--힌트) 
+--STEP1)     
+--SELECT     입사연도별 사원수, 최고급여, 급여합, 평균급여
+--FROM       EMP  
+--GROUP BY   입사연도별
+--STEP2)   입사년도(HIRE_YEAR)를 기준으로   TO_CHAR(   입사일 , 'YYYY' )
+SELECT    DEPTNO, TO_CHAR(HIREDATE, 'YYYY'), COUNT(*) CNT, MAX(SAL) MAX_SAL, SUM(SAL) SUM_SAL, AVG(SAL) AVG_SAL  
+FROM      EMP
+GROUP BY ROLLUP ( DEPTNO, TO_CHAR(HIREDATE, 'YYYY') );
 
 
 
