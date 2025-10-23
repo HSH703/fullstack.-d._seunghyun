@@ -799,5 +799,10 @@ scott004_group.sql
 ---<!----day037.md>
 
 ---
+scott004_1select(group_1).sql
+scott004_2select(group_2).sql --rollup part.
+---<!--day038.md-->
 
 ---
+scott005_join.sql
+---<!--day039.md-->
