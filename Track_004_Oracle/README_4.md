@@ -806,3 +806,8 @@ scott004_2select(group_2).sql --rollup part.
 ---
 scott005_join.sql
 ---<!--day039.md-->
+
+---
+scott005_join_repeat.sql
+scott006_subquery.sql
+---<!--day040.md-->
