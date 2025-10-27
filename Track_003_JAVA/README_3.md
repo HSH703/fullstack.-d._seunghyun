@@ -12913,3 +12913,21 @@ Network001.java ~ Network002_2_Client.java
 ---
 X
 ---<!--day039.md-->
+
+---JSP
+jsp001_ws.html
+jsp002_was.jsp
+---<!--day040.md-->
+
+# JSP (20251027~20251031)
+---
+jsp003_temp.jsp
+jsp004_ex.jsp
+jsp004_request_naver.jsp
+jsp005_result.jsp
+jsp005-request_join.jsp
+jsp006_login.jsp
+jsp006_result.jsp
+jsp007_jdbc.jsp
+
+---

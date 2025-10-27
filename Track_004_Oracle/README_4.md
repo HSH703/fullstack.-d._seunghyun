@@ -811,3 +811,9 @@ scott005_join.sql
 scott005_join_repeat.sql
 scott006_subquery.sql
 ---<!--day040.md-->
+
+# ORACLE (20251027~20251031)
+---
+scott007_ddl_dml_tx_user.sql
+---<!--day041.md-->
+
