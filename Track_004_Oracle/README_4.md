@@ -817,3 +817,6 @@ scott006_subquery.sql
 scott007_ddl_dml_tx_user.sql
 ---<!--day041.md-->
 
+---
+scott008_object.sql
+---<!--day042.md-->

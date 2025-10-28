@@ -12930,4 +12930,20 @@ jsp006_login.jsp
 jsp006_result.jsp
 jsp007_jdbc.jsp
 
+---<!--day041.md-->
+
+---jsp
+jsp008_stmt_pstmt.jsp
+tmpt.jsp
+header.jsp
+footer.jsp
+join.jsp
+join_process.jsp
+login.jsp
+login_process.jsp
+mypage.jsp
+
+---<!--day042.md-->
+---
+
 ---
