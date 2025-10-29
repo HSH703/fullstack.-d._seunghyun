@@ -72,7 +72,7 @@ flowchart TD
 
 ---
 
-#### 💡 **PROJECT1** MBTI 테스트 + 결과보기
+#### 💡 **PROJECT1** MBTI 테스트 + 결과보기  > 공용게시판
 **기술 스택**: JSP + Oracle  
 **기능**: MBTI 질문/보기 등록, 응답 저장
   1) JSP + Oracle: MBTI 질문/보기 등록 시스템
