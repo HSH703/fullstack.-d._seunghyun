@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class PostDto {
 	private int id;
-	private int app_user_id;
+	private int appUserId;
 	private String title;
 	private String content;
 	private String pass;
@@ -18,7 +18,7 @@ public class PostDto {
 			int hit, String email) {
 		super();
 		this.id = id;
-		this.app_user_id = app_user_id;
+		this.appUserId = app_user_id;
 		this.title = title;
 		this.content = content;
 		this.pass = pass;
@@ -26,32 +26,35 @@ public class PostDto {
 		this.hit = hit;
 		this.email = email;
 	}
+	public PostDto(int id, int app_user_id, String title, String content, String pass, LocalDateTime createdAt,
+			int hit) {
+		super();
+		this.id = id;
+		this.appUserId = app_user_id;
+		this.title = title;
+		this.content = content;
+		this.pass = pass;
+		this.createdAt = createdAt;
+		this.hit = hit;
+	}
 
 	@Override
 	public String toString() {
-		return "PostDto [id=" + id + ", app_user_id=" + app_user_id + ", title=" + title + ", content=" + content
-				+ ", pass=" + pass + ", createdAt=" + createdAt + ", hit=" + hit + "]";
+		return "PostDto [id=" + id + ", appUserId=" + appUserId + ", title=" + title + ", content=" + content
+				+ ", pass=" + pass + ", createdAt=" + createdAt + ", hit=" + hit + ", email=" + email + "]";
 	}
 	
 	public int getId() { return id; } public void setId(int id) { this.id = id; }
-	public int getApp_user_id() { return app_user_id; } public void setApp_user_id(int app_user_id) { this.app_user_id = app_user_id; }
+	public int getAppUserId() { return appUserId; } public void setAppUserId(int appUserId) { this.appUserId = appUserId; }
 	public String getTitle() { return title; } public void setTitle(String title) { this.title = title; }
 	public String getContent() { return content; } public void setContent(String content) { this.content = content; }
 	public String getPass() { return pass; } public void setPass(String pass) { this.pass = pass; }
 	public LocalDateTime getCreatedAt() { return createdAt; } public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 	public int getHit() { return hit; } public void setHit(int hit) { this.hit = hit; }
+	public String getEmail() { return email; } public void setEmail(String email) { this.email = email; }
+
 
 	
-	//1. [글쓰기]   sql:
-	    
-	    public int insert( PostDto dto ){
-	    	int result=-1;
-			String sql = insert into post (id              , app_user_id, title, content, pass) 
-	                values(post_seq.nextval, ?          , ?    , ?      , ?   );
-
-	    	//드 커 프 리
-	    	return result;
-	    }
 
 	
 	

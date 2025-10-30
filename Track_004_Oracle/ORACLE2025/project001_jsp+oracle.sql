@@ -40,4 +40,3 @@ create table post(
 select * from post;
 select * from appuser;
 
-

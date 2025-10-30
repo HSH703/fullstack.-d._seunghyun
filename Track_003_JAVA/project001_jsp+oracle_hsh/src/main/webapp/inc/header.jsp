@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +37,7 @@
 		        </a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link" href="<%=request.getContextPath() %>/board/list">MbtiBoard</a>
+		        <a class="nav-link" href="<%=request.getContextPath() %>/list.do">MbtiBoard</a>
 		      </li>
     		  <li class="nav-item ms-auto">
 		        <a class="nav-link" href="<%=request.getContextPath() %>/member/logout.jsp">로그아웃</a>
@@ -46,7 +48,7 @@
         <a class="nav-link" href="<%=request.getContextPath() %>/member/login.jsp">LOGIN</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath() %>/member/join.jop">JOIN</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/member/join.jsp">JOIN</a>
       </li>
 	<% }	%>
     </ul>
