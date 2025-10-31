@@ -49,10 +49,9 @@
       
       <%
       PostDao dao = new PostDao();
-      PostDto dto = new PostDto();
-      dto.setId(1);
-      out.println(dao.int(11));
-      
+/*    PostDto dto = new PostDto(); */  
+      out.println(dao.update_hit(11));
+      out.println(dao.select(11));
       %> 
       
 

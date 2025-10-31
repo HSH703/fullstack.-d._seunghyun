@@ -39,4 +39,6 @@ create table post(
 
 select * from post;
 select * from appuser;
+desc post;
 
+select * from post where id=11;

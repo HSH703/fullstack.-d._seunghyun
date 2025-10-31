@@ -37,7 +37,8 @@ public class PostDto {
 		this.createdAt = createdAt;
 		this.hit = hit;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "PostDto [id=" + id + ", appUserId=" + appUserId + ", title=" + title + ", content=" + content
@@ -54,10 +55,6 @@ public class PostDto {
 	public String getEmail() { return email; } public void setEmail(String email) { this.email = email; }
 
 
-	
-
-	
-	
 }
 
 

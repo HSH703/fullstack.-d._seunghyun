@@ -30,5 +30,4 @@ public class MbtiInsert implements MbtiService {
 		// 3. 데이터 넘겨주기
 		request.setAttribute("result", result);
 	}
-
 }

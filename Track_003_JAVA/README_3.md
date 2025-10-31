@@ -12919,7 +12919,7 @@ jsp001_ws.html
 jsp002_was.jsp
 ---<!--day040.md-->
 
-# JSP (20251027~20251031)
+# JAVA/JSP (20251027~20251031)
 ---
 jsp003_temp.jsp
 jsp004_ex.jsp
@@ -12944,6 +12944,38 @@ login_process.jsp
 mypage.jsp
 
 ---<!--day042.md-->
+---
+MVC2
+DeptDto.java
+DeptWhat.java
+JavaBasic.java
+ServletBasic1.java
+ServletBasic2.java
+ServletBasic3_LifeCycle.java
+ServletBasic4_FrontController.java
+
+PostDao.java
+PostDto.java
+
+
+개발용 (sevlet)
+배포용 (xml)
+	jsp009_java_servlet.jsp
+	web.xml
+	jsp010_response_index.jsp
+	jsp010_result.jsp
+---<!--day043.md-->
+
+---
+mbtiboard (folder)
+---<!--day044.md-->
+---
+mbtiboard(folder)
+board_test.jsp
+index.jsp
+---<!--day045.md-->
+
+# JAVA/JSP (20251103~20251107)
 ---
 
 ---
