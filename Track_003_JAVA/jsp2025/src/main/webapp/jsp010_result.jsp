@@ -28,7 +28,7 @@
        	   출력구문2: $(dto.deptno)     --%>   
        <tbody>
          <tr>
-           <td>$(dto.deptno)</td>
+           <td>${dto.deptno}</td>
            <td>$(dto.dname)</td>
            <td>$(dto.loc)</td>
          </tr>
