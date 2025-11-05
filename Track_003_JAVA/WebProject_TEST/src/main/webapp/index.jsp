@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%-- <% response.sendRedirect("member/login.jsp");  %>   --%>
+ 
+<%  response.sendRedirect("list.do"); %> 
 
-<%@ include file="../inc/header.jsp"%>
+<!-- 시작은 항상 여기서부터~~ -->
 
-<%@ include file="../inc/footer.jsp"%>
-    
-    
-    

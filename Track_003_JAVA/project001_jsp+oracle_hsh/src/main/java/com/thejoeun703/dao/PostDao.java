@@ -22,7 +22,7 @@ public class PostDao {
       Connection conn = null; PreparedStatement pstmt = null;  ResultSet rset = null;
       String driver="oracle.jdbc.driver.OracleDriver";
       String    url="jdbc:oracle:thin:@localhost:1521:xe";
-      String   user="scott" , pass="tiger";
+      String   user="scott", pass="tiger";
       // 드 커 프 리 
       try {
          //1. 드라이버연동 

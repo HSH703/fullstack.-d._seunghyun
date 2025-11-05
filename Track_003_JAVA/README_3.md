@@ -12976,6 +12976,24 @@ index.jsp
 ---<!--day045.md-->
 
 # JAVA/JSP (20251103~20251107)
+# ORACLE (20251027~20251031)
 ---
+WebProject_TEST(folder)
+---<!--day046.md-->
 
 ---
+WebProject_TEST(Folder)
+
+---<!--day047.md-->
+
+---
+
+---<!--day048.md-->
+
+---
+
+---<!--day049.md-->
+
+---
+
+---<!--day050.md-->
