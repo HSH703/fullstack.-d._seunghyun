@@ -3,37 +3,62 @@
     
 <%@include file="../inc/header.jsp" %> 
    <div class="container card  my-5 p-4">
-      <h3 class="card-header"> EXECID 글상세보기</h3>
+      <h3 class="card-header"> 글상세보기</h3>
 	  <div> 
-	      <input type="hidden"   name="app_user_id"  value=""> 
+	      <input type="hidden"   name="execid"  value=""> 
 		  <div class="mb-3 mt-3">
-		    <label for="hit" class="form-label">조회수</label>
+		    <label for="hit" class="form-label">EXECID</label>
 		    <input type="text" class="form-control" id="hit" name="hit"  readonly  
-		    	   value="${dto.hit}"> <%-- ${}로 반드시 입력할것! --%>
+		    	   value="${dto.execid}"> <%-- ${}로 반드시 입력할것! --%>
 		  </div> 
 		  <div class="mb-3 mt-3">
-		    <label for="title" class="form-label">TITLE:</label>
-		    <input type="text" class="form-control" id="title" 
-		    		placeholder="내용을 입력해주세요" name="title"  readonly 
-		    		value="${dto.title}">
+		    <label for="execetype" class="form-label">EXECTYPE:</label>
+		    <input type="text" class="form-control" id="exectype" 
+		    		placeholder="내용을 입력해주세요" name="exectype"  readonly 
+		    		value="${dto.exectype}">
 		  </div>  
 		  <div class="mb-3"> 
-		    <label for="content" class="form-label">CONTENT:</label>
-		    <textarea class="form-control" id="content" placeholder="내용을 입력해주세요"   
-		    	readonly name="content">${dto.content}</textarea> <%-- textarea - 공백없이 작성!!(글꼴 인식을 못할수도 있음.) --%>
+		    <label for="description" class="form-label">DESCRIPOTION:</label>
+		    <textarea class="form-control" id="description" placeholder="내용을 입력해주세요"   
+		    	readonly name="description">${dto.description}</textarea> <%-- textarea - 공백없이 작성!!(글꼴 인식을 못할수도 있음.) --%>
+		  </div> 
+  		  <div class="mb-3 mt-3">
+		    <label for="avgkcal30min" class="form-label">avgkcal30min</label>
+		    <input type="text" class="form-control" id="avgkcal30min" name="avgkcal30min"  readonly  
+		    	   value="${dto.avgkcal30min}"> <%-- ${}로 반드시 입력할것! --%>
+		  </div> 
+		  <div class="mb-3 mt-3">
+		    <label for="exectargetmin" class="form-label">exectargetmin:</label>
+		    <input type="text" class="form-control" id="exectargetmin" 
+		    		placeholder="내용을 입력해주세요" name="exectargetmin"  readonly 
+		    		value="${dto.exectargetmin}">
+		  </div> 
+		  		  <div class="mb-3 mt-3">
+		    <label for="suitablefor" class="form-label">suitablefor</label>
+		    <input type="text" class="form-control" id="suitablefor" name="suitablefor"  readonly  
+		    	   value="${dto.suitablefor}"> <%-- ${}로 반드시 입력할것! --%>
+		  </div> 
+		  <div class="mb-3 mt-3">
+		    <label for="intensitylevel" class="form-label">intensitylevel:</label>
+		    <input type="text" class="form-control" id="intensitylevel" 
+		    		placeholder="내용을 입력해주세요" name="intensitylevel"  readonly 
+		    		value="${dto.intensitylevel}">
 		  </div> 
 		  
-<%-- 		  <c:if   test="${not empty email}">	  
+		  
+		  
+		  
 			  <div class="mb-3">
-			  	<a href="<%=request.getContextPath()%>/editView.do?id=${dto.id}" class="btn btn-success form-control">글수정</a>
+			  	<a href="<%=request.getContextPath()%>/updateForm.hsh?id=${dto.execid}" class="btn btn-success form-control">글수정</a>
 			  </div>
 			  <div class="mb-3">
-			  	<a href="<%=request.getContextPath()%>/deleteView.do?id=${dto.id}" class="btn btn-secondary form-control">글삭제</a>
+			  	<a href="<%=request.getContextPath()%>/delete.hsh?id=${dto.execid}" class="btn btn-secondary form-control">글삭제</a>
 			  </div>
+		  <c:if   test="${not empty execid}">	  	  
 		  </c:if>
- --%>		  
+		  
 		  <div class="mb-3">
-		  	<a href="<%=request.getContextPath()%>/list.do" class="btn btn-primary form-control">목록보기</a>
+		  	<a href="<%=request.getContextPath()%>/execAll.hsh" class="btn btn-primary form-control">목록보기</a>
 		  </div>
 	 </div>
    </div> 

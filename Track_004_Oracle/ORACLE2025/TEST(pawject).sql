@@ -23,7 +23,9 @@
 --(5, '레이저 포인터 추적', '고양이에게 인기 있는 실내 운동으로, 사냥 본능을 자극합니다.', 50.0, 10, '고양이 전용, 실내 생활 반려동물', '중강도', NOW(), NOW());
 
 desc exerciseinfo;
-delete from exerciseifno where execid;
+delete from exerciseinfo;
+commit;
+
 drop table exerciseinfo;
 
 select     column_name, data_default
@@ -100,7 +102,7 @@ values(exerciseinfo_seq.nextval,
         );
   
  
- insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
+insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
 values(exerciseinfo_seq.nextval,
         '레이저 포인터 추적', 
         '고양이에게 인기 있는 실내 운동, 사냥 본능을 자극', 

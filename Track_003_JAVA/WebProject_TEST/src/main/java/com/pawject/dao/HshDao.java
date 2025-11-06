@@ -53,7 +53,7 @@ public class HshDao {
 	public ArrayList<HshDto> selectAll() {
 		ArrayList<HshDto> result = new ArrayList<HshDto>();
 //		int result = -1;
-		String sql = "select * from exerciseinfo  where  execid=?";
+		String sql = "select * from exerciseinfo ";
 		//드커프리
 		Connection conn = null; PreparedStatement pstmt = null; ResultSet rset = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
@@ -67,6 +67,7 @@ public class HshDao {
 			conn = DriverManager.getConnection(url, user, pass);
 			//3. PreparedStatement
 			pstmt = conn.prepareStatement(sql); 
+			
 			//4. 결과
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
@@ -190,7 +191,6 @@ public class HshDao {
 			//4. 결과
 			int presult = pstmt.executeUpdate();
 			if(presult > 0 ) {result = 1;}
-			
 			
 		}catch(Exception e) { e.printStackTrace();
 		}finally {

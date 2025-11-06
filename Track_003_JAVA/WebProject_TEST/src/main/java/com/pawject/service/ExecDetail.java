@@ -16,11 +16,12 @@ public class ExecDetail implements ExecinfoService {
 		int id = Integer.parseInt(request.getParameter("id"));
 		//2. 디커프리( PostDao ) db처리
 		HshDao dao = new HshDao();
-		dao.update_hit(id);
+		dao.select(id);
 		HshDto result = dao.select(id); //해당번호로 값 가져오기.
 		//3. 데이터 넘겨주기
 		request.setAttribute("dto", result);
 		
-		
+  		//select * from exerciseinfo  where  execid=?
+ 	
 	}
 }

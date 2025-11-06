@@ -5,28 +5,41 @@
 
 <div class="container card  my-5">
 	<h3 class="card-header">EXECINFO 글수정</h3>
-	<form action="<%=request.getContextPath()%>/edit.do?id=${dto.id}" method="post">
-<!-- 		<input type="hidden" name="app_user_id" value=""> -->
-<%-- 		<div class="mb-3 mt-3">
-			<label for="title" class="form-label">TITLE</label>
-			 <input type="text" class="form-control" id="title"
-				    placeholder="내용을 입력해주세요." name="title" value="${dto.title} }">
-		</div>
-		<div class="mb-3">
-			<label for="pass" class="form-label">PASS :</label> 
-			<input type="password" class="form-control" id="pass"
-				   placeholder="비밀번호를 입력해주세요." name="pass">
-		</div>
-		<div class="mb-3">
-			<label for="content" class="form-label"> CONTENT</label>
-			<textarea class="form-control" id="content" placeholder="내용을입력해주세요."
-				name="content" value="${dto.content} }"></textarea>
-		</div>
-		<div class="mb-3  text-end">
-			<button type="submit" class="btn btn-primary">글수정</button>
-			<a href="javascript:history.go(-1)" class="btn btn-danger">BACK</a>
-		</div>
-	</form> --%>
+	  <form action="<%=request.getContextPath()%>/update.hsh?id=${dto.execid}"  method="post"> 
+		  <div class="mb-3 mt-3">
+		    <label for="exectype" class="form-label">exectype</label>
+		    <input type="text" class="form-control" id="exectype" name="exectype" value="${dto.exectype}" > <%-- ${}로 반드시 입력할것! --%>
+		  </div>  
+		  <div class="mb-3"> 
+		    <label for="description" class="form-label">DESCRIPOTION:</label>
+		    <textarea class="form-control" id="description" placeholder="내용을 입력해주세요"   
+		    	     name="description">${dto.description}</textarea> <%-- textarea - 공백없이 작성!!(글꼴 인식을 못할수도 있음.) --%>
+		  </div>  
+		  <div class="mb-3 mt-3">
+		    <label for="avgkcal30min" class="form-label">avgkcal30min:</label>
+		    <input type="text" class="form-control" id="avgkcal30min" 
+		    		placeholder="내용을 입력해주세요" name="avgkcal30min" value="${dto.avgkcal30min}">
+		  </div> 
+		  <div class="mb-3 mt-3">
+		    <label for="exectargetmin" class="form-label">exectargetmin:</label>
+		    <input type="text" class="form-control" id="exectargetmin" 
+		    		placeholder="내용을 입력해주세요" name="exectargetmin" value="${dto.exectargetmin}">
+		  </div> 
+		  		  <div class="mb-3 mt-3">
+		    <label for="suitablefor" class="form-label">suitablefor:</label>
+		    <input type="text" class="form-control" id="suitablefor" 
+		    		placeholder="내용을 입력해주세요" name="suitablefor" value="${dto.suitablefor}">
+		  </div> 
+		  		  <div class="mb-3 mt-3">
+		    <label for="intensitylevel" class="form-label">intensitylevel:</label>
+		    <input type="text" class="form-control" id="intensitylevel" 
+		    		placeholder="내용을 입력해주세요" name="intensitylevel" value="${dto.intensitylevel}">
+		  </div> 
+		  <div class="mb-3  text-end">
+		  	<button type="submit" class="btn btn-warning">글쓰기</button>
+		  	<a href="<%=request.getContextPath()%>/exec.hsh" class="btn btn-danger">목록보기</a>
+		  </div>
+	 </form>
 </div>
 
 <%@include file="../inc/footer.jsp"%>

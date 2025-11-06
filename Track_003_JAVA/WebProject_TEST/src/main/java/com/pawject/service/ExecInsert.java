@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.pawject.dao.HshDao;
 import com.pawject.dto.HshDto;
@@ -14,20 +13,24 @@ public class ExecInsert implements ExecinfoService {
 	@Override
 	public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// 1. 데이터넘겨받고
-//		int app_user_id = Integer.parseInt(request.getParameter("app_user_id"));
-		HttpSession session = request.getSession();
-		int app_user_id =(Integer)session.getAttribute("APP_USER_ID");
-		String title    = request.getParameter("title");
-		String content  = request.getParameter("content");
-		String pass     = request.getParameter("pass");
+		// 1. 데이터넘겨받고  
+		String type = request.getParameter("exectype");
+	    String desc = request.getParameter("description");
+        Float avg =  Float.parseFloat(request.getParameter("avgkcal30min"));
+        Integer target = Integer.parseInt(request.getParameter("exectargetmin"));
+        String suit = request.getParameter("suitablefor");
+        String level = request.getParameter("intensitylevel");
 		// 2. 디커프리( PostDao ) db처리
 		HshDao dao = new HshDao();
-		HshDto dto = new HshDto();
-		dto.setAppUserId(app_user_id);
-		dto.setTitle(title); dto.setContent(content); dto.setPass(pass);
-		String result = String.valueOf( dao.insert(dto) );  //##
+		HshDto dto = new HshDto();  
+		dto.setExectype(type);
+		dto.setDescription(desc);
+		dto.setAvgkcal30min(avg);
+		dto.setExectargetmin(target);
+		dto.setSuitablefor(suit);
+		dto.setIntensitylevel(level);
+
 		// 3. 데이터 넘겨주기
-		request.setAttribute("result", result);
+		request.setAttribute("result", String.valueOf(dao.insert(dto)));
 	}
 }

@@ -14,13 +14,13 @@ public class ExecDelete implements ExecinfoService {
 	public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		//1. 데이터넘겨받고
-		int  id = Integer.parseInt(request.getParameter("id"));
-		String pass = request.getParameter("pass");
-		//2. 드커프리( PostDao ) db처리
+		request.setCharacterEncoding("UTF-8");
+		int id = Integer.parseInt(request.getParameter("id"));
+		//2. 드커프리
 		HshDao dao = new HshDao();
 		HshDto dto = new HshDto();
-		dto.setExecid(7);
+		dto.setExecid(id);
 		//3. 데이터 넘기기 
-		request.setAttribute("result", String.valueOf(dao.delete(dto)) );
+		request.setAttribute("result", String.valueOf(dao.delete(dto)));
 	}
 }

@@ -43,7 +43,7 @@
   	<%-- 	<%
   		//select * from exerciseinfo  where  execid=?
  		HshDao dao = new HshDao();  
-		out.println(dao.select(7)); 
+		out.println(dao.select(6)); 
 		%>
 		 --%>
 		<pre class="alert alert-warning"> 4. UPDATE</pre> 
@@ -56,7 +56,7 @@
 		dto.setExectargetmin(25);
 		dto.setSuitablefor("중형견 이상, 관절 약한 반려동물");
 		dto.setIntensitylevel("고강도");
-		dto.setExecid(7);
+		dto.setExecid(6);
  		out.println(dao.update(dto));
 		%>
  --%>	
@@ -65,7 +65,7 @@
 		<%
  		HshDao dao = new HshDao(); 
 		HshDto dto = new HshDto();
-		dto.setExecid(7);
+		dto.setExecid(6);
 		out.println(dao.delete(dto));
 		%>
 		

@@ -13,8 +13,9 @@
 		<caption>exerciseinfo</caption>
 		<thead>
 			<tr>
-				<th scope="col">EXECID</th>
+				<th scope="col">NO</th> 
 				<th scope="col">EXECTYPE</th>
+				<th scope="col">EXECID</th>
 				<th scope="col">DESCRIPTION</th>
 				<th scope="col">AVGKCAL30MIN</th>
 				<th scope="col">EXECTARGETMIN</th>
@@ -27,28 +28,33 @@
 				<tr>
 					<td>${list.size() - status.index}</td>
 					<td>
-					    <a href="<%=request.getContextPath()%>/detail.do?id=${dto.execid}">
-							${dto.title}
+					    <a href="<%=request.getContextPath()%>/exec.hsh?id=${dto.execid}">
+							${dto.exectype}
 						</a>		
 <%-- 						<a href="${pageContext.request.contextPath}/detail.do?id=${dto.id}">
 							${dto.title}
 						</a>--%>
  					</td>
 					<td>${dto.execid}</td>
-					<td>${dto.}</td>
-					<td>${dto.hit}</td>
+					<td>${dto.description}</td>
+					<td>${dto.avgkcal30min}</td>
+					<td>${dto.exectargetmin}</td>
+					<td>${dto.suitablefor}</td>
+					<td>${dto.intensitylevel}</td>
+					
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-<%-- <%  if(execid != null){ %>
-		<p class="text-end"><a href="<%=request.getContextPath()%>/writeView.do"  class="btn btn-primary">글쓰기</a>
+ <%  if(execid != null){ %>
+		<p class="text-end"><a href="<%=request.getContextPath()%>/reg.hsh" class="btn btn-warning">글쓰기</a>
 		</p>
-	<%}else{ %>
+	<%} 
+ else{ %>
 		<p class="alert alert-info"> 로그인을하면 글쓰기가능합니다.</p>
-	<%}  %>
+	<%}  %>  
 </div>
- --%>
+
 <%@include file="../inc/footer.jsp"%>
 
 <!-- ExecInfoBoard - list -->

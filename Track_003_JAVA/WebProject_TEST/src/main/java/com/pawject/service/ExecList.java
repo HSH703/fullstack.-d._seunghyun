@@ -14,9 +14,8 @@ public class ExecList implements ExecinfoService {
 		request.setCharacterEncoding("UTF-8");
 		// 1. 데이터 넘겨받기 X 
 		// 2. 드커프리 ( PostDao )
-		HshDao dao = new HshDao();
+		HshDao dao = new HshDao();  
 		// 3. 데이터 넘겨주기
 		request.setAttribute("list", dao.selectAll());
-		
 	}
 }
