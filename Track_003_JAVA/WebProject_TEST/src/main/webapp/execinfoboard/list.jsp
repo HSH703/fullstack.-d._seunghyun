@@ -4,7 +4,7 @@
 <%@include file="../inc/header.jsp"%>
 
 <div class="container card  my-5">
-	<h3 class="card-header">EXERCISEINFO BOARD</h3>
+	<h3 class="card-header">운동정보</h3>
 <!-- 		     한개			 향상된 for 게시판리스트
 <c:forEach  var="변수명" items="서버에서 넘겨받은 값들ㄴ" varStatus="status">
 	</c:forEach> 
@@ -46,6 +46,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
  <%  if(execid != null){ %>
 		<p class="text-end"><a href="<%=request.getContextPath()%>/reg.hsh" class="btn btn-warning">글쓰기</a>
 		</p>
@@ -54,6 +55,12 @@
 		<p class="alert alert-info"> 로그인을하면 글쓰기가능합니다.</p>
 	<%}  %>  
 </div>
+<form  action="<%=request.getContextPath()%>/#?id=<%=request.getParameter("#")%>"  method="post">	
+	<div class="my-3  text-end">
+		
+		<button type="submit" class="btn btn-primary"> 다음페이지<a href="javascript:history.go(+1)"></a></button>
+</form>
+
 
 <%@include file="../inc/footer.jsp"%>
 

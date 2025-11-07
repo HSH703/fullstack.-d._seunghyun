@@ -4,7 +4,7 @@
 <%@include file="../inc/header.jsp" %>
 
    <div class="container card  my-5 p-4">
-      <h3 class="card-header"> EXECINFO 글쓰기</h3>
+      <h3 class="card-header"> 글쓰기</h3>
 	  <form action="<%=request.getContextPath()%>/reg.hsh"  method="post"> 
 		  <div class="mb-3 mt-3">
 		    <label for="exectype" class="form-label">exectype</label>
@@ -38,7 +38,7 @@
 		  
 		  <div class="mb-3  text-end">
 		  	<button type="submit" class="btn btn-warning">글쓰기</button>
-		  	<a href="<%=request.getContextPath()%>/exec.hsh"  class="btn btn-danger">목록보기</a>
+		  	<a href="<%=request.getContextPath()%>/execAll.hsh"  class="btn btn-secondary">목록보기</a>
 		  </div>
 	 </form>
    </div>

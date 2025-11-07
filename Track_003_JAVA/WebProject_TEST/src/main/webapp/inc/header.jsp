@@ -130,15 +130,15 @@
         
           <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/regForm.hsh">등록</a></li>
           <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>//exec.hsh">목록</a></li>
-<%--      <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/mypage.jsp?userid=<%=sid%>"><%=email%></a></li>
- --%>          <li class="nav-item"><a class="nav-link" href="#">로그아웃</a></li>
+    <%--  <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/mypage.jsp?userid=<%=sid%>"><%=email%></a></li> --%>          
+ 		  <li class="nav-item"><a class="nav-link" href="">로그아웃</a></li>
         
          <%}else{%>
          <%--로그인 안한 경우 --%>
-          <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/regForm.hsh">등록</a></li>
-          <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/exec.hsh">목록</a></li>
-          <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/join.jsp">회원가입</a></li>
-          <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/login.jsp">로그인</a></li>
+   <%--   <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/regForm.hsh">등록</a></li> --%>   
+     <%-- <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/exec.hsh">목록</a></li>  --%> 
+		  <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/user/signup.jsp">회원가입</a></li>
+          <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/user/login.jsp">로그인</a></li>
           
           <% }%>
           

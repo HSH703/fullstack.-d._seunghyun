@@ -45,20 +45,17 @@
 		    		value="${dto.intensitylevel}">
 		  </div> 
 		  
-		  
-		  
-		  
 			  <div class="mb-3">
-			  	<a href="<%=request.getContextPath()%>/updateForm.hsh?id=${dto.execid}" class="btn btn-success form-control">글수정</a>
+			  	<a href="<%=request.getContextPath()%>/updateForm.hsh?id=${dto.execid}" class="btn btn-warning form-control">글수정</a>
 			  </div>
 			  <div class="mb-3">
-			  	<a href="<%=request.getContextPath()%>/delete.hsh?id=${dto.execid}" class="btn btn-secondary form-control">글삭제</a>
+			  	<a href="<%=request.getContextPath()%>/delete.hsh?id=${dto.execid}" class="btn btn-danger form-control">글삭제</a>
 			  </div>
 		  <c:if   test="${not empty execid}">	  	  
 		  </c:if>
 		  
 		  <div class="mb-3">
-		  	<a href="<%=request.getContextPath()%>/execAll.hsh" class="btn btn-primary form-control">목록보기</a>
+		  	<a href="<%=request.getContextPath()%>/execAll.hsh" class="btn btn-secondary form-control">목록보기</a>
 		  </div>
 	 </div>
    </div> 
