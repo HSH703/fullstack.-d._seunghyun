@@ -3,4 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<typeAliases>
+		<typeAlias type="com.thejoeun703.dto.UserInfoDto"  alias="UserInfoDto"/>
+<!-- 	<typeAlias type="com.thejoeun703.dto.MilkInfoDto"  alias="MilkInfoDto"/> -->
+	</typeAliases>
+	
 </configuration>
