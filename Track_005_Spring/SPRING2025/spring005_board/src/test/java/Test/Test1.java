@@ -30,8 +30,7 @@ public class Test1 {
 	@Test public void test5() throws UnknownHostException  {
 		//5. 
 //		Sboard1Dto dto = new Sboard1Dto();
-//		dto.setAppUserId(42); dto.setBtitle("title-new"); dto.setBcontent("content-new"); 
-//		dto.setBpass("1"); dto.setId(42);
+//		dto.setId(42); dto.setBpass("1");
 //		System.out.println(service.delete(dto));
 		
 		//4. 
@@ -41,15 +40,16 @@ public class Test1 {
 //		System.out.println(service.update(dto));
 
 		//3. select
-//		System.out.println(service.select(42));
+		System.out.println(service.select(42));
 		
 		//2.insert
 //		Sboard1Dto dto = new Sboard1Dto();
 //		dto.setAppUserId(42); dto.setBtitle("title"); dto.setBcontent("contenet"); dto.setBpass("1111");
-//		System.out.println(dao.insert(dto));
+//		System.out.println(service.insert(dto));
 		
 		//1.selectAll
-		System.out.println(dao.selectAll());
+		System.out.println(service.selectAll());
+		
 		}
 	
 	@Ignore public void test1() {System.out.println(context);}

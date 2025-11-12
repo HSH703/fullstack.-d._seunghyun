@@ -19,7 +19,8 @@ public class Sboard1Dto {
 	private String bfile;
 	private int bhit;
 	private String bip;
-	private LocalDateTime createdAt; 
+//	private LocalDateTime createdAt; CREATE_AT (default: SYSTIMESTAMP)
+	private String createdAt;
 }
 
 /*

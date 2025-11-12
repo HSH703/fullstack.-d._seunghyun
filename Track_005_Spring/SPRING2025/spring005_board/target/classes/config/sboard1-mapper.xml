@@ -18,16 +18,21 @@
 	</resultMap>
 	
 	<insert id="insert" parameterType="Sboard1Dto">
-<!--  insert into sboard1 (id, app_user_id, btitle, bcontent, bpass, bip) 
-         values(sboard1_seq.nextval, #{appUserId}, #{btitle}, #{bcontent}, #{bpass}, #{bip}) -->
+  insert into sboard1 (id, app_user_id, btitle, bcontent, bpass, bip) 
+         values(sboard1_seq.nextval, #{appUserId}, #{btitle}, #{bcontent}, #{bpass}, #{bip})
 	</insert>
+	<update id="updateHit" parameterType="int">
+		update sboard1 set bhit = bhit + 1 where id = #{id}
+	</update>
+	
  	<update id="update" parameterType="Sboard1Dto">
-<!-- 	update sboard1 
+ 	update sboard1 
 		set BTITLE=#{btitle}, BCONTENT=#{bcontent}
-		where id=#{id} and bpass=#{bpass} -->
-	</update>	
+		where id=#{id} and bpass=#{bpass}
+	</update>
+		
 	<delete id="delete" parameterType="Sboard1Dto">
-<!-- 		delete from sboard1 where ID=#{id} and BPASS=#{bpass} -->
+ 		delete from sboard1 where ID=#{id} and BPASS=#{bpass}
 	</delete> 
 	
  	<select resultMap="sboard1Map" id="selectAll"><!-- resultType="Sboard1Dto" -->

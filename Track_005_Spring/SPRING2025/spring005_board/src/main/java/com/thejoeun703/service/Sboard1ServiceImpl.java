@@ -20,10 +20,14 @@ public class Sboard1ServiceImpl implements Sboard1Service {
 			catch (UnknownHostException e) {e.printStackTrace();}
 			return dao.insert(dto);
 	} 
+	public List<Sboard1Dto> selectAll() {return dao.selectAll();}
+	public Sboard1Dto select(int id) { dao.updateHit(id);  return dao.select(id);}
+	public Sboard1Dto selectUpdateForm(int id) { return dao.select(id);}
 	public int update(Sboard1Dto dto) {return dao.update(dto);}
 	public int delete(Sboard1Dto dto) {return dao.delete(dto);}
-	public List<Sboard1Dto> selectAll() {return dao.selectAll();}
-	public Sboard1Dto select(int id) {return dao.select(id);}
-	public Sboard1Dto selectUpdateForm(int id) {return dao.select(id);}
-
 }
+
+
+
+
+
