@@ -14,13 +14,13 @@ import com.thejoeun703.dto.MilkDto;
 public class Test2 {
 	@Autowired MilkDao dao;
 	@Test public void test() {
-		System.out.println(dao.delete(3));
+		System.out.println(dao.delete(2));
 		
 //		MilkDto dto = new MilkDto();
 //		dto.setMname("choco"); dto.setMnum(1); dto.setMtotal(1000); dto.setMno(2);
 //		System.out.println(dao.update(dto));
 		
-		System.out.println(dao.select(3));
+		System.out.println(dao.select(2));
 		
 //		MilkDto dto = new MilkDto();
 //		dto.setMname("white"); dto.setMnum(2); dto.setMtotal(2000);
