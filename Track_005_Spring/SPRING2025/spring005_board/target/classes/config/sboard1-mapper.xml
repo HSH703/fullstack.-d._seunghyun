@@ -18,7 +18,7 @@
 	</resultMap>
 	
 	<insert id="insert" parameterType="Sboard1Dto">
-  insert into sboard1 (id, app_user_id, btitle, bcontent, bpass, bip) 
+  		insert into sboard1 (id, app_user_id, btitle, bcontent, bpass, bip) 
          values(sboard1_seq.nextval, #{appUserId}, #{btitle}, #{bcontent}, #{bpass}, #{bip})
 	</insert>
 	<update id="updateHit" parameterType="int">

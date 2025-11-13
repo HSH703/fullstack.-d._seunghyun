@@ -40,7 +40,7 @@ public class Test1 {
 //		System.out.println(service.update(dto));
 
 		//3. select
-		System.out.println(service.select(42));
+//		System.out.println(service.select(43));
 		
 		//2.insert
 //		Sboard1Dto dto = new Sboard1Dto();
@@ -48,7 +48,7 @@ public class Test1 {
 //		System.out.println(service.insert(dto));
 		
 		//1.selectAll
-		System.out.println(service.selectAll());
+//		System.out.println(service.selectAll());
 		
 		}
 	

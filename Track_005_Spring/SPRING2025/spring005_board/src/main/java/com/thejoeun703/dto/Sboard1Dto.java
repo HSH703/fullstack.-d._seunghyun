@@ -16,7 +16,7 @@ public class Sboard1Dto {
 	private String btitle;
 	private String bcontent;
 	private String bpass;
-	private String bfile;
+	private String bfile;		//BFILE (default : 'no-png')
 	private int bhit;
 	private String bip;
 //	private LocalDateTime createdAt; CREATE_AT (default: SYSTIMESTAMP)
@@ -31,8 +31,8 @@ public class Sboard1Dto {
       BTITLE                                    NOT NULL 	VARCHAR2(1000)
       BCONTENT                                  NOT NULL 	CLOB
       BPASS                                     NOT NULL 	VARCHAR2(255)
-      BFILE                                              		VARCHAR2(255)
-      BHIT                                               		NUMBER(10)
+      BFILE                                              	VARCHAR2(255)
+      BHIT                                               	NUMBER(10)
       BIP                                       NOT NULL 	VARCHAR2(255)
       CREATE_AT                                          	TIMESTAMP(6)
  */ 
