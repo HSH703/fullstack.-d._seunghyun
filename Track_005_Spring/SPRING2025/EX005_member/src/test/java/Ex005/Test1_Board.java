@@ -17,7 +17,7 @@ import com.thejoeun703.service.AppUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/root-context.xml")
-public class Test_Board {
+public class Test1_Board {
 	@Autowired ApplicationContext context;
 	@Autowired DataSource ds;
 	@Autowired SqlSession session;

@@ -42,5 +42,4 @@
 	select count(*) cnt from appuser  where  email=#{email}  and password=#{password}
   </select>
   
-  
 </mapper>
