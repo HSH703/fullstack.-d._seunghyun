@@ -9,10 +9,6 @@
 
 	<dependencies>
 
-
-
-
-
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -259,8 +255,6 @@
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-
-
 
 	</dependencies>
 

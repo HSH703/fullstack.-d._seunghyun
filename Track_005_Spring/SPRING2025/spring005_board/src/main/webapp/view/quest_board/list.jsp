@@ -28,9 +28,20 @@
       		</tr>	
       	</thead>
       	<tbody> 
-	  		<tr><td>${list}</td></tr>
-	  		<tr><td><a href="${pageContext.request.contextPath}/detail.quest?id=51">detail</a>
-	  		</td></tr>
+      		<c:forEach var="dto" items="${list}" varStatus="status">
+		  		<tr>
+		  	   <%-- <td>${dto}</td> --%>
+			  		<td>${list.size()-status.index}</td> <%--3-0=3  3-1=2 3=2=1 --%>
+			  		<td><a href="${pageContext.request.contextPath}/detail.quest?id=${dto.id}">
+				  		${dto.btitle}
+			  		</a></td>
+			  		<td>${dto.appUserId}</td>			  		
+			  		<td>${dto.createdAt}</td>
+			  		<td>${dto.bhit}</td>
+		  		</tr>
+	  		</c:forEach>
+		<%--  	<tr><td><a href="${pageContext.request.contextPath}/detail.quest?id=51">detail</a>
+		  		</td></tr> --%>      	
       	</tbody>
       </table> 
 		<p class="text-end">
