@@ -14,21 +14,20 @@
 		<property name="basePackage"     value="com.thejoeun703.dao"/>
 		<property name="annotationClass" value="com.thejoeun703.dao.MbtiDao"/>
 	</bean>
-	<context:component-scan base-package="com.thejoeun703.dao" />
+	<context:component-scan base-package="com.thejoeun703"/> <!-- 패키지 범위 잘 입력하기!! -->
 	<!-- SETP2. mybatis : sql -->
 	<bean id="sqlSessionFactory" 
 		  class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:config/mybtis-config.xml"/>
+		<property name="configLocation" value="classpath:config/mybatis-config.xml"/>
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:config/test-mapper.xml</value>
 	 			<value>classpath:config/appuser-mapper.xml</value>
 			</list>
 		</property>
 	</bean> 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactory"/>
+		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
 	<!-- SETP1. ds : db연동  SimpleDriverDataSource-->

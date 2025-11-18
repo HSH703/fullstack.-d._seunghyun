@@ -60,27 +60,25 @@ public class Test1_Board {
 	@Test	 public void test5()  {
 		//6. delete
 //		AppUserDto dto = new AppUserDto();
-//		dto.setPassword("1"); dto.setAppUserId(83);
+//		dto.setPassword("1111"); dto.setAppUserId(105);
 //		System.out.println("6. " + service.delete(dto));
 		
 		//5. update
 //		AppUserDto dto = new AppUserDto();
-//		dto.setAppUserId(83);  dto.setMbtiTypeId(2); dto.setPassword("1"); 
+//		dto.setAppUserId(105);  dto.setMbtiTypeId(1); dto.setPassword("1111"); 
 //		System.out.println("5. " + service.update(dto));
 
 		//4. selectLogin
 //		AppUserDto dto = new AppUserDto();
-//		dto.setEmail("b@b"); dto.setPassword("1111"); 
+//		dto.setEmail("c@c"); dto.setPassword("1111"); 
 //		System.out.println("4. " + service.selectLogin(dto));
 		
 		//3. select
-//		System.out.println("3. " + dao.select(103));
+//		System.out.println("3. " + dao.select(105));
 		
 		//2. insert
 //		AppUserDto dto = new AppUserDto();
-//		dto.setEmail("b@b");  dto.setPassword("1111"); dto.setMbtiTypeId(1);
-//		insert into appuser (APP_USER_ID , EMAIL, PASSWORD, MBTI_TYPE_ID)  
-//		values (appuser_seq.nextval, 'a@a' , '1111',1);
+//		dto.setEmail("c@c");  dto.setPassword("1111"); dto.setMbtiTypeId(1);
 //		System.out.println("2. " + service.insert(dto));
 		
 		//1. selectAll

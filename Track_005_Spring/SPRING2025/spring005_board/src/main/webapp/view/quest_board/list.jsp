@@ -6,8 +6,8 @@
 		$(function(){
 			let result = '${success}';
 			console.log(result);
-			if(result =="글쓰기실패"){ alert( result ); history.go(-1); }
-			else if(result.length== '비밀번호를 확인해주세요'){ alert( result ); history.go(-1); }
+			if(result =="회원가입 실패"){ alert( result ); history.go(-1); }
+			else if(result.length== '회원가입성공'){ alert( result ); history.go(-1); }
 			else if(result.length > 0){ alert(result) } //아까 처음 갋이없을때 공백
 		});
 		

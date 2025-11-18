@@ -26,15 +26,26 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <div class="container-fluid">
     <ul class="navbar-nav"> 
+    <c:if test="${not empty sessionScope.email}"> 
 	      <li class="nav-item">
-	        <a class="nav-link" href="">로그아웃</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/list.users">유저관리</a>
 	      </li>   
 	      <li class="nav-item">
-	        <a class="nav-link" href="">LOGIN</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/mypage.users">${sessionScope.email}</a>
+	      </li>   
+	      <li class="nav-item">
+	        <a class="nav-link" href="${pageContext.request.contextPath}/logout.users">로그아웃</a>
+	      </li>   
+     </c:if>
+	      
+	 <c:if test="${empty sessionScope.email}">    
+	      <li class="nav-item">
+	        <a class="nav-link" href="${pageContext.request.contextPath}/login.users">LOGIN</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="">JOIN</a>
-	      </li>    
+	        <a class="nav-link" href="${pageContext.request.contextPath}/join.users">JOIN</a>
+	      </li>  
+	</c:if>   
 	      <li class="nav-item">
 	        <a class="nav-link" href="">Quest Board</a>
 	      </li>  
@@ -44,4 +55,3 @@
 <!-- 	header		 -->
 <!-- 	header		 -->
 <!-- 	header		 -->
-    

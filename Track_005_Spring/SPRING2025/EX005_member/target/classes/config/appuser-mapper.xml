@@ -13,8 +13,8 @@
 	</resultMap>
 
   <insert id="insert" parameterType="AppUserDto">
-	insert into appuser (APP_USER_ID , EMAIL, PASSWORD, MBTI_TYPE_ID)  
-	values (appuser_seq.nextval, #{email} , #{password},#{mbtiTypeId})
+	insert into appuser (APP_USER_ID , EMAIL, PASSWORD, MBTI_TYPE_ID , CREATED_AT)  
+	values (appuser_seq.nextval, #{email} , #{password},#{mbtiTypeId} , sysdate)
   </insert>
   
   <update id="update" parameterType="AppUserDto">
@@ -41,5 +41,4 @@
   <select resultType="int"  id="selectLogin"  parameterType="AppUserDto">
 	select count(*) cnt from appuser  where  email=#{email}  and password=#{password}
   </select>
-  
 </mapper>

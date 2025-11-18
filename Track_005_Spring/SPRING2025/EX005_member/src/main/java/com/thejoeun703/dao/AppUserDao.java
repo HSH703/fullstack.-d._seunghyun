@@ -5,6 +5,7 @@ import java.util.List;
 import com.thejoeun703.dto.AppUserDto;
 
 @MbtiDao
+
 public interface AppUserDao {
 	public int insert(AppUserDto dto);
 	public int update(AppUserDto dto);
