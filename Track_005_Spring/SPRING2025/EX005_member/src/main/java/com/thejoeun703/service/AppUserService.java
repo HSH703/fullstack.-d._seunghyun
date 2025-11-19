@@ -2,6 +2,8 @@ package com.thejoeun703.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.thejoeun703.dto.AppUserDto;
 
 public interface AppUserService {
@@ -12,4 +14,8 @@ public interface AppUserService {
 	public AppUserDto     select(int appUserId);
 	public AppUserDto     selectEmail(String email);
 	public int selectLogin(AppUserDto dto);
+	
+	/* Upload */
+	public int insert2(MultipartFile file, AppUserDto dto);
+	public int update2(MultipartFile file, AppUserDto dto);
 }

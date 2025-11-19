@@ -1,6 +1,8 @@
 package Test;
 
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -26,8 +28,15 @@ public class Test1 {
 	@Autowired Sboard1Dao dao;
 	@Autowired Sboard1Service service;
 	
+	@Test public void test6() throws UnknownHostException  {
+		HashMap<String, String> para = new HashMap<>();
+		para.put("search", "%t%");
+		
+		System.out.println(dao.selectSearch(para));
+		
+	}
 	
-	@Test public void test5() throws UnknownHostException  {
+	@Ignore public void test5() throws UnknownHostException  {
 		//5. 
 //		Sboard1Dto dto = new Sboard1Dto();
 //		dto.setId(42); dto.setBpass("1");
@@ -55,7 +64,6 @@ public class Test1 {
 	@Ignore public void test1() {System.out.println(context);}
 	@Ignore public void test2() {System.out.println(ds);}
 	@Ignore public void test3() {System.out.println(session);}
-	
 	@Ignore public void test4() throws UnknownHostException {
 		//5. delete
 //		Sboard1Dto dto = new Sboard1Dto();

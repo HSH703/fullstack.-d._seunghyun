@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thejoeun703.dto.Sboard1Dto;
@@ -17,10 +19,10 @@ public class QuestController {
 	@Autowired  Sboard1Service service;
 	
 	@RequestMapping("/list.quest")
-	public String list(  Model model) {//view 폴더안에 + 파일명 + jsp
+	public String list(  Model model) {
 		//처리 전체리스트 가져오기
-		model.addAttribute("list",service.selectAll());
-		return "quest_board/list";  //해당화면
+		model.addAttribute("list",service.selectAll());  //처리하고
+		return "quest_board/list";  //해당화면 //view 폴더안에 + 파일명 + jsp
 	}
 	// 글쓰기 폼
 	@RequestMapping(value="/write.quest", method=RequestMethod.GET)
@@ -66,6 +68,27 @@ public class QuestController {
 		rttr.addFlashAttribute("success", result);
 		return "redirect:/list.quest"; 
 		}
+	
+	/*Upload*/
+	//글쓰기 기능
+	@RequestMapping(value="/upload.quest", method=RequestMethod.POST)
+	public String upload_post( @RequestParam("file")MultipartFile file
+								, Sboard1Dto dto, RedirectAttributes rttr) {
+		String result = "글쓰기실패"; //공백주의!!
+		if( service.insert2( file , dto ) > 0 ) { result = "글쓰기 성공"; }
+		rttr.addFlashAttribute("success", result);
+		return "redirect:/list.quest"; 
+	}
+
+	@RequestMapping(value="/updateEdit.quest" , method=RequestMethod.POST) //수정기능
+	public String updateEdit_post(  @RequestParam("file")MultipartFile file
+							, Sboard1Dto dto, RedirectAttributes rttr) {
+		String result = "비밀번호를 확인해주세요";
+		if( service.update2(file, dto)>0) {result="수정 성공";}
+		rttr.addFlashAttribute("success", result);
+		return "redirect:/detail.quest?id=" + dto.getId(); 
+	}
+
 }
 
 

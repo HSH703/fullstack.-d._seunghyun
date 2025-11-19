@@ -2,10 +2,11 @@ package com.thejoeun703.dao;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.thejoeun703.dto.AppUserDto;
 
 @MbtiDao
-
 public interface AppUserDao {
 	public int insert(AppUserDto dto);
 	public int update(AppUserDto dto);
@@ -14,6 +15,11 @@ public interface AppUserDao {
 	public AppUserDto     select(int id);
 	public AppUserDto     selectEmail(String email);
 	public int selectLogin(AppUserDto dto);
+	
+	/* Upload */
+	public int insert2(AppUserDto dto);
+	public int update2(AppUserDto dto);
+	
 }
 /*
 ■ insert

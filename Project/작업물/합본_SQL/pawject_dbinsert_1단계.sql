@@ -9,6 +9,12 @@ CREATE TABLE users (
 
 CREATE SEQUENCE users_seq;
 -- users 데이터 예시없이 회원가입 하시먼 됩니다.
+
+drop table users;
+desc pet;
+select * from pet;
+select * from pet where pettypeid=1;
+
 ------------------------------------------
 -- pettype 테이블, 최종데이터
 CREATE TABLE pettype (
@@ -41,9 +47,6 @@ CREATE SEQUENCE pet_seq;
 
 INSERT INTO pet VALUES (pet_seq.NEXTVAL, 1, '겨울이', '페르시안', '2022-06-12', 1, SYSDATE);
 
-desc pet;
-select * from pet;
-select * from pet where pettypeid=1;
 
 -- B 파트
 

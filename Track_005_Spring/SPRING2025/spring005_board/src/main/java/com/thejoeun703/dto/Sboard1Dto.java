@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sboard1Dto {
-	private int id;
-	private int appUserId;
-	private String btitle;
-	private String bcontent;
-	private String bpass;
+	private int id;				//ID
+	private int appUserId;		//APP_USER_ID
+	private String btitle;		//BTITLE
+	private String bcontent;	//BCOMTENT
+	private String bpass;		//BPASS
 	private String bfile;		//BFILE (default : 'no-png')
-	private int bhit;
-	private String bip;
+	private int bhit;			//BHIT	(default : 0)
+	private String bip;			//BIP
 //	private LocalDateTime createdAt; CREATE_AT (default: SYSTIMESTAMP)
 	private String createdAt;
 }
