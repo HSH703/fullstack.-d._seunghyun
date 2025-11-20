@@ -19,9 +19,9 @@ public class SearchController {
 	//@ResponseBody  //해당하는 값을 던져줌 (Ajax기본원리)
 	public String hi() {
 		//처리하고
-		return "HI"; //값줄게(@ResponseBody)
+		return "HI"; //화면 + 값줄게(@ResponseBody)
 	}
-	
+	//http://localhost:8282/spring005_board/selectSearch?search=t
 	@RequestMapping("/selectSearch")
 	public List<Sboard1Dto> selectSearch(@RequestParam("search") String search) {
 		return service.selectSearch(search); //값줄게(@ResponseBody)

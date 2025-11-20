@@ -11,4 +11,11 @@ select * from appuser   where app_user_id=104;
 --      update : 마이페이지 정보수정 (mbti와 비밀번호 수정할수 있게)
 update appuser  set  password='1234' , MBTI_TYPE_ID=2  where app_user_id=101;
 --      delete : 탈퇴
-delete from appuser  where app_user_id=104  and password='1'; 
+delete from appuser  where app_user_id=104  and password='1';
+
+
+
+desc appuser;
+select * from appuser;
+select * from appuser where email = '6@6';
+

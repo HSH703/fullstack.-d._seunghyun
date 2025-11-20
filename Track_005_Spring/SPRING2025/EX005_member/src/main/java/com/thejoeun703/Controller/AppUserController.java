@@ -22,7 +22,7 @@ public class AppUserController {
 	@RequestMapping("/list.users")  //##
 	public String list(Model model) {
 		model.addAttribute("list", service.selectAll());  //처리하고
-		return "member/lsit";  //해당화면
+		return "member/list";  //해당화면
 	}
 	//글쓰기폼
 	@RequestMapping(value="/join.users", method=RequestMethod.GET)

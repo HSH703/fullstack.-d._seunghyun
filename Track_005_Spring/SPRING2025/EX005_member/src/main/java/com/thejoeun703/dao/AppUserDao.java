@@ -20,6 +20,15 @@ public interface AppUserDao {
 	public int insert2(AppUserDto dto);
 	public int update2(AppUserDto dto);
 	
+	/* iddouble */
+	public int iddouble(String email);
+	
+	/* admin 유저관리 - 전체유저정보 selectAll
+	 * 				/ 아이디주면 해당 유저정보찾기 select 
+	 * 				/ 수정하기 updateAdimin
+	 * 				/ 삭제하기 deleteAdimin */
+	public int deleteAdimin(AppUserDto dto);
+	public int updateAdimin(AppUserDto dto);
 }
 /*
 ■ insert

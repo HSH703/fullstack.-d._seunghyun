@@ -57,7 +57,7 @@ public class Test1_Board {
 //		System.out.println("1." + dao.selectAll());
 	}
 
-	@Test	 public void test5()  {
+	@Ignore	 public void test5()  {
 		//6. delete
 //		AppUserDto dto = new AppUserDto();
 //		dto.setPassword("1111"); dto.setAppUserId(105);
@@ -82,6 +82,29 @@ public class Test1_Board {
 //		System.out.println("2. " + service.insert(dto));
 		
 		//1. selectAll
-		System.out.println("1." + service.selectAll());
+//		System.out.println("1." + service.selectAll());
 	}
+	@Ignore public void test6() {
+		System.out.println(dao.iddouble("5@5")); //코드가 있으면? 1
+		System.out.println(dao.iddouble("9@9")); //코드가 없으면? 0
+	}
+	@Ignore public void test7() {
+		//4. 삭제
+//		AppUserDto dto = new AppUserDto(); dto.setAppUserId(119);
+//		System.out.println(dao.deleteAdimin(dto));
+		//3. 해당유저값 확인
+//		System.out.println(dao.select(119));
+		//2. 수정
+//		AppUserDto dto = new AppUserDto();
+//		dto.setMbtiTypeId(3); dto.setAppUserId(119);
+//		System.out.println(dao.updateAdimin(dto));
+		//1. 전체
+//		System.out.println(dao.selectAll()); 
+	}
+	@Test public void test8() {
+		AppUserDto dto = new AppUserDto();
+		System.out.println(service.deleteAdimin(dto)); 
+		System.out.println(service.updateAdimin(dto)); 
+	}
+	
 }
