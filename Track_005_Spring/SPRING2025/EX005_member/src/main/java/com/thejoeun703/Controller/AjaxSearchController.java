@@ -17,7 +17,7 @@ public class AjaxSearchController {
 	
 	@Autowired AppUserService service;	
 	
-	//http://localhost:8282/EX005/iddouble?email=5@5
+	//http://localhost:8282/EX005_member/iddouble?email=5@5
 	@RequestMapping("/iddouble")
 	public Map<String, Object> iddouble(@RequestParam String email){
 		Map<String, Object> result = new HashMap<>();
@@ -25,37 +25,35 @@ public class AjaxSearchController {
 		return result;
 	}
 	//////////////////////////////////////////
-	//http://localhost:8282/EX005/selectAll
+	//http://localhost:8282/EX005_member/selectAll   appUserId 번호확인
 	/* admin 유저관리 - 전체유저정보 selectAll
 	 * 				/ 아이디주면 해당 유저정보찾기 select 
 	 * 				/ 수정하기 updateAdimin
 	 * 				/ 삭제하기 deleteAdimin */
-	@RequestMapping("selectAll")
+	@RequestMapping("/selectAll")
 	public List<AppUserDto> selectAll(){
 		return service.selectAll();
 	}
-	//http://localhost:8282/EX005/select
-	@RequestMapping("select")
+	//http://localhost:8282/EX005_member/select?appUserId=121
+	@RequestMapping("/select")
 	public Map<String, Object> select(@RequestParam int appUserId){
 		Map<String, Object> result = new HashMap<>();
 		result.put("result", service.select(appUserId));
 		return result;
 	}
 	/////////////////////////////////////////////////////
-	//http://localhost:8282/EX005/updateAdmin?appUserId=121&mbtiTypeId=3
-	@RequestMapping("updateAdmin")
+	//http://localhost:8282/EX005_member/updateAdmin?appUserId=121&mbtiTypeId=3
+	@RequestMapping("/updateAdmin")
 	public Map<String, Object> updateAdmin(@RequestParam int appUserId,
-										@RequestParam int mbtiTypeId){
+										   @RequestParam int mbtiTypeId){
 		Map<String, Object> result = new HashMap<>();
 		AppUserDto dto = new AppUserDto();
-		dto.setAppUserId(appUserId);
-		dto.setMbtiTypeId(mbtiTypeId);
-		
+		dto.setAppUserId(appUserId); dto.setMbtiTypeId(mbtiTypeId);
 		result.put("result", service.updateAdimin(dto));
 		return result;
 	}
-	//http://localhost:8282/EX005/deleteAdmin?appUserId=121
-	@RequestMapping("deleteAdmin")
+	//http://localhost:8282/EX005_member/deleteAdmin?appUserId=121
+	@RequestMapping("/deleteAdmin")
 	public Map<String, Object> deleteAdmin(@RequestParam int appUserId){
 		Map<String, Object> result = new HashMap<>();
 		AppUserDto dto = new AppUserDto();
@@ -64,7 +62,4 @@ public class AjaxSearchController {
 		return result;
 	}
 
-
-	
-	
 }

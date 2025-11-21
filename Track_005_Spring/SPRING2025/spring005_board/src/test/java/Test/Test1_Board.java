@@ -21,7 +21,7 @@ import com.thejoeun703.service.Sboard1Service;
 
 @RunWith(SpringJUnit4ClassRunner.class)  //1. 스프링구동
 @ContextConfiguration(locations = "classpath:config/root-context.xml") //2. 설정
-public class Test1 {
+public class Test1_Board {
 	@Autowired ApplicationContext context; //3. ioc - Bean (스프링이 관리하는 객체) 생성 ~ 소멸
 	@Autowired DataSource ds;
 	@Autowired SqlSession session;
