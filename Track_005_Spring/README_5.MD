@@ -33,11 +33,11 @@ spring005_board
 
 # SPRING (20251117~20251121)
 ---
-EX005_member
+EX005_controller
 ---<!--day056.md-->
 
 ---
-EX005_member
+EX005_controller
 ---<!--day057.md-->
 
 ---
@@ -45,12 +45,12 @@ spring005_board
 ---<!--day058.md-->
 
 ---
-EX005_member
+EX005_controller
 spring005_board
 ---<!--day059.md-->
 
 ---
-EX005_member
+EX005_controller
 ---<!--day060.md-->
 
 # SPRING (20251124~20251128)
@@ -61,6 +61,8 @@ spring007_paging
 ---<!--day061.md-->
 
 ---
+spring008_security
+EX006_member
 ---<!--day062.md-->
 
 ---
