@@ -28,14 +28,18 @@
 			authentication-success-handler-ref="successHandler"
 			authentication-failure-forward-url="/security/fail"
 		/>
+		<security:logout
+			logout-url="/security/logout"
+			logout-success-url="/security/login"
+			invalidate-session="true"
+		/>
 	</security:http>
 	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserDetailsService">
 			<security:password-encoder ref="passwordEncoder"/>
 		</security:authentication-provider>
-	</security:authentication-manager>
-	<!--  -->
+	</security:authentication-manager>	
 	
 </beans>
 

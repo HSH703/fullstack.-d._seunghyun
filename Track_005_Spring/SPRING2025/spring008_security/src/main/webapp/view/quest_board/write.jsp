@@ -28,7 +28,9 @@
 		  	<button type="submit" class="btn btn-primary">글쓰기</button>  
 		  	<a href="${pageContext.request.contextPath}/list.quest"  class="btn btn-primary">목록보기</a>
 		  </div>
-	 </form> 
+		  
+    	 <input  type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />	 
+     </form> 
    </div>
    
 <%@include file="../inc/footer.jsp" %>

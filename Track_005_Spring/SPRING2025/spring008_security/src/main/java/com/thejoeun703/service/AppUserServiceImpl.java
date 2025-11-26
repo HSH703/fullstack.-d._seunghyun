@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.thejoeun703.dao.AppUserDao;
@@ -74,7 +76,42 @@ public class AppUserServiceImpl implements AppUserService {
 		AppUserAuthDto dto = new AppUserAuthDto(); dto.setEmail(email);
 		return dao.readAuth(dto);
 	}
+	@Autowired PasswordEncoder pwencoder;
+	@Transactional
+	@Override
+	public int insert3(MultipartFile file, AppUserDto dto) {
+		//1. 권한
+		AuthDto adto = new AuthDto(); adto.setEmail( dto.getEmail() ); adto.setAuth("ROLE_MEMBER");
+		int step1 = dao.insertAuth(adto);
+		//2. 해당유저 회원가입
+		String fileName = null;
+		if(!file.isEmpty() ) { //파일이 비어있는게 아니라면
+			fileName = file.getOriginalFilename(); //원본파일이름
+			String uploadPath="C:/file/";
+			File img = new File(uploadPath + fileName); //import java.io.File;
+			try {
+				file.transferTo(img); //파일올리기
+			}catch ( IOException e ) { e.printStackTrace(); }
+		}else {
+			fileName="user" + ((int)((Math.random()*7)+1)) + ".png";
+		}
+		dto.setPassword(pwencoder.encode(dto.getPassword()));
+		dto.setUfile(fileName);
+		return dao.insert2(dto);
+	}
+	@Override
+	public int delete3(AppUserDto dto) {
+		
+		return 0;
+	}
+	@Override
+	public int update3(MultipartFile file, AppUserDto dto) {
+		
+		return 0;
+	}
+	
 
+	
 }
 
 

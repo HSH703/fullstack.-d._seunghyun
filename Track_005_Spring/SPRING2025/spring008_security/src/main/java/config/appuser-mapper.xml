@@ -21,7 +21,6 @@
 		(appuser_seq.nextval, #{email} , #{password},#{mbtiTypeId} , sysdate)
 	</insert>
 
-
 	<update id="update" parameterType="AppUserDto">
 		update appuser set
 		password=#{password} , MBTI_TYPE_ID=#{mbtiTypeId}

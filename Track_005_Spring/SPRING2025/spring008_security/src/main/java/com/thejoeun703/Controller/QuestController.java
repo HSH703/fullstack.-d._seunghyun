@@ -1,6 +1,7 @@
 package com.thejoeun703.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,14 +37,19 @@ public class QuestController {
 		model.addAttribute("paging",new PagingDto( service.selectTotalCnt(), pstartno ));
 		return "quest_board/list";  //해당화면 //view 폴더안에 + 파일명 + jsp
 	}
-	// 글쓰기 폼
+	// 글쓰기 폼 
 	@RequestMapping(value="/write.quest", method=RequestMethod.GET)
 	public String write_get() { return "/quest_board/write"; }
+	
 	//글쓰기기능
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN' , 'ROLE_MEMBER')") //1. 안에 있는 권한중
+	//@PreAuthorize("isAthenticated() and hasRole('ROLE_ADMIN')") //2. 로그인 → ADMIN 권한이 있다면 
+	//@PreAuthorize("isAnonymous()") //3. 아무나 다 끌쓰기 가능 (로그인하지 않은 사용자, 회원가입)
+	@PreAuthorize("isAthenticated()")
 	@RequestMapping(value="/write.quest", method=RequestMethod.POST)
 	public String write_post(Sboard1Dto dto, RedirectAttributes rttr) {
 		String result = "글쓰기실패"; //공백주의!!
-		if( service.insert(dto) > 0 ) { result = "글스기 성공"; }
+		if( service.insert(dto) > 0 ) { result = "글쓰기 성공"; }
 		rttr.addFlashAttribute("success", result);
 		return "redirect:/list.quest"; 
 	}
@@ -60,6 +66,10 @@ public class QuestController {
 		return "quest_board/edit"; 
 	}
 	
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN' , 'ROLE_MEMBER')") //1. 안에 있는 권한중
+	//@PreAuthorize("isAthenticated() and hasRole('ROLE_ADMIN')") //2. 로그인 → ADMIN 권한이 있다면 
+	//@PreAuthorize("isAnonymous()") //3. 아무나 다 끌쓰기 가능 (로그인하지 않은 사용자, 회원가입)
+	@PreAuthorize("isAthenticated()")
 	@RequestMapping(value="/edit.quest" , method=RequestMethod.POST) //수정기능
 	public String edit_post(Sboard1Dto dto, RedirectAttributes rttr) {
 		//Q1. 수정기능도 비밀번호를 확인해주세요 알림창 + /detail.quest 경로넘기기
@@ -72,6 +82,10 @@ public class QuestController {
 	@RequestMapping(value="/delete.quest" , method=RequestMethod.GET) //삭제폼
 	public String delete_get() { return "quest_board/delete"; }
 	
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN' , 'ROLE_MEMBER')") //1. 안에 있는 권한중
+	//@PreAuthorize("isAthenticated() and hasRole('ROLE_ADMIN')") //2. 로그인 → ADMIN 권한이 있다면 
+	//@PreAuthorize("isAnonymous()") //3. 아무나 다 끌쓰기 가능 (로그인하지 않은 사용자, 회원가입)
+	@PreAuthorize("isAthenticated()") //4. 로그인했다면
 	@RequestMapping(value="/delete.quest" , method=RequestMethod.POST) //삭제기능
 	public String delete_post(Sboard1Dto dto, RedirectAttributes rttr) { 
 		//Q2 삭제기능도 비밀번호를 확인해주세요 알림창 + /list.quest 경로넘기기
@@ -79,10 +93,14 @@ public class QuestController {
 		if( service.delete(dto)>0) {result="삭제 성공";}
 		rttr.addFlashAttribute("success", result);
 		return "redirect:/list.quest"; 
-		}
+	}
 	
 	/*Upload*/
 	//글쓰기 기능
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN' , 'ROLE_MEMBER')") //1. 안에 있는 권한중
+	//@PreAuthorize("isAthenticated() and hasRole('ROLE_ADMIN')") //2. 로그인 → ADMIN 권한이 있다면 
+	//@PreAuthorize("isAnonymous()") //3. 아무나 다 끌쓰기 가능 (로그인하지 않은 사용자, 회원가입)
+	@PreAuthorize("isAthenticated()") //4. 로그인했다면
 	@RequestMapping(value="/upload.quest", method=RequestMethod.POST)
 	public String upload_post( @RequestParam("file")MultipartFile file
 								, Sboard1Dto dto, RedirectAttributes rttr) {
@@ -91,8 +109,15 @@ public class QuestController {
 		rttr.addFlashAttribute("success", result);
 		return "redirect:/list.quest"; 
 	}
-
-	@RequestMapping(value="/updateEdit.quest" , method=RequestMethod.POST) //수정기능
+	
+	//updateEdit.quest
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN' , 'ROLE_MEMBER')") //1. 안에 있는 권한중
+	//@PreAuthorize("isAthenticated() and hasRole('ROLE_ADMIN')") //2. 로그인 → ADMIN 권한이 있다면 
+	//@PreAuthorize("isAnonymous()") //3. 아무나 다 끌쓰기 가능 (로그인하지 않은 사용자, 회원가입)
+	@PreAuthorize("isAthenticated()") //4. 로그인했다면
+	@RequestMapping(value="/updateEdit.quest" 
+				  , method=RequestMethod.POST
+				  , headers=("content-type=multipart/*")) //수정기능
 	public String updateEdit_post(  @RequestParam("file")MultipartFile file
 							, Sboard1Dto dto, RedirectAttributes rttr) {
 		String result = "비밀번호를 확인해주세요";
@@ -100,7 +125,6 @@ public class QuestController {
 		rttr.addFlashAttribute("success", result);
 		return "redirect:/detail.quest?id=" + dto.getId(); 
 	}
-
 }
 
 

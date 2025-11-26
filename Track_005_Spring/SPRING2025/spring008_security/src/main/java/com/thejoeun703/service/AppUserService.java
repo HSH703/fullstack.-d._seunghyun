@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.thejoeun703.dto.AppUserAuthDto;
 import com.thejoeun703.dto.AppUserDto;
 import com.thejoeun703.dto.AuthDto;
+import com.thejoeun703.dto.Sboard1Dto;
 
 public interface AppUserService {
 	public int insert(AppUserDto dto);
@@ -35,4 +36,9 @@ public interface AppUserService {
 	/* security */
 	public int insertAuth (AuthDto dto);
 	public AppUserAuthDto readAuth (String email);
+	
+	public int insert3(MultipartFile file, AppUserDto dto);
+	public int delete3(AppUserDto dto);
+	public int update3(MultipartFile file, AppUserDto dto);
+	
 }

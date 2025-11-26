@@ -37,7 +37,7 @@
 				<option value="3">INFJ</option>
 			</select>
 		</div>
-		<button type="submit" class="btn btn-primary">정보수정-비밀번호/MBTI TYPE</button>
+		<button type="submit" class="btn btn-primary">정보수정-비밀번호/MBTI TYPE</button>		  
 	</form>
 </div>
 <!-- ctrl + shift + f -->

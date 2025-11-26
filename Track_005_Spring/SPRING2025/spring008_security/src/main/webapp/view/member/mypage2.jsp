@@ -4,14 +4,25 @@
 <%@ include file="../inc/header.jsp" %>
    <div class="container card  my-5">
       <h3  class="card-header"> MYPAGE  </h3> 
+	  <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 		<table class="table  table-striped  table-bordered  table-hover">
 			<colgroup>
-				<col style="width:8%">  <%-- 이미지 열 --%>
+				<col style="width:10%">  <%-- 이미지 열 --%>
 				<col style="width:30%">  <%-- 항목명 열 --%>
-				<col style="width:62%">  <%-- 값 열 --%>
+				<col style="width:60%">  <%-- 값 열 --%>
 			</colgroup>
-			<tbody class="table-info ">
+	
+	 <%-- 	<tbody>
+				<tr> 
+					<pre> principal	현재사용자정보</pre> 
+					<th scope="row">MBTI TYPE</th>   
+					<td><sec:authentication property="principal"/></td>
+				 </tr>
+			</tbody>  --%>
+			
+ 		<tbody class="table-info ">
 				<tr>
+				<!-- 왼쪽이미지 셀 : 3줄병합 -->
 					<td rowspan="3">
 						<img src="${pageContext.request.contextPath}/upload/${dto.ufile}" alt="" class="w-10" />
 					</td>
@@ -26,8 +37,8 @@
 					<th scope="row">회원가입날짜</th>   
 					<td>${dto.createdAt}</td>
 				</tr>
-			</tbody>
-		</table>
+			</tbody> 		
+ 		</table>
 		<!-- mvc1 - 코드가 뒤죽박죽 - 스파게티 코드라고해요~! -->
 	  	<div>
 		  	<a href="${pageContext.request.contextPath}/edit.users?appUserId=${dto.appUserId}"  class="btn btn-danger">UPDATE</a>
