@@ -66,9 +66,11 @@ EX006_member
 ---<!--day062.md-->
 
 ---
+spring008_security
 ---<!--day063.md-->
 
 ---
+db_Test5.sql
 ---<!--day064.md-->
 
 ---

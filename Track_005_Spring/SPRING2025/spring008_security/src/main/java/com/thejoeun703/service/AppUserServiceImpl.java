@@ -35,9 +35,9 @@ public class AppUserServiceImpl implements AppUserService {
 			fileName = file.getOriginalFilename(); //원본파일 이름
 			String uploadPath = "C:/file/";
 			File img = new File(uploadPath + fileName); //import java.io.File;
-			try {
-				file.transferTo(img);
-			}catch ( IOException e ) { e.printStackTrace(); }
+			try {file.transferTo(img);} //파일올리기
+			catch ( IOException e ) { e.printStackTrace(); }
+		
 		}else {
 			fileName = "user" + ((int) ((Math.random()*7)+1)) + ".png"; 
 			//회원가입시 유저가 이미지("user.png") 선택을 안할경우, 랜덤으로 선택해서 이미지 올림.
