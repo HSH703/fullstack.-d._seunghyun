@@ -10,20 +10,30 @@
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}"/>
 		<div class="mb-3 mt-3">
-			<label for="email" class="form-label">Email:</label> <input
-				type="email" class="form-control" id="email"
-				placeholder="이메일을 입력해주세요" required name="email">
+			<label for="email" class="form-label">Email:</label>
+			<input type="email" class="form-control" id="email"
+				   placeholder="이메일을 입력해주세요" required name="email">
 			<div class="iddouble_result"></div>
 		</div>
-		<div class="mb-3">
-			<label for="password" class="form-label">Password:</label> <input
-				type="password" class="form-control" id="password"
-				placeholder="비밀번호를 입력해주세요" name="password">
+		<div class="mb-3 mt-3">
+			<label  for="nickname" class="form-label">Nickname:</label>
+			<input type="text" class="form-control" id="nickname"
+				   placeholder="닉네임을 입력해주세요" required name="nickname">
+		</div>
+		<div class="mb-3 mt-3">
+			<label for="mobile" class="form-label">Mobile:</label>
+			<input type="text" class="form-control" id="mobile"
+				   placeholder="모바일을 입력해주세요" required name="mobile">
 		</div>
 		<div class="mb-3">
-			<label for="file" class="form-label">프로필사진(추후에 업데이트가능합니다!)</label> <input
-				type="file" class="form-control" id="file" placeholder="파일을 입력해주세요"
-				name="file">
+			<label for="password" class="form-label">Password:</label>
+			<input type="password" class="form-control" id="password"
+				   placeholder="비밀번호를 입력해주세요" name="password">
+		</div>
+		<div class="mb-3">
+			<label for="file" class="form-label">프로필사진(추후에 업데이트가능합니다!)</label> 
+			<input type="file" class="form-control" id="file" placeholder="파일을 입력해주세요"
+				   name="file">
 		</div>
 		<div class="mb-3">
 			<label class="form-check-label" for="mbti">MBTI TYPE : </label> <select
@@ -32,7 +42,6 @@
 				<option value="2">ISFJ</option>
 				<option value="3">INFJ</option>
 			</select>
-
 		</div>
 		<button type="submit" class="btn btn-primary">회원가입</button>
 	</form>

@@ -2,15 +2,21 @@
     pageEncoding="UTF-8"%>
 
 <%@  include file="../inc/header.jsp" %>  
+<script>
+	$(function(){
+		let result = '${success}';
+		console.log(result);
+		if(result == "로그인 실패"){ alert( result ); history.go(-1); }
+		else if(result.length== '비밀번호를 확인해주세요'){ alert( result ); history.go(-1); }
+		else if(result.length != 0 ){ alert(result) }  //아까 처음 값이 없을때 공백
+	});
+</script>
+
+<c:if test="${not empty loginError}">
 	<script>
-		$(function(){
-			let result = '${success}';
-			console.log(result);
-			if(result == "글쓰기실패"){ alert( result ); history.go(-1); }
-			else if(result.length== '비밀번호를 확인해주세요'){ alert( result ); history.go(-1); }
-			else if(result.length != 0 ){ alert(result) }  //아까 처음 값이 없을때 공백
-		});
+		alert("${loginError}");
 	</script>
+</c:if>
 		
 <div class="container mt-5">
 	<h3> 로그인</h3>
@@ -18,12 +24,12 @@
 	  <div class="mb-3 mt-3">
 	    <label for="username" class="form-label">Email:</label>
 	    <input type="email" class="form-control" id="username" 
-	    		placeholder="이메일을 적어주세요"  required name="username">
+	    	   placeholder="이메일을 적어주세요"  required name="username">
 	  </div>
 	  <div class="mb-3">
 	    <label for="password" class="form-label">Password:</label>
 	    <input type="password" class="form-control" id="password" 
-	               placeholder="비밀번호를 적어주세요"  required  name="password">
+	           placeholder="비밀번호를 적어주세요"  required  name="password">
 	  </div>
 <!-- 	  <div class="form-check mb-3">
 	    <label class="form-check-label">

@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.thejoeun703.dto.AppUserAuthDto;
-import com.thejoeun703.service.AppUserService;
+import com.thejoeun703.service.AppUserSecurityService;
 
 public class CustomUserDetailsService implements UserDetailsService {
 	
-	@Autowired AppUserService service;
+	@Autowired AppUserSecurityService service;  //##
 	
 	@Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		AppUserAuthDto dto = service.readAuth(username); //해당유저정보를 가져오기: email, password, 권한들

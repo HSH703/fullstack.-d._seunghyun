@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.thejoeun703.dao.AppUserMapper;
 import com.thejoeun703.dto.AppUser;
 import com.thejoeun703.dto.AppUserAuthDto;
+import com.thejoeun703.dto.AuthDto;
 
 @Service
 public class AppUserSecurityServiceImpl  implements AppUserSecurityService{
@@ -18,7 +19,11 @@ public class AppUserSecurityServiceImpl  implements AppUserSecurityService{
 	@Autowired PasswordEncoder  pwencoder;
 	
 	@Override public int insert(MultipartFile file, AppUser dto) {
-	    //1. 파일올리기 
+	  //0. 권한 (ROLE_MEMBER)
+		AuthDto adto = new AuthDto();
+		adto.setEmail(dto.getEmail()); adto.setAuth("ROLE_MEMBER");
+		dao.insertAuth(adto); //권한주기	
+		//1. 파일올리기 
 		String fileName   = null;
 	      if(  !file.isEmpty() ) {  // 파일이 비어있는게 아니라면
 	         fileName   = file.getOriginalFilename(); // 원본파일이름
@@ -30,7 +35,7 @@ public class AppUserSecurityServiceImpl  implements AppUserSecurityService{
 	      }else { fileName = "user" + ((int)((Math.random()*7)+1)) + ".png"; }
 
 	      dto.setUfile(fileName); 
-	      //2. 암호화
+	      //2. 암호화 ###
 	      dto.setPassword(pwencoder.encode( dto.getPassword() ) );
 	      return dao.insert(dto);
 	}
@@ -64,8 +69,7 @@ public class AppUserSecurityServiceImpl  implements AppUserSecurityService{
 		AppUserAuthDto dbUser = dao.readAuth(dto);
 		if(dbUser==null) { return 0;}
 		System.out.println("......delete>" + dbUser);
-		System.out.println("......delete>" + 
-				pwencoder.matches(dto.getPassword(), dbUser.getPassword()));
+		System.out.println("......delete>" + pwencoder.matches(dto.getPassword(), dbUser.getPassword()));
 		
 		//입력한 비밀번호와 db비밀번호를 비교해서 같다면
 		if( pwencoder.matches(dto.getPassword(), dbUser.getPassword())) { //## 두개 비교
@@ -77,8 +81,7 @@ public class AppUserSecurityServiceImpl  implements AppUserSecurityService{
 	{AppUser dto = new AppUser(); dto.setEmail(email);  return dao.readAuth(dto);}
 	@Override public AppUser selectEmail(String email) 
 	{AppUser dto = new AppUser(); dto.setEmail(email);  return dao.select(dto);} 
-	
-	
+		
 }
 
 

@@ -3,11 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thejoeun703.dao.AppUserMapper">
+  <insert  id="insertAuth"    parameterType="AuthDto">
+     insert into  authorities  (email, auth)  values (#{email} , #{auth})
+  </insert>   
+      
   <insert  id="insert"   parameterType="AppUser">
      insert into appuser (APP_USER_ID , EMAIL , PASSWORD, MBTI_TYPE_ID ,UFILE   ,MOBILE ,  NICKNAME)  
-       values (appuser_seq.nextval, #{email} , #{password} ,#{mbtiTypeId} , #{ufile} ,#{mobile} , #{nickname}  )
+     values (appuser_seq.nextval, #{email} , #{password} ,#{mbtiTypeId} , #{ufile} ,#{mobile} , #{nickname}  )
   </insert>
-  <update  id="update"   parameterType="AppUser"> <!-- password를 입력하면 암호화를 풀어보리기때문에 입력하지말기!! -->
+  <update  id="update"   parameterType="AppUser"> <!-- PASSWORD=#{password}를 추가하면  암호화를 풀어버리기때문에 추가하지말기!! -->
     update  appuser  
     set     EMAIL=#{email}, MBTI_TYPE_ID=#{mbtiTypeId},  UFILE=#{ufile}   ,MOBILE=#{mobile} ,  NICKNAME=#{nickname}     
     where   APP_USER_ID=#{appUserId} 
