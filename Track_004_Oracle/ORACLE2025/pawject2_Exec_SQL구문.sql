@@ -53,7 +53,6 @@ create table execboard(
     ehit       int            default 0,
     execid     int,
     userid     int,
-    pettypeid  int,
     etitle     varchar2(100),
     econtent   CLOB,
     eimg       varchar2(255),  --이미지경로
@@ -61,29 +60,38 @@ create table execboard(
     updatedat  date           default sysdate,
     
     constraint fk_execboard_user foreign key (userid)    references users(userid),
-    constraint fk_execboard_pet  foreign key (pettypeid) references pettype(pettypeid),
     constraint fk_execboard_exec foreign key (execid)    references exerciseinfo(execid)
 );  -- ai에게 물어보기(기능이 어떤지?)
 
 
 create sequence execboard_seq;
-desc execboard;
 
 
-insert into execboard (postid,              execid, userid, pettypeid, etitle,                  econtent,                                                          eimg) 
-               values (1,                     1 ,      1,        1,    '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png'  );
+insert into execboard (postid,              execid, userid,   etitle,                  econtent,                                                           eimg      ) 
+               values (1,                     1 ,      1,     '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png'  );
 
-insert into execboard (postid,               execid, userid, pettypeid, etitle,                  econtent,                                                         eimg) 
-               values (execboard_seq.nextval, 1 ,    1,      1,         '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png'  );
+insert into execboard  (postid,                execid, userid,          etitle,                  econtent,                                                         eimg     )
+               values  (execboard_seq.nextval, 1 ,     1,              '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
 
 -- READ
 select * from execboard;  --전체보기
 select * from execboard where postid='23';  --상세보기
 
+--※ 페이징필요.
+select *
+from (
+    select row_number() over (order by createdat desc) as rnum,
+           postid, execid, userid, etitle, econtent, eimg, ehit,
+           createdat, updatedat
+    from execboard
+) A
+where A.rnum between 1 and 10;
+
 -- UPDATE
 update execboard set etitle='반려동물과 함께하는 노즈워크', 
-                     econtent='노즈워크는 반려동물이 참을성을 길러줍니다.'
-where postid='23';
+                     econtent='노즈워크는 반려동물이 참을성을 길러줍니다.' ,
+                execid=1,   eimg = '1.png'
+where postid='24';
 
 -- DELETE
 delete from execboard where postid='23'and execid='1';
