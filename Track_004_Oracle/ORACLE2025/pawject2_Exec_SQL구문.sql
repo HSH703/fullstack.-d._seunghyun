@@ -14,7 +14,8 @@ desc users;
 create sequence exerciseinfo_seq;
 
 select * from exerciseinfo;
-
+delete from exerciseinfo;
+commit;
 
 insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
 values(exerciseinfo_seq.nextval, '산책', '기본적인 야외활동/스트레스 해소', 80.0, 30, '모든 견종, 노령견 포함', '저강도' );

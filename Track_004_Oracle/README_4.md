@@ -1051,6 +1051,7 @@ pawject2_Exec_SQL구문.sql
 ---<!--day067.md-->
 
 ---
+pawject2_Exec_SQL구문.sql
 ---<!--day068.md-->
 
 ---
