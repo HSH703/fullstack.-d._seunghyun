@@ -14,7 +14,7 @@ desc users;
 create sequence exerciseinfo_seq;
 
 select * from exerciseinfo;
-delete from exerciseinfo;
+--delete from exerciseinfo;
 commit;
 
 insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
