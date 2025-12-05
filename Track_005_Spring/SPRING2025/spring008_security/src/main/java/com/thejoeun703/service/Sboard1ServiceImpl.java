@@ -35,7 +35,7 @@ public class Sboard1ServiceImpl implements Sboard1Service {
 	public int insert2(MultipartFile file, Sboard1Dto dto) { 
 		if( !file.isEmpty() ) { //파일이 비어있는게 아니라면.
 			String fileName = file.getOriginalFilename(); //원본파일 이름
-			String uploadPath = "C:/file/";
+			String uploadPath = "/static/execimg/";
 			File   img        = new File(uploadPath + fileName);  //java.io.File
 			try {
 				file.transferTo(img); //파일올리기
@@ -51,7 +51,7 @@ public class Sboard1ServiceImpl implements Sboard1Service {
 		//기존에 bfile이 있어서 값이 처리됨.
 		if( !file.isEmpty() ) { //파일이 비어있는게 아니라면.
 			String fileName = file.getOriginalFilename(); //원본파일 이름
-			String uploadPath = "C:/file/";
+			String uploadPath = "/static/execimg/";
 			File   img        = new File(uploadPath + fileName);  //java.io.File
 			try {
 				file.transferTo(img); //파일올리기

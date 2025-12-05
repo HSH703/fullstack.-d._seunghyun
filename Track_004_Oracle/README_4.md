@@ -1055,9 +1055,11 @@ pawject2_Exec_SQL구문.sql
 ---<!--day068.md-->
 
 ---
+pawject2_Exec_SQL구문.sql
 ---<!--day069.md-->
 
 ---
+pawject2_Exec_SQL구문.sql
 ---<!--day070.md-->
 
 

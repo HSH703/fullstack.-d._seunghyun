@@ -6,11 +6,12 @@ create table exerciseinfo(
     avgkcal30min   FLOAT,
     exectargetmin  int,
     suitablefor    VARCHAR2(100),
-    intensitylevel VARCHAR2(100),
-    createdat      DATE  DEFAULT SYSDATE,
-    updatedat      DATE  DEFAULT SYSDATE
+    intensitylevel VARCHAR2(100)
+--    createdat      DATE  DEFAULT SYSDATE,
+--    updatedat      DATE  DEFAULT SYSDATE
  );
 desc users;
+select * from users;
 create sequence exerciseinfo_seq;
 
 select * from exerciseinfo;
@@ -23,45 +24,37 @@ values(exerciseinfo_seq.nextval, '산책', '기본적인 야외활동/스트레�
 select * from exerciseinfo;
 
 
--- 사용자정보테이블 (USERID)(1단계프로젝트/외래키용)
-CREATE TABLE users (
-  userid     NUMBER PRIMARY KEY,
-  email      VARCHAR2(200) NOT NULL UNIQUE,
-  nickname   VARCHAR2(100) NOT NULL,
-  password   VARCHAR2(100) NOT NULL,
-  createdat  DATE NOT NULL
+-- 사용자정보테이블 (USERID)(2단계프로젝트/외래키용)
+CREATE TABLE USERS (
+    userid     NUMBER              PRIMARY KEY,                 -- 사용자 고유 ID
+    email      VARCHAR2(200)       NOT NULL UNIQUE,             -- 이메일 주소 (중복 불가)
+    nickname   VARCHAR2(100)       NOT NULL,                    -- 닉네임
+    password   VARCHAR2(100)       NOT NULL,                    -- 비밀번호
+    ufile      VARCHAR2(255)       DEFAULT 'default.png',       -- 이미지 파일 (기본값)
+    createdat  DATE                NOT NULL,                    -- 가입일
+    mobile     VARCHAR2(200)       UNIQUE                       -- 휴대폰 번호 (NULL 허용, 중복 불가)
 );
 
+CREATE SEQUENCE USER_seq;
+desc USERS;
+select * from  USERS;
+delete from USERS;
 
-CREATE SEQUENCE users_seq;
-
-
--- 임시로 만들었음.
-CREATE SEQUENCE users_seq;
-
-insert into users (userid, email, nickname, password, createdat) 
-values (users_seq.nextval, '1@1', 'user', '1111', '2025/11/26');
-
--- 반려동물타입테이블 PETID) (1단계프로젝트/외래키용)
-CREATE TABLE pettype (
-  pettypeid NUMBER PRIMARY KEY,
-  pettypename  VARCHAR2(100) NOT NULL
-);
-
-INSERT INTO pettype (pettypeid, pettypename) VALUES (1, '고양이');
+--시험용
+insert into users (userid, email, nickname, password, ufile ,createdat,mobile ) 
+values (user_seq.nextval, '1@1', 'user', '1111', '산책.png' ,'2025/11/26', '010');
 
 
 
 
-
--- 운동정보게시판테이블(2단계프로젝트)
+-- 운동챌린지게시판테이블(2단계프로젝트)
 
 desc exerciseinfo;
 -- CREATE
 create table execboard(
     postid     int            primary key,
     execid     int,
-    userid     int,
+    userid     NUMBER,
     etitle     varchar2(100),
     econtent   CLOB,
     eimg       varchar2(255),  --이미지경로
@@ -69,9 +62,9 @@ create table execboard(
     createdat  date           default sysdate,
     updatedat  date           default sysdate,
     
-    constraint fk_execboard_user foreign key (userid)    references users(userid),
+    constraint fk_execboard_user foreign key (userid)    references USERS(userid),
     constraint fk_execboard_exec foreign key (execid)    references exerciseinfo(execid)
-);  -- ai에게 물어보기(기능이 어떤지?)
+);  
 
 
 create sequence execboard_seq;
@@ -106,11 +99,44 @@ where postid='26';
 -- DELETE
 delete from execboard where postid='27'and execid='41';
 
-drop table execboard;
+--drop table users;
+--drop table execboard;
 commit;
 
+--페이징테스트
+--insert into sboard1 ( ID    , APP_USER_ID , btitle, bcontent, bpass, bfile,  bip )
+--select  sboard1_seq.nextval , APP_USER_ID , btitle, bcontent, bpass, bfile,  bip   from sboard1;  
+--EXECBOARD
+select * from execboard;
 
 
+insert into execboard  (postid, execid, userid, etitle, econtent,  eimg )  
+      select execboard_seq.nextval, execid, userid, etitle, econtent, eimg from execboard;
+
+select * 
+from ( 
+    select row_number() over (order by createdat desc) as rnum,
+    postid, execid, userid, etitle, econtent, eimg, ehit, createdat,
+    updatedat
+    from execboard
+) A 
+where A.rnum between 1 and 10;
+
+
+
+--EXERCISEINFO
+insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
+select exerciseinfo_seq.nextval, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel;
+
+
+select * 
+from ( 
+    select row_number() over (order by createdat desc) as rnum,
+    execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, 
+    intensitylevel
+    from exerciseinfo 
+) A 
+where A.rnum between 1 and 10;
 
 
 
