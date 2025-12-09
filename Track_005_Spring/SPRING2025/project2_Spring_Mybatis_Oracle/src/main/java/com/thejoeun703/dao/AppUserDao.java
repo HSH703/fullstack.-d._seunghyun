@@ -23,7 +23,7 @@ public interface AppUserDao {
 	public int update2(AppUserDto dto);
 	
 	/* iddouble */
-	public int iddouble(String email);
+	public int iddouble(AppUserDto dto);
 	
 	/* admin 유저관리 - 전체유저정보 selectAll
 	 * 				/ 아이디주면 해당 유저정보찾기 select 

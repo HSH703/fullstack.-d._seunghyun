@@ -61,7 +61,7 @@ public class AppUserController {
 		return "member/mypage"; //폴더이름 주의!!!
 	}
 	
-	@RequestMapping("/logout.users")  //상세보기
+	@RequestMapping("/logout.users")  //로그아웃
 	public String mypage( HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();

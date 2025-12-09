@@ -140,5 +140,40 @@ where A.rnum between 1 and 10;
 
 
 
+--20251209 평가(제출용)
+select * from appuser;
+desc AUTHORITIES;
+ALTER TABLE AUTHORITIES DROP COLUMN USERID;
+
+ALTER TABLE AUTHORITIES DROP COLUMN USERID CASCADE CONSTRAINTS;
+
+--SELECT COUNT(*) FROM authorities WHERE email = #{email}
+--select * from appuser  where  email='9999@9999';
+
+SELECT constraint_name
+FROM user_constraints
+WHERE table_name = 'AUTHORITIES';
 
 
+SELECT constraint_name, constraint_type, status
+FROM user_constraints
+WHERE table_name = 'AUTHORITIES';
+
+SELECT constraint_name, column_name
+FROM user_cons_columns
+WHERE table_name = 'AUTHORITIES';
+
+ALTER TABLE AUTHORITIES DROP CONSTRAINT SYS_C002312;
+ALTER TABLE AUTHORITIES DROP CONSTRAINT AUTH_USER_FK;
+ALTER TABLE AUTHORITIES DROP CONSTRAINT PK_AUTHORITIES;
+
+
+ALTER TABLE AUTHORITIES
+ADD CONSTRAINT PK_AUTHORITIES PRIMARY KEY (EMAIL, AUTH);
+
+
+
+ SELECT COUNT(*) FROM authorities;
+ delete from authorities;
+ commit;
+SELECT COUNT(*) FROM appuser;

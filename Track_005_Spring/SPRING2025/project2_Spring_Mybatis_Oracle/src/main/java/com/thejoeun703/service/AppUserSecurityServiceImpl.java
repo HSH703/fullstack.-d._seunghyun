@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.thejoeun703.dao.AppUserMapper;
 import com.thejoeun703.dto.AppUser;
 import com.thejoeun703.dto.AppUserAuthDto;
+import com.thejoeun703.dto.AppUserDto;
 import com.thejoeun703.dto.AuthDto;
 
 @Service
@@ -82,6 +83,10 @@ public class AppUserSecurityServiceImpl  implements AppUserSecurityService{
 	@Override public AppUser selectEmail(String email) 
 	{AppUser dto = new AppUser(); dto.setEmail(email);  return dao.select(dto);} 
 		
+	
+	/* iddouble */
+	@Override public int iddouble(String email) { 
+		AppUser dto = new AppUser();   dto.setEmail(email);  return dao.iddouble(dto);}
 }
 
 

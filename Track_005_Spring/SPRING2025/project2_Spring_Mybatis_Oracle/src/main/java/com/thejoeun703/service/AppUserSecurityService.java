@@ -11,5 +11,6 @@ public interface AppUserSecurityService {
 	public int delete (AppUser dto); //유저삭제
 	public AppUserAuthDto readAuth(   String email); //로그인
 	public AppUser        selectEmail(String email); //마이페이지
-
+	/* iddouble */
+	public int iddouble(String email);
 }

@@ -3,10 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thejoeun703.dao.AppUserMapper">
-  <insert  id="insertAuth"    parameterType="AuthDto">
-     insert into  authorities  (email, auth)  values (#{email} , #{auth})
-  </insert>   
-      
+ <insert id="insertAuth" parameterType="AuthDto">
+	INSERT INTO authorities (email, auth) VALUES (#{email}, #{auth})
+ </insert>
   <insert  id="insert"   parameterType="AppUser">
      insert into appuser (APP_USER_ID , EMAIL , PASSWORD, MBTI_TYPE_ID ,UFILE   ,MOBILE ,  NICKNAME)  
      values (appuser_seq.nextval, #{email} , #{password} ,#{mbtiTypeId} , #{ufile} ,#{mobile} , #{nickname}  )
@@ -53,4 +52,11 @@
   <select  resultMap="appUserMap"         id="selectPassword"  parameterType="AppUser">
      select password from appuser  where  email=#{email} 
   </select>
+  
+ 	<!-- 아이디중복검사 -->
+	<select resultType="int" id="iddouble"
+		parameterType="AppUser">
+		select count(*) cnt from appuser where email=#{email}
+	</select>
+  
 </mapper>

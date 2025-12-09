@@ -67,7 +67,7 @@ public class QuestController {
 		if( service.delete(dto)>0) {result="삭제 성공";}
 		rttr.addFlashAttribute("success", result);
 		return "redirect:/list.quest"; 
-		}
+	}
 	
 	/*Upload*/
 	//글쓰기 기능

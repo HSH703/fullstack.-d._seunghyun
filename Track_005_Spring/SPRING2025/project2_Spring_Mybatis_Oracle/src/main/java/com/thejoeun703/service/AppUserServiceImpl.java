@@ -65,7 +65,8 @@ public class AppUserServiceImpl implements AppUserService {
 	}
 	
 	/* iddouble */
-	@Override public int iddouble(String email) {return dao.iddouble(email);}
+	@Override public int iddouble(String email) { 
+		AppUserDto dto = new AppUserDto();   dto.setEmail(email);  return dao.iddouble(dto);}
 	
 	/* admin 유저관리 */
 	@Override public int deleteAdimin(AppUserDto dto) {return dao.deleteAdimin(dto);}

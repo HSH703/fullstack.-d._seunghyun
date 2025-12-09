@@ -17,7 +17,7 @@ public class AjaxSearchController {
 	
 	@Autowired AppUserService service;	
 	
-	//http://localhost:8282/EX005_member/iddouble?email=5@5
+	//http://localhost:8282/project2_Spring_Mybatis_Oracle/iddouble?email=5@5
 	@RequestMapping("/iddouble")
 	public Map<String, Object> iddouble(@RequestParam String email){
 		Map<String, Object> result = new HashMap<>();

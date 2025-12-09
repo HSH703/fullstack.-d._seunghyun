@@ -34,7 +34,7 @@ public class AppUserSecurityController {
 	@ResponseBody
 	public Map<String, Object> iddouble(@RequestParam String email){
 		Map<String, Object> result = new HashMap<>();
-		result.put("cnt", service.selectEmail(email));
+		result.put("cnt", service.iddouble(email));
 		return result;
 	}
 	

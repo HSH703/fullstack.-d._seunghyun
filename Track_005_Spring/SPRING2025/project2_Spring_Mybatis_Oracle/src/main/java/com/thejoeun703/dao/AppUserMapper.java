@@ -2,6 +2,7 @@ package com.thejoeun703.dao;
 
 import com.thejoeun703.dto.AppUser;
 import com.thejoeun703.dto.AppUserAuthDto;
+import com.thejoeun703.dto.AppUserDto;
 import com.thejoeun703.dto.AuthDto;
 
 @MbtiDao
@@ -13,6 +14,10 @@ public interface AppUserMapper {
 	public int update ( AppUser dto);
 	public int delete ( AppUser dto);
 	public int insertAuth(AuthDto dto);
+	
+
+	/* iddouble */
+	public int iddouble(AppUser dto);
 }
 /*
 SQL> desc appuser;
