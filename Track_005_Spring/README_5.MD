@@ -105,24 +105,24 @@ project2_Spring_Mybatis_Oracle
 ---
 
 ---
-
+2차 프로젝트 마무리
 <!--day072.md-->
 ---
 
 
 ---
-
+X
 <!--day073.md-->
 ---
 
 ---
-
+X
 <!--day074.md-->
 ---
 
 
 ---
-
+X
 <!--day075.md-->
 ---
 

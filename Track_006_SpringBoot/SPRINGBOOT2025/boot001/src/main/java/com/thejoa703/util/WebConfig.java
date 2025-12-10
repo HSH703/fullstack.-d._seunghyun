@@ -1,0 +1,18 @@
+package com.thejoa703.util;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
+
+@Configuration
+public class WebConfig {
+	@Value("${upload.path}")  private String uploadPath;
+	@Value("${resource.path}") private String resourcePath;
+	//@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler(uploadPath)
+				.addResourceLocations("file" + resourcePath);
+	}
+	
+}
