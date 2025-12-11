@@ -14,8 +14,11 @@ public class UtilPaging {
 	   private  int current;        //#6) 하단에 페이지수   이전 11 12 [13] 14 15    디음
 	   private  int start;          //#7) 하단에 페이지수   이전 [11] 12 13 14 15    디음
 	   private  int end;			//#8) 하단에 페이지수   이전 [11] 12 ,,,19 [20]  디음
-	
-	   //해당 페이지의 게시글 가져오기
+	   
+	   // 기본 생성자 (10개씩, 하단 네비 10개)
+	   
+	   
+	   // 오버로딩된 생성자 (페이지 크기와 하단 네비 크기를 직접 지정) ####
 	   public UtilPaging(int listtotal, int pageNo) { //(1) 1,10 (2) 11,20  // # = 계산식
 			this.listtotal   = (listtotal<=0)? 1:listtotal;
 			this.onepagelist = 10;  //# 기본값 : 한페이지 10개

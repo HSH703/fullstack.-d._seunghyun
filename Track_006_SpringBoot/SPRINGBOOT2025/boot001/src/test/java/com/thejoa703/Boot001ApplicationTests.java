@@ -23,8 +23,6 @@ class Boot001ApplicationTests {
 	@Autowired  Sboard2Service boardService;
  
 	
-	
-	
     @Test
 	public void test4_paging() {
 		//10개씩 가져오기
