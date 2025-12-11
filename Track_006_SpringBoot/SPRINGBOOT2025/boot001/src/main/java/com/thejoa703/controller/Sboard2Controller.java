@@ -37,10 +37,10 @@ public class Sboard2Controller {
 		return "board/list";  //화연 ###
 	}
 
-	@GetMapping("/search")
-	@ResponseBody
-	public Map<String, Object> search(Model model,
-									  @RequestParam()) {}
+//	@GetMapping("/search")
+//	@ResponseBody
+//	public Map<String, Object> search(Model model,
+//									  @RequestParam()) {}
 	
 	
 	//    /board/write (글쓰기 폼)
