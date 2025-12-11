@@ -7,24 +7,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class BasicController {
-	
-	//http://localhost:8484/boot001/basic1
+    // http://localhost:8484/boot001/basic1
 	//@RequestMapping("/basic1")
 	@GetMapping("/basic1")
 	@ResponseBody
 	public String basic1() { return "basic1"; }
-	
+
 	//http://localhost:8484/boot001/basic2
 	@GetMapping("/basic2")
-	public String basic2( Model model ) {
-		model.addAttribute("greeting" , "Hello");  //처리
-		return "basic2";   //화면
+	public String basic2( Model model ) { 
+		model.addAttribute("greeting", "hello");
+		return "basic2"; 
 	}
-	@GetMapping("/index")
-	public String indec(  ) {
-		return "index";   
+	
+	@GetMapping("/")
+	public String index() {  
+		return "index"; 
 	}
-
-	
-	
 }
