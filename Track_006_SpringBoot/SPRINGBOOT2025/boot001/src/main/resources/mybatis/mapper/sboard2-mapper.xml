@@ -42,26 +42,27 @@
 		where A.rnum between #{start} and #{end} 
 	</select>
 	<!-- 페이징 (2) -->
-	<select id="selectTotalcnt" resultType="int">
+	<select id="selectTotalCnt" resultType="int">
 		select count(*) from sboard2
 	</select>
 	
-  <!-- 페이징+검색어(3) -->
+   <!-- 페이징+검색어(3) -->
    <select  id="select3"  parameterType="java.util.HashMap"  resultMap="sboard2Map">
       select * from(
          select row_number() over(order by id desc)  as rnum, 
                 id, app_user_id, btitle, bcontent, bpass, bfile, bip, bhit, created_at
          from  sboard2
-         where btitle  LIKE '%' || #{search} || '%'
+         where btitle  LIKE '%' || #{search, jdbcType=VARCHAR} || '%'
       ) A  
       where  A.rnum  between  #{start}  and #{end}
-   </select> 	
-	<!-- 페이징 (4) 검색어 기준 전체 건수 -->
-	<select id="selectSearchTotalcnt" parameterType="string" resultType="int">
-		select count(*) 
-		from sboard2
-		where btitle LIKE '%' || #{search} || '%'
-	</select>
+   </select> 
+   
+   <!-- 페이징+검색어(4) 검색어 기준 전체 건수 -->
+   <select id="selectSearchTotalCnt" parameterType="string" resultType="int">
+       SELECT COUNT(*)
+       FROM sboard2
+       WHERE btitle LIKE '%' || #{search, jdbcType=VARCHAR} || '%'
+   </select>
 	
 	
 </mapper>

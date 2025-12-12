@@ -56,26 +56,26 @@ public class Sboard2ServiceImpl implements Sboard2Service {
 	}
 	@Override
 	public int selectTotalCnt() {
-		return dao.selectTotalcnt();
+		return dao.selectTotalCnt();
 	}
-	
-	/* 해당 검색어로 3개씩 페이징 */
+	/* Paging + search */
+	//http://localhost:8484/boot001/board/search?pageNo=1&keyword=t
 	@Override
-	public List<Sboard2Dto> select3(String search, int pageNo) {
-		HashMap<String, Object> para = new HashMap<>();
-		int pageSize = 3;
-		int start = (pageNo-1)*pageSize + 1;  //(1)1  (2)11  (3)21
-		int end   = start + pageSize-1;
-		para.put(search, para);
-		para.put("start", start);
-		para.put("end"  , end);
+	public List<Sboard2Dto> select3(String keyword, int pageNo) {
+		HashMap<String, Object> para = new HashMap<>(); //숫자(페이지), 문자(검색)를 받음 → Object로 지정
+		// 11-1 (10/10 = 1) 20-1(19/10 = 1)  계산하는거 면접질문 (10을 기준으로해서 계산하기)
+		int pageSize = 3; //3개씩의 페이지
+		// 1: start → 1, end → 3  2: start → 4, end → 6  3: start → 7, end → 9
+		para.put("search", keyword);
+		int start = (pageNo-1)*pageSize+1;  //(1)1  (2)11  (3)21
+		para.put("start", start);     //  1→3   , 2→4  (2-1)*3+1   , 3→7(3-1)*3+1  
+		para.put("end"  , start + pageSize-1);    //  4→6 (4+3-1)  , 7→9 (7+3-1)
 		return dao.select3(para);
 	}
 
-	@Override
-	public int selectSearchTotalcnt(String search) {
-		return dao.selectSearchTotalcnt();
-	}
+	@Override public int selectSearchTotalCnt(String keyword) { return dao.selectSearchTotalCnt(keyword); }
+
+
 	
 } 
 

@@ -1,5 +1,8 @@
 package com.thejoa703.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,11 +40,20 @@ public class Sboard2Controller {
 		return "board/list";  //화연 ###
 	}
 
-//	@GetMapping("/search")
-//	@ResponseBody
-//	public Map<String, Object> search(Model model,
-//									  @RequestParam()) {}
-	
+	@GetMapping("/search")
+	@ResponseBody
+	public  Map<String, Object> search(
+			 @RequestParam(value="pageNo" , defaultValue="1") int pageNo,
+			 @RequestParam(value="keyword" , required=false) String keyword 
+	) {    
+		Map <String, Object> result = new HashMap<>();
+		int totalCnt = service.selectSearchTotalCnt(keyword);
+		
+		result.put("search", keyword);
+		result.put("list", service.select3(keyword, pageNo));  //키워드 페이지3개
+		result.put("paging", new UtilPaging(totalCnt , pageNo, 3, 10)); //페이징계산
+		return result;  								//화연 ###  키워드 검색갯수, 페이지번호, 몇개씩, 하단블록   
+	}	
 	
 	//    /board/write (글쓰기 폼)
 	@GetMapping("/write") public String write_get() { return "board/write";}

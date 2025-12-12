@@ -15,17 +15,19 @@ public class UtilPaging {
 	   private  int start;          //#7) 하단에 페이지수   이전 [11] 12 13 14 15    디음
 	   private  int end;			//#8) 하단에 페이지수   이전 [11] 12 ,,,19 [20]  디음
 	   
-	   // 기본 생성자 (10개씩, 하단 네비 10개)
-	   
-	   
-	   // 오버로딩된 생성자 (페이지 크기와 하단 네비 크기를 직접 지정) ####
-	   public UtilPaging(int listtotal, int pageNo) { //(1) 1,10 (2) 11,20  // # = 계산식
+	   //## 기본생성자 (10개씩, 하단네비블록 10개)
+	   public UtilPaging(int listtotal, int pageNo) { 
+		   this( listtotal, pageNo, 10,10 );
+	   }
+
+	   //## 오버로딩된 생성자 (페이지 크기와 하단 네비 크기를 직접 지정) ####
+	   public UtilPaging(int listtotal, int pageNo, int onepagelist, int bottomlist) { //(1) 1,10 (2) 11,20  // # = 계산식
 			this.listtotal   = (listtotal<=0)? 1:listtotal;
 			this.onepagelist = 10;  //# 기본값 : 한페이지 10개
 			this.pagetotal   = (int)Math.ceil(this.listtotal/(double)onepagelist); //#
 			//  193/10 = 19.3 → 올림 → 20  / 256/10  → 25.6 → 26  //###
 			//  200/10 = 20   → 올림 → 20  / 
-			this.bottomlist  = 10;
+			this.bottomlist  = 10;  //#######(바꿔서 사용가능)
 			//하단 페이지 블록계산
 			this.current     = pageNo;   // 23 → start=21 , end=30
 			this.start       = ((current - 1)/bottomlist)*bottomlist + 1; //#

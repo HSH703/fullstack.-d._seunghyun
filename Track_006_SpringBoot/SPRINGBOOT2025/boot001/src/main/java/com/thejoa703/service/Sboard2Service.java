@@ -17,10 +17,10 @@ public interface Sboard2Service {
 	/* 페이징 */
 	public List<Sboard2Dto> select10(int pageNo);
 	public int selectTotalCnt();
-	
-	/* 해당 검색어로 3개씩 페이징 */
-	public List<Sboard2Dto> select3(String search, int pageNo);
-	public int 				 selectSearchTotalcnt(String search);
+
+	/* Paging + search */
+	public List<Sboard2Dto> select3(String keyword, int pageNo);
+	public int  selectSearchTotalCnt(String keyword);
 }
 
 
