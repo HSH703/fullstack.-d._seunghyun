@@ -13,12 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.thejoa703.dao.Sboard2Dao;
 import com.thejoa703.dto.Sboard2Dto;
-import com.thejoa703.util.UtilUplad;
+import com.thejoa703.util.UtilUpload;
 
 @Service
 public class Sboard2ServiceImpl implements Sboard2Service { 
 	@Autowired Sboard2Dao  dao;
-	@Autowired UtilUplad  upload;
+	@Autowired UtilUpload  upload;
 
 	@Override public int insert(MultipartFile file, Sboard2Dto dto) { 
 		if(!file.isEmpty()) {
@@ -37,6 +37,7 @@ public class Sboard2ServiceImpl implements Sboard2Service {
 		}
 		return dao.update(dto); 
 	}
+	
 	@Override public int delete(Sboard2Dto dto) { return dao.delete(dto); }
 	
 	@Override public List<Sboard2Dto> selectAll() { return dao.selectAll(); }
@@ -44,41 +45,38 @@ public class Sboard2ServiceImpl implements Sboard2Service {
 	@Override public Sboard2Dto select(int id) { dao.updateHit(id);  return dao.select(id); }
 	@Override public Sboard2Dto selectUpdateForm(int id) { return dao.select(id); }
 
-	/* 페이징 */
+	/* paging */
 	@Override
-	public List<Sboard2Dto> select10(int pageNo) { //(1) 1,10 / (2) 11,20 / (3)21, 30
-		HashMap<String, Integer> para = new HashMap<>();
-		int start = (pageNo-1)*10 + 1;  //(1)1  (2)11  (3)21
+	public List<Sboard2Dto> select10(int pageNo) {  //(1)1,10 , (2) 11,20 (3) 21,30
+		HashMap<String,Integer>   para = new HashMap<>();
+		int start = (pageNo-1)*10 + 1;  //(1)1    (2)11  (2)21
 		int end   = start + 9;
+		
 		para.put("start", start);
 		para.put("end"  , end);
 		return dao.select10(para);
 	}
-	@Override
-	public int selectTotalCnt() {
-		return dao.selectTotalCnt();
-	}
-	/* Paging + search */
-	//http://localhost:8484/boot001/board/search?pageNo=1&keyword=t
+
+	@Override public int selectTotalCnt() { return dao.selectTotalCnt(); }
+	
+	/* Paging + Search */
 	@Override
 	public List<Sboard2Dto> select3(String keyword, int pageNo) {
-		HashMap<String, Object> para = new HashMap<>(); //숫자(페이지), 문자(검색)를 받음 → Object로 지정
-		// 11-1 (10/10 = 1) 20-1(19/10 = 1)  계산하는거 면접질문 (10을 기준으로해서 계산하기)
-		int pageSize = 3; //3개씩의 페이지
-		// 1: start → 1, end → 3  2: start → 4, end → 6  3: start → 7, end → 9
+		HashMap<String, Object> para = new HashMap<>();
+		//  11-1 (10/10 = 1) 20-1(19/10 = 1)
+		int pageSize=3; //3개씩의 페이지
+		// 1: start→1, end→3   2: start→4, end→6   3: start→7, end→9 
 		para.put("search", keyword);
-		int start = (pageNo-1)*pageSize+1;  //(1)1  (2)11  (3)21
-		para.put("start", start);     //  1→3   , 2→4  (2-1)*3+1   , 3→7(3-1)*3+1  
-		para.put("end"  , start + pageSize-1);    //  4→6 (4+3-1)  , 7→9 (7+3-1)
+		int start = (pageNo-1)*pageSize+1;
+		para.put("start", start);   // 1→1    2→4 (2-1)*3+1   3→7 (3-1)*3+1
+		para.put("end"  , start + pageSize-1);   //4→6 (4+3-1)   , 7→9  (7+3-1)
 		return dao.select3(para);
 	}
 
-	@Override public int selectSearchTotalCnt(String keyword) { return dao.selectSearchTotalCnt(keyword); }
+	@Override 
+	public int selectSearchTotalCnt(String keyword) { return dao.selectSearchTotalCnt(keyword); }
 
-
-	
-} 
-
+}
 
 
 

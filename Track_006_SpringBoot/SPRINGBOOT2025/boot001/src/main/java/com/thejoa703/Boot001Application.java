@@ -10,3 +10,10 @@ public class Boot001Application {
 	}
 
 }
+
+
+/*
+  insert into sboard2 ( ID    , APP_USER_ID , btitle, bcontent, bpass, bfile,  bip )
+  select  sboard2_seq.nextval , APP_USER_ID , btitle, bcontent, bpass, bfile,  bip   from sboard2;
+
+*/

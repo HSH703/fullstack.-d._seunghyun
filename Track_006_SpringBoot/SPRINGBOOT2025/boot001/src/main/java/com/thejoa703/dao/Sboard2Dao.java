@@ -15,10 +15,10 @@ public interface Sboard2Dao {
 	public int delete(Sboard2Dto dto);
 	public List<Sboard2Dto>  selectAll();
 	public Sboard2Dto        select(int id);
-	public List<Sboard2Dto>  select10(HashMap<String, Integer> para);
-	public int 				 selectTotalCnt();
-	public List<Sboard2Dto>  select3(HashMap<String, Object> para);
-	public int 				 selectSearchTotalCnt(String search);
+	public List<Sboard2Dto>  select10(HashMap<String,Integer> para);
+	public int               selectTotalCnt();
+	public List<Sboard2Dto>  select3(  HashMap<String,Object> para);  //##
+	public int               selectSearchTotalCnt(String search);//##
 }
 
 

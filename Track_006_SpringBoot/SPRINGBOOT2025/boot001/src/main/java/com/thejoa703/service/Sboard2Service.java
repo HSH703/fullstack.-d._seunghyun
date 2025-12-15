@@ -14,13 +14,13 @@ public interface Sboard2Service {
 	public Sboard2Dto        select(int id);  //조회수올리기 + 상세보기
 	public Sboard2Dto        selectUpdateForm(int id);  //수정하기폼
 	
-	/* 페이징 */
+	/* Paging */
 	public List<Sboard2Dto> select10(int pageNo);
-	public int selectTotalCnt();
-
-	/* Paging + search */
-	public List<Sboard2Dto> select3(String keyword, int pageNo);
-	public int  selectSearchTotalCnt(String keyword);
+	public int  selectTotalCnt();
+	
+	/* Paging + Search */
+	public List<Sboard2Dto>  select3( String keyword ,int pageNo);
+	public int  selectSearchTotalCnt( String keyword );
 }
 
 

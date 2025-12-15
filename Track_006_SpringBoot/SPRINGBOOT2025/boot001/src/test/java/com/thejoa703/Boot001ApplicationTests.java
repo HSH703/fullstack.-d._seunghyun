@@ -24,28 +24,28 @@ class Boot001ApplicationTests {
  
 	
 	@Disabled @Test
-	    public void test4_paging() {
-	       //1. 10개씩 가져오기
-	       HashMap<String, Integer> para = new HashMap<>(); 
-	       para.put("start", 1);
-	       para.put("end", 10);
-	       System.out.println("............" + dao.select10(para));
-	       
-	       //2. 전체갯수
-	       System.out.println("............" + dao.selectTotalCnt());
-	        
-	       //3. 검색어 + 3개씩 가져오기
-	       HashMap<String, Object> para2 = new HashMap<>(); 
-	       para2.put("search", "t");
-	       para2.put("start", 1);  // (1) 1,3  (2)4,6 (3)7,9
-	       para2.put("end"  , 3);
-	       System.out.println("............" + dao.select3(para2));       
+	 public void test4_paging() {
+		 //1. 10개씩 가져오기
+		 HashMap<String, Integer> para = new HashMap<>(); 
+		 para.put("start", 1);
+		 para.put("end", 10);
+		 System.out.println("............" + dao.select10(para));
+		 
+		 //2. 전체갯수
+		 System.out.println("............" + dao.selectTotalCnt());
+		  
+		 //3. 검색어 + 3개씩 가져오기
+		 HashMap<String, Object> para2 = new HashMap<>(); 
+		 para2.put("search", "t");
+		 para2.put("start", 1);  // (1) 1,3  (2)4,6 (3)7,9
+		 para2.put("end"  , 3);
+		 System.out.println("............" + dao.select3(para2));		 
 
-	       //4. 검색어 + 3개씩 가져오기  ( 검색어 있는걸로 테스트 - t)
-	       System.out.println("............" + dao.selectSearchTotalCnt("t"));
-	    }	
+		 //4. 검색어 + 3개씩 가져오기  ( 검색어 있는걸로 테스트 - t)
+		 System.out.println("............" + dao.selectSearchTotalCnt("t"));
+	 }
 	
-	 @Disabled  @Test
+	@Disabled  @Test
 	public void test3_sboardService() throws UnknownHostException {
     	//1. selectAll
     	System.out.println(boardService.selectAll());
@@ -77,6 +77,7 @@ class Boot001ApplicationTests {
 //    	dto_d.setBpass("1111");  dto_d.setId(1);
 //    	System.out.println(boardService.delete(dto_d));
 	}
+	
 	
 	
 	@Disabled   @Test void contextLoads() {   //Junit4: @Ignore  5:@Disabled
