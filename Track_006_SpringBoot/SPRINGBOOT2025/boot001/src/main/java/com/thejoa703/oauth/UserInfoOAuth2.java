@@ -1,7 +1,7 @@
 package com.thejoa703.oauth;
 
 public interface UserInfoOAuth2 {
-	String getProvider();  
+	String getProvider();
 	String getProviderId();
 	String getEmail();
 	String getNickname();
@@ -10,17 +10,17 @@ public interface UserInfoOAuth2 {
 
 
 /*
-1. provider = "local" / "google", "kakao", "naver", "facebook"
-2. provider = google → sub , kakao/facebook → id, naver → response
+1. provider   = "local" / "google" , "kakao" , "naver"
+2. providerId = google → sub , kakao/facebook   → id, naver  → response
 
-<google> → Provider 
+<google>
 {
    sub=103058387739722400130, 
    name=안효정, 
    given_name=효정, 
    family_name=안, 
-   picture=https://lh3.googleusercontent.com/a/AEdFTp5SiCyTaOLog9sDPN6QhWwsUj7xPbfj4HQF0fdC=s96-c
-   , email=sally03915@gmail.com, 
+   picture=https://lh3.googleusercontent.com/a/AEdFTp5SiCyTaOLog9sDPN6QhWwsUj7xPbfj4HQF0fdC=s96-c, 
+   email=sally03915@gmail.com, 
    email_verified=true, 
    locale=ko
 }
@@ -46,7 +46,8 @@ public interface UserInfoOAuth2 {
     resultcode=00, 
     message=success, 
     response = {
-        id=pvdq1FSG3VZlD7Cp3JuWfAFi-3xir6A-WPlP5f8kXIo, email=sally03915@naver.com, 
+        id=pvdq1FSG3VZlD7Cp3JuWfAFi-3xir6A-WPlP5f8kXIo, 
+        email=sally03915@naver.com, 
         name=안효정
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import com.thejoa703.dto.AppUserAuthDto;
 import com.thejoa703.dto.AppUserDto;
 
-public class CustomUserDetails implements UserDetails, OAuth2User{
+public class CustomUserDetails implements UserDetails , OAuth2User{
 	
 	private AppUserDto user;
 	private AppUserAuthDto authDto;
@@ -28,8 +28,8 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 		this.attributes = new HashMap<>();
 		this.attributes.put("email"    , user.getEmail());
 		this.attributes.put("provider" , user.getProvider());
-	}
-	/////////////////////////////////////////////////////////
+	} 
+	///////////////////////////////////////////////////////////////////////////////////
 	//2. Oauth2 소셜로그인
 	public CustomUserDetails(AppUserDto user, Map<String, Object> attributes) {
 		super();
@@ -40,12 +40,12 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 		this.attributes.put("email"    , user.getEmail());
 		this.attributes.put("provider" , user.getProvider());
 	}
-	/* SOCIAL LOGIN */
-	@Override public Map<String, Object> getAttributes() {return attributes;}
-	@Override public String getName() {return user.getEmail()+":"+user.getProvider();}
-	public void setAttributes(Map<String, Object> attributes) {this.attributes = attributes;}
-	/////////////////////////////////////////////////////////
-	
+	/* SOCIAL LOGIN	*/
+	@Override public Map<String, Object> getAttributes() { return attributes; }
+	@Override public String getName() { return user.getEmail()+":"+user.getProvider(); }
+	public void setAttributes(Map<String, Object> attributes) { this.attributes = attributes; }
+	///////////////////////////////////////////////////////////////////////////////////
+	 
 	@Override public Collection<? extends GrantedAuthority> getAuthorities() {
 		if(authDto ==null ||  authDto.getAuthList() == null ||  authDto.getAuthList().isEmpty() ) {
 			return List.of(new SimpleGrantedAuthority("ROLE_MEMBER"));
@@ -67,8 +67,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 	public String     getEmail()    { return user.getEmail(); }
 	public String     getProvider() { return user.getProvider(); }
 	
-	
-	
+
 }
 
 
