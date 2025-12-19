@@ -18,78 +18,81 @@ import com.thejoa703.dto.AppUserDto;
 import com.thejoa703.dto.AuthDto;
 import com.thejoa703.security.CustomUserDetails;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class Oauth2IUserService extends DefaultOAuth2UserService{ 
-   @Autowired AppUserDao dao;
-   @Autowired PasswordEncoder  passwordEncoder;
-   
-   @Override public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-      OAuth2User  oAuth2User = super.loadUser(userRequest);  //로그인정보
-      String provider  = userRequest.getClientRegistration().getRegistrationId();
-      
-      System.out.println("......" + userRequest);
-      
-      UserInfoOAuth2  info;
-      if("google".equals(provider)) {
-         info = new UserInfoGoogle( oAuth2User.getAttributes());
-      }else if("kakao".equals(provider)) {
-         info = new UserInfoKakao( oAuth2User.getAttributes());
-      }else if("naver".equals(provider)) {
-         info = new UserInfoNaver( oAuth2User.getAttributes());
-         System.out.println(".....naver" + info);
-      }else {
-         throw new OAuth2AuthenticationException("지원하지 않는 OAuth2 provider : " + provider);
-      }
-      
-      String email = info.getEmail();
-      String nickname = info.getNickname();
-      String providerId = info.getProviderId();
-      
-      
-      /////// 유저 있는지확인
-      // 만약 null 이면 회원가입
-      // 아니라면 유저정보 업데이트
-      AppUserDto      userParam = new AppUserDto();
-      userParam.setEmail(email);
-      userParam.setProvider(provider);
-      AppUserDto      user    = dao.findByEmail(userParam); //## 유저정보가져오기
-      
-      if(user == null) { //회원가입
-    	  user = new AppUserDto();
-    	  user.setEmail(email);
-    	  user.setNickname(nickname !=null && !nickname.isBlank() ? nickname : "사용자");
-    	  //user.setPassword(provider);
-    	  user.setProvider(provider);
-    	  user.setProviderId(providerId);
-    	  user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));  //인코딩적용
-    	  user.setMbtiTypeId(1);
-    	  dao.insertAppUser(user);
-    	  
-    	  AuthDto auth = new AuthDto();
-    	  auth.setEmail(email);
-    	  auth.setAuth("ROLE_MEMBER");
-    	  dao.insertAuth(auth);
-    	  System.out.println("...... 신규 소설 사용자가입" + email);
-      }else { //업데이트 ##
-    	  if( nickname !=null && !nickname.isBlank() ){
-    		  user.setNickname(nickname);
-    		  dao.updateAppUser(user);
-    		  System.out.println("........소설 사용자 업데이트" + email);
-    	  }
-      }
-      
-      AppUserAuthDto     authDto           = dao.readAuthByEmail(user); 
-      CustomUserDetails  customUserDetails = new CustomUserDetails(user, authDto); 
-      
-      //##
-      Map<String, Object> attrs = new HashMap<>(oAuth2User.getAttributes());
-      attrs.put("provider", provider);
-      attrs.put("email", email);
-      attrs.put("nickname", nickname);
-      customUserDetails.setAttributes(attrs);
-      
-      return customUserDetails;
-   } 
+	@Autowired AppUserDao dao;
+	@Autowired PasswordEncoder  passwordEncoder;
+	
+	@Override public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+		log.info("1: " + userRequest);
+		System.out.println("........." + userRequest);
+		System.out.println(userRequest);
+		
+		OAuth2User  oAuth2User = super.loadUser(userRequest);  //로그인정보
+		String provider  = userRequest.getClientRegistration().getRegistrationId();
+		
+		UserInfoOAuth2  info;
+		if("google".equals(provider)) {
+			info = new UserInfoGoogle( oAuth2User.getAttributes());
+		}else if("kakao".equals(provider)) {
+			info = new UserInfoKakao( oAuth2User.getAttributes());
+		}else if("naver".equals(provider)) {
+			info = new UserInfoNaver( oAuth2User.getAttributes());
+			System.out.println("....... naver : " + info);
+		}else {
+			throw new OAuth2AuthenticationException("지원하지 않는 OAuth2 provider : " + provider);
+		}
+		
+		String email = info.getEmail();
+		String nickname = info.getNickname();
+		String providerId = info.getProviderId();
+		
+		///////  유저 있는지확인 
+		AppUserDto      userParam    = new  AppUserDto(); 
+		userParam.setEmail(email);
+		userParam.setProvider(provider); 
+		
+		AppUserDto      user    = dao.findByEmail(userParam);  //유저정보가져오기 
+		
+		if(user == null) { //회원가입 ##
+			user = new AppUserDto();
+			user.setEmail(email);
+			user.setNickname(nickname  !=null &&  !nickname.isBlank() ? nickname : "사용자");
+			user.setProvider(provider);
+			user.setProviderId(providerId);
+			user.setPassword(  passwordEncoder.encode( UUID.randomUUID().toString()));  //인코딩적용
+			user.setMbtiTypeId(1);
+			
+			dao.insertAppUser(user);
+			
+			AuthDto auth = new AuthDto();
+			auth.setEmail(email);
+			auth.setAuth("ROLE_MEMBER");
+			dao.insertAuth(auth);
+			System.out.println("........... 신규 소셜 사용자가입" + email);
+		}else { //업데이트 ##
+			if( nickname != null  &&   !nickname.isBlank()   ) {
+				user.setNickname(nickname);
+				dao.updateAppUser(user);
+				System.out.println("........... 소셜 사용자 업데이트" + email);
+			}
+		}
+		
+  		AppUserAuthDto  authDto = dao.readAuthByEmail(userParam);  //유저권한확인 
+		CustomUserDetails   cusomUserDetails = new CustomUserDetails(user, authDto); 
+		
+		//##
+		Map<String, Object> attrs = new HashMap<>(oAuth2User.getAttributes());
+		attrs.put("provider", provider);
+		attrs.put("email"   , email);
+		attrs.put("nickname", nickname);
+		cusomUserDetails.setAttributes(attrs);
+		
+		return cusomUserDetails;
+	} 
 }
 
 

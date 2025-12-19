@@ -61,7 +61,7 @@ public class UserController {
 		  }
 	}
 	
-	//http://localhost:8484/boot001/users/login
+
 	/* 로그인 : 폼 , 성공, 실패 */
 	@GetMapping("/login")
 	public String loginForm() { return "users/login"; }
@@ -71,39 +71,40 @@ public class UserController {
 		model.addAttribute("errorMessage" , "로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
 		return "users/login";
 	}
-	///////////////////////////////////
-	//http://localhost:8484/boot001/users/mypage
+	//////////////////////////////////////////////////////////
 	/* 마이페이지 */	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/mypage")
-	public String mypage( Authentication authentication, Model model ) {
-		String email = null, provider = null;
-		Object principal = authentication.getPrincipal();
+	public String mypage( Authentication   authentication  , Model model) { 
+		String email = null , provider = null;
+		Object principal =   authentication.getPrincipal();
 		
-		//1. local - import org.springframework.security.core.Authentication;
-		if( principal instanceof CustomUserDetails ) {
-			CustomUserDetails userDetails = (CustomUserDetails)principal;
-			email = userDetails.getUser().getEmail();
-			provider = userDetails.getUser().getProvider();
+		//1. local 
+		//-  Authentication : import org.springframework.security.core.Authentication;
+		//-  CustomUserDetails
+		if( principal  instanceof CustomUserDetails  ) {
+			CustomUserDetails  userDetails = (CustomUserDetails)principal;
+			email    =  userDetails.getUser().getEmail();
+			provider =  userDetails.getUser().getProvider();
 		}
 		//2. social
-		else if( principal instanceof OAuth2User ){
-			OAuth2User oAuth2User = (OAuth2User)principal;
-			email = (String)oAuth2User.getAttributes().get("email");
-			if(authentication instanceof OAuth2AuthenticationToken) {
-				provider = ((OAuth2AuthenticationToken)authentication).getAuthorizedClientRegistrationId();	
-			}	
+		else if( principal instanceof OAuth2User ) {
+			OAuth2User  oAuth2User = (OAuth2User)principal;
+			email =   (String)oAuth2User.getAttributes().get("email");
+			if(authentication  instanceof OAuth2AuthenticationToken ) {
+				provider = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+			}
 		}
 		AppUserDto dto = userService.selectEmail(email, provider);
-		if( dto == null ) {
+		if(dto == null) {
 			dto = new AppUserDto();
-			dto.setEmail(email); dto.setProvider(provider);
-		}
-		model.addAttribute("dto", dto);
+			dto.setEmail(email);  dto.setProvider(provider);
+		} 
+		model.addAttribute("dto" , dto);
 		return "users/mypage"; 
 	}
-	///////////////////////////////////
-	//http://localhost:8484/boot001/users/update
+
+	//////////////////////////////////////////////////////////
 	/* 회원정보수정 폼, 기능 */
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/update")
@@ -130,53 +131,53 @@ public class UserController {
 		return "redirect:/users/mypage"; 
 	}
 
+	
 	/* 회원탈퇴 폼, 기능 */
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/delete")
-	public String deleteForm( Authentication authentication, Model model ) {
-		String email     = null, provider = null;
-		Object principal = authentication.getPrincipal();
-		
-		if( principal instanceof CustomUserDetails ) {
-			CustomUserDetails userDetails = (CustomUserDetails)principal;
-			email    = userDetails.getUser().getEmail();
-			provider = userDetails.getUser().getProvider();
-		}
+	public String deleteForm(Authentication   authentication  , Model model) { 
+		String email = null , provider = null;
+		Object principal =   authentication.getPrincipal();
+
+		if( principal  instanceof CustomUserDetails  ) {
+			CustomUserDetails  userDetails = (CustomUserDetails)principal;
+			email    =  userDetails.getUser().getEmail();
+			provider =  userDetails.getUser().getProvider();
+		} 
 		AppUserDto dto = userService.selectEmail(email, provider);
-		model.addAttribute("dto", dto);
+		model.addAttribute("dto" , dto); 
 		return "users/delete"; 
 	}
-	
-
+	 
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/delete")
-	public String delete( AppUserDto dto, RedirectAttributes rttr,
-			Authentication authentication, HttpServletRequest request, HttpServletResponse response ) {
-		String email = null, provider = null;
-		Object principal = authentication.getPrincipal();
-		
-		if( principal instanceof CustomUserDetails ) {
-			CustomUserDetails userDetails = (CustomUserDetails)principal;
-			email    = userDetails.getUser().getEmail();
-			provider = userDetails.getUser().getProvider();
-		}
-		dto.setEmail(email); dto.setProvider(provider); //##
-		boolean  requirePasswordCheck = "local".equalsIgnoreCase(provider);
-		//local
+	public String delete(AppUserDto dto ,  RedirectAttributes rttr 
+			, Authentication   authentication , HttpServletRequest request, HttpServletResponse response ) { 
+		String email = null , provider = null;
+		Object principal =   authentication.getPrincipal();
+
+		if( principal  instanceof CustomUserDetails  ) {
+			CustomUserDetails  userDetails = (CustomUserDetails)principal;
+			email    =  userDetails.getUser().getEmail();
+			provider =  userDetails.getUser().getProvider();
+		} 
+		dto.setEmail(email);      dto.setProvider(provider);  //##
+		boolean  requirePasswordCheck   = "local".equalsIgnoreCase(provider);
+		///local
 		if(requirePasswordCheck) {
-			if(dto.getPassword() == null || dto.getPassword().isEmpty()) {
-				rttr.addFlashAttribute("errorMessage" , "회원탈퇴 실패 : 비밀번호를 입력해주세요.");
+			if(dto.getPassword() == null ||  dto.getPassword().isEmpty()) {
+				rttr.addFlashAttribute("errorMessage" , "회원탈퇴 실패: 비밀번호를 입력해주세요");
 				return "redirect:/users/delete";
-			}
-			if( !userService.matchesPassword(email, provider, dto.getPassword())) {
-				rttr.addFlashAttribute("errorMessage" , "회원탈퇴 실패 : 비밀번호를 입력해주세요.");
+			} 
+			if( !userService.matchesPassword(email, provider,  dto.getPassword() )) {
+				rttr.addFlashAttribute("errorMessage" , "회원탈퇴 실패: 비밀번호가 일치하지 않습니다.");
 				return "redirect:/users/delete";
 			}
 		}
-		if( userService.delete(dto, requirePasswordCheck) > 0 ) {  //requirePasswordCheck = true 'local'
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			if( auth !=null ) { new SecurityContextLogoutHandler().logout(request, response, auth); }
-			rttr.addFlashAttribute("successMessage", "회원탈퇴가 완료되었습니다.");
+		if( userService.delete(dto, requirePasswordCheck) > 0  ) {  //requirePasswordCheck = true  'local'  유저정보삭제
+			Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+			if(auth != null) {  new SecurityContextLogoutHandler().logout(request, response, auth);  }
+			rttr.addFlashAttribute("successMessage" , "회원탈퇴가 완료되었습니다.");
 			return "redirect:/users/login";
 		}
 		return "redirect:/users/login";

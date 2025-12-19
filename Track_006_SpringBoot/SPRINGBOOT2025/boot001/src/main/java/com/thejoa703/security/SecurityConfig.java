@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor  //##
 public class SecurityConfig { 
 	
-	private final Oauth2IUserService oauth2IUserService;
+	private final Oauth2IUserService  oauth2IUserService; //##
 	
 	@Bean public SecurityFilterChain  filterChain(HttpSecurity http) throws Exception  {
 		http /* 1. 허용경로 */
@@ -46,9 +46,9 @@ public class SecurityConfig {
 		    	.permitAll()
 		    )
 		    .oauth2Login(oauth2 -> oauth2
-		    		.loginPage("/users/login")  // ← 로그인을 통합
-		    		.defaultSuccessUrl("/users/mypage", true) // ← 로그인성공시 경로
-		    		.userInfoEndpoint(userInfo -> userInfo.userService(oauth2IUserService))
+			     .loginPage("/users/login")  // ← 로그인폼 통합
+			     .defaultSuccessUrl("/users/mypage" , true) // ← 로그인성공시 경로
+			     .userInfoEndpoint(userInfo -> userInfo.userService(oauth2IUserService))
 		    )
 		     /* 4. csrf 예외처리 */
 		    .csrf( csrf  -> csrf.ignoringAntMatchers("/users/join" , "/users/update" , "/users/delete"));
