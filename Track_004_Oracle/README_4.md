@@ -1102,20 +1102,23 @@ cmd사용
 
 ### day077.md
 ---
-
+cmd사용
 ---
 
 ### day078.md
 ---
-
+pawject2_Exec_SQL구문.sql
+cmd사용
 ---
 
 ### day079.md
 ---
-
+pawject2_Exec_SQL구문.sql
+cmd사용
 ---
 
 ### day080md
 ---
-
+pawject2_Exec_SQL구문.sql
+cmd사용
 ---

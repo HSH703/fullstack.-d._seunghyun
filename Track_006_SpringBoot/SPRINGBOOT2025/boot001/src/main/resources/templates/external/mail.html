@@ -6,13 +6,16 @@
 <head lang="ko">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- cdnjs CDN --> 
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
+
 </head>
 <body>
 	<div layout:fragment="content">
 		<!-- CKEditor 로드 -->
 		<script src="//cdn.ckeditor.com/4.25.1/standard/ckeditor.js"></script>
 		<h3 th:text="메일보내기"></h3>
-		<script  src="http://cdn.ckeditor.com/4.25.1/standard/ckeditor.js"></script>
 		<form th:action="@{/api/mail}" method="post">
 			<!-- <input type="hidden"  th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>  -->
 			<table class="table table-striped">

@@ -7,8 +7,8 @@ create table exerciseinfo(
     exectargetmin  int,
     suitablefor    VARCHAR2(100),
     intensitylevel VARCHAR2(100)
---    createdat      DATE  DEFAULT SYSDATE,
---    updatedat      DATE  DEFAULT SYSDATE
+    createdat      DATE  DEFAULT SYSDATE,
+    updatedat      DATE  DEFAULT SYSDATE
  );
 desc users;
 select * from users;
