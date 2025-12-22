@@ -35,6 +35,7 @@ CREATE TABLE exerciseinfo (
 --시퀀스 
 create sequence exerciseinfo_seq;
 
+-- 글쓰기
 --insert
 -- 1.산책
 insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
@@ -82,22 +83,27 @@ values(exerciseinfo_seq.nextval,
 
 
 -- READ (select / selectAll )
--- select
-select * from exerciseinfo where execid=1;
-
+-- 전체게시글보기
 --selectAll
 select * from exerciseinfo order by execid desc;
 
+-- 게시글상세보기
+-- select
+select * from exerciseinfo where execid=1;
 
 
+
+-- 게시글수정
 -- UPDATE
 update exerciseinfo set exectype='조깅', description='일반적인 산책보다 강도가 높음.', avgkcal30min=100.0, 
 exectargetmin=15, suitablefor='관절이 건강하고, 뛰는 것을 좋아하는 반려동물', intensitylevel='중강도' 
 where  execid=1;
 
-
+-- 게시글삭제
 -- DELETE
 delete from exerciseinfo   where  execid=1;
+
+
 
 -- 기본기능
 -- spring boot때 알려주신 기능도 넣기 (검색시 3개? 검색결과 출력)
@@ -155,6 +161,7 @@ create sequence execrecommendation_seq;
 -- desc execrecommendation;
 -- drop table execrecommendation;
 
+-- 게시글쓰기
 -- insert
 -- 맑음
 INSERT INTO execrecommendation (recid, weather, maxtemp, mintemp, activityplace, reason)
@@ -178,20 +185,24 @@ VALUES
 
 
 -- READ( select, selectall )
+-- 전체게시글보기
 -- selectAll
 select * from execrecommendation order by recid desc;
 
+-- 게시글상세보기
 -- select
 select * from execrecommendation where recid=1;
 
 
 -- 사용안하면 지울 예정
 -- 사용안하면 지울 예정
+-- 게시글수정
 -- UPDATE
 update execrecommendation set weather='안개', maxtemp='19', mintemp='10',
                      activityplace='실내활동' , reason='안개가 많이 껴있어, 가시거리 확보가 힘들기 때문에 실내활동을 추천합니다.'
 where recid='1';
 
+-- 게시글삭제
 -- DELETE
 delete from execrecommendation where recid='1';
 
@@ -260,6 +271,7 @@ create table execsmart(
 -- 시퀀스
 create sequence execsmart_seq;
 
+-- 글쓰기
 -- insert
 insert into execsmart  (postid,                execid, userid,recid     ,etitle,                  econtent,                                                         eimg     )
                values  (execsmart_seq.nextval, 6 ,     1,    1       , '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
@@ -267,15 +279,15 @@ insert into execsmart  (postid,                execid, userid,recid     ,etitle,
 --insert into execboard  (postid,                execid, userid, recid    , etitle,                  econtent,                                                         eimg     )
 --               values  (execboard_seq.nextval, 41 ,     1,     1        ,'반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
 
-
-
 -- READ (select / select * )
+-- 전체게시글보기
 -- selectAll
 select * from execsmart order by postid desc;
+-- 게시글상세보기
 -- select
-select * from execsmart where postid='23';  --상세보기
+select * from execsmart where postid='23';  
 
-
+-- 게시글수정
 -- UPDATE
 update execsmart set etitle='반려동물과 함께하는 노즈워크', 
                      econtent='노즈워크는 반려동물이 참을성을 길러줍니다.' ,
@@ -288,6 +300,7 @@ where postid='23';
 --                execid=41,   eimg = '노즈워크.png'
 --where postid='26';
 
+-- 게시글삭제
 -- DELETE
 delete from execsmart where postid='23'and execid='6';
 
@@ -333,13 +346,35 @@ where etitle  LIKE '%' || search || '%';
 
 
 
--- API기능
--- ★ 키워드 몇개 적어주면 AI가 알아서 글쓰기 (AI를 사용안해도 글 쓰기가능.)
--- ★ 날씨에 따라 운동추천과 추천이유도 적어줘
--- ★ gps 기반산책코스 지도
+-- API기능 - 운동스마트게시판에만 적용시키기
+-- 건당 돈이 빠져 나갈수도 있으니 조심해서 쓰기;;;
+-- ★ 1순위. 키워드 몇개 적어주면 AI가 알아서 글쓰기 (AI를 사용안해도 글 쓰기가능.) - ChatGpt api (or openAi)활용
+-- ★ 2순위. 날씨에 따라 운동추천과 추천이유도 적어줘 -  data.go.kr → 기상청 api활용
+-- ★ 3순위. gps 기반산책코스 지도 - 네이버 클라우드 → Maps api활용
 
--- .html에 코드입력
--- ★ 날씨 이용해서 글 쓸때  배경바꾸기 (코드입력 <style/>?)
+-- 글쓰기에 해당되는 .html 파일에 코드입력 
+-- ★ 4순위. 날씨 이용해서 글 쓸때  배경바꾸기 (코드입력 <style/>?)
+
+-- 2차때 구현 못한 시간관계상 3차때 구현 예정.
+-- 게시판 특별기능
+-- 계정 삭제시  / 이미지도 같이 삭제? 
+-- 확장자거르기?? 
+-- 이미지바로보이기??? 
+-- 테이블 조인????
+--
+--
+--2차 프로젝트 운동 챌린지, 정보게시판 개선점.
+--
+-- 기능 사용시(글쓰기, 글수정, 글삭제 ...)시 입력할 필요없는 데이터들은(운동아이디, 사용자아이디 ...) 입력할 필요없게 만들기.
+--ex) 운동아이디와 같은 값들은 고정
+--
+--
+-- 글쓰기 시 자신이 만든 계정들 중에서 선택해서 그 계정으로 입력할 수 있게 만들기.
+-- 또 다른 기능있으면 추가하기...
+--ex)
+--<for:each> ...
+--function ... 등 활용
+
 
 
 
@@ -398,7 +433,7 @@ WHERE a.constraint_type = 'R'
     SELECT constraint_name
     FROM user_constraints
     WHERE table_name = 'USERS'
-  );
+);
 
 DROP TABLE REVIEW CASCADE CONSTRAINTS;
 
