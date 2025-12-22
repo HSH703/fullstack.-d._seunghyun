@@ -68,6 +68,14 @@ public class ApiController {
 		return apiCoolSms.phoneNumber(to);
 	}
 
+	/////////////////////////////// PostCode
+	@GetMapping("/postcode")
+	public String postcode() { return "external/postcode"; }
+
+	/////////////////////////////// Maps
+	@GetMapping("/maps")
+	public String maps() { return "external/navermaps"; }
+
 	
 	
 }

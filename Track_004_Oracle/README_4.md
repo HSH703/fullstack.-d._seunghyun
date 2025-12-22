@@ -1107,18 +1107,44 @@ cmd사용
 
 ### day078.md
 ---
-pawject2_Exec_SQL구문.sql
+pawject3_Exec.sql
 cmd사용
 ---
 
 ### day079.md
 ---
-pawject2_Exec_SQL구문.sql
+pawject3_Exec.sql
 cmd사용
 ---
 
 ### day080md
 ---
-pawject2_Exec_SQL구문.sql
+pawject3_Exec.sql
 cmd사용
 ---
+
+### ORACLE (20251222~20251224, 20251226)
+### day081.md
+---
+pawject3_Exec.sql
+cmd사용
+---
+
+### day082.md
+---
+pawject3_Exec.sql
+cmd사용
+---
+
+### day083.md
+---
+pawject3_Exec.sql
+cmd사용
+---
+
+### day084.md
+---
+pawject3_Exec.sql
+cmd사용
+---
+
