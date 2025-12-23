@@ -44,7 +44,7 @@ boot001(~sms)
 ### SPRING (20251222~20251224, 20251226)
 ### day081.md
 ---
-boot001(~지도api)
+boot001(~Maps_api)
 ---
 
 ### day082.md

@@ -18,6 +18,9 @@
 -- 3차_프로젝트_운동파트 - CRUD
 -- 운동정보게시판
 desc exerciseinfo;
+drop table exerciseinfo;
+drop sequence exerciseinfo_seq;
+commit;
 -- CREATE (create, insert)
 -- create table
 CREATE TABLE exerciseinfo (
@@ -140,75 +143,70 @@ from exerciseinfo
 where exectype  LIKE '%' || search || '%';
 
 
-
-
--- 날씨기반 운동추천기능
+-- 날씨정보
 --(기능을 구현할려고 하는 거니깐 insert는 데이터를 넣어야되서 있어야하지만(그럼 글쓰기 기능도 있어야하나...), update, delete는 어떻게 해야할까...)
 -- CREATE( create, insert)
-desc execrecommendation;
+desc execweather;
+drop table execweather;
+drop sequence execweather_seq;
 -- create
-create table execrecommendation (
-    recid         number           primary key,   -- 기본키
-    weather       varchar2(30),                   -- 날씨
-    maxtemp       number           not null,      -- 최고기온       
-    mintemp       number           not null,      -- 최저기온 
-    activityplace varchar2(30)     not null,      -- 실내/실외활동 여부
-    reason        varchar2(255)    not null       -- 추천이유
+-- 기상청_단기예보 ((구)_동네예보) 조회서비스 - API
+create table execweather (
+    servicekey    varchar2(255) not null,                               -- 공공데이터포털 인증키 (api 인증키)
+    pageno        number,                                               -- 페이지번호
+    numofrows     number,                                               -- 한 페이지 결과 수
+    basedate      date          default   sysdate,                      -- 기준 날짜
+    basetime      varchar2(4)   default '0600',                         -- 기준 시간 (HHMM)
+    nx            number(10, 6) not null,                               -- 예보지점 X 좌표 (위도)
+    ny            number(10, 6) not null,                               -- 예보지점 Y 좌표 (경도)
+    constraint pk_execweather   primary key (basedate, basetime, nx, ny)
 );
+desc execweather;
 -- 시퀀스
-create sequence execrecommendation_seq;
+-- create sequence execweather_seq;
 
--- desc execrecommendation;
--- drop table execrecommendation;
+-- desc execweather;
+-- drop table execweather;
 
--- 게시글쓰기
+
 -- insert
--- 맑음
-INSERT INTO execrecommendation (recid, weather, maxtemp, mintemp, activityplace, reason)
-VALUES 
-(execrecommendation_seq.nextval, '맑음', 20, 15, '야외활동', '날씨가 맑고 선선하기 때문에 산책을 추천합니다.');
+-- 날씨저장
+-- service key는 개인 api키 지정
 
--- 흐림
-INSERT INTO execrecommendation (recid, weather, maxtemp, mintemp,  activityplace, reason)
-VALUES 
-(execrecommendation_seq.nextval, '흐림', 22, 17, '실내활동', '날씨가 흐려 외부 활동이 적합하지 않으므로 실내 놀이를 추천합니다.');
+-- 인천시청 좌표
+insert into execweather (servicekey, pageno, numofrows, nx, ny) 
+values                  ('KMA_API_KEY', 1, 10, 37.456255, 126.705206);
 
--- 더운날
-INSERT INTO execrecommendation (recid, weather, maxtemp, mintemp, activityplace, reason)
-VALUES 
-(execrecommendation_seq.nextval, '맑음', 34, 25, '야외활동', '기온이 너무 높아 야외활동은 위험하므로 실내에서 쉬는 것을 추천합니다.');
-
--- 추운날
-INSERT INTO execrecommendation (recid, weather, maxtemp, mintemp, activityplace, reason)
-VALUES 
-(execrecommendation_seq.nextval, '흐림', 1, 0,  '실내활동', '기온이 낮고 때로는 눈이 내리는 지역이 있기 때문에, 실내놀이를 추천합니다.');
+-- 서울시청 좌표
+insert into execweather (servicekey, pageno, numofrows, nx, ny)
+values                  ('KMA_API_KEY', 1, 10, 37.566535, 126.977969);
 
 
 -- READ( select, selectall )
--- 전체게시글보기
+-- 검색
 -- selectAll
-select * from execrecommendation order by recid desc;
+select * from execweather order by recid desc;
 
--- 게시글상세보기
+-- 날씨정보상세보기
 -- select
-select * from execrecommendation where recid=1;
+select * from execweather where recid=1;
 
-
--- 사용안하면 지울 예정
--- 사용안하면 지울 예정
--- 게시글수정
--- UPDATE
+-- 날씨정보 수정
+-- update
 update execrecommendation set weather='안개', maxtemp='19', mintemp='10',
                      activityplace='실내활동' , reason='안개가 많이 껴있어, 가시거리 확보가 힘들기 때문에 실내활동을 추천합니다.'
 where recid='1';
 
--- 게시글삭제
+-- 날씨정보 삭제
 -- DELETE
 delete from execrecommendation where recid='1';
 
 -- CRUD_TEST_커밋
 commit;
 
+
+-- 사용안하면 지울 예정
+-- 사용안하면 지울 예정
 -- 기본기능
 -- spring boot때 알려주신 기능도 넣기 (검색시 3개? 검색결과 출력)
 -- PAGING 
@@ -245,17 +243,27 @@ where weather  LIKE '%' || search || '%';
 -- 사용안하면 지울 예정
 
 
+-- 날씨저장필드
+
+
+
+-- 산책 코스 필드
+
+
+
 
 -- 운동스마트게시판 (운동챌린지 게시판(글관련 내용) + API기반)
 -- CREATE (create, insert)
 desc execsmart;
 drop table execsmart;
+drop sequence execsmart_seq;
+
 -- create table
 create table execsmart(
     postid     number            primary key,
     execid     number,
     userid     number,
-    recid      number,
+    basedate      number,
     etitle     varchar2(100),
     econtent   clob,
     eimg       varchar2(255),  --이미지경로
@@ -263,11 +271,10 @@ create table execsmart(
     createdat  date              default sysdate,
     updatedat  date              default sysdate,
     
-    constraint fk_execsmart_user foreign key (userid)    references USERS(userid),
-    constraint fk_execsmart_exec foreign key (execid)    references exerciseinfo(execid),
-    constraint fk_execsmart_rec  foreign key (recid)     references execrecommendation(recid)
+    constraint fk_execsmart_user    foreign key (userid)   references USERS(userid),
+    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
+    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate)
 );  
-
 -- 시퀀스
 create sequence execsmart_seq;
 
@@ -348,12 +355,21 @@ where etitle  LIKE '%' || search || '%';
 
 -- API기능 - 운동스마트게시판에만 적용시키기
 -- 건당 돈이 빠져 나갈수도 있으니 조심해서 쓰기;;;
--- ★ 1순위. 키워드 몇개 적어주면 AI가 알아서 글쓰기 (AI를 사용안해도 글 쓰기가능.) - ChatGpt api (or openAi)활용
--- ★ 2순위. 날씨에 따라 운동추천과 추천이유도 적어줘 -  data.go.kr → 기상청 api활용
--- ★ 3순위. gps 기반산책코스 지도 - 네이버 클라우드 → Maps api활용
+-- ★ 운동후 : 키워드 몇개 적어주면 ai알아서 글쓰기 - ChatGpt api (or openAi)활용
+-- ★ 운동 전 : 반려견의 건강상태에 따라 
+--   날씨에 따라 운동추천과 추천이유도 적어줘 -  data.go.kr → 기상청 api활용
+-- ★ 운동후 : 날씨정보 가져오기
+--※ 매일 오전 6시에 금일 날씨 가져오기 - 공통사항
+--스케쥴러 + 스케쥴러활용
+-- ※ api의 필드와 매칭해서 가져오기
+-- 날짜 - 기본키
+-- ★ 산책 위치 지도 - 마커 표시, 지도 - 네이버 클라우드 → Maps api활용
+-- ※ 날씨 저장 필드, 산책 코스 필드(12.22일에 배웠던 지도 파트 참고하기. - ex)인천점....) 
+--     ㄴ테이블 추가
+
 
 -- 글쓰기에 해당되는 .html 파일에 코드입력 
--- ★ 4순위. 날씨 이용해서 글 쓸때  배경바꾸기 (코드입력 <style/>?)
+-- ★ 자동:날씨 이용해서 글 쓸때  배경바꾸기 (코드입력 <style/>?)
 
 -- 2차때 구현 못한 시간관계상 3차때 구현 예정.
 -- 게시판 특별기능
@@ -448,9 +464,54 @@ DROP TABLE REVIEW CASCADE CONSTRAINTS;
 
 
 
+-- 임시보관
+-- 날씨저장
+-- create
+desc saveweather;
+create table saveweather (
+    wid           number           primary key,    -- 기본키
+    weather       varchar2(30),                    -- 날씨
+    maxtemp       number           not null,       -- 최고기온       
+    mintemp       number           not null,       -- 최저기온 
+    moispercent   number           not null,       -- 습도
+    rainpercent   number           not null        -- 강수량
+);
+desc saveweather;
+
+ -- 시퀀스
+create sequence saveweather_seq;
+
+-- insert
+-- 맑음
+INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES 
+(saveweather_seq.nextval, '맑음', 20, 15, 40, 30);
+
+-- 안개
+INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES 
+(saveweather_seq.nextval, '흐림', 22, 17, 80, 90);
+
+-- 더운날
+INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES 
+(saveweather_seq.nextval, '맑음', 34, 25, 30, 20);
+
+-- 추운날
+INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES 
+(saveweather_seq.nextval, '흐림', 1, 0, 10, 10);
 
 
+-- READ 
+select * from saveweather order by wid desc;
 
+-- UPDATE
+--update 
+--set 
+
+-- DELETE
+delete from saveweather;
 
 
 
