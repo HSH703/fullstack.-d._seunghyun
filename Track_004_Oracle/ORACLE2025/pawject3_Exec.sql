@@ -17,6 +17,7 @@
 
 -- 3차_프로젝트_운동파트 - CRUD
 -- 운동정보게시판
+
 desc exerciseinfo;
 drop table exerciseinfo;
 drop sequence exerciseinfo_seq;
@@ -143,70 +144,59 @@ from exerciseinfo
 where exectype  LIKE '%' || search || '%';
 
 
--- 날씨정보
---(기능을 구현할려고 하는 거니깐 insert는 데이터를 넣어야되서 있어야하지만(그럼 글쓰기 기능도 있어야하나...), update, delete는 어떻게 해야할까...)
--- CREATE( create, insert)
-desc execweather;
-drop table execweather;
-drop sequence execweather_seq;
+
+-- 날씨정보저장필드
+-- 날씨정보저장
 -- create
--- 기상청_단기예보 ((구)_동네예보) 조회서비스 - API
-create table execweather (
-    servicekey    varchar2(255) not null,                               -- 공공데이터포털 인증키 (api 인증키)
-    pageno        number,                                               -- 페이지번호
-    numofrows     number,                                               -- 한 페이지 결과 수
-    basedate      date          default   sysdate,                      -- 기준 날짜
-    basetime      varchar2(4)   default '0600',                         -- 기준 시간 (HHMM)
-    nx            number(10, 6) not null,                               -- 예보지점 X 좌표 (위도)
-    ny            number(10, 6) not null,                               -- 예보지점 Y 좌표 (경도)
-    constraint pk_execweather   primary key (basedate, basetime, nx, ny)
+commit;
+drop table saveweather;
+create table saveweather (
+    basedate      date            default sysdate, -- 날짜
+    weather       varchar2(30),                    -- 날씨
+    maxtemp       number           not null,       -- 최고기온       
+    mintemp       number           not null,       -- 최저기온 
+    moispercent   number           not null,       -- 습도
+    rainpercent   number           not null        -- 강수량
 );
-desc execweather;
--- 시퀀스
--- create sequence execweather_seq;
+desc saveweather;
 
--- desc execweather;
--- drop table execweather;
-
+ -- 시퀀스
 
 -- insert
--- 날씨저장
--- service key는 개인 api키 지정
+-- 맑음
+INSERT INTO saveweather (weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES                  ( '맑음',  20,      15,      40,         30);
 
--- 인천시청 좌표
-insert into execweather (servicekey, pageno, numofrows, nx, ny) 
-values                  ('KMA_API_KEY', 1, 10, 37.456255, 126.705206);
+-- 안개
+INSERT INTO saveweather (weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES                  ('흐림',   22,     17,       80,          90);
 
--- 서울시청 좌표
-insert into execweather (servicekey, pageno, numofrows, nx, ny)
-values                  ('KMA_API_KEY', 1, 10, 37.566535, 126.977969);
+-- 더운날
+INSERT INTO saveweather ( weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES                  ( '더움',  34,      25,      30,           20);
+
+-- 추운날
+INSERT INTO saveweather ( weather, maxtemp, mintemp, moispercent, rainpercent)
+VALUES                  ('눈',    1,       0,       10,          10);
 
 
--- READ( select, selectall )
--- 검색
+-- READ 
+-- 날씨전체저장리스트
 -- selectAll
-select * from execweather order by recid desc;
+select * from saveweather order by basedate desc;
 
--- 날씨정보상세보기
 -- select
-select * from execweather where recid=1;
+select * from saveweather where weather='흐림';
 
--- 날씨정보 수정
--- update
-update execrecommendation set weather='안개', maxtemp='19', mintemp='10',
-                     activityplace='실내활동' , reason='안개가 많이 껴있어, 가시거리 확보가 힘들기 때문에 실내활동을 추천합니다.'
-where recid='1';
+-- UPDATE
+-- 날씨저장리스트 수정
+update saveweather set weather='안개', maxtemp=19, mintemp=10,
+                     moispercent=90 , rainpercent=90
+where weather='흐림';
 
--- 날씨정보 삭제
 -- DELETE
-delete from execrecommendation where recid='1';
+delete from saveweather where weather='흐림';
 
--- CRUD_TEST_커밋
-commit;
-
-
--- 사용안하면 지울 예정
--- 사용안하면 지울 예정
 -- 기본기능
 -- spring boot때 알려주신 기능도 넣기 (검색시 3개? 검색결과 출력)
 -- PAGING 
@@ -214,42 +204,111 @@ commit;
 select *
 from (
     select row_number() over (order by recid desc) as rnum,
-           recid, weather, maxtemp, mintemp, activityplace, reason
-    from execrecommendation
+           basedate, weather, maxtemp, mintemp, moispercent, rainpercent
+    from saveweather
 ) A
 where A.rnum between 1 and 10;
 
 -- 전체게시글을 페이지당 10개씩 볼 수 있음. 
-select count(*) from execrecommendation;
+select count(*) from saveweather;
 
 -- search(수정 필요)
-select * from execrecommendation where weather LIKE '%' || $1 || '%';
+select * from saveweather where weather LIKE '%' || $1 || '%';
 
 -- 페이징 + 검색어
 select *
 from (
     select row_number() over (order by recid desc) as rnum,
-           recid, weather, maxtemp, mintemp, activityplace, reason
-    from execrecommendation
+           basedate, weather, maxtemp, mintemp, moispercent, rainpercent
+    from saveweather
     where weather LIKE '%' || search || '%'
 ) A
 where A.rnum between 1 and 10;
 
 -- 페이징 + 검색어_검색어 기준 전체 건수
 select count (*) 
-from execrecommendation
+from saveweather
 where weather  LIKE '%' || search || '%';
--- 사용안하면 지울 예정
--- 사용안하면 지울 예정
-
-
--- 날씨저장필드
-
 
 
 -- 산책 코스 필드
+desc walkingcourse;
+create table walkingcourse (
+    courseid       number(10)       primary key,       -- 코스 고유 ID
+    postid         NUMBER,                             -- 게시글(외래키)
+    location       varchar2(255)    not null,          -- 위치 (예: 공원, 산, 강변)
+    lat            number(5)        not null,          -- 위도
+    lng            number(5)        not null,          -- 경도
+    createdat      date             default sysdate,   -- 등록일
+    
+    constraint fk_walkingcourse_smart    foreign key (postid)   references execsmart(postid)
+);
+desc walkingcourse;
 
+ -- 시퀀스
+create sequence walkingcourse_seq;
 
+-- insert
+-- 인천대공원
+insert into walkingcourse ( courseid, postid ,location,   lat,        lng  ) 
+values                    ( 1,        1,     '인천대공원',  37.498095,  127.02761 );
+-- 북한산둘레길
+insert into walkingcourse ( courseid, postid ,location,     lat,        lng ) 
+values                    ( 2,        1,     '북한산둘레길',  37.498095,  127.02761 );
+-- 한강공원강변길
+insert into walkingcourse ( courseid, postid  ,location,       lat,        lng )
+values                    ( 3,        1,      '한강공원강변길',  37.498095,  127.02761 );
+
+-- READ 
+-- 산책코스전체리스트
+-- selectAll
+select * from walkingcourse order by courseid desc;
+
+-- select
+select * from walkingcourse where courseid=1;
+
+-- UPDATE
+-- 산책코스 수정
+update walkingcourse set postid=1, location='제주올레길7코스', 
+                         lat=37.498095, lng=127.02761
+                    
+where courseid='1';
+
+-- DELETE
+delete from walkingcourse where courseid='1';
+
+-- 기본기능
+-- spring boot때 알려주신 기능도 넣기 (검색시 3개? 검색결과 출력)
+-- PAGING 
+-- 이전  1 2 3 ....9 10 다음
+select *
+from (
+    select row_number() over (order by courseid desc) as rnum,
+           courseid, postid, location, lat, lng, createdat
+    from walkingcourse
+) A
+where A.rnum between 1 and 10;
+
+-- 전체게시글을 페이지당 10개씩 볼 수 있음. 
+select count(*) from walkingcourse;
+
+-- search(수정 필요)
+select * from walkingcourse where location LIKE '%' || $1 || '%';
+
+-- 페이징 + 검색어
+select *
+from (
+    select row_number() over (order by courseid desc) as rnum,
+           courseid, postid, location, lat, lng, createdat
+    from walkingcourse
+    where location LIKE '%' || search || '%'
+) A
+where A.rnum between 1 and 10;
+
+-- 페이징 + 검색어_검색어 기준 전체 건수
+select count (*) 
+from walkingcourse
+where location  LIKE '%' || search || '%';
 
 
 -- 운동스마트게시판 (운동챌린지 게시판(글관련 내용) + API기반)
@@ -260,46 +319,57 @@ drop sequence execsmart_seq;
 
 -- create table
 create table execsmart(
-    postid     number            primary key,
-    execid     number,
-    userid     number,
-    basedate      number,
-    etitle     varchar2(100),
-    econtent   clob,
-    eimg       varchar2(255),  --이미지경로
-    ehit       number            default 0,
-    createdat  date              default sysdate,
-    updatedat  date              default sysdate,
+    postid     number            primary key,      -- 게시글고유키
+    execid     number            not null,         -- 운동아이디
+    userid     number            not null,         -- 사용자아이디
+    basedate   date              default sysdate,  -- 날짜
+    courseid   number(10),                         -- 코스아이디
+    etitle     varchar2(100)     not null,         -- 제목
+    econtent   clob              not null,         -- 내용
+    eimg       varchar2(255),                      --이미지경로  
+    ehit       number            default 0,        -- 조회수
+    createdat  date              default sysdate,  -- 등록일
+    updatedat  date              default sysdate,  -- 수정일
     
-    constraint fk_execsmart_user    foreign key (userid)   references USERS(userid),
+    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
     constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
-    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate)
+    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate),
+    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
 );  
 -- 시퀀스
 create sequence execsmart_seq;
 
 -- 글쓰기
 -- insert
-insert into execsmart  (postid,                execid, userid,recid     ,etitle,                  econtent,                                                         eimg     )
-               values  (execsmart_seq.nextval, 6 ,     1,    1       , '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
+insert into execsmart  (postid,                execid, userid,courseid  ,etitle,                  econtent,                                                         eimg     )
+               values  (execsmart_seq.nextval, 6 ,     1,     1 ,       '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
 -- 이미지 업로드용(insert)
---insert into execboard  (postid,                execid, userid, recid    , etitle,                  econtent,                                                         eimg     )
+--insert into execboard  (postid,                execid, userid, courseid    , etitle,                  econtent,                                                         eimg     )
 --               values  (execboard_seq.nextval, 41 ,     1,     1        ,'반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
 
 -- READ (select / select * )
 -- 전체게시글보기
 -- selectAll
 select * from execsmart order by postid desc;
+
 -- 게시글상세보기
 -- select
 select * from execsmart where postid='23';  
 
 -- 게시글수정
 -- UPDATE
-update execsmart set etitle='반려동물과 함께하는 노즈워크', 
+update execsmart set execid=6, userid=1, courseid=1,
+                    etitle='반려동물과 함께하는 노즈워크', 
                      econtent='노즈워크는 반려동물이 참을성을 길러줍니다.' ,
-                execid=6,   eimg = '노즈워크.png'
+                   eimg = '노즈워크.png'
 where postid='23';
+
+-- 조회수
+-- updateHit
+update  execsmart   
+set     ehit = ehit + 1   
+where   postid='23'; 
+
 
 -- 이미지업로드용(update)
 --update execsmart set etitle='반려동물과 함께하는 노즈워크', 
@@ -322,12 +392,11 @@ commit;
 select *
 from (
     select row_number() over (order by createdat desc) as rnum,
-           postid, execid, userid, recid, etitle, econtent, eimg, ehit,
+           postid, execid, userid, basedate, courseid, etitle, econtent, eimg, ehit,
            createdat, updatedat
     from execsmart
 ) A
 where A.rnum between 1 and 10;
-
 
 -- 전체게시글을 페이지당 10개씩 볼 수 있음. 
 select count(*) from execsmart;
@@ -357,7 +426,7 @@ where etitle  LIKE '%' || search || '%';
 -- 건당 돈이 빠져 나갈수도 있으니 조심해서 쓰기;;;
 -- ★ 운동후 : 키워드 몇개 적어주면 ai알아서 글쓰기 - ChatGpt api (or openAi)활용
 -- ★ 운동 전 : 반려견의 건강상태에 따라 
---   날씨에 따라 운동추천과 추천이유도 적어줘 -  data.go.kr → 기상청 api활용
+-- 날씨에 따라 운동추천과 추천이유도 적어줘 -  data.go.kr → 기상청 api활용
 -- ★ 운동후 : 날씨정보 가져오기
 --※ 매일 오전 6시에 금일 날씨 가져오기 - 공통사항
 --스케쥴러 + 스케쥴러활용
@@ -450,7 +519,7 @@ WHERE a.constraint_type = 'R'
     FROM user_constraints
     WHERE table_name = 'USERS'
 );
-
+-- 외래키 걸린거 무시하고 해당 테이블 지우기
 DROP TABLE REVIEW CASCADE CONSTRAINTS;
 
 
@@ -467,52 +536,49 @@ DROP TABLE REVIEW CASCADE CONSTRAINTS;
 -- 임시보관
 -- 날씨저장
 -- create
-desc saveweather;
-create table saveweather (
-    wid           number           primary key,    -- 기본키
-    weather       varchar2(30),                    -- 날씨
-    maxtemp       number           not null,       -- 최고기온       
-    mintemp       number           not null,       -- 최저기온 
-    moispercent   number           not null,       -- 습도
-    rainpercent   number           not null        -- 강수량
-);
-desc saveweather;
-
- -- 시퀀스
-create sequence saveweather_seq;
-
--- insert
--- 맑음
-INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
-VALUES 
-(saveweather_seq.nextval, '맑음', 20, 15, 40, 30);
-
--- 안개
-INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
-VALUES 
-(saveweather_seq.nextval, '흐림', 22, 17, 80, 90);
-
--- 더운날
-INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
-VALUES 
-(saveweather_seq.nextval, '맑음', 34, 25, 30, 20);
-
--- 추운날
-INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
-VALUES 
-(saveweather_seq.nextval, '흐림', 1, 0, 10, 10);
-
-
--- READ 
-select * from saveweather order by wid desc;
-
--- UPDATE
---update 
---set 
-
--- DELETE
-delete from saveweather;
-
-
-
+--desc saveweather;
+--create table saveweather (
+--    wid           number           primary key,    -- 기본키
+--    weather       varchar2(30),                    -- 날씨
+--    maxtemp       number           not null,       -- 최고기온       
+--    mintemp       number           not null,       -- 최저기온 
+--    moispercent   number           not null,       -- 습도
+--    rainpercent   number           not null        -- 강수량
+--);
+--desc saveweather;
+--
+-- -- 시퀀스
+--create sequence saveweather_seq;
+--
+---- insert
+---- 맑음
+--INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+--VALUES 
+--(saveweather_seq.nextval, '맑음', 20, 15, 40, 30);
+--
+---- 안개
+--INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+--VALUES 
+--(saveweather_seq.nextval, '흐림', 22, 17, 80, 90);
+--
+---- 더운날
+--INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+--VALUES 
+--(saveweather_seq.nextval, '맑음', 34, 25, 30, 20);
+--
+---- 추운날
+--INSERT INTO saveweather (wid, weather, maxtemp, mintemp, moispercent, rainpercent)
+--VALUES 
+--(saveweather_seq.nextval, '흐림', 1, 0, 10, 10);
+--
+--
+---- READ 
+--select * from saveweather order by wid desc;
+--
+---- UPDATE
+----update 
+----set 
+--
+---- DELETE
+--delete from saveweather;
 

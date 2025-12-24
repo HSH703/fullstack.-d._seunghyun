@@ -49,12 +49,12 @@ boot001(~Maps_api)
 
 ### day082.md
 ---
-
+boot001(~xmlService)
 ---
 
 ### day083.md
 ---
-
+boot001(~ tooltip)
 ---
 
 ### day084.md
