@@ -24,6 +24,7 @@ drop sequence exerciseinfo_seq;
 commit;
 -- CREATE (create, insert)
 -- create table
+desc exerciseinfo;
 CREATE TABLE exerciseinfo (
     execid         number          PRIMARY KEY,
     exectype       varchar2(50),
@@ -96,7 +97,6 @@ select * from exerciseinfo order by execid desc;
 select * from exerciseinfo where execid=1;
 
 
-
 -- 게시글수정
 -- UPDATE
 update exerciseinfo set exectype='조깅', description='일반적인 산책보다 강도가 높음.', avgkcal30min=100.0, 
@@ -105,7 +105,7 @@ where  execid=1;
 
 -- 게시글삭제
 -- DELETE
-delete from exerciseinfo   where  execid=1;
+delete from exerciseinfo   where  execid=1 and exectype='조깅';
 
 
 
@@ -155,7 +155,7 @@ create table saveweather (
     weather       varchar2(30),                    -- 날씨
     maxtemp       number           not null,       -- 최고기온       
     mintemp       number           not null,       -- 최저기온 
-    moispercent   number           not null,       -- 습도
+    moistpercent   number          not null,       -- 습도
     rainpercent   number           not null        -- 강수량
 );
 desc saveweather;
@@ -164,19 +164,19 @@ desc saveweather;
 
 -- insert
 -- 맑음
-INSERT INTO saveweather (weather, maxtemp, mintemp, moispercent, rainpercent)
+INSERT INTO saveweather (weather, maxtemp, mintemp, moistpercent, rainpercent)
 VALUES                  ( '맑음',  20,      15,      40,         30);
 
 -- 안개
-INSERT INTO saveweather (weather, maxtemp, mintemp, moispercent, rainpercent)
+INSERT INTO saveweather (weather, maxtemp, mintemp, moistpercent, rainpercent)
 VALUES                  ('흐림',   22,     17,       80,          90);
 
 -- 더운날
-INSERT INTO saveweather ( weather, maxtemp, mintemp, moispercent, rainpercent)
+INSERT INTO saveweather ( weather, maxtemp, mintemp, moistpercent, rainpercent)
 VALUES                  ( '더움',  34,      25,      30,           20);
 
 -- 추운날
-INSERT INTO saveweather ( weather, maxtemp, mintemp, moispercent, rainpercent)
+INSERT INTO saveweather ( weather, maxtemp, mintemp, moistpercent, rainpercent)
 VALUES                  ('눈',    1,       0,       10,          10);
 
 
@@ -186,13 +186,17 @@ VALUES                  ('눈',    1,       0,       10,          10);
 select * from saveweather order by basedate desc;
 
 -- select
-select * from saveweather where weather='흐림';
+select * from saveweather where trunc(basedate) = trunc(sysdate);
 
 -- UPDATE
 -- 날씨저장리스트 수정
-update saveweather set weather='안개', maxtemp=19, mintemp=10,
-                     moispercent=90 , rainpercent=90
-where weather='흐림';
+update saveweather
+set weather = '안개',
+    maxtemp = 19,
+    mintemp = 10,
+    moispercent = 90,
+    rainpercent = 90
+where trunc(basedate) = trunc(sysdate);
 
 -- DELETE
 delete from saveweather where weather='흐림';
@@ -203,8 +207,8 @@ delete from saveweather where weather='흐림';
 -- 이전  1 2 3 ....9 10 다음
 select *
 from (
-    select row_number() over (order by recid desc) as rnum,
-           basedate, weather, maxtemp, mintemp, moispercent, rainpercent
+    select row_number() over (order by basedate desc) as rnum,
+           basedate, weather, maxtemp, mintemp, moistpercent, rainpercent
     from saveweather
 ) A
 where A.rnum between 1 and 10;
@@ -219,7 +223,7 @@ select * from saveweather where weather LIKE '%' || $1 || '%';
 select *
 from (
     select row_number() over (order by recid desc) as rnum,
-           basedate, weather, maxtemp, mintemp, moispercent, rainpercent
+           basedate, weather, maxtemp, mintemp, moistpercent, rainpercent
     from saveweather
     where weather LIKE '%' || search || '%'
 ) A
@@ -239,10 +243,11 @@ create table walkingcourse (
     location       varchar2(255)    not null,          -- 위치 (예: 공원, 산, 강변)
     lat            number(5)        not null,          -- 위도
     lng            number(5)        not null,          -- 경도
-    createdat      date             default sysdate,   -- 등록일
-    
-    constraint fk_walkingcourse_smart    foreign key (postid)   references execsmart(postid)
-);
+    createdat      date             default sysdate   -- 등록일
+ );   
+-- 최종테스트때 외래키달기 
+-- constraint fk_walkingcourse_smart    foreign key (postid)   references execsmart(postid)
+
 desc walkingcourse;
 
  -- 시퀀스
@@ -270,8 +275,7 @@ select * from walkingcourse where courseid=1;
 -- UPDATE
 -- 산책코스 수정
 update walkingcourse set postid=1, location='제주올레길7코스', 
-                         lat=37.498095, lng=127.02761
-                    
+                         lat=37.498095, lng=127.02761    
 where courseid='1';
 
 -- DELETE
@@ -329,15 +333,18 @@ create table execsmart(
     eimg       varchar2(255),                      --이미지경로  
     ehit       number            default 0,        -- 조회수
     createdat  date              default sysdate,  -- 등록일
-    updatedat  date              default sysdate,  -- 수정일
-    
-    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
-    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
-    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate),
-    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
-);  
+    updatedat  date              default sysdate  -- 수정일
+ );   
+-- 최종테스트때 외래키달기
+--    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
+--    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
+--    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate),
+--    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
+  
+desc execsmart;
 -- 시퀀스
 create sequence execsmart_seq;
+
 
 -- 글쓰기
 -- insert
@@ -351,6 +358,7 @@ insert into execsmart  (postid,                execid, userid,courseid  ,etitle,
 -- 전체게시글보기
 -- selectAll
 select * from execsmart order by postid desc;
+commit;
 
 -- 게시글상세보기
 -- select
@@ -476,6 +484,7 @@ where etitle  LIKE '%' || search || '%';
 
 
 -- 사용자정보 (외래키 연동 Test)
+desc users;
 CREATE TABLE USERS (
     USERID       NUMBER          PRIMARY KEY,         -- 기본키
     EMAIL        VARCHAR2(200)   NOT NULL UNIQUE,     -- 이메일 (유니크)
@@ -492,8 +501,8 @@ insert into USERS (USERID, EMAIL, NICKNAME,        PASSWORD, UFILE,      MOBILE,
 values            (1,      '1@1', 'test_nickname', '1111',   'test.png', '010123' , 'provider', 'providerid'  );
 
 -- 최종 테스트용
-insert into USERS (USERID, EMAIL,          NICKNAME,  PASSWORD, UFILE,  MOBILE,           PROVIDER,  PROVIDERID)
-values            (100,    'admin@admin', 'admin',    '123',   '1.png', '010-1234-5678' , 'local',   'local_id'  );
+--insert into USERS (USERID, EMAIL,          NICKNAME,  PASSWORD, UFILE,  MOBILE,           PROVIDER,  PROVIDERID)
+--values            (100,    'admin@admin', 'admin',    '123',   '1.png', '010-1234-5678' , 'local',   'local_id'  );
 
 -- 최종테스트 시 사용
 -- userid=100, email=admin@admin, nickname=admin, password=123
@@ -502,6 +511,7 @@ values            (100,    'admin@admin', 'admin',    '123',   '1.png', '010-123
 drop table USERS;
 drop table PET;
 drop table REVIEW;
+commit;
 
 desc execsmart;
 desc users;

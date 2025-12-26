@@ -59,7 +59,7 @@ boot001(~ tooltip)
 
 ### day084.md
 ---
-
+boot001(~ nav_show_active)
 ---
 
 

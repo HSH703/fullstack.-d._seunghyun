@@ -2,7 +2,9 @@ package com.thejoa703.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.thejoa703.dto.SongCrawling;
 import com.thejoa703.external.ApiChatGpt;
 import com.thejoa703.external.ApiCoolSms;
 import com.thejoa703.external.ApiEmailNaver;
@@ -107,5 +110,21 @@ public class ApiController {
 	public List<BookDto> naverbookXml(@RequestParam String search) throws UnsupportedEncodingException  { 
 		return xmlService.getBooks(search); 
 	}
+	
+	/////////////////////////////// SongCrawling
+	@Autowired SongCrawling songCrawling;
+   
+	@GetMapping("/jsoupView")
+	public String jsoupView() { return "external/jsoup"; }
+
+	
+	@GetMapping(value="/jsoup" , produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public  Map<String, Object> jsoup(){
+    	Map<String, Object> result = new HashMap<>();
+    	result.put("data", songCrawling.crawling());
+        return  result;
+    }
+
 	
 }
