@@ -160,6 +160,8 @@ create table saveweather (
 );
 desc saveweather;
 
+commit;
+
  -- 시퀀스
 
 -- insert
@@ -191,12 +193,11 @@ select * from saveweather where trunc(basedate) = trunc(sysdate);
 -- UPDATE
 -- 날씨저장리스트 수정
 update saveweather
-set weather = '안개',
-    maxtemp = 19,
+set maxtemp = 19,
     mintemp = 10,
     moispercent = 90,
     rainpercent = 90
-where trunc(basedate) = trunc(sysdate);
+where weather = '흐림';
 
 -- DELETE
 delete from saveweather where weather='흐림';
@@ -237,6 +238,8 @@ where weather  LIKE '%' || search || '%';
 
 -- 산책 코스 필드
 desc walkingcourse;
+drop table walkingcourse;
+drop sequence walkingcourse_seq;
 create table walkingcourse (
     courseid       number(10)       primary key,       -- 코스 고유 ID
     postid         NUMBER,                             -- 게시글(외래키)
@@ -248,21 +251,19 @@ create table walkingcourse (
 -- 최종테스트때 외래키달기 
 -- constraint fk_walkingcourse_smart    foreign key (postid)   references execsmart(postid)
 
-desc walkingcourse;
-
  -- 시퀀스
 create sequence walkingcourse_seq;
 
 -- insert
 -- 인천대공원
-insert into walkingcourse ( courseid, postid ,location,   lat,        lng  ) 
-values                    ( 1,        1,     '인천대공원',  37.498095,  127.02761 );
+insert into walkingcourse ( courseid,                    postid, location,    lat,        lng  ) 
+values                    ( walkingcourse_seq.nextval,   1,      '인천대공원',  37.498095,  127.02761 );
 -- 북한산둘레길
-insert into walkingcourse ( courseid, postid ,location,     lat,        lng ) 
-values                    ( 2,        1,     '북한산둘레길',  37.498095,  127.02761 );
+insert into walkingcourse ( courseid,                    postid, location,      lat,        lng ) 
+values                    ( walkingcourse_seq.nextval,   1,      '북한산둘레길',  37.498095,  127.02761 );
 -- 한강공원강변길
-insert into walkingcourse ( courseid, postid  ,location,       lat,        lng )
-values                    ( 3,        1,      '한강공원강변길',  37.498095,  127.02761 );
+insert into walkingcourse ( courseid,                    postid, location,        lat,        lng )
+values                    ( walkingcourse_seq.nextval,   1,      '한강공원강변길',  37.498095,  127.02761 );
 
 -- READ 
 -- 산책코스전체리스트
@@ -340,7 +341,7 @@ create table execsmart(
 --    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
 --    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate),
 --    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
-  
+select * from execsmart;
 desc execsmart;
 -- 시퀀스
 create sequence execsmart_seq;
@@ -350,6 +351,12 @@ create sequence execsmart_seq;
 -- insert
 insert into execsmart  (postid,                execid, userid,courseid  ,etitle,                  econtent,                                                         eimg     )
                values  (execsmart_seq.nextval, 6 ,     1,     1 ,       '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
+
+-- mapper test용
+insert into execsmart  (postid,                execid, userid,courseid  ,etitle,                  econtent,                                                         eimg     )
+               values  (23, 6 ,     1,     1 ,       'title_test1', 'content_test1', '산책.png');
+commit;
+
 -- 이미지 업로드용(insert)
 --insert into execboard  (postid,                execid, userid, courseid    , etitle,                  econtent,                                                         eimg     )
 --               values  (execboard_seq.nextval, 41 ,     1,     1        ,'반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
@@ -362,7 +369,7 @@ commit;
 
 -- 게시글상세보기
 -- select
-select * from execsmart where postid='23';  
+select * from execsmart where postid=23;  
 
 -- 게시글수정
 -- UPDATE
