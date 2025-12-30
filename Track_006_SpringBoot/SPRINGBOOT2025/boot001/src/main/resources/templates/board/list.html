@@ -59,7 +59,7 @@
 			    <!--   10 다음(11)    20다음(21)  -->
 				<li  class="page-item"  th:if="${paging.end < paging.pagetotal}">
 					<a 	class="page-link"
-						th:href="@{/board/list(pageNo=${paging.start + paging.bottomlist})}">다음</a>
+						th:href="@{/smart/smartlist(pageNo=${paging.start + paging.bottomlist})}">다음</a>
 				</li>
 			</ul>
 		</nav>

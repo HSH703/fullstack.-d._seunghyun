@@ -489,6 +489,43 @@ where etitle  LIKE '%' || search || '%';
 
 --commit;
 
+-- 페이징테스트 더미데이터
+--execsmart
+insert into execsmart  (postid,  execid, userid, courseid , etitle, econtent, eimg )
+select    execsmart_seq.nextval, execid, userid, courseid , etitle, econtent, eimg from execsmart;
+
+commit;
+
+--execinfo
+insert into exerciseinfo (execid, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel ) 
+select  exerciseinfo_seq.nextval, exectype, description, avgkcal30min, exectargetmin, suitablefor, intensitylevel from exerciseinfo;
+commit;
+select count(*) from exerciseinfo;
+
+--saveweather
+INSERT INTO saveweather (weather, maxtemp, mintemp, moistpercent, rainpercent)
+SELECT                  weather, maxtemp, mintemp, moistpercent, rainpercent from saveweather;
+
+--walkingcourse
+insert into walkingcourse ( courseid, postid, location, lat, lng  ) 
+select     walkingcourse_seq.nextval, postid, location, lat, lng from walkingcourse;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- 사용자정보 (외래키 연동 Test)
 desc users;
