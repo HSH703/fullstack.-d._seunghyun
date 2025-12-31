@@ -186,22 +186,23 @@ VALUES                  (weather_seq.nextval, '눈',    1,       0,       10,   
 -- READ 
 -- 날씨전체저장리스트
 -- selectAll
-select * from saveweather order by basedate desc;
+select * from saveweather order by wid desc;
 
 -- select
-select * from saveweather where trunc(basedate) = trunc(sysdate);
+select * from saveweather where wid=1;
 
 -- UPDATE
 -- 날씨저장리스트 수정
 update saveweather
-set maxtemp = 19,
+set weather = '흐림',
+    maxtemp = 19,
     mintemp = 10,
     moispercent = 90,
     rainpercent = 90
-where weather = '흐림';
+where wid=1;
 
 -- DELETE
-delete from saveweather where weather='흐림';
+delete from saveweather where wid=1;
 
 -- 기본기능
 -- spring boot때 알려주신 기능도 넣기 (검색시 3개? 검색결과 출력)
@@ -210,7 +211,7 @@ delete from saveweather where weather='흐림';
 select *
 from (
     select row_number() over (order by basedate desc) as rnum,
-           basedate, weather, maxtemp, mintemp, moistpercent, rainpercent
+           wid, basedate, weather, maxtemp, mintemp, moistpercent, rainpercent
     from saveweather
 ) A
 where A.rnum between 1 and 10;
@@ -224,8 +225,8 @@ select * from saveweather where weather LIKE '%' || $1 || '%';
 -- 페이징 + 검색어
 select *
 from (
-    select row_number() over (order by recid desc) as rnum,
-           basedate, weather, maxtemp, mintemp, moistpercent, rainpercent
+    select row_number() over (order by wid desc) as rnum,
+           wid, basedate, weather, maxtemp, mintemp, moistpercent, rainpercent
     from saveweather
     where weather LIKE '%' || search || '%'
 ) A
