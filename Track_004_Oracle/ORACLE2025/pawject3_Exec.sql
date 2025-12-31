@@ -151,35 +151,36 @@ where exectype  LIKE '%' || search || '%';
 commit;
 drop table saveweather;
 create table saveweather (
-    basedate      date            default sysdate, -- 날짜
+    wid           number(10)       primary key,    -- 날시고유
     weather       varchar2(30),                    -- 날씨
     maxtemp       number           not null,       -- 최고기온       
     mintemp       number           not null,       -- 최저기온 
     moistpercent   number          not null,       -- 습도
-    rainpercent   number           not null        -- 강수량
+    rainpercent   number           not null,        -- 강수량
+    basedate      date            default sysdate -- 날짜    
 );
 desc saveweather;
 
 commit;
 
  -- 시퀀스
-
+create sequence weather_seq;
 -- insert
 -- 맑음
-INSERT INTO saveweather (weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  ( '맑음',  20,      15,      40,         30);
+INSERT INTO saveweather ( wid,                 weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  ( weather_seq.nextval, '맑음',  20,      15,      40,         30);
 
 -- 안개
-INSERT INTO saveweather (weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  ('흐림',   22,     17,       80,          90);
+INSERT INTO saveweather (wid,                 weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  (weather_seq.nextval, '흐림',   22,     17,       80,          90);
 
 -- 더운날
-INSERT INTO saveweather ( weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  ( '더움',  34,      25,      30,           20);
+INSERT INTO saveweather ( wid, weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  ( weather_seq.nextval, '더움',  34,      25,      30,           20);
 
 -- 추운날
-INSERT INTO saveweather ( weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  ('눈',    1,       0,       10,          10);
+INSERT INTO saveweather ( wid, weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  (weather_seq.nextval, '눈',    1,       0,       10,          10);
 
 
 -- READ 
@@ -242,7 +243,7 @@ drop table walkingcourse;
 drop sequence walkingcourse_seq;
 create table walkingcourse (
     courseid       number(10)       primary key,       -- 코스 고유 ID
-    postid         NUMBER,                             -- 게시글(외래키)
+    postid         number,                             -- 게시글(외래키)
     location       varchar2(255)    not null,          -- 위치 (예: 공원, 산, 강변)
     lat            number(5)        not null,          -- 위도
     lng            number(5)        not null,          -- 경도
