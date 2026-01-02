@@ -75,18 +75,14 @@ boot001(~ )
 
 ### day087.md
 ---
-boot001(~ )
+pawject3(~view연결)
 ---
 
 ### day088.md
 ---
-boot001(~ )
+pawject3(~ )
 ---
 
-### day089.md
----
-boot001(~ )
----
 
 
 
