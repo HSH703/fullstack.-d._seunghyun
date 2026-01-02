@@ -80,7 +80,7 @@ pawject3(~view연결)
 
 ### day088.md
 ---
-pawject3(~ )
+pawject3(~ api 연결마무리)
 ---
 
 

@@ -150,6 +150,8 @@ where exectype  LIKE '%' || search || '%';
 -- create
 commit;
 drop table saveweather;
+drop sequence weather_seq;
+commit;
 create table saveweather (
     wid           number(10)       primary key,    -- 날시고유
     weather       varchar2(30),                    -- 날씨
@@ -242,6 +244,7 @@ where weather  LIKE '%' || search || '%';
 desc walkingcourse;
 drop table walkingcourse;
 drop sequence walkingcourse_seq;
+commit;
 create table walkingcourse (
     courseid       number(10)       primary key,       -- 코스 고유 ID
     postid         number,                             -- 게시글(외래키)
@@ -255,17 +258,17 @@ create table walkingcourse (
 
  -- 시퀀스
 create sequence walkingcourse_seq;
-
+select * from walkingcourse;
 -- insert
 -- 인천대공원
 insert into walkingcourse ( courseid,                    postid, location,    lat,        lng  ) 
-values                    ( walkingcourse_seq.nextval,   1,      '인천대공원',  37.498095,  127.02761 );
+values                    ( walkingcourse_seq.nextval,   1,      '인천대공원',  37.459267,  126.750511 );
 -- 북한산둘레길
-insert into walkingcourse ( courseid,                    postid, location,      lat,        lng ) 
-values                    ( walkingcourse_seq.nextval,   1,      '북한산둘레길',  37.498095,  127.02761 );
+insert into walkingcourse ( courseid,                    postid, location,                     lat,       lng ) 
+values                    ( walkingcourse_seq.nextval,   1,      '북한산둘레길 - 1코스 소나무숲길', 37.6630,  127.0115 );
 -- 한강공원강변길
-insert into walkingcourse ( courseid,                    postid, location,        lat,        lng )
-values                    ( walkingcourse_seq.nextval,   1,      '한강공원강변길',  37.498095,  127.02761 );
+insert into walkingcourse ( courseid,                    postid, location,      lat,      lng )
+values                    ( walkingcourse_seq.nextval,   1,      '반포한강공원',  37.5100,  126.9950 );
 
 -- READ 
 -- 산책코스전체리스트
@@ -326,37 +329,33 @@ drop sequence execsmart_seq;
 
 -- create table
 create table execsmart(
-    postid     number            primary key,      -- 게시글고유키
+    postid     number            primary key,      -- 게시글고유아이디
     execid     number            not null,         -- 운동아이디
     userid     number            not null,         -- 사용자아이디
-    basedate   date              default sysdate,  -- 날짜
+    wid        number            not null,         -- 날씨정보아이디
     courseid   number(10),                         -- 코스아이디
     etitle     varchar2(100)     not null,         -- 제목
     econtent   clob              not null,         -- 내용
     eimg       varchar2(255),                      --이미지경로  
     ehit       number            default 0,        -- 조회수
     createdat  date              default sysdate,  -- 등록일
-    updatedat  date              default sysdate  -- 수정일
- );   
--- 최종테스트때 외래키달기
---    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
---    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
---    constraint fk_execsmart_weather foreign key (basedate) references execweather(basedate),
---    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
-select * from execsmart;
-desc execsmart;
--- 시퀀스
+    updatedat  date              default sysdate,  -- 수정일
+
+    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
+    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
+    constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
+    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
+ );
+
+--시퀀스
 create sequence execsmart_seq;
 
 
 -- 글쓰기
 -- insert
-insert into execsmart  (postid,                execid, userid,courseid  ,etitle,                  econtent,                                                         eimg     )
-               values  (execsmart_seq.nextval, 6 ,     1,     1 ,       '반려동물과 함께하는 산책', '반려동물과 함께하는 산책은 주인과 반려동물 모두에게 긍정적인영향을 줍니다.', '산책.png');
-
 -- mapper test용
-insert into execsmart  (postid,                execid, userid,courseid  ,etitle,                  econtent,                                                         eimg     )
-               values  (23, 6 ,     1,     1 ,       'title_test1', 'content_test1', '산책.png');
+insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,                  econtent,                                                         eimg     )
+               values  (execsmart_seq.nextval, 1 ,     7,     1 ,    1,   'title_test1', 'content_test1', '산책.png');
 commit;
 
 -- 이미지 업로드용(insert)
@@ -371,7 +370,16 @@ commit;
 
 -- 게시글상세보기
 -- select
-select * from execsmart where postid=23;  
+select * from execsmart where postid=23;
+-- join 사용
+SELECT e.postid,
+       e.etitle,
+       e.econtent,
+       w.postid
+FROM execsmart e
+INNER JOIN walkingcourse w
+   ON e.courseid = w.courseid
+  AND e.postid   = w.postid;
 
 -- 게시글수정
 -- UPDATE
@@ -514,12 +522,81 @@ select     walkingcourse_seq.nextval, postid, location, lat, lng from walkingcou
 
 
 
+commit;
+
+-- 최종테이블
+운동정보테이블 + 시퀀스
+CREATE TABLE exerciseinfo (
+    execid         number          PRIMARY KEY,
+    exectype       varchar2(50),
+    description    varchar2(255),
+    avgkcal30min number,
+    exectargetmin  number,
+    suitablefor    varchar2(100),
+    intensitylevel varchar2(100),
+    createdat     date default   sysdate,
+    updatedat     date default   sysdate
+);
+
+--시퀀스 
+create sequence exerciseinfo_seq;
+
+-- 날씨정보 + 시퀀스
+create table saveweather (
+    wid           number(10)       primary key,    -- 날시고유
+    weather       varchar2(30),                    -- 날씨
+    maxtemp       number           not null,       -- 최고기온       
+    mintemp       number           not null,       -- 최저기온 
+    moistpercent   number          not null,       -- 습도
+    rainpercent   number           not null,        -- 강수량
+    basedate      date            default sysdate -- 날짜    
+);
+ -- 시퀀스
+create sequence weather_seq;
 
 
+산책코스테이블 + 시퀀스
+drop table walkingcourse;
+drop sequence walkingcourse_seq;
+commit;
+create table walkingcourse (
+    courseid       number(10)       primary key,       -- 코스 고유 ID
+    postid         number,                             -- 게시글(외래키)
+    location       varchar2(255)    not null,          -- 위치 (예: 공원, 산, 강변)
+    lat            number(5)        not null,          -- 위도
+    lng            number(5)        not null,          -- 경도
+    createdat      date             default sysdate   -- 등록일
 
+ --constraint fk_walkingcourse_smart    foreign key (postid)   references execsmart(postid)
+ ); 
 
+ -- 시퀀스
+create sequence walkingcourse_seq;
 
+운동스마트게시판 + 시퀀스
+create table execsmart(
+    postid     number            primary key,      -- 게시글고유키
+    execid     number            not null,         -- 운동아이디
+    userid     number            not null,         -- 사용자아이디
+    wid        number            not null,         -- 날씨정보아이디
+    courseid   number(10),                         -- 코스아이디
+    etitle     varchar2(100)     not null,         -- 제목
+    econtent   clob              not null,         -- 내용
+    eimg       varchar2(255),                      --이미지경로  
+    ehit       number            default 0,        -- 조회수
+    createdat  date              default sysdate,  -- 등록일
+    updatedat  date              default sysdate,  -- 수정일
+   
 
+    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
+    constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
+    constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
+    constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
+ );
+-- 시퀀스
+create sequence execsmart_seq;
+
+commit;
 
 
 
@@ -530,6 +607,7 @@ select     walkingcourse_seq.nextval, postid, location, lat, lng from walkingcou
 
 
 -- 사용자정보 (외래키 연동 Test)
+drop table USERS;
 desc users;
 CREATE TABLE USERS (
     USERID       NUMBER          PRIMARY KEY,         -- 기본키
@@ -542,6 +620,7 @@ CREATE TABLE USERS (
     PROVIDER     VARCHAR2(50),                        -- 인증 제공자(local, google 등)
     PROVIDERID   VARCHAR2(100)                        -- 제공자 id
 );
+
 -- 개별 테스트용
 insert into USERS (USERID, EMAIL, NICKNAME,        PASSWORD, UFILE,      MOBILE,    PROVIDER,   PROVIDERID)
 values            (1,      '1@1', 'test_nickname', '1111',   'test.png', '010123' , 'provider', 'providerid'  );

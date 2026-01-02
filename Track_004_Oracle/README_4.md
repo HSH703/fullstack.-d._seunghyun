@@ -1157,21 +1157,22 @@ cmd사용
 
 ### day086.md
 ---
-
+pawject3_Exec.sql
+cmd사용
 ---
 
 ### day087.md
 ---
-
+pawject3_Exec.sql
+cmd사용
 ---
 
 ### day088.md
 ---
-
+pawject3_Exec.sql
+pawject3_최종ver..sql
+cmd사용
 ---
 
-### day089.md
----
 
----
 
