@@ -346,10 +346,34 @@ create table execsmart(
     constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
     constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
  );
-
+ SELECT constraint_name, table_name, r_constraint_name
+FROM user_constraints
+WHERE constraint_type = 'R'
+  AND table_name = 'EXECSMART';
+ALTER TABLE EXECSMART
+DROP CONSTRAINT FK_EXECSMART_USER;
+commit;
 --시퀀스
 create sequence execsmart_seq;
 
+select * from execsmart;
+
+desc execsmart;
+commit;
+
+    select 
+    		e.postid,
+            e.execid,
+            e.userid,
+            e.wid,
+            e.ehit,
+    		e.etitle, 
+    		e.econtent, 
+            e.eimg,
+    		w.courseid
+    from execsmart e
+    inner join walkingcourse w on e.courseid = w.courseid
+    where e.POSTID=7;
 
 -- 글쓰기
 -- insert
