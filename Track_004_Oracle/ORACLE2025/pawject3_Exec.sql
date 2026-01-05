@@ -346,6 +346,8 @@ create table execsmart(
     constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
     constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
  );
+ 
+ 
  SELECT constraint_name, table_name, r_constraint_name
 FROM user_constraints
 WHERE constraint_type = 'R'
@@ -362,15 +364,15 @@ desc execsmart;
 commit;
 
     select 
-    		e.postid,
+          e.postid,
             e.execid,
             e.userid,
             e.wid,
             e.ehit,
-    		e.etitle, 
-    		e.econtent, 
+          e.etitle, 
+          e.econtent, 
             e.eimg,
-    		w.courseid
+          w.courseid
     from execsmart e
     inner join walkingcourse w on e.courseid = w.courseid
     where e.POSTID=7;
@@ -395,6 +397,8 @@ commit;
 -- 게시글상세보기
 -- select
 select * from execsmart where postid=23;
+
+select * from execsmart;
 -- join 사용
 SELECT e.postid,
        e.etitle,
@@ -407,11 +411,17 @@ INNER JOIN walkingcourse w
 
 -- 게시글수정
 -- UPDATE
-update execsmart set execid=6, userid=1, courseid=1,
+update execsmart set execid=8, userid=0, courseid=13,
                     etitle='반려동물과 함께하는 노즈워크', 
                      econtent='노즈워크는 반려동물이 참을성을 길러줍니다.' ,
                    eimg = '노즈워크.png'
-where postid='23';
+where postid='46';
+commit;
+
+
+delete from execsmart where etitle='반려동물과 함께하는 노즈워크';
+
+commit;
 
 -- 조회수
 -- updateHit
@@ -650,8 +660,8 @@ insert into USERS (USERID, EMAIL, NICKNAME,        PASSWORD, UFILE,      MOBILE,
 values            (1,      '1@1', 'test_nickname', '1111',   'test.png', '010123' , 'provider', 'providerid'  );
 
 -- 최종 테스트용
---insert into USERS (USERID, EMAIL,          NICKNAME,  PASSWORD, UFILE,  MOBILE,           PROVIDER,  PROVIDERID)
---values            (100,    'admin@admin', 'admin',    '123',   '1.png', '010-1234-5678' , 'local',   'local_id'  );
+insert into USERS (USERID, EMAIL,          NICKNAME,  PASSWORD, UFILE,  MOBILE,           PROVIDER,  PROVIDERID)
+values            (100,    'admin@admin', 'admin',    '123',   '1.png', '010-1234-5678' , 'local',   'local_id'  );
 
 -- 최종테스트 시 사용
 -- userid=100, email=admin@admin, nickname=admin, password=123
@@ -680,11 +690,6 @@ WHERE a.constraint_type = 'R'
 );
 -- 외래키 걸린거 무시하고 해당 테이블 지우기
 DROP TABLE REVIEW CASCADE CONSTRAINTS;
-
-
-
-
-
 
 
 
@@ -740,4 +745,3 @@ DROP TABLE REVIEW CASCADE CONSTRAINTS;
 --
 ---- DELETE
 --delete from saveweather;
-

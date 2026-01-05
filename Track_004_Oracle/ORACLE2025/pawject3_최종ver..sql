@@ -17,6 +17,7 @@ CREATE TABLE USERS (
 CREATE SEQUENCE users_seq;
 
 
+
 -- 권한 테이블 (ROLE_ADMIN or ROLE_MEMBER)
 CREATE TABLE ROLES (
     AUTHID   NUMBER          PRIMARY KEY,     -- 권한 고유 ID
@@ -60,8 +61,6 @@ CREATE TABLE PETTYPE (
     pettypename VARCHAR2(100)   NOT NULL
 );
 
-
-
 -- 공지사항 내용 db 저장 테이블
 CREATE TABLE ANNOUNCEMENT (
     ID NUMBER PRIMARY KEY,
@@ -104,7 +103,6 @@ CREATE TABLE FOODBRAND (
     BRANDTYPE      VARCHAR2(50)     NOT NULL,   
     ORIGIN         VARCHAR2(50),             
     BRANDINFO      VARCHAR2(500)
-
 );
 
 --2.푸드 (FK) BRANDID : BFAND(BRANDID)/PETTYPEID : PETS(PETTYPEID) 
@@ -160,7 +158,7 @@ CREATE TABLE FOODNUTRIENT(
         REFERENCES NUTRIENT(NUTRIENTID)
 );
 
---5.영양소범위 (FK) NUTRIENTID : NUTRIENT(NUTRIENTID)		
+--5.영양소범위 (FK) NUTRIENTID : NUTRIENT(NUTRIENTID)      
 CREATE TABLE NUTRIENTRANGE (
     RANGEID      NUMBER          PRIMARY KEY,
     PETTYPEID    NUMBER          NOT NULL,
@@ -204,7 +202,7 @@ CREATE SEQUENCE REVIEW_SEQ
 START WITH 1 INCREMENT BY 1
 NOCACHE;
 
---7. 리뷰이미지  (FK)	REVIEWID : REVIEW(REVIEWID)	
+--7. 리뷰이미지  (FK)   REVIEWID : REVIEW(REVIEWID)   
 CREATE TABLE REVIEWIMG (
     REVIEWIMGID NUMBER PRIMARY KEY,
     REVIEWID NUMBER, 
@@ -311,6 +309,19 @@ create table walkingcourse (
  -- 시퀀스
 create sequence walkingcourse_seq;
 
+commit;
+
+select * from walkingcourse;
+delete from walkingcourse where courseid = 9;
+
+drop table execsmart;
+commit;
+select * from saveweather;
+desc weather;
+
+commit;
+delete from saveweather where wid=6;
+select * from execsmart;;
 
 --운동스마트게시판 + 시퀀스
 create table execsmart(
@@ -326,14 +337,22 @@ create table execsmart(
     createdat  date              default sysdate,  -- 등록일
     updatedat  date              default sysdate,  -- 수정일
 
-    constraint fk_execsmart_user    foreign key (userid)   references users(userid),
+    --constraint fk_execsmart_users    foreign key (userid)   references users(userid),
     constraint fk_execsmart_exec    foreign key (execid)   references exerciseinfo(execid),
     constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
     constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
  );
 
+
+
 create sequence execsmart_seq;
 commit;
+
+desc users;
+DROP TABLE users CASCADE CONSTRAINTS;
+
+drop table users;
+drop table execsmart;
 
 -- 4. DISEASE
 -- 질환 리스트
@@ -398,19 +417,137 @@ INSERT INTO ROLES (
     AUTHID, USERID, EMAIL, AUTH
 ) VALUES (
     roles_seq.NEXTVAL,   -- 권한 고유 ID 자동 증가
-    5,                   -- USERID
+    3,                   -- USERID
     '1@1', -- 이메일
     'ROLE_MEMBER'        -- 권한
 );
 
-CREATE SEQUENCE roles_seq;
+INSERT INTO ROLES (
+    AUTHID, USERID, EMAIL, AUTH
+) VALUES (
+    roles_seq.NEXTVAL,   -- 권한 고유 ID 자동 증가
+    100,                   -- USERID
+    'admin@admin', -- 이메일
+    'ROLE_ADMIN'        -- 권한
+);
+
+
+INSERT INTO ROLES (
+    AUTHID, USERID, EMAIL, AUTH
+) VALUES (
+    roles_seq.NEXTVAL,   -- 권한 고유 ID 자동 증가
+    9,                   -- USERID
+    '6@6', -- 이메일
+    'ROLE_ADMIN'        -- 권한
+);
 
 commit;
+CREATE SEQUENCE roles_seq;
+
+SELECT * FROM USERS WHERE USERID = '6';
+
+desc user;
+
+SELECT *
+FROM users;
+
+
+desc users;
+
+insert into users values (150, 'user@test.com', 'testuser', '123', 'file.png', '2026-01-05', '01011', 'local', 'localid' );
+insert into users values (100, 'admin@test.com', 'admin', '123', 'file.png', '2026-01-05', '01022', 'local', 'localid' );
+
+desc roles;
+select * from roles;
+INSERT INTO ROLES VALUES(1, 150, 'user@test.com', 'ROLE_MEMBER');
+INSERT INTO ROLES VALUES(9, 100, 'admin@test.com', 'ROLE_ADMIN');
+commit;
+
+select * from execsmart;
+
+select * from users;
+commit;
+
+
+commit;
+
 select * from roles;
 select * from users;
+delete from users where userid = 2;
+-- 1. 존재 확인
+SELECT * FROM roles WHERE userId = 100;
+
+-- 2. 존재하면 업데이트
+UPDATE roles
+SET auth = 'ROLE_ADMIN'
+WHERE userId = 100;
+
+-- 3. 존재하지 않으면 삽입
+INSERT INTO roles (userId, auth)
+VALUES (100, 'ROLE_ADMIN');
+
+INSERT INTO roles (authid, userId, auth)
+VALUES (1, 100, 'ROLE_ADMIN');
+
+
 delete from roles;
 
 UPDATE roles
 SET auth = 'ROLE_ADMIN'
-WHERE userId = 7
-  AND auth = 'ROLE_MEMBER';
+WHERE userId = 100;
+  --AND auth = 'ROLE_MEMBER';
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+desc appuser;
+drop table appuser;
+create table  
+DROP TABLE appuser CASCADE CONSTRAINTS;
+
+DROP TABLE appuser CASCADE CONSTRAINTS;
+  
+ALTER TABLE appuser DROP COLUMN PROVIDER;
+SELECT constraint_name, constraint_type
+FROM user_constraints
+WHERE table_name = 'APPUSER';
+
+ALTER TABLE appuser DROP COLUMN PROVIDER;
+
+  SELECT a.constraint_name, a.table_name
+FROM user_constraints a
+WHERE a.constraint_type = 'R'
+  AND a.r_constraint_name IN (
+      SELECT constraint_name
+      FROM user_constraints
+      WHERE table_name = 'APPUSER'
+  );
+DROP  TABLE APPUSER  CASCADE CONSTRAINTS;
+
+CREATE TABLE APPUSER (
+    APP_USER_ID     NUMBER NOT NULL,
+    EMAIL           VARCHAR2(255) NOT NULL UNIQUE,
+    PASSWORD        VARCHAR2(255) NOT NULL,
+    NICKNAME        VARCHAR2(100),
+    MOBILE          VARCHAR2(20),
+    MBTI_TYPE_ID    NUMBER,
+    UFILE           VARCHAR2(255),
+    CREATED_AT      DATE DEFAULT SYSDATE 
+);
+
+create sequence APPUSER_SEQ;
+
+desc appuser;
+
+
+commit;
+drop sequence  APPUSER_SEQ;
+  
+  
