@@ -1,9 +1,9 @@
+// Oracle Instant Client 초기화 (환경에 맞게 경로 수정)
+//oracledb.initOracleClient({ libDir: "C:\\oracle\\instantclient_11_2" });
+
 const  { createUser,  findUserByEmail,  verifyUser, 
      getAllUsers,  updateUserNickname,   deleteUser,  findUserById
 } = require('./models/users');
-
-// Oracle Instant Client 초기화 (환경에 맞게 경로 수정)
-oracledb.initOracleClient({ libDir: "C:\\oracle\\instantclient_11_2" });
 
 async function runTests(){
    try{
@@ -41,3 +41,5 @@ async function runTests(){
    }catch(err){  console.error('❌ 테스트 중 오류 발생:' , err); }
 }
 runTests();
+
+//  node   test1.js

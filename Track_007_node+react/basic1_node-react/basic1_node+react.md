@@ -78,8 +78,8 @@ back/
 │   ├── index.js           #   Password 초기화
 │   └── local.js           #   Local 전략 설정   
 ├── routes/
-│   └── user.js            #    사용자 관련 api 라우터
-├── node_modules/          #    npm패키지           
+│   └── user.js            #    사용자관련 api 라우터
+├── node_modules/          #    npm s패키지           
 ├── .env                   #    환경변수         
 ├── app.js                 #    서버 진입점             
 ├── package.json           # ✅ 프로젝트 설정 및 스크립트         
@@ -134,4 +134,78 @@ back/
 
 (3) [models] - [users.js]
 (4) 모델함수 테스트
+```
+error >
+$ node test1.js
+D:\seunghyun\fullstack.-d._seunghyun\Track_007_node+react\basic1_node-react\back\test1.js:44
+oracledb.initOracleClient({ libDir: "C:\\oracle\\instantclient_11_2" });  
+^
 
+ReferenceError: oracledb is not defined
+    at Object.<anonymous> (D:\seunghyun\fullstack.-d._seunghyun\Track_007_node+react\basic1_node-react\back\test1.js:44:1)
+    at Module._compile (node:internal/modules/cjs/loader:1761:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1481:32)
+    at Module._load (node:internal/modules/cjs/loader:1300:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.12.0
+```
+
+
+>
+### 2. ROUTE (router)
+back/
+├── routes/
+│   └── user.js            #    사용자관련 api 라우터
+
+주소경로
+post:   /user/register (requestBody)
+post:   /user/login    (requestBody)
+post:   /user/logout   <!--(requestBody)  단순 응담이라 필요없음-->
+get :   /user/
+patch : /user/{id}/nickname   <!-- put: 모든 데이터 다 갱신 -->
+※비교   /user/nickname?id=1   <!-- 기존에 사용했던 방식 -->
+delete : /user/{id}
+
+1. app.js
+app.use('/user', userRouter)
+
+
+1. [routes] - user.js
+
+
+### 3. Passport / 미들웨어 로그인흐름 확인
+```js
+back/
+├── middlewares/
+│   └── isAuthenticated.js # 로그인 인증 미들웨어     
+├── passport/
+│   ├── index.js           #   Password 초기화
+│   └── local.js           #   Local 전략 설정   
+```
+1. [passport] - local.js    Local 전략 설정
+2. [passport] - index.js    Password 초기화
+3. [middlewares] - isAuthenticated.js    로그인 인증 미들웨어
+4. [router]    - user.js        
+5. app.js        
+
+
+
+### 
+1. 클라이언트요청     /user/login
+2. 라우터    rotes/user.js 
+3. passport/local.js : ★LocalStategy - 이메일/비번검증해서 성공시 user반환
+    DB조회   - findUserByEmail  성공 done(null, user) 사용자반환
+4. passport/index.js : 로그인 성공시 호출 - user.APP_USER_ID 세션저장
+    ★serializeUser : 세션에 pk저장
+    ★deserializeUser : 세션의 pk로 db조회
+5. app.js   :  세션저장 ( express-session) 쿠키(connect.sid) 발급
+6. passport/index.js : 이후 요청마다 , deserializeUser 세션에 저장된 APP_USER_ID 꺼내 
+                       사용자 정보 복원
+7. middlewares/isAuthenticated.js : req.isAuthenticated()  로그인 여부 확인 , X면 401
+    ★isAuthenticated: 로그인여부 체크
+8. routes/users.js 로그아웃: 세션, 쿠키 제거

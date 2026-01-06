@@ -86,6 +86,7 @@ values(exerciseinfo_seq.nextval,
         '고양이 전용, 실내 생활 반려동물', 
         '중강도');
 
+select * from exerciseinfo;
 
 -- READ (select / selectAll )
 -- 전체게시글보기
@@ -169,20 +170,20 @@ commit;
 create sequence weather_seq;
 -- insert
 -- 맑음
-INSERT INTO saveweather ( wid,                 weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  ( weather_seq.nextval, '맑음',  20,      15,      40,         30);
+INSERT INTO saveweather ( wid,                     weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  ( saveweather_seq.nextval, '맑음',  20,      15,      40,         30);
 
 -- 안개
-INSERT INTO saveweather (wid,                 weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  (weather_seq.nextval, '흐림',   22,     17,       80,          90);
+INSERT INTO saveweather (wid,                      weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  (saveweather_seq.nextval, '흐림',   22,     17,       80,          90);
 
 -- 더운날
-INSERT INTO saveweather ( wid, weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  ( weather_seq.nextval, '더움',  34,      25,      30,           20);
+INSERT INTO saveweather ( wid,                     weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  ( saveweather_seq.nextval, '더움',  34,      25,      30,           20);
 
 -- 추운날
-INSERT INTO saveweather ( wid, weather, maxtemp, mintemp, moistpercent, rainpercent)
-VALUES                  (weather_seq.nextval, '눈',    1,       0,       10,          10);
+INSERT INTO saveweather ( wid,                     weather, maxtemp, mintemp, moistpercent, rainpercent)
+VALUES                  (saveweather_seq.nextval, '눈',    1,       0,       10,          10);
 
 
 -- READ 
@@ -270,6 +271,7 @@ values                    ( walkingcourse_seq.nextval,   1,      '북한산둘�
 insert into walkingcourse ( courseid,                    postid, location,      lat,      lng )
 values                    ( walkingcourse_seq.nextval,   1,      '반포한강공원',  37.5100,  126.9950 );
 
+
 -- READ 
 -- 산책코스전체리스트
 -- selectAll
@@ -337,6 +339,7 @@ create table execsmart(
     etitle     varchar2(100)     not null,         -- 제목
     econtent   clob              not null,         -- 내용
     eimg       varchar2(255),                      --이미지경로  
+    
     ehit       number            default 0,        -- 조회수
     createdat  date              default sysdate,  -- 등록일
     updatedat  date              default sysdate,  -- 수정일
@@ -377,11 +380,35 @@ commit;
     inner join walkingcourse w on e.courseid = w.courseid
     where e.POSTID=7;
 
+select * from execsmart;
+
 -- 글쓰기
 -- insert
 -- mapper test용
-insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,                  econtent,                                                         eimg     )
+-- 1. 산책
+insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,   econtent,        eimg     )
                values  (execsmart_seq.nextval, 1 ,     7,     1 ,    1,   'title_test1', 'content_test1', '산책.png');
+
+-- 노즈워크
+insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,   econtent,        eimg     )
+               values  (execsmart_seq.nextval, 1 ,     7,     1 ,    1,   'title_test2', 'content_test2', '노즈워크.png');
+
+-- 수영
+insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,   econtent,        eimg     )
+               values  (execsmart_seq.nextval, 1 ,     7,     1 ,    1,   'title_test3', 'content_test3', '수영.png');
+
+-- 터그놀이
+insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,   econtent,        eimg     )
+               values  (execsmart_seq.nextval, 1 ,     7,     1 ,    1,   'title_test4', 'content_test4', '터그놀이.png');
+
+-- 레이저포인터 추적
+insert into execsmart  (postid,                execid, userid, wid ,courseid  ,etitle,   econtent,        eimg     )
+               values  (execsmart_seq.nextval, 1 ,     7,     1 ,    1,   'title_test5', 'content_test5', '레이저포인터 추적.png');
+
+
+delete from execsmart;
+
+
 commit;
 
 -- 이미지 업로드용(insert)
