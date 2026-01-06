@@ -721,7 +721,7 @@ DROP TABLE REVIEW CASCADE CONSTRAINTS;
 
 
 
-
+commit;
 
 
 -- 임시보관
@@ -772,3 +772,5 @@ DROP TABLE REVIEW CASCADE CONSTRAINTS;
 --
 ---- DELETE
 --delete from saveweather;
+
+select * from appuser;
