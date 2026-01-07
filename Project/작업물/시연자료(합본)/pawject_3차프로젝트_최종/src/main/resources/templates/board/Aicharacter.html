@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head lang="ko">
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>반려동물 캐릭터 생성</title>
+
+    <style>
+  /* 하단 결과 영역 */
+  .bottom-preview {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      gap: 20px;
+      z-index: 1000;
+  }
+
+  /* 좌/우 균등 */
+  .preview-box {
+      flex: 1;                 /* ✅ 균등 분배 */
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
+      min-width: 0;
+  }
+
+  .preview-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+  }
+
+  /* ✅ 이미지 표시 영역 고정 (좌/우 동일 높이) */
+  .img-frame {
+      width: 100%;
+      height: 280px;           /* ✅ 고정 높이 */
+      border: 1px solid #eee;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fafafa;
+  }
+
+  .img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;     /* ✅ 비율 유지 */
+  }
+
+  #errorBox { margin-top: 12px; }
+  #errorMessage { font-size: 14px; line-height: 1.4; }
+
+  .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #e0e0e0;
+      border-top: 6px solid #4a90e2;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+
+  .hidden { display: none; }
+</style>
+
+    
+</head>
+
+<body>
+<div layout:fragment="content" class="container mt-4">
+
+    <!-- 페이지 제목 -->
+    <h3 class="card-header mb-3">🐾 반려동물 캐릭터 생성</h3>
+
+    <!-- 캐릭터 생성 폼 -->
+    <form id="petForm" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label">원본 이미지 업로드:</label>
+            <input type="file" class="form-control" id="file" name="file"
+                   accept="image/*" onchange="previewUploadImage(this)">
+        </div>
+
+        <div class="mb-3">
+            <label for="kindpet" class="form-label">반려동물 종:</label>
+            <input type="text" class="form-control" id="kindpet" name="kindpet"
+                   placeholder="예: 강아지, 고양이 등">
+        </div>
+
+        <div class="mb-3">
+            <label for="userid" class="form-label">사용자 ID:</label>
+            <input type="number" class="form-control" id="userid" name="userid"
+                   placeholder="사용자 ID를 입력하세요">
+        </div>
+
+        <div class="text-end">
+            <button type="button" class="btn btn-primary"
+                    onclick="generatePetCharacter()">캐릭터 생성</button>
+        </div>
+    </form>
+
+<!-- 🔽 하단 이미지 영역 -->
+<!-- <div class="bottom-preview"> -->
+
+    <!-- 좌측: 업로드 이미지 -->
+    <div class="preview-box">
+        <div class="preview-title">📷 업로드 이미지</div>
+        <!-- <img id="uploadPreview" src="" alt="업로드 이미지 미리보기"> -->
+        <div class="img-frame">
+  			<img id="uploadPreview" src="" alt="업로드 이미지 미리보기">
+		</div>
+    </div>
+
+   <!-- 우측: AI 생성 이미지 -->
+<div class="preview-box">
+  <div class="preview-title">🎨 AI 캐릭터 이미지</div>
+
+  <div class="img-frame">
+    <!-- 로딩 -->
+    <div id="loading" class="loading-spinner hidden"></div>
+
+    <!-- 결과 이미지 -->
+    <img id="aiResultImage" src="" alt="AI 생성 이미지" class="hidden">
+  </div>
+
+  <!-- 다운로드 버튼 (성공 시 표시) -->
+  <div class="mt-2">
+    <button id="downloadBtn" type="button" class="btn btn-success btn-sm hidden"
+            onclick="downloadAiImage()">⬇️ 다운로드</button>
+  </div>
+
+  <!-- 실패 메시지 -->
+  <div id="errorBox" class="hidden">
+    <p id="errorMessage" class="text-danger mb-2"></p>
+    <button type="button" class="btn btn-outline-danger btn-sm"
+            onclick="retryGenerate()">🔁 재시도</button>
+  </div>
+</div>
+
+
+
+
+<!-- </div> -->
+
+<!-- JS 로직 -->
+<script>
+/** =========================
+ *  State (전역)
+ *  ========================= */
+let lastFormData = null;      // 재시도용
+let lastAiImageUrl = null;    // blob URL 저장(다운로드/미리보기용)
+let isGenerating = false;     // 중복 요청 방지
+
+/** =========================
+ *  Helpers
+ *  ========================= */
+function getCsrf() {
+  const tokenEl = document.querySelector('meta[name="_csrf"]');
+  const headerEl = document.querySelector('meta[name="_csrf_header"]');
+  return {
+    token: tokenEl ? tokenEl.content : "",
+    header: headerEl ? headerEl.content : ""
+  };
+}
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function setHidden(el, hidden) {
+  if (!el) return;
+  el.classList.toggle("hidden", hidden);
+}
+
+function setButtonLoading(isLoading) {
+  const btn = document.querySelector('button[onclick="generatePetCharacter()"]');
+  if (!btn) return;
+
+  btn.disabled = isLoading;
+  btn.innerText = isLoading ? "생성 중..." : "캐릭터 생성";
+}
+
+/** =========================
+ *  Preview (업로드 이미지 미리보기)
+ *  ========================= */
+function previewUploadImage(input) {
+  if (input.files && input.files[0]) {
+    const url = URL.createObjectURL(input.files[0]);
+    $("uploadPreview").src = url;
+  }
+}
+
+/** =========================
+ *  FormData
+ *  ========================= */
+function createFormData() {
+  const fileInput = $("file");
+  const kindpet = $("kindpet").value.trim();
+  const userid = $("userid").value.trim();
+
+  if (!userid) throw new Error("사용자 ID가 없습니다.");
+  if (!kindpet) throw new Error("반려동물 종을 입력해주세요.");
+  if (!fileInput.files || fileInput.files.length === 0) throw new Error("원본 이미지를 업로드해주세요.");
+
+  const fd = new FormData();
+  fd.append("userid", userid);
+  fd.append("kindpet", kindpet);
+  fd.append("file", fileInput.files[0]); // ✅ key는 반드시 "file"
+
+  return fd;
+}
+
+/** =========================
+ *  Main: 생성 요청 (PNG bytes 응답)
+ *  ========================= */
+async function generatePetCharacter(formDataOverride) {
+  // 중복 클릭 방지
+  if (isGenerating) return;
+  isGenerating = true;
+  setButtonLoading(true);
+
+  const loading = $("loading");
+  const aiImage = $("aiResultImage");
+  const errorBox = $("errorBox");
+  const errorMessage = $("errorMessage");
+  const downloadBtn = $("downloadBtn");
+
+  // UI 초기화
+  setHidden(loading, false);
+  setHidden(aiImage, true);
+  setHidden(errorBox, true);
+  setHidden(downloadBtn, true);
+  errorMessage.innerText = "";
+
+  // 기존 이미지 URL 정리(메모리 누수 방지)
+  if (lastAiImageUrl && lastAiImageUrl.startsWith("blob:")) {
+    URL.revokeObjectURL(lastAiImageUrl);
+    lastAiImageUrl = null;
+  }
+  aiImage.src = "";
+
+  const { token, header } = getCsrf();
+  const formData = formDataOverride || createFormData();
+  lastFormData = formData;
+
+  try {
+    const res = await fetch("/api/pet/character", {
+      method: "POST",
+      headers: header ? { [header]: token } : {},
+      body: formData
+    });
+
+    if (!res.ok) {
+      const errText = await res.text().catch(() => "");
+      throw new Error(errText || `요청 실패 (${res.status})`);
+    }
+
+    // ✅ PNG 바이너리 응답 → blob 처리
+    const blob = await res.blob();
+
+    // 응답이 PNG인지 1차 체크(서버에서 텍스트 에러를 내려주는 경우 방어)
+    if (blob.type && blob.type !== "image/png") {
+      const maybeText = await blob.text().catch(() => "");
+      throw new Error(maybeText || `PNG가 아닌 응답입니다: ${blob.type}`);
+    }
+
+    const blobUrl = URL.createObjectURL(blob);
+    lastAiImageUrl = blobUrl;
+
+    aiImage.src = blobUrl;
+    setHidden(aiImage, false);
+    setHidden(downloadBtn, false);
+
+  } catch (e) {
+    errorMessage.innerText = e.message || "생성 중 오류가 발생했습니다.";
+    setHidden(errorBox, false);
+  } finally {
+    setHidden(loading, true);
+    isGenerating = false;
+    setButtonLoading(false);
+  }
+}
+
+/** =========================
+ *  Retry
+ *  ========================= */
+function retryGenerate() {
+  if (lastFormData) generatePetCharacter(lastFormData);
+}
+
+/** =========================
+ *  Download (blob URL로 즉시 다운로드)
+ *  ========================= */
+function downloadAiImage() {
+  if (!lastAiImageUrl) {
+    alert("다운로드할 이미지가 없습니다.");
+    return;
+  }
+
+  const a = document.createElement("a");
+  a.href = lastAiImageUrl;
+  a.download = "pet_character.png";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+</script>
+
+
+
+
+
+
+
+
+</div> 
+
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<head lang="ko">
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+      <h3 class="card-header"> 반려동물 질환 글쓰기</h3>
+	  <form th:action="@{/board/write}"  method="post"  enctype="multipart/form-data"> 
+	     <!--  <input type="hidden"   name="app_user_id"  value="">  -->
+	      <div class="mb-3">
+		    <label for="userid" class="form-label">WRITER:</label>
+		    <input type="text" class="form-control" id="userid"  name="userid">
+		  </div>
+		
+		  
+		  <div class="mb-3 mt-3">
+		    <label for="disname" class="form-label">질환명:</label>
+		    <input type="text" class="form-control" id="disname" 
+		    	placeholder="질환명을 입력해주세요" name="disname"   th:value="${dto.disname}">
+		  </div>
+		  <div class="mb-3">
+		    <label for="bpass" class="form-label">PASS:</label>
+		    <input type="password" class="form-control" id="bpass"
+		    	 placeholder="비밀번호를 입력해주세요" name="bpass">
+		  </div>
+		  
+		  <!-- <div class="mb-3">
+		    <label for="bcontent" class="form-label">CONTENT:</label>
+		    <textarea class="form-control" id="bcontent" placeholder="내용을 입력해주세요" 
+		    	name="bcontent"  th:text="${dto.bcontent}"></textarea>
+		  </div>  -->
+		  
+		  <div class="mb-3">
+		    <label for="disex" class="form-label">질환명 설명:</label>
+		    <textarea class="form-control" id="disex" placeholder="질환명 설명해주세요"   
+		    	name="disex"   th:text="${dto.disex}"></textarea>
+		  </div> 
+		  
+		    <div class="mb-3">
+		    <label for="kindpet" class="form-label">반려동물 종:</label>
+		    <textarea class="form-control" id="kindpet" placeholder="반려동물 종을 입력해주세요"   
+		    	 name="kindpet"   th:text="${dto.kindpet}"></textarea>
+		  </div> 
+		  
+		    <div class="mb-3">
+		    <label for="infval" class="form-label">질환명관련 수치:</label>
+		    <textarea class="form-control" id="infval" placeholder="질환명관련 수치 내용을 입력해주세요"   
+		    	 name="infval"   th:text="${dto.infval}"></textarea>
+		  </div> 
+		  
+		    <div class="mb-3">
+		    <label for="mannote" class="form-label">질환명관련 주의 사항:</label>
+		    <textarea class="form-control" id="mannote" placeholder="질환명관련 주의사항 입력해주세요"   
+		    	 name="mannote"   th:text="${dto.mannote}"></textarea>
+		  </div> 
+		  
+		  
+		  
+		  <!-- <div class="mb-3">
+		    <label for="file" class="form-label">FILE:</label>
+		    <input type="file" class="form-control" id="file" placeholder="비밀번호를 입력해주세요" name="file">
+		  </div> -->
+		  
+		  <div class="mb-3  text-end">
+				<button type="button" class="btn btn-secondary"
+					onclick="autoFillByAI()">🤖 AI 자동완성</button>
+				<button type="submit" class="btn btn-primary">글쓰기</button>  
+		  	<a th:href="@{/board/list}"  class="btn btn-primary">목록보기</a>
+		  </div>
+	 </form> 
+	 
+	 
+	 
+	 
+	 <script>
+	async function autoFillByAI() {
+
+	    const disname = document.getElementById("disname").value;
+
+	    if (!disname) {
+	        alert("질환명을 먼저 입력해주세요.");
+	        return;
+	    }
+
+	    const token = document.querySelector('meta[name="_csrf"]').content;
+	    const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+	    const res = await fetch("/api/ai/autocomplete", {
+	        method: "POST",
+	        headers: {
+	            "Content-Type": "application/json",
+	            [header]: token
+	        },
+	        body: JSON.stringify({ disname })
+	    });
+
+	    if (!res.ok) {
+	        alert("AI 호출 실패");
+	        return;
+	    }
+
+	    const data = await res.json();
+
+	    document.getElementById("disex").value = data.disex;
+	    document.getElementById("kindpet").value = data.kindpet;
+	    document.getElementById("infval").value = data.infval;
+	    document.getElementById("mannote").value = data.mannote;
+	}
+
+	</script>
+	</div>
+
+	
+
+
+
+</body>
+</html>

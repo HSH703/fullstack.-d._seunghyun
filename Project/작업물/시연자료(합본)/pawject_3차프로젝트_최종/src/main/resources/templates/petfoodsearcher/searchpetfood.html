@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<head lang="ko">
+<meta charset="UTF-8">
+<title>사료 찾기</title>
+</head>
+<body>
+	<div layout:fragment="content">
+
+
+    <h2 class="foodsearcher-title">사료 찾기</h2>
+    
+    <div class="filterbox">
+    
+		<div class="filter-row row">
+
+			<div class="pettypeidfilter col-4 mb-2">
+				<select name="pettypeid" id="pettypeid" class="form-control" >
+					<option value="">-- 모든 펫타입 --</option>
+					 <option value="1" data-name="고양이">고양이</option>
+					 <option value="2" data-name="강아지">강아지</option>
+				</select>
+			</div>
+
+			<div class="foodtypefilter col-4 mb-2">
+				<select name="foodtype"	id="foodtype" class="form-control">
+					<option value="">-- 건식/습식 --</option>
+					<option value="건식">건식</option>
+					<option value="습식">습식</option>
+				</select>
+			</div>
+
+			<div class="brandidfilter col-4 mb-2">
+			  <select name="brandid" id="brandid" class="form-control">
+			    <option value="">-- 모든 브랜드 --</option>	
+			    <option th:each="b : ${brandlist}"
+			            th:value="${b.brandid}"
+			            th:text="${b.brandname}">
+			    </option>
+			  </select>
+			</div>
+			
+			<div class="foodidfilter col-4 mb-2">
+			  <select name="foodid" id="foodid" class="form-control">
+			    <option value="">-- 모든 사료 --</option>	
+			    <option th:each="f : ${foodlist}"
+			    		th:data-pet="${f.pettypeid}"
+			    		th:data-brand="${f.brandid}"
+			            th:value="${f.foodid}"
+			            th:text="${f.foodname}">
+			    </option>
+			  </select>
+
+			</div>
+		</div>
+		
+		<div class="filter-row row">	
+		  <div class="col d-flex justify-content-center gap-2">
+		    <input type="text" id="keyword"
+		           placeholder="찾으시는 사료나 재료를 입력해 주세요"
+		           class="form-control" style="width:300px;">
+		    <button type="button" class="btn btn-slateBlue" onclick="searchPetfood()">검색</button>
+		  </div>
+		</div>
+		
+		<div class="row">
+		  <div class="col d-flex justify-content-end gap-2">
+		    <button type="button"
+		            id="searchFilterToggle"
+		            onclick="toggleContent()"
+		            class="btn btn-mint">
+		      상세조건
+		    </button>
+		  </div>
+		</div>		
+		
+		<!-- 여기가 토글 -->
+		<div id="searchFilterPanel" class="hidden">
+
+	  		<div class="filter-row row">	
+				<div class="categoryfilter col-3 mb-2">
+					<select name="category" id="category" class="form-control">
+						<option value="">-- 모든 유형 --</option>
+						<option value="일반">일반</option>
+						<option value="처방식">처방식</option>
+						<option value="기능식">기능식</option>
+					</select>
+				</div>
+	
+				<div class="petagegroupfilter col-3 mb-2">
+					<select name="petagegroup" id= "petagegroup" class="form-control">
+						<option value="">-- 모든 연령 --</option>
+						<option value="어덜트">어덜트</option>
+						<option value="시니어">시니어</option>
+						<option value="키튼">키튼</option>
+						<option value="퍼피">퍼피</option>
+					</select>
+				</div>
+	
+				<div class="isgrainfreefilter col-3 mb-2">
+					<select name="isgrainfree" id="isgrainfree" class="form-control">
+						<option value="">-- 그레인프리?--</option>
+						<option value="Y">Y</option>
+						<option value="N">N</option>
+					</select>
+				</div>
+				
+				<div class="originfilter col-3 mb-2">
+					<select name="origin" id="origin" class="form-control">
+						<option value="">-- 국내/해외 --</option>
+						<option value="국내">국내</option>
+						<option value="해외">해외</option>
+					</select>
+				</div>	
+
+			</div>
+			
+		<div class="filter-row row">	
+
+		  <div class="rangelabelfilter col-3 mb-2">
+		    <select name="rangeid" id="rangeid" class="form-control">
+		      <option value="">-- 영양소 범위 --</option>	
+		      <option th:each="r : ${rangelist}"
+		              th:data-pet="${r.pettypeid}"
+		              th:value="${r.rangeid}"
+		              th:text="${r.rangelabel}">
+		      </option>
+		    </select>
+		  </div> 
+		  
+		<div class="caloriefilter col-8 mb-2">
+		  <div class="input-group">
+		    <span class="input-group-text">칼로리</span>
+		    <input type="text" class="form-control" name="minvalue" placeholder="최소">
+		    <span class="input-group-text">~</span>
+		    <input type="text" class="form-control" name="maxvalue" placeholder="최대">
+		    <span class="input-group-text">kcal</span>
+		  </div>
+		</div>	
+			
+		</div> <!-- filter-row -->
+		
+    </div><!-- searchFilterPanel -->
+
+	</div><!-- filterbox -->	
+	
+	
+	<!-- ai 상담창 -->
+		<div class="ai-helper-box mt-4">
+		  <div class="ai-helper-header">
+		    <span class="ai-badge">AI</span>
+		    <span class="ai-helper-text">검색 조건 설정에 도움이 필요하신가요?</span>
+		    <button type="button" id="askBtn" class="btn btn-sm btn-green">질문하기</button>
+		    <button type="button" id="openBtn" class="btn btn-sm btn-olive" open-close = "false">
+			  열기
+			</button>
+		  </div>
+		  
+		 <div class="ai-panel d-none mt-3" id="aiPanel">
+		  <!-- 입력 -->
+		  <div class="ai-ask-box">
+		    <div class="mb-3 ai-ask-content">
+		      <textarea class="form-control" id="userMessage"
+		                placeholder="필요하신 조건을 설명해 주세요"></textarea>
+		    </div>
+		  </div>
+		  <!-- 구분선 -->
+		  <hr class="ai-divider">
+		
+		  <!-- 결과 -->
+		  <div class="ai-result-box d-none" id="responseWrap">
+		    <pre id="response" class="ai-result-content"></pre>
+		  </div>
+		</div>
+		
+		</div>
+
+	
+	<!-- 검색결과 -->
+	<!-- SELECT B.BRANDNAME, F.FOODNAME , F.FOODIMG, R.AVGRATING, F.DESCRIPTION -->
+	 <div> 
+	 
+		<div class="d-flex justify-content-end mb-2 mt-3" id="conditionWrap">
+		  <select id="condition" class="condition form-select form-select-sm" style="width:120px;">
+		    <option value="">정렬</option>
+		    <option value="foodnameAsc">사료명</option>
+		    <option value="foodnameDesc">사료역순</option>
+		    <option value="brandnameAsc">브랜드명</option>
+		    <option value="brandnameDesc">브랜드역순</option>
+		    <option value="avgratingDesc">높은별점</option>
+		    <option value="avgratingAsc">낮은별점</option>
+		  </select>
+		</div>
+	
+	<table class="resultTable">
+	
+	<input type="hidden" id="csrfHeader" th:value="${_csrf.headerName}">
+	<input type="hidden" id="csrfToken"  th:value="${_csrf.token}">
+	 	
+	  <thead>
+	    <tr>
+	      <th scope="col">검색 결과</th>
+	    </tr>
+	  </thead>
+	
+	 <tbody id="resultBody"></tbody>
+
+	</table>
+	
+	<!-- 페이징 -->
+	<div id="pagingArea" class="mt-2 text-center"></div>
+	
+	
+<div class="modal fade" id="foodModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <!-- Header -->
+		<div class="modal-header align-items-start">
+		  <div>
+		    <div class="d-flex align-items-center gap-2">
+		      <h5 class="modal-title mb-0" id="modal-foodname"></h5>
+		      <span class="badge bg-light text-dark border" id="modal-pettypeid"></span>
+		    </div>
+		    <small class="text-muted d-block mt-1" id="modal-brandline"></small>
+		  </div>
+		
+		  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		</div>
+
+      <!-- Body -->
+      <div class="modal-body">
+
+        <!-- 기본 정보 -->
+        <div class="row g-2 small mb-3">
+
+          <div class="col-4 text-muted">유형</div>
+          <div class="col-8" id="modal-foodtype"></div>
+
+          <div class="col-4 text-muted">그레인프리</div>
+          <div class="col-8" id="modal-isgrainfree"></div>
+
+          <div class="col-4 text-muted">분류</div>
+          <div class="col-8" id="modal-category"></div>
+
+          <div class="col-4 text-muted">연령</div>
+          <div class="col-8" id="modal-petagegroup"></div>
+
+          <div class="col-4 text-muted">칼로리</div>
+          <div class="col-8" id="modal-calorie"></div>
+        </div>
+
+        <hr>
+
+        <!-- 원재료 -->
+        <div class="mb-3">
+          <div class="fw-bold mb-1">원재료</div>
+          <div class="small">
+            <div><span class="text-muted">주재료:</span> <span id="modal-mainingredient"></span></div>
+            <div><span class="text-muted">부재료:</span> <span id="modal-subingredient"></span></div>
+          </div>
+        </div>
+
+        <!-- 설명 -->
+        <div class="mb-3">
+          <div class="fw-bold mb-1">제품 설명</div>
+          <p class="small mb-0" id="modal-description"></p>
+        </div>
+
+        <!-- 영양 -->
+        <div>
+          <div class="fw-bold mb-1">영양 정보</div>
+          <p class="small mb-0" id="modal-nutriinfo"></p>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+          닫기
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+	
+	
+			 
+	 
+	 </div>
+
+<script>
+// 전역변수-토큰
+let csrfToken = $("#csrfToken").val();
+let csrfHeader = $("#csrfHeader").val();
+
+// 전역변수-페이징
+let currentMode = "list";
+let currentKeyword = "";
+let currentPageNo = 1;
+
+//정렬
+let currentCondition = null; 
+
+//초기화 - 이거 안하면 입장하자마자 버튼 보임
+$(function () {
+    $("#askBtn").hide(); 
+    $("#conditionWrap").addClass("d-none");
+}); 
+
+//버튼 토글
+document.getElementById("openBtn").addEventListener("click", function () {
+    const askBox = document.getElementById("aiPanel");
+    if (!askBox) return;
+
+    // 토글 - 그다음 오픈 순서 주의
+    askBox.classList.toggle("d-none");
+    const isOpen = !askBox.classList.contains("d-none");
+
+    // 버튼 텍스트
+    this.textContent = isOpen ? "닫기" : "열기";
+    this.setAttribute("open-close", String(isOpen));
+
+    // ask 
+    if (isOpen) {
+        $("#askBtn").show();
+    } else {
+        $("#askBtn").hide();
+    }
+
+});
+
+//ai
+$(document).on("click", "#askBtn", function () {
+
+    const user = $("#userMessage").val().trim();
+
+    if (user.length === 0) {
+        alert("조건이 입력되지 않았습니다");
+        return;
+    }
+   
+    $.ajax({
+        url: "/petfoodsearcher/foodapi",
+        type: "POST",
+        data: {userMessage : user},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (result) {
+            
+        	const guidMessage = "\n검색 버튼을 눌러 결과를 확인해 보세요.";
+        	$("#response").text(result.message + guidMessage);	  //result만 쓰면 안나옴!!
+            $("#responseWrap").removeClass("d-none"); // 결과 영역 열기
+
+            toggleContent(); 
+            applyAiFilters(result.filters);
+        },
+        error: function () {
+            alert("AI 요청 중 오류가 발생했습니다.");
+        }
+    });
+});
+
+//필터 대체하기
+
+// 펫타입은 아이디만 받아와서 교체해줌 - ai 해석용
+function applypettypename(pettypename) {
+    $("#pettypeid option").each(function () {
+        if ($(this).data("name") === pettypename) {
+            $("#pettypeid").val($(this).val());
+        }
+    });
+}
+
+function applyAiFilters(filters) {
+	
+	if (filters.pettype){
+        applypettypename(filters.pettype);   //담에 꼭 반정규화 하기 여유 있을 초반에....
+    }
+    
+    if (filters.foodtype) {
+        $("#foodtype").val(filters.foodtype);
+    }    
+
+	if (filters.brandname){  //id->name->id
+        $("#brandid option").each(function () {
+            if ($(this).text().trim() === filters.brandname) {
+                $("#brandid").val($(this).val());
+            }
+        });
+    }
+    if (filters.category) {
+        $("#category").val(filters.category);
+    } 
+
+    if (filters.petagegroup) {
+        $("#petagegroup").val(filters.petagegroup);
+    }
+        
+    if (filters.isgrainfree === "Y") {
+        $("#isgrainfree").prop("checked", true);
+    } else if (filters.isgrainfree === "N") {
+        $("#isgrainfree").prop("checked", false);
+    }
+    
+    if (filters.origin) {
+        $("#origin").val(filters.origin);
+    }    
+
+	if (filters.rangelabel){  //id->name->id
+        $("#rangeid option").each(function () {
+            if ($(this).text().trim() === filters.rangelabel) {
+                $("#rangeid").val($(this).val());
+            }
+        });
+    }    
+    
+    
+}
+
+
+//검색 결과 정렬
+$(document).on("change", ".condition", function () {
+    currentCondition = $(this).val() || null;
+    currentPageNo = 1;
+    
+	  const params = cleanParams({
+		    ...collectSearchParams(),
+		    keyword: currentKeyword,
+		    pstartno: 1  
+		  });
+		
+		  doPetfoodSearch(params);
+
+});
+
+		
+
+		
+		//토글
+		function toggleContent() {
+			  const panel = document.getElementById("searchFilterPanel");
+			  if (!panel) return;
+			  panel.classList.toggle("hidden");
+			}
+			
+		//페이징 버튼
+		$(document).on("click", ".pageBtn", function(){
+		  let page = $(this).data("page");
+		
+		  //여기 조심!
+		  const params = cleanParams({
+		    ...collectSearchParams(),
+		    keyword: currentKeyword,
+		    pstartno : page
+		  });
+		
+		  doPetfoodSearch(params);
+		});
+		
+		//검색필터
+	    window.onload = function () {
+	        const pet = document.getElementById("pettypeid");
+	        const brand = document.getElementById("brandid");
+	        const food = document.getElementById("foodid");
+	        const range = document.getElementById("rangeid");
+
+	        //펫타입+브랜드->사료
+	        function filterFood() {
+	          const p = pet.value;
+	          const b = brand.value;
+
+	          for (let i = 0; i < food.options.length; i++) {
+	            const opt = food.options[i];
+
+	            if (!opt.getAttribute("data-pet")) {
+	              opt.style.display = "block";
+	              continue;
+	            }
+
+	            const petOk = (p === "") || (opt.getAttribute("data-pet") === p);
+	            const brandOk = (b === "") || (opt.getAttribute("data-brand") === b);
+
+	            opt.style.display = (petOk && brandOk) ? "block" : "none";
+	          }
+
+	          food.value = "";
+	        }
+			//펫타입->라벨
+	        function filterRange() {
+	          const p = pet.value;
+
+	          for (let i = 0; i < range.options.length; i++) {
+	            const opt = range.options[i];
+
+	            if (!opt.getAttribute("data-pet")) {
+	              opt.style.display = "block";
+	              continue;
+	            }
+
+	            const petOk = (p === "") || (opt.getAttribute("data-pet") === p);
+	            opt.style.display = petOk ? "block" : "none";
+	          }
+
+	          range.value = "";
+	        }
+
+	        pet.onchange = function () {
+	          filterFood();
+	          filterRange();
+	        };
+	        brand.onchange = filterFood;
+	      };
+		
+	
+		//별점 표시
+		function ratingToStar(avgrating) {
+			  const r = Math.round(avgrating);
+
+			  if (r === 5) return "★★★★★ (" + avgrating.toFixed(1) + ")";
+			  if (r === 4) return "★★★★☆ (" + avgrating.toFixed(1) + ")";
+			  if (r === 3) return "★★★☆☆ (" + avgrating.toFixed(1) + ")";
+			  if (r === 2) return "★★☆☆☆ (" + avgrating.toFixed(1) + ")";
+			  if (r === 1) return "★☆☆☆☆ (" + avgrating.toFixed(1) + ")";
+			  return "☆☆☆☆☆";
+			}
+		
+		//검색 - 파라미터 int 타입들 빈값 오류 방지
+		function cleanParams(obj){
+			  const result = {};
+			  for (const key in obj) {
+			    if (obj[key] !== "" && obj[key] !== null && obj[key] !== undefined) {
+			      result[key] = obj[key];
+			    }
+			  }
+			  return result;
+			}
+		// 파라미터 따로 빼주기
+		function collectSearchParams() {
+			  return {
+			    keyword: document.getElementById("keyword")?.value.trim(),
+			    pettypeid: document.getElementById("pettypeid")?.value,
+			    foodtype: document.getElementById("foodtype")?.value,
+			    brandid: document.getElementById("brandid")?.value,
+			    foodid: document.getElementById("foodid")?.value,
+			    category: document.getElementById("category")?.value,
+			    petagegroup: document.getElementById("petagegroup")?.value,
+			    isgrainfree: document.getElementById("isgrainfree")?.value,
+			    origin: document.getElementById("origin")?.value,
+			    rangeid: document.getElementById("rangeid")?.value,
+			    minvalue: document.querySelector("input[name='minvalue']")?.value,
+			    maxvalue: document.querySelector("input[name='maxvalue']")?.value
+			  };
+			}
+		
+		//검색 - 전체 스캔 방지
+			function searchPetfood() {
+	
+			  const rawParams = collectSearchParams();  //전체 값
+			  const params = cleanParams(rawParams);	//빈값 지우기
+			
+			  if (Object.keys(params).length === 0) {
+			    alert("검색 조건을 하나 이상 선택해 주세요.");
+			    return;
+			  }
+			  params.pstartno = 1;  //검색 페이지 여기서 설정해줘야됨
+			  doPetfoodSearch(params);
+			}
+		 function doPetfoodSearch(params){
+
+			 currentMode = "list";
+			 currentKeyword = params.keyword || "";   //값이 빈 인자 존재
+			 currentPageNo  = params.pstartno || 1;		// 그냥 currentKeyword = keyword 아렇게 받으면 터짐.
+			  											// 컨트롤러 지저분한 것과 같슨
+			 params.condition = currentCondition;  //params 안에 넣어주기									
+			  											
+			  $.ajax({
+			    url:"/petfoodsearcher/searchfilterPaging",
+			    type:"GET",
+			    data:params, 
+			    beforeSend: function(xhr){
+			      if(csrfHeader && csrfToken){
+			        xhr.setRequestHeader(csrfHeader, csrfToken);
+			      }
+			    },
+
+			    success: function(result){
+			      const list = result.list;   // 빼먹지말기
+			      const total = result.total;
+			      
+			      const $tbody = $("#resultBody");
+			      $tbody.empty();
+
+			      if(!list || list.length === 0){
+			        $tbody.append(`
+			          <tr>
+			            <td>검색 결과가 없습니다.</td>
+			          </tr>
+			        `);
+			        return;
+			      }
+			      
+			      
+			      if(list && list.length > 0){
+			    	    $("#conditionWrap").removeClass("d-none");
+			    	  } else {
+			    	    $("#conditionWrap").addClass("d-none");
+			    	  }			      
+
+			      list.forEach(function(f){
+
+			        const imgSrc = f.foodimg ? `/foodimg/${f.foodimg}` : `/foodimg/brand0${f.brandid}.png`;
+
+			        const row = `
+			          <tr>
+			            <td style="display:flex; align-items:flex-start; gap:16px;">
+			              <img src="${imgSrc}"
+			                   style="width:160px; height:160px; object-fit:cover; border-radius:12px;">
+			              <div class="d-flex flex-column justify-content-between">
+			                <div>
+			                  <span class="rating">${ratingToStar(f.avgrating)}</span><br>
+			                  <span class="brand">${f.brandname}</span><br>
+			                  <span class="foodname">${f.foodname}</span><br>
+			                  <span class="desc">${f.description}</span>
+			                </div>
+			                <div class="action">
+				                
+			                <button class="btn btn-olive btn-sm modalbtn"
+			                    data-foodid="${f.foodid}"
+			                    data-bs-toggle="modal"
+			                    data-bs-target="#foodModal">
+			                상세보기
+			            </button>
+				        	
+			        	<button class="btn btn-olive btn-sm"
+					            onclick="window.open(
+							              '/reviewboard/reviewlist?foodid=${f.foodid}',
+							              'detailPopup',
+							              'width=900,height=700,scrollbars=yes,resizable=yes'
+							            )">
+			        	리뷰</button> 	
+	
+			                 </div>
+			              </div>
+			            </td>
+			          </tr>
+			        `;
+
+			        $tbody.append(row);
+			      });
+			      
+			      
+			      renderPaging(result.paging);  //페이징
+			      
+			      
+			    },
+
+			    error: function(){
+			      alert("검색 중 오류가 발생했습니다.");
+			    }
+			    
+			    
+			  });
+			}
+		 
+		 function renderPaging(p){
+			  let area = $("#pagingArea");
+			  area.empty();
+
+			  if(!p || p.pagetotal <= 1) return;
+
+			  let html = "";
+			  let end = Math.min(p.end, p.pagetotal);
+
+			  if(p.start > 1){
+			    html += `<button class="btn btn-sm btn-outline-primary pageBtn" data-page="${p.start-1}">이전</button>`;
+			  }
+
+			  for(let i=p.start; i<=end; i++){
+			    let active = (i === p.current) ? "btn-primary" : "btn-outline-primary";
+			    html += `<button class="btn btn-sm ${active} pageBtn ms-2" data-page="${i}">${i}</button>`;
+			  }
+
+			  if(end < p.pagetotal){
+			    html += `<button class="btn btn-sm btn-outline-primary pageBtn ms-2" data-page="${end+1}">다음</button>`;
+			  }
+
+			  area.html(html);
+			}		 
+
+		 
+//모달 
+
+$(document).on("click", ".modalbtn", function () {
+    const foodid = $(this).data("foodid");
+
+    $.get("/petfoodsearcher/modalcard", { foodid }, function (res) {
+    	
+    	$("#modal-foodname").text(res.foodname);
+    	$("#modal-brandline").text(
+    			  `${res.brandname} · ${res.country} · ${res.brandtype} · ${res.brandinfo}`
+    			);
+    	$("#modal-pettypeid").text(res.pettypeid =="1"? "고양이 사료" : "강아지 사료");
+        $("#modal-foodtype").html(res.foodtype);
+        $("#modal-isgrainfree").text(res.isgrainfree === "Y" ? "그레인프리" : "일반");
+        $("#modal-category").html(res.category);
+        $("#modal-petagegroup").html(res.petagegroup);
+        $("#modal-calorie").html(res.calorie);
+        $("#modal-mainingredient").html(res.mainingredient);
+        $("#modal-subingredient").html(res.subingredient);
+        $("#modal-nutriinfo").html(res.nutriinfo);
+        $("#modal-description").html(res.description);
+    });
+});
+
+		 
+		 
+		</script>
+
+
+
+
+
+	</div><!-- content-->
+	
+
+
+
+</body>
+</html>
