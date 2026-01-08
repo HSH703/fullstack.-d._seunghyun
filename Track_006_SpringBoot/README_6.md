@@ -96,12 +96,12 @@ pawject3( ~ 연장)
 
 ### day091.md
 ---
-pawject3( ~ 진짜 마무리)
+pawject3( ~ 진짜 마무리/시연회)
 ---
 
 ### day092.md
 ---
-
+X
 ---
 
 ### day093.md
