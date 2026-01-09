@@ -209,3 +209,70 @@ back/
 7. middlewares/isAuthenticated.js : req.isAuthenticated()  로그인 여부 확인 , X면 401
     ★isAuthenticated: 로그인여부 체크
 8. routes/users.js 로그아웃: 세션, 쿠키 제거
+
+
+
+
+### 1. 프로젝트초기화
+1. reducer (주방레시피대로 상태바꾸기 - 치킨의 상태) 조리 시작, 조리중. 조리완료 ...
+2. saga    (배달기사 - 서버에 다녀오기)
+3. store   (치킨집   - 모든 상태를 모아두는 중앙창고 /  주방의 상태, 배달기사의 배달여부 )
+
+1) `View` 손님이 주문 `/users/login.js` → (store에 액션 전달: 치킨집)
+                                     → 액션을 saga/reducer로 전달
+2)   배달 기사가 서버에 다녀오고     (saga)     성공/실패 
+3) 주방레시피대로 상태바꾸기       (reducer)    결과에 따라 상태(state)를 변경
+4) 치킨집(store) 업데이트
+5) 'View' 화면반영   →  상태감지하고 화면에 그림 그리기
+
+
+<구동 흐름>
+사용자 액션 (버튼클릭, 로그인 요청 등)
+            ↓
+    [View 컴포넌트]
+    
+================================
+ - dispatch(type: LOG_IN_REQUEST, data)
+ - 화면에서 액션 발생
+
+             ↓
+          [Store]
+
+================================
+- 중앙창고 (Redux Store)
+- 모든상태(state) 저장
+- 액션을 reducer/saga로 전달
+
+             ↓
+            [Saga (Middleware)]
+
+================================
+ - 비동기 작업 담당 (API)
+ - 예) axios.post('/user/login')
+ - 성공 - LOG_IN_SUCCESS
+ - 실패 - LOG_IN_FAILURE
+
+             ↓
+            [Reducer]
+================================
+ - 상태(state) 변경 규칙서
+ - LOG_IN_SUCCESS  → me 업데이트
+ - LOG_IN_FAILURE  → error 저장
+
+             ↓
+          [Store]
+================================
+ - 변경된 상태를 중앙창고에 반영
+ 
+             ↓
+          [View 리렌더링]
+
+================================
+ - useSelect로 상태읽기
+
+
+
+
+1. [reducers] - user.js     ※ post.js, hashtag.js,,,,,
+2. [reducers] - index.js    
+3. [reducers] - user.test.js   

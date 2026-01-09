@@ -29,9 +29,14 @@ const  app = express();           // express 애플리케이션 인스턴스 생
 // ✅ 기본 미들웨어 
 app.use(express.json());                        // json 파싱 미들웨어 (POST요청  body를 JSON으로 읽기)
 app.use(express.urlencoded({extended: true}));  // URL-encoded 파싱 미들웨어 ( form 데이터 처리)
-app.use(cors());                                // 모든 도메인에 api호출 허용
-app.use(morgan('dev'));                         // 개발모드에서 요청로그출력
-app.use(helmet());                              // 기본보안 헤더 적용( XSS, CSP 등)
+// app.use(cors());                                // 모든 도메인에 api호출 허용
+// app.use(morgan('dev'));                         // 개발모드에서 요청로그출력
+// app.use(helmet());                              // 기본보안 헤더 적용( XSS, CSP 등)
+app.use(cors({
+  origin: 'http://localhost:3000',  // 프론트엔드 주소를 정확히 명시
+  credentials: true                 // 쿠키/세션 허용
+}));
+
 
 // ✅ 세션설정 ( 쿠키 기반 세션 관리 )
 app.use(session({

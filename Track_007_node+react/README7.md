@@ -22,5 +22,5 @@ basic1_node-react/front
 
 ### day093.md
 ---
-basic1_node-react/
+basic1_node-react/front
 ---

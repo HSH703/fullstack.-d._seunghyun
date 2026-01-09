@@ -244,3 +244,99 @@ console.log( gen2.next() );
 6. delete : /user/{id}
 
 
+
+
+
+##
+1. post: /user/register  - data
+ *               email: { type: string }
+ *               password: { type: string }
+ *               nickname: { type: string }
+ *               mobile: { type: string }
+ *               mbtiTypeId: { type: integer }
+ *               ufile: { type: string }
+
+2. post: /user/login    - data
+ *               email: { type: string }
+ *               password: { type: string }
+
+3. post: /user/logout  
+
+4. get: /user/   
+
+5. patch: /user/{id}/nickname  - data
+ *               nickname: { type: string }
+
+6. delete : /user/{id} 
+
+
+
+사용자 액션 (버튼클릭, 로그인 요청 등)
+             ↓
+        [View  컴포넌트]   
+    _______________________________
+    - dispatch({type:LOG_IN_REQUEST , data})
+    - 화면에서 액션발생    
+
+             ↓
+          [Store]
+    _______________________________
+    - 중앙창고 (Redux Store)
+    - 모든상태(state)저장
+    - 액션을  reducer/saga 로 전달
+
+             ↓
+          [Saga (Middleware)]
+    _______________________________
+    - 비동기 작업 담당 (API)
+    - 예) axios.post('/user/login')
+    - 성공 -  LOG_IN_SUCCESS
+    - 실패 -  LOG_IN_FAILURE
+    
+             ↓
+          [Reducer]
+    _______________________________
+    - 상태(state) 변경 규칙서
+    - LOG_IN_SUCCESS → me 업데이트
+    - LOG_IN_FAILURE → error 저장
+
+             ↓
+          [Store]
+    _______________________________
+    - 변경된 상태를 중앙창고에 반영
+
+             ↓
+
+        [View  리렌더링]   
+    _______________________________
+    - useSelector로 상태읽기
+
+
+
+### 7. 개발  ( reducer - sage - view ) (3) Store
+front/
+├── store/                  # ✅ Redux 스토어 설정 폴더
+│   ├── configureStore.js   # Redux 스토어 설정
+│   └── configureStore.test.js # 스토어 테스트 코드
+
+1. store/configureStore.js
+2. store/configureStore.test.js
+
+
+### 8. view
+```
+front/
+
+├── pages/                  # ✅ Next.js 라우팅 기반 페이지 폴더
+│   ├── _app.js             # 전체 앱의 공통 설정 (Redux Provider, 글로벌 스타일 등)
+│   ├── index.js            # 메인 페이지
+│   ├── login.js            # 로그인 페이지
+│   ├── signup.js           # 회원가입 페이지
+│   └── users.js            # 사용자 목록 또는 정보 페이지 
+```
+
+1. `useSelector`  → Redux store 에서 사용자 상태 가져오기
+2. `userEffect`   → 로그인 여부 확인 및 사용자 목록 불러오기
+3. `dispatch`     → 액션 발생을 감지 (로그인, 사용자 삭제,,,)
+
+
