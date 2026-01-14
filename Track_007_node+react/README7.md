@@ -35,12 +35,12 @@ test/test-front
 
 ### day095.md
 ---
-basic2_boot_react/back
+basic2_boot_react/back(Entity)
 ---
 
 ### day096.md
 ---
-
+basic2_boot_react/back(Repository)
 ---
 
 ### day097.md

@@ -42,7 +42,7 @@
 <br/>
 
 
-##### [실습]  2. model 
+##### [실습]  2. model ( 엔티티 → 레파지토리 → 서비스 )
 1. 엔티티 관계도
 2. 엔티티 작성
 
@@ -79,9 +79,44 @@ AppUser 관계매핑 (이미지)
  - 한 사람이 여러글을 쓸수 있다.  (OneToMany)
  - 글(Post) 쪽에서는 누가 썼는지 기억 ( ManyToOne )
 
-
-
+Image
+```
+Long id, String src, Post post;
 ```
 
+
+2. 레파지토리
+[com.thejoa703.repository] 
+
+ - [X] 1. AppUserRepository
+ - [x] 2. PostRepository
+ - [x] 3. ImageRepository
+ - [x] 4. HahstagRepository
+ - [x] 5. CommentRepository
+ - [x] 6. FollowRepository
+ - [x] 7. RetweetRepository
+ - [x] 8. PostLikeRepository
+
 ```
+참고경로: [https://docs.spring.io/spring-data/jpa/docs/current-SNAPSHOT/reference/html/?utm_source=copilot.com#jpa.query-methods.query-creation]
+
+
+ @Repository
+ public interface AppUserRepository extends JpaRepository <AppUser, Long>{  //Entity, PK
+
+ }
+
+CREATE  : save(CREATE/INSERT)     - INSERT INTO appuser (컬럼1, 컬럼2,,,) values (?,?,,,,)
+READ    : findAll  - SELECT * from appuser (전체조회)
+          findById - SELECT * from appuwer where id=? ( 단건 조회 / 사용자조회)
+UPDATE  : save     - update appuser set 컬럼1=? , 컬럼2=? where id=?
+DELETE  : delete   - delete from appuser where id=?
+```
+
+         사용자      관리자
+CREATE   ◎회원가입    ◎회원가입
+READ     로그인, 이메일중복, 닉네임중복, <!-- 페이징이 들어간 유저조회(모바일 인증번호,,,) --> 
+UPDATE   ◎닉네임수정, ◎이미지수정
+DELETE   ◎회원탈퇴
+
 

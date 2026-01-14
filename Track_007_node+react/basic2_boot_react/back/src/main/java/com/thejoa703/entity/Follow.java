@@ -1,7 +1,6 @@
 package com.thejoa703.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,9 +51,6 @@ public class Follow {
 		this.follower = follower;
 		this.followee = followee;
 	   }
-	   
-	   
-	   
 	   
 }
 /*
