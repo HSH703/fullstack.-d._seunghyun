@@ -15,8 +15,10 @@ CREATE TABLE USERS (
     CONSTRAINT uq_users_email_provider UNIQUE (EMAIL, PROVIDER)
 );
 CREATE SEQUENCE users_seq;
+drop table USERS;
+drop sequence users_seq;
 
-
+DROP TABLE USERS CASCADE CONSTRAINTS;
 
 -- 권한 테이블 (ROLE_ADMIN or ROLE_MEMBER)
 CREATE TABLE ROLES (
@@ -30,6 +32,7 @@ ALTER TABLE ROLES
     REFERENCES USERS (USERID);
 
 
+DROP TABLE ROLES CASCADE CONSTRAINTS;
 
 
 -- 펫 테이블
@@ -53,6 +56,9 @@ ALTER TABLE PETS
     ADD CONSTRAINT fk_pets_pettype FOREIGN KEY (PETTYPEID)
         REFERENCES PETTYPE (PETTYPEID);
 
+
+DROP TABLE PETS CASCADE CONSTRAINTS;
+drop sequence pets_seq;
 CREATE SEQUENCE pets_seq;
 
 -- 펫 타입 테이블( 강아지, 고양이 선택 )
@@ -71,6 +77,9 @@ CREATE TABLE ANNOUNCEMENT (
 CREATE SEQUENCE ANNOUNCEMENT_seq;
 
 
+DROP TABLE ANNOUNCEMENT CASCADE CONSTRAINTS;
+drop sequence  ANNOUNCEMENT_seq;
+
 
 -- 알림 숨김 테이블( 사용자가 x 버튼을 누르면 해당 사용자 알림 삭제 )
 CREATE TABLE HIDDENANNOUNCEMENT (
@@ -78,6 +87,10 @@ CREATE TABLE HIDDENANNOUNCEMENT (
     ANNOUNCEMENTID NUMBER NOT NULL,
     PRIMARY KEY (USERID, ANNOUNCEMENTID)
 );
+
+DROP TABLE HIDDENANNOUNCEMENT CASCADE CONSTRAINTS;
+
+
 
 ALTER TABLE HIDDENANNOUNCEMENT 
 ADD CONSTRAINT FK_HID_ANN_ID 
@@ -104,6 +117,10 @@ CREATE TABLE FOODBRAND (
     ORIGIN         VARCHAR2(50),             
     BRANDINFO      VARCHAR2(500)
 );
+
+DROP TABLE FOODBRAND CASCADE CONSTRAINTS;
+drop sequence  ANNOUNCEMENT_seq;
+
 
 --2.푸드 (FK) BRANDID : BFAND(BRANDID)/PETTYPEID : PETS(PETTYPEID) 
 drop table food;
@@ -135,12 +152,19 @@ CREATE SEQUENCE food_seq
 START WITH 1 INCREMENT BY 1
 NOCACHE;
 
+DROP TABLE FOOD CASCADE CONSTRAINTS;
+drop sequence  food_seq;
+
+
+
 --3. 영양소 외래키X
 CREATE TABLE NUTRIENT(
     NUTRIENTID NUMBER PRIMARY KEY,
     NUTRIENTNAME VARCHAR2(100) NOT NULL,
     UNIT VARCHAR2(50) 
 );
+DROP TABLE NUTRIENT CASCADE CONSTRAINTS;
+drop sequence  food_seq;
 
 --4.라벨영양소 (FK) FOODID : FOOD(FOODID) / NUTRIENTID  : NUTRIENT(NUTRIENTID)
 CREATE TABLE FOODNUTRIENT(
@@ -158,6 +182,10 @@ CREATE TABLE FOODNUTRIENT(
         REFERENCES NUTRIENT(NUTRIENTID)
 );
 
+DROP TABLE FOODNUTRIENT CASCADE CONSTRAINTS;
+drop sequence  food_seq;
+
+
 --5.영양소범위 (FK) NUTRIENTID : NUTRIENT(NUTRIENTID)      
 CREATE TABLE NUTRIENTRANGE (
     RANGEID      NUMBER          PRIMARY KEY,
@@ -173,6 +201,9 @@ CREATE TABLE NUTRIENTRANGE (
     CONSTRAINT FK_NR_NUTRIENT FOREIGN KEY (NUTRIENTID)
         REFERENCES NUTRIENT(NUTRIENTID)
 );
+
+DROP TABLE NUTRIENTRANGE CASCADE CONSTRAINTS;
+drop sequence  food_seq;
 
 
 --6. 리뷰 (FK) USERID : USERS(USERID) / BRANDID : BRAND(BRANDID) /FOODID : FOOD(FOODID)
@@ -202,6 +233,10 @@ CREATE SEQUENCE REVIEW_SEQ
 START WITH 1 INCREMENT BY 1
 NOCACHE;
 
+DROP TABLE REVIEW CASCADE CONSTRAINTS;
+drop sequence  REVIEW_SEQ;
+
+
 --7. 리뷰이미지  (FK)   REVIEWID : REVIEW(REVIEWID)   
 CREATE TABLE REVIEWIMG (
     REVIEWIMGID NUMBER PRIMARY KEY,
@@ -214,6 +249,10 @@ CREATE TABLE REVIEWIMG (
 CREATE SEQUENCE REVIEWIMG_SEQ
 START WITH 1 INCREMENT BY 1
 NOCACHE;
+
+DROP TABLE REVIEWIMG CASCADE CONSTRAINTS;
+drop sequence  REVIEWIMG_SEQ;
+
 
 --신규
 --8. 1:1질문 (FK)USERID : USERS(USERID)
@@ -228,6 +267,7 @@ CREATE TABLE CSQUESTION(
    CONSTRAINT fk_csquestion_user FOREIGN KEY (USERID)
         REFERENCES USERS(USERID) 
 );
+DROP TABLE CSQUESTION CASCADE CONSTRAINTS;
 
 
 --9. 1:1답변 (FK)QUESTIONID : CSQUESTION(QUESTIONID)/(FK)ADMINID : USERS(USERID)
@@ -248,6 +288,10 @@ CREATE SEQUENCE CSANSWER_SEQ
 START WITH 1 INCREMENT BY 1
 NOCACHE;
 
+
+DROP TABLE CSANSWER CASCADE CONSTRAINTS;
+drop sequence  CSANSWER_SEQ;
+
 --10. FAQ 외래키X
 CREATE TABLE FAQ (
   FAQID NUMBER PRIMARY KEY,
@@ -263,6 +307,9 @@ CREATE TABLE FAQ (
 CREATE SEQUENCE FAQ_SEQ
 START WITH 1 INCREMENT BY 1
 NOCACHE;
+
+DROP TABLE FAQ CASCADE CONSTRAINTS;
+drop sequence  FAQ_SEQ;
 
 
 -- 3. EXEC
@@ -281,6 +328,10 @@ create table exerciseinfo (
 --시퀀스 
 create sequence exerciseinfo_seq;
 
+DROP TABLE exerciseinfo CASCADE CONSTRAINTS;
+drop sequence  exerciseinfo_seq;
+ 
+
 
 -- 날씨정보 + 시퀀스
 create table saveweather (
@@ -295,6 +346,14 @@ create table saveweather (
  -- 시퀀스
 create sequence saveweather_seq;
 
+DROP TABLE saveweather CASCADE CONSTRAINTS;
+drop sequence  saveweather_seq;
+
+
+ drop table saveweather;
+ drop sequence saveweather_seq;
+
+
 
 --산책코스테이블 + 시퀀스
 desc walkingcourse;
@@ -308,6 +367,14 @@ create table walkingcourse (
  ); 
  -- 시퀀스
 create sequence walkingcourse_seq;
+
+DROP TABLE walkingcourse CASCADE CONSTRAINTS;
+drop sequence  walkingcourse_seq;
+
+drop table walkingcourse;
+drop sequence walkingcourse_seq;
+ 
+
 
 commit;
 
@@ -342,10 +409,15 @@ create table execsmart(
     constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
     constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
  );
-
-
-
 create sequence execsmart_seq;
+
+DROP TABLE execsmart CASCADE CONSTRAINTS;
+drop sequence execsmart_seq;
+
+drop table execsmart;
+drop sequence execsmart_seq;
+
+
 commit;
 
 desc users;
@@ -353,6 +425,7 @@ DROP TABLE users CASCADE CONSTRAINTS;
 
 drop table users;
 drop table execsmart;
+
 
 -- 4. DISEASE
 -- 질환 리스트
@@ -376,6 +449,9 @@ CREATE TABLE DISEASE (
 -- 시퀀스
 create sequence disease_seq;
 
+DROP TABLE DISEASE CASCADE CONSTRAINTS;
+drop sequence  disease_seq;
+
 
 -- 반려동물 캐릭터
 -- PetCharacter
@@ -393,6 +469,10 @@ CREATE TABLE PetCharacter (
 
 -- 시퀀스
 CREATE SEQUENCE petcharacter_seq;
+
+DROP TABLE PetCharacter CASCADE CONSTRAINTS;
+drop sequence  petcharacter_seq;
+
 
 commit;
 
@@ -496,58 +576,3 @@ UPDATE roles
 SET auth = 'ROLE_ADMIN'
 WHERE userId = 100;
   --AND auth = 'ROLE_MEMBER';
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-desc appuser;
-drop table appuser;
-create table  
-DROP TABLE appuser CASCADE CONSTRAINTS;
-
-DROP TABLE appuser CASCADE CONSTRAINTS;
-  
-ALTER TABLE appuser DROP COLUMN PROVIDER;
-SELECT constraint_name, constraint_type
-FROM user_constraints
-WHERE table_name = 'APPUSER';
-
-ALTER TABLE appuser DROP COLUMN PROVIDER;
-
-  SELECT a.constraint_name, a.table_name
-FROM user_constraints a
-WHERE a.constraint_type = 'R'
-  AND a.r_constraint_name IN (
-      SELECT constraint_name
-      FROM user_constraints
-      WHERE table_name = 'APPUSER'
-  );
-DROP  TABLE APPUSER  CASCADE CONSTRAINTS;
-
-CREATE TABLE APPUSER (
-    APP_USER_ID     NUMBER NOT NULL,
-    EMAIL           VARCHAR2(255) NOT NULL UNIQUE,
-    PASSWORD        VARCHAR2(255) NOT NULL,
-    NICKNAME        VARCHAR2(100),
-    MOBILE          VARCHAR2(20),
-    MBTI_TYPE_ID    NUMBER,
-    UFILE           VARCHAR2(255),
-    CREATED_AT      DATE DEFAULT SYSDATE 
-);
-
-create sequence APPUSER_SEQ;
-
-desc appuser;
-
-
-commit;
-drop sequence  APPUSER_SEQ;
-  
-  
