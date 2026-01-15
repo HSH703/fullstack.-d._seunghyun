@@ -110,7 +110,7 @@ CREATE  : save(CREATE/INSERT)     - INSERT INTO appuser (컬럼1, 컬럼2,,,) va
 READ    : findAll  - SELECT * from appuser (전체조회)
           findById - SELECT * from appuwer where id=? ( 단건 조회 / 사용자조회)
 UPDATE  : save     - update appuser set 컬럼1=? , 컬럼2=? where id=?
-DELETE  : delete   - delete from appuser where id=?
+DELETE  : deleteById   - delete from appuser where id=?
 ```
 
          사용자      관리자
@@ -118,5 +118,33 @@ CREATE   ◎회원가입    ◎회원가입
 READ     로그인, 이메일중복, 닉네임중복, <!-- 페이징이 들어간 유저조회(모바일 인증번호,,,) --> 
 UPDATE   ◎닉네임수정, ◎이미지수정
 DELETE   ◎회원탈퇴
+
+---
+3. mybatis(Project)
+
+- [x] 1. build.gradle
+- [x] 2. application.yml
+- [x] 3. [com.thejoa703.domain] - DeptUser  @Entity
+- [x] 4. [com.thejoa703.mapper] 
+        - @Mapper  (복잡한 SQL)  / 기본CRUD @Repository (save, findById, findAll, deleteById)
+- [ ] 5. [com.thejoa703.service] - DeptService
+- [ ] 6. [com.thejoa703.controller] - DeptController   
+
+
+---
+4. service
+- [x] 1. dto - requestDto / responseDto
+- [x] 2. UTIL : 이미지업로드
+      - application.yml 이미지설정
+      - service 작성
+- [x] 3. UTIL : 암호화
+- [ ] 4. AppUserService  <유저>
+- [ ] 5. PostService     <게시글>
+- [ ] 6. Etc Service
+
+
+---
+
+5. security + jwt + redis + oauth2.0
 
 

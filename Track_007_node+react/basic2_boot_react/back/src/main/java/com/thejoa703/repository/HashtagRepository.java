@@ -15,6 +15,9 @@ public interface HashtagRepository extends JpaRepository<Hashtag, Long> { //Enti
    Optional<Hashtag> findByNameWithPosts( @Param("name") String name);
    //java.util.Optional
    //org.springframework.data.repository.query.Param
+   
+   Optional<Hashtag> findByName(String name);
+   
 }
 
 /*

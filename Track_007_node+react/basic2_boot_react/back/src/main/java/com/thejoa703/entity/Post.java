@@ -91,6 +91,18 @@ public class Post {
          inverseJoinColumns = @JoinColumn(name="HASHTAG_ID") 
    )
    private  List<Hashtag> hashtags = new ArrayList<>();  // 게시글에 연결된 해쉬태그들
+
+   ///// 좋아요 수, 댓글 수 ,,, 계산같은 것들은 DB에서 설정하지 말고 이렇게 설정해서 사용해보기.
+   //// Dto에서 가져오기
+   // 좋아요 수 계산
+   public int getLikeCount() {
+	   return likes !=null? likes.size() : 0 ;
+   }
+   // 댓글 수 계산
+   public int getCommentCount() {
+	   return comments !=null? comments.size() : 0 ;
+   }
+   
 }
 
 
