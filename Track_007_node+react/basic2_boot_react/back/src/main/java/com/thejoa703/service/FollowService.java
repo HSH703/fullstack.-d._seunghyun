@@ -20,36 +20,30 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class FollowService {
-
+public class FollowService { 
     private final FollowRepository followRepository; 
     private final AppUserRepository userRepository;
-    
-    // 팔로우
+    //팔로우
     public FollowResponseDto follow(Long followerId, FollowRequestDto dto) {
         Long followeeId = dto.getFolloweeId();
         if (followerId.equals(followeeId)) {
             throw new IllegalStateException("자기 자신은 팔로우할 수 없습니다.");
         }
-        
-        // 팔로워
+
+        //팔루워
         AppUser follower = userRepository.findById(followerId)
                 .orElseThrow(() -> new IllegalArgumentException("팔로워 없음"));
-        
-        // 팔로위
+        //팔로위
         AppUser followee = userRepository.findById(followeeId)
                 .orElseThrow(() -> new IllegalArgumentException("팔로잉 대상 없음"));
-
-        // jpa 저장
+        // jap 저장
         Follow saved = followRepository.save(new Follow(follower, followee));
         return FollowResponseDto.of(saved, followee, false);
     }
-    
     // 언팔로우
     public Long unfollow(Long followerId, Long followeeId) {
         followRepository.findByFollower_IdAndFollowee_Id(followerId, followeeId)
             .ifPresent(followRepository::delete);
         return followeeId;
-    }
- 
+    } 
 }

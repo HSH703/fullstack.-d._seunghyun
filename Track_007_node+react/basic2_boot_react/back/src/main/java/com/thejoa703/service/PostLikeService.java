@@ -26,38 +26,36 @@ import lombok.RequiredArgsConstructor;
 public class PostLikeService {
 
     private final PostLikeRepository postLikeRepository;
-    private final AppUserRepository userRepository;
-    private final PostRepository postRepository;
+    private final AppUserRepository  userRepository;
+    private final PostRepository     postRepository;
  
-    //////  좋아요 생성
-    public LikeResponseDto addLike( Long userId, LikeRequestDto dto ) {
+    //////  좋아요 생성 
+    public LikeResponseDto addLike( Long userId , LikeRequestDto dto    ) {
         // 사용자 조회
-    	AppUser user = userRepository.findById(userId)
+    		AppUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));  
-    	
-    	Post post = postRepository.findById( dto.getPostId() )
-                .orElseThrow(() -> new IllegalArgumentException("게시글 없음"));  
-        
-    	// 중복 좋아요 방지
-    	if( postLikeRepository.countByUser_IdAndPost_Id(userId, dto.getPostId()) > 0) { // 기존에 있다 1개
-        	long count = postLikeRepository.countByPost_Id(post.getId());   // 현재 좋아요수 반환
-            return LikeResponseDto.builder()
-                    .postId(post.getId())
-                    .count(count)
-                    .build();
 
-    	}
-    	
-    	// 좋아요 저장
-    	postLikeRepository.save( new PostLike(user, post) );
-    	
-    	// 최신 좋아요 수 반환
-    	long count = postLikeRepository.countByPost_Id(post.getId());  
+    		Post    post = postRepository.findById(  dto.getPostId()   )
+                .orElseThrow(() -> new IllegalArgumentException("게시글 없음"));  
+    		
+    		// 중복 좋아요 방지
+    		if( postLikeRepository.countByUser_IdAndPost_Id(userId, dto.getPostId())  > 0 ) {  // 기존에 있다 1개
+    	        long count = postLikeRepository.countByPost_Id(post.getId());   //현재좋아요수 반환
+    	        return LikeResponseDto.builder()
+    	                .postId(  post.getId())
+    	                .count(count)
+    	                .build();
+    	    		
+    		}
+    		// 좋아요 저장
+    		postLikeRepository.save(  new PostLike(user,post) );
+    		// 최신 좋아요 수 반환
+        long count = postLikeRepository.countByPost_Id(post.getId());  
         return LikeResponseDto.builder()
-                .postId(post.getId())
+                .postId(  post.getId())
                 .count(count)
                 .build();
-
+    		
     }
 
     // 특정게시글의 좋아요 수
@@ -65,7 +63,6 @@ public class PostLikeService {
     public long countLikes(Long postId) {
         return postLikeRepository.countByPost_Id(postId);  
     }
- 
     // 특정유저가 특정게시글의 좋아요 여부
     @Transactional(readOnly = true)
     public boolean hasLiked(Long userId, Long postId) {
@@ -82,5 +79,4 @@ public class PostLikeService {
                 .count(updatedCount)
                 .build();
     }
-    
 }

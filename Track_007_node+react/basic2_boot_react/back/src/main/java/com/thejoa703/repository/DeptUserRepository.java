@@ -6,15 +6,14 @@ import org.springframework.stereotype.Repository;
 import com.thejoa703.domain.DeptUser;
 
 @Repository
-public interface DeptUserRepository extends JpaRepository<DeptUser, Long> {  //Entity, PK
-	
+public interface DeptUserRepository  extends JpaRepository<DeptUser, Long>{  // Entity, PK
+
 }
 
 /*
-CREATE  : save(CREATE/INSERT)  - INSERT INTO 테이블명 (컬럼1, 컬럼2,,,) values (?,?,,,,)
-READ    : findAll    - SELECT * from 테이블명 (전체조회)
-          findById   - SELECT * from 테이블명 where id=? ( 단건 조회 )
-UPDATE  : save       - update 테이블명 set 컬럼1=? , 컬럼2=? where id=?
-DELETE  : deleteById - delete from 테이블명 where id=?
-
+CREATE : save     -   INSERT INTO  테이블명 (컬럼1,컬럼2,,) values (?,?,,)
+READ   : findAll  -   SELECT  * from 테이블명  
+         findById -   SELECT  * from 테이블명   where deptno=? 
+UPDATE : save     -   update  테이블명   set 컬럼1=? ,컬럼2=?  where   deptno=? 
+DELETE : deleteById - delete from 테이블명   where deptno=?
 */

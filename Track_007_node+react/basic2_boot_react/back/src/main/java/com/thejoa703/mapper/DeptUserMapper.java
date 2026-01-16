@@ -6,5 +6,5 @@ import com.thejoa703.domain.DeptUser;
 
 @Mapper
 public interface DeptUserMapper { 
-   List<DeptUser>  findByNameKeyword(String keyword);
+	List<DeptUser>  findByNameKeyword(String keyword);
 }

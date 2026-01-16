@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "DEPTUSER")  // 새로운 테이블 이름지정
-@Getter @Setter
+@Table(name = "DEPTUSER")  // 테이블 이름지정
+@Getter  @Setter
 public class DeptUser {
 	
 	@Id
-	private Long deptno;
+	private Long deptno;    
 	private String dname;
 	private String loc;
-
+	
 }
+ 

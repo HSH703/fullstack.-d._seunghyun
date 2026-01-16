@@ -10,6 +10,5 @@ class BackApplicationTests {
 	void contextLoads() {
 	}
 
-	
-	
 }
+

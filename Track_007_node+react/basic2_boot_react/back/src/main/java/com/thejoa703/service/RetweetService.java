@@ -24,21 +24,20 @@ public class RetweetService {
     private final RetweetRepository retweetRepository;
     private final AppUserRepository userRepository;
     private final PostRepository postRepository;
-    
-    // 리트윗 추가
+    // 리트윗추가
     public RetweetResponseDto addRetweet(Long userId, RetweetRequestDto dto) {
         AppUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
         Post post = postRepository.findById(dto.getOriginalPostId())
                 .orElseThrow(() -> new IllegalArgumentException("게시글 없음"));
-        
+
         if (retweetRepository.countByUserAndOriginalPost(userId, dto.getOriginalPostId()) > 0) {
             throw new IllegalStateException("이미 리트윗한 게시글입니다.");
         }
 
         Retweet saved = retweetRepository.save(new Retweet(user, post));
         long count = retweetRepository.countByOriginalPostId(post.getId());  
-        
+
         return RetweetResponseDto.builder()
                 .id(saved.getId())
                 .userId(user.getId())
@@ -54,7 +53,7 @@ public class RetweetService {
         return retweetRepository.countByUserAndOriginalPost(userId, postId) > 0;
     }
 
-   // 특정 게시글에 리트윗 수가 몇개인지 확인
+    // 게시글의 리트윗수
     @Transactional(readOnly = true)
     public long countRetweets(Long postId) {
         return retweetRepository.countByOriginalPostId(postId);

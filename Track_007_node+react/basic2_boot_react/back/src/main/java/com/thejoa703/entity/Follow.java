@@ -16,53 +16,50 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-/***
- * 팔로우 엔티티
- * 팔로워 : 나를 구독 , 내 팬
- * 팔로잉 : 내가 구독한 사람들 , 김우빈 신민아...
- */
-@Entity   //JPA 엔티티 선언
+@Entity    
 @Table(name= "FOLLOWS")
 @Getter  @Setter 
 public class Follow {
-	   @Id
-	   @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "follow_seq")  //시퀀스 사용
-	   @SequenceGenerator(name = "follow_seq", sequenceName = "FOLLOW_SEQ" , allocationSize = 1) 
-	   private Long id; //PK
-	   
-	   @Column(nullable = false , name="CREATED_AT")
-	   private LocalDateTime createdAt; // 생성일시
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "follow_seq")  //시퀀스 사용
+	@SequenceGenerator(name = "follow_seq", sequenceName = "FOLLOW_SEQ" , allocationSize = 1) 
+	private Long id; //PK
+	
+	@Column(nullable = false , name="CREATED_AT")
+	private LocalDateTime createdAt; // 생성일시
 
-	   @PrePersist
-	   void onCreate() {
-	      this.createdAt = LocalDateTime.now();
-	   }
-	   
-	   @ManyToOne(fetch = FetchType.LAZY)
-	   @JoinColumn(name="FOLLOWER_ID" , nullable = false )
-	   private AppUser follower;
-
-	   @ManyToOne(fetch = FetchType.LAZY)
-	   @JoinColumn(name="FOLLOWEE_ID" , nullable = false )
-	   private AppUser followee;
-
-	   public Follow(AppUser follower, AppUser followee) {
+	@PrePersist
+	void onCreate() {
+		this.createdAt = LocalDateTime.now(); 
+	}
+	
+	public Follow(AppUser follower, AppUser followee) {
 		super();
 		this.follower = follower;
 		this.followee = followee;
-	   }
-	   
+	} 
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="FOLLOWER_ID" ,nullable = false)
+	private AppUser follower;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="FOLLOWEE_ID" ,nullable = false)
+	private AppUser followee;
+
 }
 /*
-팔로워 : 나를 구독 , 내 팬
-팔로잉 : 내가 구독한 사람들 , 김우빈 신민아...
+팔로워: 나를 구독, 내팬
+팔로잉: 내가한구독, 김우빈, 신민아
 
-나 : 1   김우빈 : 2    신민아 : 3
+나 : 1   김우빈 : 2   신민아: 3
 
-	follower(내가)		followee(팔로우를 당하는 사람들)
-	1					2
-	1					3
+	follower	(내가)	followee(팔로우를 당하는 사람들)
+1	1				2		
+2	1				3					
+		
 
- */
+*/
+
 
 

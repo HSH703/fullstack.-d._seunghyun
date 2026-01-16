@@ -146,80 +146,74 @@ class BackApplicationTests3_Service {
 		commentService.deleteComment(user2Dto.getId() , comment.getId());
 		assertThat(  commentService.countComments(post.getId())      ).isEqualTo(0);
 	}
-	
+
+
 	// ---------------------------------------------------------------------
-    // PostLikeService 테스트
+    // ■ PostLikeService 테스트
     // ---------------------------------------------------------------------
     @Test
     @DisplayName("■ PostLikeService - 좋아요 추가/중복 방지/취소")
     void testPostLikeService() { 
-    	// 좋아요 추가
+    		//좋아요 추가
         LikeRequestDto likeReq = new LikeRequestDto(post.getId());
         LikeResponseDto like = postLikeService.addLike(user2Dto.getId(), likeReq);
         assertThat(like.getCount()).isEqualTo(1);  
-        
-        // 중복 좋아요
+ 
+        //중복 좋아요
         LikeResponseDto duplicate = postLikeService.addLike(user2Dto.getId(), likeReq);
         assertThat(duplicate.getCount()).isEqualTo(1);
         
-        // 좋아요 취소
+        //좋아요 취소
         LikeResponseDto removed = postLikeService.removeLike(user2Dto.getId(), post.getId());
-        assertThat(removed.getCount()).isEqualTo(0);
+        assertThat( removed.getCount() ).isEqualTo(0);
     }
-    
+    	
     // ---------------------------------------------------------------------
     // FollowService 테스트
     // ---------------------------------------------------------------------
     @Test
     @DisplayName("■ FollowService - 팔로우/언팔로우/차단/차단해제")
     void testFollowService() {
-    	// 팔로우
+    		//팔로우
         FollowRequestDto followReq = new FollowRequestDto(user2Dto.getId());
-        FollowResponseDto follow = followService.follow(user1Dto.getId(), followReq);  // 팔로워, 팔로위
+        FollowResponseDto follow = followService.follow(user1Dto.getId(), followReq);  //팔로워, 팔로위
         assertThat(follow.getFolloweeId()).isEqualTo(user2Dto.getId());
- 
-        // 자기자신 팔로우 → 예외처리
+        	//자기자신 팔로우 → 예외
         FollowRequestDto selfFollow = new FollowRequestDto(user1Dto.getId());
         assertThrows(IllegalStateException.class, () -> followService.follow(user1Dto.getId(), selfFollow));
-        
-        // 언팔로우
+        //언팔로우
         Long unfollowedId = followService.unfollow(user1Dto.getId(), user2Dto.getId());
         assertThat(unfollowedId).isEqualTo(user2Dto.getId());
   
     }
 
-    // ---------------------------------------------------------------------
-    // RetweetService 테스트
-    // ---------------------------------------------------------------------
-    @Test
-    @DisplayName("RetweetService - 리트윗 추가/중복/조회/취소/목록")
-    void testRetweetService() { 
-        //1. 작성게시글 준비
-    	RetweetRequestDto retweetReq = new RetweetRequestDto(post.getId());
-        
-        // 													  어떤 유저가          원본글
-        RetweetResponseDto retweet = retweetService.addRetweet(user1Dto.getId(), retweetReq);
-        assertThat(retweet.getOriginalPostId()).isEqualTo(post.getId()); // post
-        assertThat(retweet.getUserId()).isEqualTo(user1Dto.getId());  // user1Dto
-        assertThat(retweet.getRetweetCount()).isEqualTo(1);  // 리트윗수가 1개야.
-        
-        // 중복리트윗 → 예외처리
-        assertThrows(IllegalStateException.class,
-            () -> retweetService.addRetweet(user1Dto.getId(), retweetReq));
-        
-        //리트윗 여부
-        boolean hasRetweeted = retweetService.hasRetweeted(user1Dto.getId(), post.getId());
-        assertThat(hasRetweeted).isTrue();
-        
-        // 리트윗수 확인
-        long count = retweetService.countRetweets(post.getId());
-        assertThat(count).isEqualTo(1);
-        
-        // 리트윗 취소
-        RetweetResponseDto removed = retweetService.removeRetweet(user1Dto.getId(), post.getId());
-        assertThat(removed.getRetweetCount()).isEqualTo(0);
-  
-    }
+	// ---------------------------------------------------------------------
+	// RetweetService 테스트
+	// ---------------------------------------------------------------------
+	@Test
+	@DisplayName("■ RetweetService - 리트윗 추가/중복/조회/취소/목록")
+	void testRetweetService() { 
+		//1. 작성게시글 준비
+	    RetweetRequestDto retweetReq = new RetweetRequestDto(post.getId()); 
+	    //													 어떤유저가			원본글
+	    RetweetResponseDto retweet = retweetService.addRetweet(user1Dto.getId(), retweetReq);
+	    assertThat(retweet.getOriginalPostId()).isEqualTo(post.getId()); //post
+	    assertThat(retweet.getUserId()).isEqualTo(user1Dto.getId());   //user1Dto
+	    assertThat(retweet.getRetweetCount()).isEqualTo(1);  // 리트윗수가 1개야
+	    // 중복리트윗 → 예외
+	    assertThrows(IllegalStateException.class,
+	        () -> retweetService.addRetweet(user1Dto.getId(), retweetReq));
+	    // 리트윗여부
+	    boolean hasRetweeted = retweetService.hasRetweeted(user1Dto.getId(), post.getId());
+	    assertThat(hasRetweeted).isTrue();
+	    // 리트윗수 확인
+	    long count = retweetService.countRetweets(post.getId());
+	    assertThat(count).isEqualTo(1);
+	    // 리트윗 취소
+	    RetweetResponseDto removed = retweetService.removeRetweet(user1Dto.getId(), post.getId());
+	    assertThat(removed.getRetweetCount()).isEqualTo(0);
+ 
+	}
 	
 }
 
