@@ -132,8 +132,6 @@ export function* updateProfileImage(action) {
   }
 }
 
-
-
 // --- Root Saga ---
 export default function* authSaga() {
   yield takeLatest(signupRequest.type, signup);

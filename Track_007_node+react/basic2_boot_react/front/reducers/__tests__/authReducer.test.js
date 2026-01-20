@@ -122,5 +122,4 @@ describe( 'auth reducer' , ()=>{
         const state = reducer( initialState , updateProfileImageFailure('fail') );
         expect(state.error).toBe('fail');   expect(state.loading).toBe(false); 
     }); 
-    
 });

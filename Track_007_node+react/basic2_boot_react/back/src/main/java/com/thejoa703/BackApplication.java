@@ -18,5 +18,7 @@ docker exec  -it  my-redis  redis-cli  FLUSHALL
 
 keys  *
 
-2. http://localhost:8484/swagger-ui/index.html
+2.  
+http://localhost:8484/swagger-ui/index.html
+ 
 */

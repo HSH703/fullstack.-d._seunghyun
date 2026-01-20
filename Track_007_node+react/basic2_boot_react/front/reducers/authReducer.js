@@ -1,5 +1,4 @@
 // reducers/authReducer.js
-
 import { createSlice } from "@reduxjs/toolkit";  // reducer와 액션을 한번에 생성해주는 역할
 const initialState = {
     user: null,
@@ -19,11 +18,11 @@ const authSlice = createSlice({
             state.error    = null;
             state.success  = false;
         },
-        signupSuccess : (state)=>{   //##
+        signupSuccess : (state)=>{  //##
             state.loading  = false;
             state.success  = true;
         },
-        signupFailure : (state, action)=>{ //##
+        signupFailure : (state, action)=>{//##
             state.loading  = false;
             state.error    = action.payload;
         }, 
@@ -37,7 +36,7 @@ const authSlice = createSlice({
         loginRequest : (state)=>{
             state.loading  = true;
             state.error    = null; 
-        }, // 로그인 버튼 누를때 요청
+        },
         loginSuccess : (state, action)=>{
             state.loading     = false;
             state.user        = action.payload.user  || null;
@@ -50,16 +49,21 @@ const authSlice = createSlice({
             state.accessToken = null;
         },
         // --- 토큰 재발급 ---
-        refreshTokenRequest : (state)=>{   state.loading  = true;      },
+        refreshTokenRequest : (state)=>{   
+            state.loading  = true;      
+        },
         refreshTokenSuccess : (state, action)=>{
             state.loading     = false;
             state.accessToken = action.payload?.accessToken || null;
         },
         refreshTokenFailure : (state, action)=>{
-            state.loading     = false;     state.error       = action.payload;
+            state.loading     = false;     
+            state.error       = action.payload;
         },
         // --- 로그아웃 ---
-        logoutRequest  : (state)=>{   state.loading  = true;   },
+        logoutRequest  : (state)=>{   
+            state.loading  = true;   
+        },
         logout : (state)=>{
             state.loading     = false;
             state.error       = null;
@@ -68,25 +72,32 @@ const authSlice = createSlice({
             state.success     = false;
         },
         logoutFailure :  (state, action)=>{
-            state.loading     = false;   state.error       = action.payload;
+            state.loading     = false;   
+            state.error       = action.payload;
         },
         // --- 닉네임 변경 ---
-        updateNicknameRequest : (state)=>{   state.loading  = true;      },
+        updateNicknameRequest : (state)=>{   
+            state.loading  = true;      
+        },
         updateNicknameSuccess : (state, action)=>{
             state.loading     = false;
             state.user = action.payload.user;
         },
         updateNicknameFailure : (state, action)=>{
-            state.loading     = false;   state.error       = action.payload;
+            state.loading     = false;   
+            state.error       = action.payload;
         },
         // --- 프로필 이미지 변경 ---
-        updateProfileImageRequest : (state)=>{   state.loading  = true;      },
+        updateProfileImageRequest : (state)=>{   
+            state.loading  = true;      
+        },
         updateProfileImageSuccess : (state, action)=>{
             state.loading     = false;
             state.user = action.payload.user;
         },
         updateProfileImageFailure : (state, action)=>{
-            state.loading     = false;   state.error       = action.payload;
+            state.loading     = false;  
+            state.error       = action.payload;
         },
     },
 });
