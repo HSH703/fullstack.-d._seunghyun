@@ -3,7 +3,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux"; // 리듀서 상태관리
 import { Row, Col, Form, Input, Button, Spin, message } from "antd";  // 컴포넌트
 import { useRouter } from "next/router"; // 경로
-import { loginSuccess, logout } from "../reducers/authReducer"; //액션 - 로그인성공, 로그아웃
+import { loginSuccess, logout ,loginRequest} from "../reducers/authReducer"; //액션 - 로그인성공, 로그아웃
+//import { loginRequest } from "../reducers/authReducer"; //액션 - 로그인성공, 로그아웃
 import api from "../api/axios";  // 비동기 localhost:8484
 
 export default function LoginPage(){
@@ -34,6 +35,13 @@ export default function LoginPage(){
                 message.error("로그인 실패: 이메일/비밀번호를 확인하세요.");
         } 
     };
+
+    // 로그인버튼(축약버전)
+    // const onFinish = async(values)=>{
+    //     dispatch( loginRequest({...values , provider:"local"}) )
+    // }
+
+
     //소셜 로그인 핸들러추가
     const handleSocialLogin=(provider)=>{ 
         window.location.href = `http://localhost:8484/oauth2/authorization/${provider}`;
@@ -67,6 +75,8 @@ export default function LoginPage(){
                             </Button>
                         </div>
                     </Form>
+
+
                     {/*   소셜  로그인 이미지 버튼 */}
                     <div style={{ marginTop: 20, textAlign: "center" }}>
                         <img

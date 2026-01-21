@@ -62,12 +62,12 @@ basic2_boot_react/front(~ store_test  )
 
 ### day100.md
 ---
-
+basic2_boot_react/front(~ Project_social_login_test )
 ---
 
 ### day101.md
 ---
-
+basic2_boot_react/front(~ post_reducer_test  )
 ---
 
 ### day102.md

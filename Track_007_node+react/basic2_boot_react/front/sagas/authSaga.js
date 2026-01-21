@@ -15,6 +15,9 @@ import {
   updateProfileImageRequest,  updateProfileImageSuccess,  updateProfileImageFailure,
 } from "../reducers/authReducer";
 
+// 알림창
+//import {meesage} from "antd";
+
 // --- 회원가입 API ---
 function signupApi(formData) {
   return api.post("/auth/signup", formData, {
@@ -29,6 +32,8 @@ export function* signup(action) {
     yield put(signupFailure(err.response?.data?.error || err.message));
   }
 }
+
+//import Router from "next/router";
 
 // --- 로그인 API ---
 // Spring Boot: { accessToken, user } 반환 + Refresh Token은 HttpOnly 쿠키로 내려감
@@ -54,6 +59,31 @@ export function* login(action) {
     yield put(loginFailure(err.response?.data?.error || err.message));
   }
 }
+
+//로그인 버튼
+// const onFinish = async(values)=>{ 
+//     try{    // api.post → saga 
+//         const res = await  api.post("/auth/login"
+//                                     , {...values , provider:"local"} 
+//                                     , { headers:{"Content-Type":"application/json"} });
+//         const {accessToken , user} = res.data;           
+        
+//         if(user && accessToken){
+//             localStorage.setItem("accessToken" , accessToken);
+//             dispatch(loginSuccess({user,accessToken}));
+//             message.success(`${user.nickname}님 환영합니다!`);
+//             router.push("/mypage");
+//         }else{
+//             dispatch(logout());
+//             message.error("로그인 정보를 확인할 수 없습니다.");
+//         }
+//     }catch(err){
+//             dispatch(logout());
+//             message.error("로그인 실패: 이메일/비밀번호를 확인하세요.");
+//     } 
+// };
+
+
 
 // --- 토큰 재발급 API ---
 // Spring Boot: { accessToken } 반환
