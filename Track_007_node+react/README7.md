@@ -67,12 +67,12 @@ basic2_boot_react/front(~ Project_social_login_test )
 
 ### day101.md
 ---
-basic2_boot_react/front(~ post_reducer_test  )
+basic2_boot_react/front(~ post_reducer_test )
 ---
 
 ### day102.md
 ---
-
+basic2_boot_react/front(~ pages/index.js )
 ---
 
 ### day103.md

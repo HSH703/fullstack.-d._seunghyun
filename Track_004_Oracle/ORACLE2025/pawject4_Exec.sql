@@ -13,7 +13,7 @@ create table comments (
     comment             clob               not null,      -- 댓글
     userid              number(19)         not null,      -- 사용자아이디(외래키)
     postid              number(19)         not null,      -- 게시글아이디(외래키)
-    commentid           number(19),                       -- 대댓글아이디(외래키)
+    commentid           number(19),        null           -- 대댓글아이디(외래키)
     commentcreatedat    date               default sysdate not null,  -- 댓글등록일
     commentupdatedat    date               default sysdate            -- 댓글수정일
 );
@@ -95,6 +95,24 @@ INSERT INTO COMMENTS (
     1
 );
 -- SELECT
+-- ① 특정 게시글의 댓글 + 대댓글 조회 (부모 → 자식 순서)
+SELECT
+    LEVEL                         AS depth,
+    c.cid,
+    c.comment,
+    c.userid,
+    c.postid,
+    c.commentid,
+    c.commentcreatedat,
+    c.commentupdatedat
+FROM comments c
+WHERE c.postid = 100
+START WITH c.commentid IS NULL
+CONNECT BY PRIOR c.cid = c.commentid
+ORDER SIBLINGS BY c.commentcreatedat;
+
+
+
 
 -- UPDATE
 -- ② (실무형) 작성자 본인만 수정 가능하게

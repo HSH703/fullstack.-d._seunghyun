@@ -15,15 +15,24 @@ import {
   logout,
 } from "../reducers/authReducer";  //액션
 
+////// frollow
+import {
+    loadFollowersRequest, 
+    loadFollowingsRequest,
+    unfollowRequest,
+} from '../reducers/followReducer';
+
 import api from "../api/axios";
 import { wrapper } from "../store/configureStore";
 import TabPane from "antd/lib/tabs/TabPane";
 
 export default function Mypage(){
     //code
-    const dispatch = useDispatch();
-    const router   = useRouter();
+    const dispatch = useDispatch();  // store[치킨집]
+    const router   = useRouter();  // react - view
     const { user, loading } = useSelector( (state)=> state.auth);
+
+
 
     useEffect(() => {
         const verify = async () => {
@@ -56,6 +65,20 @@ export default function Mypage(){
     const [fileList , setFileList] = useState([]);
 
     const imageUrl = user?.ufile  ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.ufile}` : undefined;
+    
+    /////////////////////////////////////////////////////////////////////
+    const {
+        followersList  = [],     // 화면 렌더링용 배열
+        followingsList = [],    // 화면 렌더링용 배열   
+        followLoading = false,
+    } = useSelector( (state) => state.follow );  // 치킨집( 치킨상태 + 배달기사 )
+
+    useEffect(  ()=>{
+        if(user?.id){
+            dispatch( loadFollowersRequest() );
+            dispatch( loadFollowingsRequest() );
+        }
+    } , [ user?.id , dispatch ]);
 
 
     if(loading){ return <Spin/>; }
@@ -65,7 +88,7 @@ export default function Mypage(){
     return (<Card title="마이페이지"  style={{maxWith:800 , margin: "20px auto"}}>
         <Tabs defaultActiveKey="profile">
             {/* 내 정보 탭 */}
-             <TabPane> 
+             <TabPane tab="내 정보" key="profile"> 
                 <div style={{ display: "flex" , alignTems: "center" , marginBottom: 20}}>
                     <Avatar src={imageUrl} size={64}>
                         {user.nickname?.[0]}
@@ -117,10 +140,44 @@ export default function Mypage(){
                     </Button>
                 </Form> 
              </TabPane>  
-            {/* 팔로워 탭 */} 
-             <TabPane></TabPane>  
+            {/* 팔로워 탭 */ /* dataSource:데이터 가지고올때 / renderItem: 화면 띄울때 */} 
+             <TabPane tab={`팔로워 ${followersList.length}`} key="followers">
+                    <List  loading={followLoading}
+                           dataSource={Array.isArray(followersList)? followersList : []}
+                           renderItem={(item)=>(
+                                <List.Item actions={[]}>
+                                    <List.Item.Meta
+                                        avatar={<Avatar>{item.nickname?.[0]}</Avatar>}
+                                        title={item.nickname}
+                                        description={item.email}
+                                    >
+                                    </List.Item.Meta>
+                                </List.Item>
+                           )}
+                    />  
+             </TabPane>  
             {/* 팔로잉 탭 */}  
-             <TabPane></TabPane>   
+             <TabPane tab={`팔로잉 ${followingsList.length}`} key="followings">
+                    <List  loading={followLoading}
+                           dataSource={Array.isArray(followingsList)? followingsList : []}
+                           renderItem={(item)=>(
+                                <List.Item actions={[
+                                    <Button key="unfollow"
+                                        onClick={ ()=>dispatch( unfollowRequest({followeeId : item.followeeId}) ) }
+                                    >
+                                        언팔로우
+                                    </Button>
+                                ]}>
+                                    <List.Item.Meta
+                                        avatar={<Avatar>{item.nickname?.[0]}</Avatar>}
+                                        title={item.nickname}
+                                        description={item.email}
+                                    >
+                                    </List.Item.Meta>
+                                </List.Item>
+                           )}
+                    />                      
+             </TabPane>   
         </Tabs>
     </Card>);
 }
