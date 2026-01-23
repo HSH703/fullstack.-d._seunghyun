@@ -200,6 +200,7 @@ export default function Home(){
                     />   
             </Tabs.TabPane> } 
         </Tabs>
+
         <EditPostModal
             visible={isEditModalVisible}
             editPost={editPost}

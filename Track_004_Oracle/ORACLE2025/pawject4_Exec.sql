@@ -111,7 +111,13 @@ START WITH c.commentid IS NULL
 CONNECT BY PRIOR c.cid = c.commentid
 ORDER SIBLINGS BY c.commentcreatedat;
 
-
+-- 운동 추천 AI 파트
+-- select postid from execsns where etitle LIKE '%ai가 준키워드%'	 ← 이런식으로 select 구문 다시 조정하기.
+SELECT title, exercise_name
+FROM sns_table
+WHERE title LIKE '%' || :keyword || '%'
+ORDER BY created_at DESC
+FETCH FIRST 20 ROWS ONLY;
 
 
 -- UPDATE
@@ -245,7 +251,25 @@ WHERE postid = 100;
 
 
 
--- 운동정보기능(crud)
+-- 운동정보기능()  -- 필요 없음.X
+--INFOSEARCH
+--- KEYWORD            -- 입력 키워드
+--- TITLE              -- 기준 제목
+--- AI_REASON          -- AI가 추천한 이유
+--- EXERCISE_NAME      -- 추천 운동명
+--create table execinfosearch(
+--    infoid        int           primary key,     -- 운동정보검색기본키
+--    keyword       varchar2(50)  not null,        -- 입력 키워드
+--    infotitle     varchar2(50)  not null,        -- SNS 기준 제목
+--    aireason      varchar2(100) not null,        -- AI가 추천한 이유
+--    execname      varchar2(50)  not null         -- 추천 운동명
+--);
+
+
+
+
+
+
 
 -- 날씨정보기능 
 

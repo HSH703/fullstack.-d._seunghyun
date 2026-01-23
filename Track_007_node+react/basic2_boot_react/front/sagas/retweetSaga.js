@@ -8,16 +8,17 @@ import {
 } from '../reducers/retweetReducer';
 
 
-// 리트윗 추가
+//  리트윗 추가
 export function* addRetweet(action) {
   try {
-    const { originalPostId } = action.payload;  // react에서 던지는 값
-    const { data } = yield call(() => axios.post(`/api/retweets`, { originalPostId: originalPostId })); // { originalPostId: postId } - server(springBoot) : react
-    yield put(addRetweetSuccess({ originalPostId: data.originalPostId, retweetCount: data.retweetCount })); 
+    const { postId } = action.payload;  // react 에서 던지는값
+    const { data } = yield call(() => axios.post(`/api/retweets`, { originalPostId: postId }));
+    yield put(addRetweetSuccess({ postId: data.originalPostId, retweetCount: data.retweetCount })); 
   } catch (err) {
     yield put(addRetweetFailure(err.response?.data?.message || err.message));
   }
 }
+
 
 // 리트윗 여부 확인
 export function* hasRetweeted(action) {
