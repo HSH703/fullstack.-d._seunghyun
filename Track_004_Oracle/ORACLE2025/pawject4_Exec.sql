@@ -322,14 +322,3 @@ WHERE etitle LIKE '%' || :keyword || '%';
 -- 최종
 
 
-
-
-
-
-
-
-
-
-
-
-
