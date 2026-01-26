@@ -1255,7 +1255,8 @@ cmd 사용
 ### node + react (20260126~20260130)
 ### day104.md
 ---
-
+cmd 사용
+pawject4_Exec.sql
 ---
 
 ### day105.md
