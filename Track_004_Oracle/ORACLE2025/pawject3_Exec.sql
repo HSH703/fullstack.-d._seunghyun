@@ -366,6 +366,9 @@ select * from execsmart;
 desc execsmart;
 commit;
 
+select * from execsns where postid='1';
+
+
     select 
           e.postid,
             e.execid,

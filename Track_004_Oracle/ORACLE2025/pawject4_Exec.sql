@@ -1,8 +1,44 @@
 -- 테스트
+desc execsns;
+DELETE FROM images WHERE post_id NOT IN (SELECT post_id FROM execsns);
+COMMIT;
+desc execinfo;
+drop table execinfo;
+drop table walkingcourse;
+
+commit;
+
+
+-- 1. 임시 컬럼 추가
+ALTER TABLE execsns ADD econtent_tmp CLOB;
+
+-- 2. 데이터 복사
+UPDATE execsns SET econtent_tmp = econtent;
+
+-- 3. 기존 컬럼 삭제
+ALTER TABLE execsns DROP COLUMN econtent;
+
+-- 4. 컬럼명 변경
+ALTER TABLE execsns RENAME COLUMN econtent_tmp TO econtent;
 
 
 
 
+-- 1단계: NULL 허용으로 컬럼 추가
+ALTER TABLE users ADD role VARCHAR2(50 CHAR);
+
+-- 2단계: 기존 데이터 채우기
+UPDATE users SET role = 'USER';
+
+-- 3단계: NOT NULL 제약 추가
+ALTER TABLE users MODIFY role NOT NULL;
+
+
+
+
+-- EXECSNS 관련 구문
+
+select * from execsns where postid='1';
 
 
 -- 댓글기능 (본인 파트 테이블에 맞게 변경하기.)
@@ -265,6 +301,9 @@ WHERE postid = 100;
 --    execname      varchar2(50)  not null         -- 추천 운동명
 --);
 
+SELECT postid
+FROM execsns
+WHERE etitle LIKE '%' || :keyword || '%';
 
 
 
