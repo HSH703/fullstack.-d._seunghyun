@@ -37,7 +37,7 @@ import com.thejoa703.repository.RetweetRepository;
 @SpringBootTest
 @Transactional  // org.springframework.transaction.annotation.Transactional
 class BackApplicationTests1_Repository {
-
+	
 	@Autowired private AppUserRepository   appUserRepository;
 	@Autowired private PostRepository      postRepository;
 	@Autowired private ImageRepository     imageRepository;
@@ -78,7 +78,7 @@ class BackApplicationTests1_Repository {
 		appUserRepository.save(user1);
 		appUserRepository.save(user2);
 		//게시글 생성
-
+		
 		post = new Post();
 		post.setContent("테스트 게시글");
 		post.setUser(user1);

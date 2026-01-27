@@ -1261,7 +1261,8 @@ pawject4_Exec.sql
 
 ### day105.md
 ---
-
+cmd 사용
+pawject4_Exec.sql
 ---
 
 ### day106.md
