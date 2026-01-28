@@ -139,24 +139,24 @@ class BackApplicationTests1_Repository {
 	
 	// ---------------------------------------------------------------------
 	// HashtagRepository - HashTag
-	// ---------------------------------------------------------------------
-	//	@Test
-	//	@DisplayName("■ PostRepository-CRUD ")
-	//	void testPostRepository() {
-	//		// 해쉬태그 연결 후 검색
-	//		Hashtag tag = new Hashtag();
-	//		tag.setName("haha"); 
-	//		hashtagRepository.save(tag);
-	//		
-	//		post.getHashtags().add(tag);  // List<Hashtag> hashtags
-	//		postRepository.save(post);
-	//		
-	//		List<Post> byTag = postRepository.findByHashtags_NameAndDeletedFalse("haha");
-	//		assertThat(byTag).isNotEmpty();
-	//		
-	//		// 게시글수정
-	//		// 게시글 삭제 후 조회 불가 
-	//	} 	
+//	// ---------------------------------------------------------------------
+//	@Test
+//	@DisplayName("■ PostRepository-CRUD ")
+//	void testPostRepository() {
+//		// 해쉬태그 연결 후 검색
+//		Hashtag tag = new Hashtag();
+//		tag.setName("haha"); 
+//		hashtagRepository.save(tag);
+//		
+//		post.getHashtags().add(tag);  // List<Hashtag> hashtags
+//		postRepository.save(post);
+//		
+//		List<Post> byTag = postRepository.findByHashtags_NameAndDeletedFalse("haha");
+//		assertThat(byTag).isNotEmpty();
+//		
+//		// 게시글수정
+//		// 게시글 삭제 후 조회 불가 
+//	} 	
 	
 	@Test
 	@DisplayName("■ HashtagRepository-CRUD ")
