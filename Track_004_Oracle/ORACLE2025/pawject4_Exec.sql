@@ -21,13 +21,14 @@
 
 
 
+select * from users;
 
 -- 1단계: NULL 허용으로 컬럼 추가
 ALTER TABLE users ADD role VARCHAR2(50 CHAR);
 
-
 -- 2단계: 기존 데이터 채우기
 UPDATE users SET role = 'USER';
+UPDATE users SET role = 'ADMIN' where email='5@5';
 
 -- 3단계: NOT NULL 제약 추가
 ALTER TABLE users MODIFY role NOT NULL;
