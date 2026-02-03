@@ -409,6 +409,7 @@ create table execsmart(
     constraint fk_execsmart_weather foreign key (wid)      references saveweather(wid),
     constraint fk_execsmart_course  foreign key (courseid) references walkingcourse(courseid)
  );
+ commit;
 create sequence execsmart_seq;
 
 DROP TABLE execsmart CASCADE CONSTRAINTS;

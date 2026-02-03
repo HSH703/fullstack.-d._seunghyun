@@ -1286,12 +1286,14 @@ pawject4_Exec.sql
 ### ORACLE (20260202~20260206)
 ### day109.md
 ---
-
+cmd 사용
+pawject4_Exec.sql
 ---
 
 ### day110.md
 ---
-
+cmd 사용
+pawject4_Exec.sql
 ---
 
 ### day111.md
