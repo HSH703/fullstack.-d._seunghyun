@@ -33,7 +33,7 @@
 
 <br/>
 <br/>
- <br/>
+<br/>
 
 
 
@@ -73,8 +73,9 @@
 <br/>
 
 ---
-
- <!/--  JAVA, HRML+CSS+JS/JQUERY...-->
+```
+ JAVA, HRML+CSS+JS/JQUERY...
+```
  <!-- ## 포트폴리오
  <br/>
  <br/>
