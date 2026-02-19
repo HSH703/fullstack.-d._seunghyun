@@ -214,6 +214,9 @@ ALTER TABLE users ADD role VARCHAR2(50 CHAR);
 UPDATE users SET role = 'USER';
 UPDATE users SET role = 'ADMIN' where email='5@5';
 
+select * from users;
+commit;
+
 -- 3단계: NOT NULL 제약 추가
 ALTER TABLE users MODIFY role NOT NULL;
 
@@ -226,7 +229,6 @@ COMMIT;
 desc execinfo;
 drop table execinfo;
 drop table walkingcourse;
-
 commit;
 
 
