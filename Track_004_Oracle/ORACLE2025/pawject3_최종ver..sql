@@ -17,6 +17,7 @@ CREATE TABLE USERS (
 CREATE SEQUENCE users_seq;
 drop table USERS;
 drop sequence users_seq;
+commit;
 
 DROP TABLE USERS CASCADE CONSTRAINTS;
 
@@ -31,6 +32,7 @@ ALTER TABLE ROLES
     ADD CONSTRAINT FK_ROLES_USER FOREIGN KEY (USERID)
     REFERENCES USERS (USERID);
 
+desc ROLES;
 
 DROP TABLE ROLES CASCADE CONSTRAINTS;
 
@@ -56,6 +58,7 @@ ALTER TABLE PETS
     ADD CONSTRAINT fk_pets_pettype FOREIGN KEY (PETTYPEID)
         REFERENCES PETTYPE (PETTYPEID);
 
+desc PETS;
 
 DROP TABLE PETS CASCADE CONSTRAINTS;
 drop sequence pets_seq;
@@ -117,7 +120,7 @@ CREATE TABLE FOODBRAND (
     ORIGIN         VARCHAR2(50),             
     BRANDINFO      VARCHAR2(500)
 );
-
+desc FOODBRAND;
 DROP TABLE FOODBRAND CASCADE CONSTRAINTS;
 drop sequence  ANNOUNCEMENT_seq;
 
@@ -427,6 +430,8 @@ DROP TABLE users CASCADE CONSTRAINTS;
 drop table users;
 drop table execsmart;
 
+select * from users;
+select count(*) from users;
 
 -- 4. DISEASE
 -- 질환 리스트
@@ -502,6 +507,8 @@ INSERT INTO ROLES (
     '1@1', -- 이메일
     'ROLE_MEMBER'        -- 권한
 );
+
+
 
 INSERT INTO ROLES (
     AUTHID, USERID, EMAIL, AUTH

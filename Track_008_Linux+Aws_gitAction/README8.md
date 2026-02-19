@@ -44,16 +44,17 @@ cicd
 ### day118.md
 ---
 cicd
+cicd2
 ---
 
 
 ### Linux+Aws+gitAction (20260219, 20260220)
 ### day119.md
 ---
-cicd
+cicd2
 ---
 
 ### day120.md
 ---
-cicd
+cicd2
 ---
